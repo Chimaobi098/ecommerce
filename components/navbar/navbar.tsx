@@ -25,9 +25,9 @@ const Navbar = () => {
             setCartOpen(true);
           }}
           style={{
-            width: "60px",
-            height: "60px",
-            borderRadius: "50%",
+            width: "32px",
+            height: "32px",
+            // borderRadius: "50%",
             color: "grey",
           }}
         >
