@@ -55,7 +55,6 @@ const ProductInfo = styled.div`
   #vendorName {
     display: flex;
     flex: 1;
-
     height: 21px;
 
     /* Category-body-text */
