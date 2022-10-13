@@ -1,23 +1,26 @@
 import { UserProvider } from "@auth0/nextjs-auth0";
 import type { AppProps } from "next/app";
 import Footer from "../components/footer/footer";
-import Navbar from "../components/navbar/navbar";
 import { GlobalStyle } from "../GlobalStyles";
 import { ShoppingCartProvider } from "../context/shoppingCart.js";
+import Navbar from "../components/navbar/navbar";
+import { AnimatePresence } from "framer-motion";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <ShoppingCartProvider>
         <UserProvider>
-          <Navbar />
           <main
             style={{
-              padding: "15vmin 0",
+              paddingBottom: "15vmin ",
               height: "100%",
               overflow: "hidden",
             }}
           >
-            <Component {...pageProps} />
+            <AnimatePresence>
+              <Component {...pageProps} />
+            </AnimatePresence>
           </main>
           <Footer />
         </UserProvider>

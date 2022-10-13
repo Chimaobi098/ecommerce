@@ -5,10 +5,7 @@ export const Wrapper = styled(motion.div)`
   width: 100vw;
   height: 110vh;
   background-color: white;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 99;
+
   overflow-y: scroll;
   padding-bottom: 10rem;
 `;
@@ -27,13 +24,6 @@ export const CloseMenu = styled(motion.div)`
   border-radius: 50%;
   width: 25px;
   height: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: 12px;
-  }
 `;
 
 export const VendorProductsWrapper = styled.div`

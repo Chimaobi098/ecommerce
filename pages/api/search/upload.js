@@ -1,6 +1,6 @@
 import algoliasearch from "algoliasearch";
 import indexer from "sanity-algolia";
-import { sanityClient } from "../../../lib/sanity";
+import { sanityClient, urlFor } from "../../../lib/sanity";
 
 export default async function handler(req, res) {
   // remember to add the secret cuz this shit is hackcable I mean everything is but still. You can't make it easy for them
@@ -9,7 +9,6 @@ export default async function handler(req, res) {
     process.env.ALGOLIA_APP_ID,
     process.env.ALGOLIA_ADMIN_API_KEY
   );
-
   const algoliaIndex = algolia.initIndex("dev_ecommerce");
 
   const sanityAlgolia = indexer(
@@ -20,15 +19,26 @@ export default async function handler(req, res) {
         {
   title,
   'price':defaultProductVariant.price,
-  'path':slug.current
-  'productImages':defaultProductVariant{images}
+  'path':slug.current,
+  'productImageUrl': defaultProductVariant.images[0]
+
 }`,
       },
     },
     (document) => document
   );
 
-  return sanityAlgolia
-    .webhookSync(sanityClient, req.body)
-    .then(() => res.status(200).send("ok"));
+  try {
+    sanityClient.fetch(`* [_type == 'product' ][]._id`).then((ids) =>
+      sanityAlgolia.webhookSync(sanityClient, {
+        ids: { created: ids, updated: [], deleted: [] },
+      })
+    );
+    res.status(200).send("it worked");
+    return;
+  } catch (err) {
+    console.log(err, "it did not work");
+    res.status(500).send("something went wrong");
+    return;
+  }
 }

@@ -1,4 +1,3 @@
-import { ArrowBackRounded, DeleteRounded } from "@material-ui/icons";
 import React from "react";
 import {
   CheckoutButton,
@@ -10,7 +9,8 @@ import { Header } from "./shoppingCartOverlay.styles";
 import { urlFor } from "../../lib/sanity";
 import { AnimatePresence } from "framer-motion";
 import { formatCurrency } from "../../utils/currencyFormatter";
-import { Button } from "@material-ui/core";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 const ShoppingCartOverlay = () => {
   const { setCartOpen, cartItems, removeFromCart, getTotalCartPrice } =
@@ -24,7 +24,7 @@ const ShoppingCartOverlay = () => {
             setCartOpen(false);
           }}
         >
-          <ArrowBackRounded />
+          <ArrowBackIcon />
         </button>
         <span style={{ fontWeight: 500 }}>Cart</span>
       </Header>
@@ -62,7 +62,7 @@ const ShoppingCartOverlay = () => {
               }}
               id="remove-product"
             >
-              <DeleteRounded fontSize="small" color="error" />
+              <DeleteRoundedIcon fontSize="small" color="error" />
             </button>
           </ProudctInfo>
         ))}

@@ -4,12 +4,17 @@ import gameData from "../gameData.js";
 import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
 import { CloseMenu } from "../components/productInfoOverly/prodInfoOverlay.styles";
-
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { NavBar } from "../components/Home/home.styles";
 // styling
 const Wrapper = styled(motion.div)`
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15vmin;
 `;
 
 const Overlay = styled(motion.div)`
@@ -105,10 +110,13 @@ const Arcade = () => {
       imageUrl: string;
     }[];
   }
-
+  console.log("you are in the arcade section");
   const [gameOverlay, setGameOverlay] = useState<gamaData | null>(null);
   return (
     <>
+      <NavBar>
+        <header>Arcade</header>
+      </NavBar>
       <Head>
         <title>Arcade || The best way to earn</title>
       </Head>
@@ -122,7 +130,7 @@ const Arcade = () => {
             onClick={() => {
               setGameOverlay(game);
             }}
-            style={{ marginTop: "7vmin", width: "100%" }}
+            style={{ marginTop: "7vmin", width: "90%", borderRadius: "10px" }}
             src={game.imageUrl}
             alt="game art"
           />
@@ -157,7 +165,7 @@ const Arcade = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <img src="close.svg" alt="close button" />
+              <CloseRoundedIcon />
             </CloseMenu>
             <GameInfoSection
               initial={{ opacity: 0 }}

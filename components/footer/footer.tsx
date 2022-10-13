@@ -2,69 +2,46 @@ import { Wrapper } from "./footer.styles";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
+import HomeIcon from "@mui/icons-material/Home";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
+import VideogameAssetOutlinedIcon from "@mui/icons-material/VideogameAssetOutlined";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import SearchIcon from "@mui/icons-material/Search";
+
 const Footer = () => {
   const { pathname, push, replace } = useRouter();
-
+  console.log(pathname);
   return (
     <Wrapper>
       <Link passHref href={"/"}>
         <a>
-          <img
-            style={{
-              width: "24px",
-              filter:
-                pathname === "/"
-                  ? "invert(0%) sepia(98%) saturate(9%) hue-rotate(246deg) brightness(105%) contrast(99%)"
-                  : "invert(55%) sepia(6%) saturate(4%) hue-rotate(9deg) brightness(108%) contrast(100%)",
-            }}
-            src="home.svg"
-            alt="arcade section"
-          />
+          {pathname == "/" ? (
+            <HomeIcon fontSize="large" style={{ color: "black" }} />
+          ) : (
+            <HomeOutlinedIcon fontSize="large" style={{ color: "black" }} />
+          )}
         </a>
       </Link>
       <Link passHref href={"/arcade"}>
         <a>
-          <img
-            style={{
-              width: "24px",
-              filter:
-                pathname === "/arcade"
-                  ? "invert(0%) sepia(98%) saturate(9%) hue-rotate(246deg) brightness(105%) contrast(99%)"
-                  : "invert(55%) sepia(6%) saturate(4%) hue-rotate(9deg) brightness(108%) contrast(100%)",
-            }}
-            src="arcade.svg"
-            alt="arcade section"
-          />
+          {pathname == "/arcade" ? (
+            <VideogameAssetIcon fontSize="large" style={{ color: "black" }} />
+          ) : (
+            <VideogameAssetOutlinedIcon
+              fontSize="large"
+              style={{ color: "black" }}
+            />
+          )}
         </a>
       </Link>
-      <Link passHref href={"/arcade"}>
+      <Link passHref href={"/explore"}>
         <a>
-          <img
-            style={{
-              width: "24px",
-              filter:
-                pathname === "/arcade"
-                  ? "invert(0%) sepia(98%) saturate(9%) hue-rotate(246deg) brightness(105%) contrast(99%)"
-                  : "invert(55%) sepia(6%) saturate(4%) hue-rotate(9deg) brightness(108%) contrast(100%)",
-            }}
-            src="arcade.svg"
-            alt="arcade section"
-          />
-        </a>
-      </Link>
-      <Link passHref href={"/arcade"}>
-        <a>
-          <img
-            style={{
-              width: "24px",
-              filter:
-                pathname === "/arcade"
-                  ? "invert(0%) sepia(98%) saturate(9%) hue-rotate(246deg) brightness(105%) contrast(99%)"
-                  : "invert(55%) sepia(6%) saturate(4%) hue-rotate(9deg) brightness(108%) contrast(100%)",
-            }}
-            src="arcade.svg"
-            alt="arcade section"
-          />
+          {pathname == "/explore" ? (
+            <SearchIcon fontSize="large" style={{ color: "black" }} />
+          ) : (
+            <SearchOutlinedIcon fontSize="large" style={{ color: "black" }} />
+          )}
         </a>
       </Link>
     </Wrapper>
