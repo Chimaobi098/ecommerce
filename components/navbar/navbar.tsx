@@ -9,13 +9,13 @@ const Navbar = () => {
   const { pathname } = useRouter();
   const { getCartQuantity, cartOpen, setCartOpen } = useShoppingCart();
 
-  if (pathname === "/arcade") {
-    return (
-      <Wrapper>
-        <header>Arcade</header>
-      </Wrapper>
-    );
-  }
+  // if (pathname === "/arcade") {
+  //   return (
+  //     <Wrapper>
+  //       <header>Arcade</header>
+  //     </Wrapper>
+  //   );
+  // }
   if (pathname === "/") {
     return (
       <Wrapper>
@@ -28,6 +28,7 @@ const Navbar = () => {
             width: "32px",
             height: "32px",
             // borderRadius: "50%",
+            border: "3px solid gold",
             color: "grey",
           }}
         >

@@ -131,7 +131,7 @@ const Home = ({ results }) => {
                     router.push(`/vendor/${product.vendor._id}`);
                   }}
                 />
-                <span>{product.vendor.title}</span>
+                <span id="vendorName">{product.vendor.title}</span>
               </div>
               <motion.img
                 id="productImage"
