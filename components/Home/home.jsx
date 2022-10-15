@@ -14,7 +14,6 @@ import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CommentRoundedIcon from '@mui/icons-material/CommentRounded';
-import Link from "next/link";
 
 
 
@@ -121,18 +120,13 @@ console.log(productData)
                 <img id="vendorImage" src={urlFor(product.vendor.logo).url()} alt={product.title} onClick={() => { router.push(`/vendor/${product.vendor._id}`) }} />
                 <span>{product.vendor.title}</span>
               </div>
-              <Link href={`/product/${product.slug.current}`} >
-              <a>
-              <img  id='productImage' src={urlFor(product.defaultProductVariant.images[0])} alt="Product Image"  whileTap={{ scale: 0.9 }} />
+              
 
-                </a>
-                </Link>
-                
-
+              <motion.img  id='productImage' src={urlFor(product.defaultProductVariant.images[0])} alt="Product Image" onClick={() => {router.push(`/product/${product.slug.current}`) }} whileTap={{ scale: 0.9 }} />
               
               <div>
                 <div id='action-section'>
-                  <motion.div whileTap={{scale: 0.85}}>
+                  <motion.div whileTap={{scale: 0.9}}>
                     
                   <FavoriteBorderIcon fontSize='large' sx={{marginRight: '10px'}}/>
                   </motion.div>
