@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   overflow-y: scroll;
   height: 100%;
+  background: #fff;
   ::-webkit-scrollbar {
     display: none;
   }
