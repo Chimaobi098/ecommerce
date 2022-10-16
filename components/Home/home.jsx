@@ -13,6 +13,7 @@ import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
 
 const Home = ({ results }) => {
@@ -20,9 +21,10 @@ const Home = ({ results }) => {
   const { getCartQuantity, cartOpen, setCartOpen } = useShoppingCart();
   const { user, loading, error } = useUser();
   const [productData, setProductData] = useState(results);
+  console.log(productData);
   const [hasMore, setHasMore] = useState(true);
   const lastId = useRef(results[results.length - 1]._id);
-  console.log(productData);
+  const [likes, setLikes] = useState({ likeCount: 300, likeState: false });
   useEffect(() => {
     async function fetchData() {
       if (user) {
@@ -34,14 +36,21 @@ const Home = ({ results }) => {
           },
         });
         const final = await data.json();
-        console.log(final);
       }
     }
     fetchData();
   }, [user]);
 
+  function handleLikes() {
+    setLikes((prev) => {
+      if (prev.likeState) {
+        return { likeCount: prev.likeCount - 1, likeState: false };
+      }
+      return { likeCount: prev.likeCount + 1, likeState: true };
+    });
+  }
+
   async function fetchNextPage() {
-    console.log("this function is called");
     const { current } = lastId;
     if (current === null) {
       setHasMore(false);
@@ -62,7 +71,6 @@ const Home = ({ results }) => {
     if (data.length > 0) {
       lastId.current = data[data.length - 1]._id;
       setProductData((prev) => [...prev, ...data]);
-      console.log("i did it");
     } else {
       lastId.current = null; // Reached the end
       setHasMore(false);
@@ -138,11 +146,19 @@ const Home = ({ results }) => {
               <div id="bottom-feedCard">
                 <div id="action-section">
                   <div id="left-action-side">
-                    <motion.div whileTap={{ scale: 0.9 }}>
-                      <FavoriteBorderIcon
-                        fontSize="large"
-                        sx={{ marginRight: "10px" }}
-                      />
+                    <motion.div whileTap={{ scale: 0.8 }} onClick={handleLikes}>
+                      {likes.likeState ? (
+                        <FavoriteIcon
+                          fontSize="large"
+                          sx={{ marginRight: "10px" }}
+                          color="error"
+                        />
+                      ) : (
+                        <FavoriteBorderIcon
+                          fontSize="large"
+                          sx={{ marginRight: "10px" }}
+                        />
+                      )}
                     </motion.div>
                     <CommentRoundedIcon fontSize="large" />
                     {/* <CommentRoundedIcon fontSize="large" /> */}
@@ -156,6 +172,20 @@ const Home = ({ results }) => {
                   <p>John Doe</p>
                   <p id="feedCardCaption">placeholder text</p>
                 </div>
+                {/* <motion.img  id='productImage' src={urlFor(product.defaultProductVariant.images[0])} alt="Product Image" onClick={() => {router.push(`/product/${product.slug.current}`) }} whileTap={{ scale: 0.9 }} />
+              
+              <div>
+                <div id='action-section'>
+                  <motion.div whileTap={{ scale: 0.8 }} onClick={handleLikes}>
+                    {
+likes.likeState ?
+                        <FavoriteIcon fontSize='large' sx={{ marginRight: '10px' }} color = 'error'/>:<FavoriteBorderIcon fontSize='large' sx={{ marginRight: '10px' }} /> 
+                        
+                    }
+                  </motion.div>
+                  <CommentRoundedIcon fontSize='large'/>
+                </div>
+                <h4 style={{ marginTop: '10px'}}>{`${likes.likeCount} likes`}</h4> */}
               </div>
             </ProductInfo>
           ))}
@@ -169,5 +199,6 @@ export default Home;
 
 export const getServerSideProps = async () => {
   const results = await sanityClient.fetch(productQuery);
+
   return { props: { results } };
 };
