@@ -66,9 +66,90 @@ const ProductInfoOverlay = ({ currentProduct }) => {
         >
           <CloseRoundedIcon />
         </CloseMenu>
-        <h4>{currentProduct.title}</h4>
-        <h1>{formatCurrency(currentProduct?.defaultProductVariant?.price)}</h1>
-        <CartButtons primary>
+        <h4 id="currentProductTitle">{currentProduct.title}</h4>
+        <h1 id="currentProductPrice">
+          {formatCurrency(currentProduct?.defaultProductVariant?.price)}
+        </h1>
+        <div id="productSizeAndColourContainer">
+          <div id="overallSizeContainer">
+            <h3 id="sizeOrColourText">Select Size</h3>
+            <div id="sizePickerContainer">
+              <h4 className="individualSizes">S</h4>
+              <h4 className="individualSizes">M</h4>
+              <h4 className="individualSizes">L</h4>
+              <h4 className="individualSizes xlAndxxlSizes">XL</h4>
+              <h4 className="individualSizes xlAndxxlSizes">XXL</h4>
+              <h4 className="individualSizes xxxlSize">XXXL</h4>
+            </div>
+          </div>
+          <div id="overallColourContainer">
+            <h3 id="sizeOrColourText">Select Colour</h3>
+            <div id="colourPickerContainer">
+              <h4 className="individualColours">Black</h4>
+              <h4 className="individualColours">White</h4>
+              <h4 className="individualColours">Blue</h4>
+              <h4 className="individualColours">Red</h4>
+              <h4 className="individualColours">Gray</h4>
+            </div>
+          </div>
+        </div>
+
+        <div id="productDescriptionDropdowns">
+          <Accordion className="individual-pd-Dropdown">
+            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
+              <h3>Product Description</h3>
+            </AccordionSummary>
+            <AccordionDetails>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+                eget.
+              </p>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion className="individual-pd-Dropdown">
+            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
+              <h3>Reviews</h3>
+            </AccordionSummary>
+            <AccordionDetails>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+                eget.
+              </p>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion className="individual-pd-Dropdown">
+            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
+              <h3>Size Guide</h3>
+            </AccordionSummary>
+            <AccordionDetails>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+                eget.
+              </p>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion className="individual-pd-Dropdown">
+            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
+              <h3>Shipping Info</h3>
+            </AccordionSummary>
+            <AccordionDetails>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+                eget.
+              </p>
+            </AccordionDetails>
+          </Accordion>
+        </div>
+        <div id="vendorDetailsContainer">
+          <h3>About this vendor</h3>
+          <div id="vendorInfoandPicturer"></div>
+          <a className="invertedBtn longBtn">Click me</a>
+        </div>
+        {/* <CartButtons primary>
           <div id="quantity-control-container">
             <button
               className="quantity-change-buttons"
@@ -97,44 +178,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           >
             {cartButtonState()}
           </button>
-        </CartButtons>
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
-            <h3>Product Description</h3>
-          </AccordionSummary>
-          <AccordionDetails>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </p>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
-            <h3>Size Guide</h3>
-          </AccordionSummary>
-          <AccordionDetails>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </p>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
-            <h3>Shipping Info</h3>
-          </AccordionSummary>
-          <AccordionDetails>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </p>
-          </AccordionDetails>
-        </Accordion>
-        <h2 style={{ marginTop: "50px" }}>More from this vendor</h2>
+        </CartButtons> */}
+        <h2 className="moreFromVendor">More from this vendor</h2>
         <VendorProductsWrapper>
           {currentProduct?.moreFromVendor?.map((product) => (
             <Link
@@ -149,7 +194,12 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                   alt="Product Image"
                 />
                 <div style={{ padding: "0 0.5rem" }}>
-                  <h2>{formatCurrency(product.defaultProductVariant.price)}</h2>
+                  <div id="productPriceAndMoreIcon">
+                    <h2>
+                      {formatCurrency(product.defaultProductVariant.price)}
+                    </h2>
+                  </div>
+
                   <p>{product.title}</p>
                 </div>
               </VendorProduct>
@@ -159,6 +209,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             <p>No more proudcts from this vendor</p>
           ) : null}
         </VendorProductsWrapper>
+        <h2 className="moreFromVendor">Recently viewed</h2>
       </ProductInfoSection>
     </Wrapper>
   );
