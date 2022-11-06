@@ -1,6 +1,6 @@
 import React from "react";
 import VendorPage from "../../components/vendorPage/vendorPage.jsx";
-import { sanityClient } from "../../lib/sanity.js";
+import { sanityClient } from "../../lib/sanity.ts";
 const vendorInfoQuery = `*[_type == 'vendor' && _id == $vendorId]{
 
     logo,

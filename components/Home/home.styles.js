@@ -31,7 +31,8 @@ export const ProductInfo = styled.div`
   width: 100%;
 
   #productImage {
-    width: 100%;
+    width: 600px;
+    height: 500px;
     margin: 0;
     padding: 0;
   }
@@ -41,15 +42,13 @@ export const ProductInfo = styled.div`
     align-items: center;
     font-weight: 600;
     margin-bottom: 1vh;
+    padding: 0 10px;
   }
 
-  #vendorImage {
-    width: 50px;
-    height: 50px;
-    margin-right: 20px;
-    margin-left: 7px;
+  .vendorImage {
+    
     border-radius: 50%;
-    object-fit: contain;
+    
   }
 
   #action-section {

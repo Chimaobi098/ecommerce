@@ -57,11 +57,7 @@ export const VendorProduct = styled(motion.div)`
     margin-top: 0;
   }
 
-  img {
-    width: 100%;
-    height: 70%;
-    object-fit: cover;
-  }
+
 `;
 
 export const CartButtons = styled.div`

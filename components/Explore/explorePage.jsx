@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavBar, SearchResultItems, Wrapper } from './explorePage.styles'
 import { urlFor } from '../../lib/sanity'
-import { formatCurrency } from '../../utils/currencyFormatter'
+import { formatCurrency } from '../../utils/currencyFormatter.ts'
 import Link from 'next/link'
 
 

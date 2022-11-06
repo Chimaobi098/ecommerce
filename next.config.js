@@ -8,6 +8,7 @@ const nextConfig = {
   env: {
     ALGOLIA_APP_ID: "QWFLVVGLBV",
     ALGOLIA_SEARCH_KEY: "ae043287c47c3250b6e1d92920a963d6",
+    PAYSTACK_PUBLIC_KEY: "pk_test_8f3c6c93fc82f663ce4939505f86d6fa13f386d9",
   },
 };
 
