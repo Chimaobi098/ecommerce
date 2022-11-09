@@ -27,21 +27,7 @@ const Home = ({ results }: HomeProduct) => {
   const [hasMore, setHasMore] = useState(true);
   const lastId = useRef<string | null>(results[results.length - 1]._id);
   const [likes, setLikes] = useState({ likeCount: 300, likeState: false });
-  useEffect(() => {
-    async function fetchData() {
-      if (user) {
-        const data = await fetch("/api/users/createUser", {
-          method: "POST",
-          body: JSON.stringify(user),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const final = await data.json();
-      }
-    }
-    fetchData();
-  }, [user]);
+ 
 
   function handleLikes() {
     setLikes((prev) => {
@@ -78,6 +64,7 @@ const Home = ({ results }: HomeProduct) => {
       setHasMore(false);
     }
   }
+  console.log(user)
 
   return (
     <>

@@ -12,4 +12,5 @@ export const config = {
 
 export const sanityClient = createClient(config);
 
+
 export const urlFor = (source:{ asset: { _ref: string; _type: string; }; }) => createImageUrlBuilder(config).image(source);

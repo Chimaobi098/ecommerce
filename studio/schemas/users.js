@@ -25,6 +25,16 @@ export default {
       type: "string",
     },
     {
+      name: "address",
+      title: "Address",
+      type: "string",
+    },
+    {
+      name: "phoneNumber",
+      title: "Phone Number",
+      type: "number",
+    },
+    {
       title: "Liked Products",
       name: "likedProducts",
       type: "array",

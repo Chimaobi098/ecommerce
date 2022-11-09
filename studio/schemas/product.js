@@ -63,6 +63,11 @@ export default {
       title: "Body",
       type: "localeBlockContent",
     },
+    {
+      name: "likes",
+      title: "Likes",
+      type: "nubmer",
+    },
   ],
 
   preview: {

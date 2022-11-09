@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useShoppingCart } from "../../context/shoppingCart";
 import { Wrapper, Card } from "./checkoutPage.styles";
 import { formatCurrency } from "../../utils/currencyFormatter";
@@ -8,6 +8,9 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import { useRouter } from "next/router";
 import { usePaystackPayment } from "react-paystack";
 import { UserProfile } from "@auth0/nextjs-auth0";
+import { sanityClient } from "../../lib/sanity";
+
+
 
 interface CheckoutProps{
   user: UserProfile
@@ -23,11 +26,15 @@ const CheckoutPage= ({user}:CheckoutProps) => {
     alert("why did you close na");
   };
   const router = useRouter();
+  const[currentUID, setCurrentUID] = useState<string>('')
   const { getTotalCartPrice } = useShoppingCart();
-  const [deliveryPhoneNumber, setDeliveryPhoneNumber] = useState<string>("");
+  const [deliveryPhoneNumber, setDeliveryPhoneNumber] = useState<number>(0);
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
+  const [fullName, setFullName] = useState<string>("");
   const shippingFees = 2920;
   const totalAmount = getTotalCartPrice() + shippingFees;
+ console.log(user)
+  
 
   const config = {
     email: user!.email!,
@@ -35,6 +42,49 @@ const CheckoutPage= ({user}:CheckoutProps) => {
     publicKey: process.env.PAYSTACK_PUBLIC_KEY!,
   };
   const initializePayment = usePaystackPayment(config);
+
+  useEffect(() => {
+    const getUID = async () => {
+      const data = await sanityClient.fetch(
+        `
+*[_type == 'users' && userId ==$auth0ID]{
+  _id,
+  name,
+  phoneNumber,
+  address
+}`, {
+  auth0ID:user.sub
+}
+      );
+ 
+      setCurrentUID(data[0]._id||'')
+      setFullName(data[0].name||'')
+      setDeliveryAddress(data[0].address||'')
+      setDeliveryPhoneNumber(data[0].phoneNumber|| 0)
+    }
+
+    getUID()
+  }, [])
+  
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    
+     fetch('/api/updateUser',
+      {method: 'POST',
+      body: JSON.stringify({_id: currentUID, fullName, deliveryAddress, deliveryPhoneNumber})}
+      ).then(res => {
+        if (!res.ok) {
+          alert('Could not upload form data, try again later!')
+          return
+        }
+        initializePayment(onSuccess, onClose);
+        
+      }).catch(err => {
+      console.log(err,'this didnt')
+    })
+  
+  }
+
   return (
     <Wrapper>
       <button
@@ -46,35 +96,44 @@ const CheckoutPage= ({user}:CheckoutProps) => {
         <ArrowBackRoundedIcon />
       </button>
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          initializePayment(onSuccess, onClose);
-        }}
+        onSubmit={handleSubmit}
       >
         <p className="section-title">Delivery Info</p>
+        <TextField
+          required
+          label="Phone Number"
+          type="number"
+          className="input-field"
+          margin="normal"
+          onChange={(e) => {
+            setDeliveryPhoneNumber(Number(e.target.value));
+          }}
+          value={deliveryPhoneNumber}
+        />
+        <TextField
+          required
+          label="Full Name"
+          type="name"
+          className="input-field"
+          margin="normal"
+          onChange={(e) => {
+            setFullName(e.target.value);
+          }}
+          value={fullName}
+        />
         <TextField
           required
           label="Address"
           multiline
           rows={4}
           className="input-field"
-          margin="dense"
+          margin="normal"
           onChange={(e) => {
             setDeliveryAddress(e.target.value);
           }}
           value={deliveryAddress}
         />
-        <TextField
-          required
-          label="Phone Number"
-          type="number"
-          className="input-field"
-          margin="dense"
-          onChange={(e) => {
-            setDeliveryPhoneNumber(e.target.value);
-          }}
-          value={deliveryPhoneNumber}
-        />
+        
 
         <p className="section-title">Delivery Method</p>
         <Card>
