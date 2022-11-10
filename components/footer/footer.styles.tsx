@@ -29,13 +29,13 @@ export const Wrapper = styled.footer`
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.14);
   }
 
-  .normalBtn{
+  .normalBtn {
     background: black;
-    color:white;
+    color: white;
     border: 1px solid #fff;
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.14);
   }
-  }
+
   .shortBtn {
     font-family: "Chakra Petch";
     font-style: normal;
@@ -46,7 +46,7 @@ export const Wrapper = styled.footer`
     align-items: center;
     padding: 8px;
 
-    width:45vw;
+    width: 45vw;
     border-radius: 5px;
     // max-width: 45vw;
     // height: 41px;

@@ -8,9 +8,13 @@ import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import VideogameAssetOutlinedIcon from "@mui/icons-material/VideogameAssetOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SearchIcon from "@mui/icons-material/Search";
+// import { useShoppingCart } from "../../context/shoppingCart";
 
 const Footer = () => {
   const { pathname, push, replace } = useRouter();
+  // const { setCartOpen, cartItems, removeFromCart, getTotalCartPrice } =
+  //   useShoppingCart();
+  // console.log(getTotalCartPrice());
   console.log(pathname);
   if (pathname === "/product/[productSlug]")
     return (

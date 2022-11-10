@@ -169,7 +169,7 @@ const Home = ({ results }) => {
                 </div>
                 <h4>3000 likes</h4>
                 <div id="vendorName-Caption">
-                  <p>John Doe</p>
+                  <p>{product.vendor.title}</p>
                   <p id="feedCardCaption">placeholder text</p>
                 </div>
                 {/* <motion.img  id='productImage' src={urlFor(product.defaultProductVariant.images[0])} alt="Product Image" onClick={() => {router.push(`/product/${product.slug.current}`) }} whileTap={{ scale: 0.9 }} />

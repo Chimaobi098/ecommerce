@@ -21,16 +21,17 @@ export const NavBar = styled.nav`
   align-items: center;
   justify-content: center;
   header {
+    font-family: "Chakra Petch";
     font-weight: 600;
-    font-size: 1.8rem;
+    font-size: 1.75rem;
   }
 `;
 
 export const ProductInfo = styled.div`
   width: 100%;
-  border-width: 0.1px 0px 0px 0px;
-  border-style: solid;
-  border-color: #000000;
+  // border-width: 0.1px 0px 0px 0px;
+  // border-style: solid;
+  // border-color: #000000;
   // border: 3px solid green;
 
   //  POST HEADER SECTION

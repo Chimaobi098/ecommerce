@@ -149,7 +149,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           <div id="vendorInfoandPicturer"></div>
           <a className="invertedBtn longBtn">Click me</a>
         </div>
-        {/* <CartButtons primary>
+        <CartButtons primary>
           <div id="quantity-control-container">
             <button
               className="quantity-change-buttons"
@@ -169,6 +169,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               {<AddRoundedIcon />}
             </button>
           </div>
+
           <button
             id="add-to-cart"
             onClick={() => {
@@ -178,7 +179,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           >
             {cartButtonState()}
           </button>
-        </CartButtons> */}
+        </CartButtons>
         <h2 className="moreFromVendor">More from this vendor</h2>
         <VendorProductsWrapper>
           {currentProduct?.moreFromVendor?.map((product) => (
