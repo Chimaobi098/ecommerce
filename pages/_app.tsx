@@ -10,8 +10,8 @@ import { AnimatePresence } from "framer-motion";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <ShoppingCartProvider>
-        <UserProvider>
+      <UserProvider>
+        <ShoppingCartProvider>
           <main
             style={{
               paddingBottom: "15vmin ",
@@ -24,9 +24,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             </AnimatePresence>
           </main>
           <Footer />
-        </UserProvider>
-        <GlobalStyle />
-      </ShoppingCartProvider>
+          <GlobalStyle />
+        </ShoppingCartProvider>
+      </UserProvider>
     </>
   );
 }

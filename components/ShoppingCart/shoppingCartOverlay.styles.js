@@ -129,6 +129,15 @@ export const CheckoutButton = styled(motion.button)`
   padding: 10px;
   background-color: #0aad0a;
   color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
   #button-content-wrapper {
     display: flex;
     align-items: center;

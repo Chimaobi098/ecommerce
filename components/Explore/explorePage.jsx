@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import React from "react";
 import { NavBar, SearchResultItems, Wrapper } from "./explorePage.styles";
 import { urlFor } from "../../lib/sanity";
 import { formatCurrency } from "../../utils/currencyFormatter";
 import Link from "next/link";
+=======
+import React from 'react'
+import { NavBar, SearchResultItems, Wrapper } from './explorePage.styles'
+import { urlFor } from '../../lib/sanity'
+import { formatCurrency } from '../../utils/currencyFormatter.ts'
+import Link from 'next/link'
+>>>>>>> upsstream/main
 
 const ExplorePage = ({ searchResults }) => {
   console.log(searchResults);

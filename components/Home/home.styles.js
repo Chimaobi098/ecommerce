@@ -63,6 +63,7 @@ export const ProductInfo = styled.div`
   }
 
   #productImage {
+<<<<<<< HEAD
     width: 100%;
     height: 328px;
     // border: 3px solid cyan;
@@ -86,6 +87,26 @@ export const ProductInfo = styled.div`
     margin: 0px 0 8px 0;
     // display: flex;
     // flex-direction: column;
+=======
+    width: 600px;
+    height: 500px;
+    margin: 0;
+    padding: 0;
+  }
+
+  #vendor-info-container {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    margin-bottom: 1vh;
+    padding: 0 10px;
+  }
+
+  .vendorImage {
+    
+    border-radius: 50%;
+    
+>>>>>>> upsstream/main
   }
 
   #action-section {

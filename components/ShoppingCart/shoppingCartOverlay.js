@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   CheckoutButton,
   ProudctInfo,
@@ -10,14 +10,26 @@ import { Header } from "./shoppingCartOverlay.styles";
 import { urlFor } from "../../lib/sanity";
 
 import { AnimatePresence } from "framer-motion";
-import { formatCurrency } from "../../utils/currencyFormatter";
+import { formatCurrency } from "../../utils/currencyFormatter.ts";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import { useRouter } from "next/router";
 
 const ShoppingCartOverlay = () => {
+  const router = useRouter();
   const { setCartOpen, cartItems, removeFromCart, getTotalCartPrice } =
     useShoppingCart();
 
+<<<<<<< HEAD
+=======
+
+  function handleClick() {
+   
+    setCartOpen(false);
+    router.push("/checkout");
+  }
+
+>>>>>>> upsstream/main
   return (
     <Wrapper initial={{ y: "100vh" }} animate={{ y: 0 }} exit={{ y: "100vh" }}>
       <Header>
@@ -74,12 +86,19 @@ const ShoppingCartOverlay = () => {
             </div>
           </ProudctInfo>
         ))}
+<<<<<<< HEAD
         {/* <CheckoutButton layout key="3">
           <div id="button-content-wrapper">
             <div>Proceed to checkout</div>
             <div id="checkout-price">{formatCurrency(getTotalCartPrice())}</div>
           </div>
         </CheckoutButton> */}
+=======
+        <CheckoutButton layout key="3" onClick={handleClick}>
+          <span>Proceed to checkout</span>
+          <div id="checkout-price">{formatCurrency(getTotalCartPrice())}</div>
+        </CheckoutButton>
+>>>>>>> upsstream/main
       </AnimatePresence>
     </Wrapper>
   );

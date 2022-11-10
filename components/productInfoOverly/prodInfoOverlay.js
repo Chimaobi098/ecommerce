@@ -7,7 +7,7 @@ import {
   Wrapper,
 } from "./prodInfoOverlay.styles";
 import { urlFor } from "../../lib/sanity";
-import { formatCurrency } from "../../utils/currencyFormatter";
+import { formatCurrency } from "../../utils/currencyFormatter.ts";
 import { CloseMenu } from "./prodInfoOverlay.styles";
 import { motion } from "framer-motion";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
@@ -17,6 +17,7 @@ import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useShoppingCart } from "../../context/shoppingCart";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import Link from "next/link";
 
 const ProductInfoOverlay = ({ currentProduct }) => {
@@ -52,12 +53,16 @@ const ProductInfoOverlay = ({ currentProduct }) => {
       animate={{ y: "0vh" }}
       exit={{ y: "100vh" }}
     >
-      <motion.img
-        id="productImage"
-        src={urlFor(currentProduct.defaultProductVariant?.images[0])}
-        alt="Product Image"
-        style={{ width: "100%" }}
-      />
+      <div style={{ width: "100%", height: "40vh", position: 'relative' }}>
+
+
+        <Image
+          layout="fill"
+          objectFit="contain"
+          src={urlFor(currentProduct.defaultProductVariant?.images[0]).url()}
+          alt="Product Image"
+        />
+      </div>
       <ProductInfoSection>
         <CloseMenu
           onClick={() => {
@@ -190,10 +195,16 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               key={product._id}
             >
               <VendorProduct whileTap={{ scale: 0.9 }}>
-                <img
-                  src={urlFor(product.defaultProductVariant.images[0])}
+                <div style={{width: '100%',height: '70%',position: 'relative'}}>
+
+                  <Image
+                    layout="fill"
+                    objectFit="cover"
+                  src={urlFor(product.defaultProductVariant.images[0]).url()}
                   alt="Product Image"
+                  
                 />
+                </div>
                 <div style={{ padding: "0 0.5rem" }}>
                   <div id="productPriceAndMoreIcon">
                     <h2>
