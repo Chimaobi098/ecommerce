@@ -19,17 +19,11 @@ const ShoppingCartOverlay = () => {
   const router = useRouter();
   const { setCartOpen, cartItems, removeFromCart, getTotalCartPrice } =
     useShoppingCart();
-
-<<<<<<< HEAD
-=======
-
   function handleClick() {
-   
     setCartOpen(false);
     router.push("/checkout");
   }
 
->>>>>>> upsstream/main
   return (
     <Wrapper initial={{ y: "100vh" }} animate={{ y: 0 }} exit={{ y: "100vh" }}>
       <Header>
@@ -86,19 +80,10 @@ const ShoppingCartOverlay = () => {
             </div>
           </ProudctInfo>
         ))}
-<<<<<<< HEAD
-        {/* <CheckoutButton layout key="3">
-          <div id="button-content-wrapper">
-            <div>Proceed to checkout</div>
-            <div id="checkout-price">{formatCurrency(getTotalCartPrice())}</div>
-          </div>
-        </CheckoutButton> */}
-=======
-        <CheckoutButton layout key="3" onClick={handleClick}>
+        {/* <CheckoutButton layout key="3" onClick={handleClick}>
           <span>Proceed to checkout</span>
           <div id="checkout-price">{formatCurrency(getTotalCartPrice())}</div>
-        </CheckoutButton>
->>>>>>> upsstream/main
+        </CheckoutButton> */}
       </AnimatePresence>
     </Wrapper>
   );

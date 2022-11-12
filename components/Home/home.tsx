@@ -27,7 +27,6 @@ const Home = ({ results }: HomeProduct) => {
   const [hasMore, setHasMore] = useState(true);
   const lastId = useRef<string | null>(results[results.length - 1]._id);
   const [likes, setLikes] = useState({ likeCount: 300, likeState: false });
- 
 
   function handleLikes() {
     setLikes((prev) => {
@@ -64,7 +63,7 @@ const Home = ({ results }: HomeProduct) => {
       setHasMore(false);
     }
   }
-  console.log(user)
+  console.log(user);
 
   return (
     <>
@@ -115,17 +114,15 @@ const Home = ({ results }: HomeProduct) => {
                   placeholder="blur"
                   blurDataURL="/placeholder.png"
                   className="vendorImage"
-                  width={50}
-                  height={50}
+                  width={40}
+                  height={40}
                   src={urlFor(product.vendor.logo).url()}
                   alt={product.title}
                   onClick={() => {
                     router.push(`/vendor/${product.vendor._id}`);
                   }}
                 />
-                <span style={{ marginLeft: "30px" }}>
-                  {product.vendor.title}
-                </span>
+                <span id="vendorName">{product.vendor.title}</span>
               </div>
               <motion.div
                 whileTap={{ scale: 0.9 }}
@@ -144,27 +141,27 @@ const Home = ({ results }: HomeProduct) => {
                 />
               </motion.div>
 
-              <div style={{ paddingLeft: "3vw" }}>
+              <div id="bottom-feedCard">
                 <div id="action-section">
-                  <motion.div whileTap={{ scale: 0.8 }} onClick={handleLikes}>
-                    {likes.likeState ? (
-                      <FavoriteIcon
-                        fontSize="large"
-                        sx={{ marginRight: "10px" }}
-                        color="error"
-                      />
-                    ) : (
-                      <FavoriteBorderIcon
-                        fontSize="large"
-                        sx={{ marginRight: "10px" }}
-                      />
-                    )}
-                  </motion.div>
-                  <CommentRoundedIcon fontSize="large" />
+                  <div id="left-action-side">
+                    <motion.div whileTap={{ scale: 0.8 }} onClick={handleLikes}>
+                      {likes.likeState ? (
+                        <FavoriteIcon fontSize="large" color="error" />
+                      ) : (
+                        <FavoriteBorderIcon fontSize="large" />
+                      )}
+                    </motion.div>
+                    <CommentRoundedIcon fontSize="large" />
+                  </div>
+                  <div id="right-action-side">
+                    {/* <CommentRoundedIcon fontSize="large" /> */}
+                  </div>
                 </div>
-                <h4
-                  style={{ marginTop: "10px" }}
-                >{`${likes.likeCount} likes`}</h4>
+                <h4>{`${likes.likeCount} likes`}</h4>
+                <div id="vendorName-Caption">
+                  <p>{product.vendor.title}</p>
+                  <p id="feedCardCaption">placeholder text</p>
+                </div>
               </div>
             </ProductInfo>
           ))}

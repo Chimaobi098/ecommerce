@@ -37,7 +37,6 @@ export const ProductInfo = styled.div`
   //  POST HEADER SECTION
   #vendor-info-container {
     box-sizing: border-box;
-    /* Auto layout */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -62,17 +61,20 @@ export const ProductInfo = styled.div`
     color: #000;
   }
 
+  // #productImage {
+  //   width: 100%;
+  //   height: 528px;
+  //   border: 3px solid cyan;
+  // }
+
+  .vendorImage {
+    border-radius: 20px;
+  }
+
   #productImage {
-<<<<<<< HEAD
     width: 100%;
     height: 328px;
     // border: 3px solid cyan;
-  }
-
-  #vendorImage {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
   }
 
   // Bottom part of Home Feed
@@ -87,26 +89,6 @@ export const ProductInfo = styled.div`
     margin: 0px 0 8px 0;
     // display: flex;
     // flex-direction: column;
-=======
-    width: 600px;
-    height: 500px;
-    margin: 0;
-    padding: 0;
-  }
-
-  #vendor-info-container {
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-    margin-bottom: 1vh;
-    padding: 0 10px;
-  }
-
-  .vendorImage {
-    
-    border-radius: 50%;
-    
->>>>>>> upsstream/main
   }
 
   #action-section {

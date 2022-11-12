@@ -53,9 +53,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
       animate={{ y: "0vh" }}
       exit={{ y: "100vh" }}
     >
-      <div style={{ width: "100%", height: "40vh", position: 'relative' }}>
-
-
+      <div style={{ width: "100%", height: "40vh", position: "relative" }}>
         <Image
           layout="fill"
           objectFit="contain"
@@ -195,15 +193,15 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               key={product._id}
             >
               <VendorProduct whileTap={{ scale: 0.9 }}>
-                <div style={{width: '100%',height: '70%',position: 'relative'}}>
-
+                <div
+                  style={{ width: "100%", height: "70%", position: "relative" }}
+                >
                   <Image
                     layout="fill"
                     objectFit="cover"
-                  src={urlFor(product.defaultProductVariant.images[0]).url()}
-                  alt="Product Image"
-                  
-                />
+                    src={urlFor(product.defaultProductVariant.images[0]).url()}
+                    alt="Product Image"
+                  />
                 </div>
                 <div style={{ padding: "0 0.5rem" }}>
                   <div id="productPriceAndMoreIcon">

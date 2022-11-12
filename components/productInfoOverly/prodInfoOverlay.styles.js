@@ -251,15 +251,11 @@ export const VendorProduct = styled(motion.div)`
     line-height: 16px;
   }
 
-<<<<<<< HEAD
   img {
     width: 100%;
     height: 77%;
     // object-fit: cover;
   }
-=======
-
->>>>>>> upsstream/main
 `;
 
 export const CartButtons = styled.div`
