@@ -21,42 +21,126 @@ export const NavBar = styled.nav`
   align-items: center;
   justify-content: center;
   header {
+    font-family: "Chakra Petch";
     font-weight: 600;
-    font-size: 1.8rem;
+    font-size: 1.75rem;
   }
 `;
 
 export const ProductInfo = styled.div`
-  margin-bottom: 10px;
   width: 100%;
+  // border-width: 0.1px 0px 0px 0px;
+  // border-style: solid;
+  // border-color: #000000;
+  // border: 3px solid green;
 
-  #productImage {
-    width: 600px;
-    height: 500px;
-    margin: 0;
-    padding: 0;
-  }
-
+  //  POST HEADER SECTION
   #vendor-info-container {
+    box-sizing: border-box;
     display: flex;
+    flex-direction: row;
     align-items: center;
-    font-weight: 600;
-    margin-bottom: 1vh;
-    padding: 0 10px;
+    padding: 0px 16px;
+    gap: 16px;
+    width: 100%;
+    height: 56px;
+    margin: 0;
   }
+
+  #vendorName {
+    display: flex;
+    flex: 1;
+    height: 21px;
+
+    /* Category-body-text */
+    font-family: "Chakra Petch";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 21px;
+    color: #000;
+  }
+
+  // #productImage {
+  //   width: 100%;
+  //   height: 528px;
+  //   border: 3px solid cyan;
+  // }
 
   .vendorImage {
-    
-    border-radius: 50%;
-    
+    border-radius: 20px;
+  }
+
+  #productImage {
+    width: 100%;
+    height: 328px;
+    // border: 3px solid cyan;
+  }
+
+  // Bottom part of Home Feed
+
+  #bottom-feedCard {
+    // border: 3px solid orange;
+    // display: flex;
+    // flex-direction: column;
+  }
+
+  #bottom-feedCard > * {
+    margin: 0px 0 8px 0;
+    // display: flex;
+    // flex-direction: column;
   }
 
   #action-section {
     display: flex;
-    margin-top: 10px;
+    justify-content: space-between;
+    align-items: center;
+    // border: 1px solid green;
+    padding: 0px 16px;
+  }
+
+  #left-action-side {
+    display: flex;
+    gap: 16px;
+  }
+
+  #right-action-side {
+    display: flex;
   }
 
   .action-button {
-    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+  }
+
+  #bottom-feedCard > h4 {
+    // border: 3px solid lavender;
+    padding: 0px 16px;
+    font-family: "Chakra Petch";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.05rem;
+    // line-height: 21px;
+  }
+
+  #vendorName-Caption {
+    height: 21px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px 16px 16px;
+    font-family: "Chakra Petch";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    // border: 3px solid black;
+  }
+
+  #feedCardCaption {
+    font-family: "Chakra Petch";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 21px;
   }
 `;

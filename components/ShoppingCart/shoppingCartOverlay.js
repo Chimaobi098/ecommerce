@@ -4,9 +4,11 @@ import {
   ProudctInfo,
   Wrapper,
 } from "./shoppingCartOverlay.styles";
+
 import { useShoppingCart } from "../../context/shoppingCart";
 import { Header } from "./shoppingCartOverlay.styles";
 import { urlFor } from "../../lib/sanity";
+
 import { AnimatePresence } from "framer-motion";
 import { formatCurrency } from "../../utils/currencyFormatter.ts";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -17,10 +19,7 @@ const ShoppingCartOverlay = () => {
   const router = useRouter();
   const { setCartOpen, cartItems, removeFromCart, getTotalCartPrice } =
     useShoppingCart();
-
-
   function handleClick() {
-   
     setCartOpen(false);
     router.push("/checkout");
   }
@@ -35,7 +34,7 @@ const ShoppingCartOverlay = () => {
         >
           <ArrowBackIcon />
         </button>
-        <span style={{ fontWeight: 500 }}>Cart</span>
+        <span style={{ fontWeight: 600 }}>Bag</span>
       </Header>
       <AnimatePresence>
         {cartItems.map((item) => (
@@ -46,11 +45,11 @@ const ShoppingCartOverlay = () => {
               alt="prouduct image"
             />
             <div id="product-info-wrapper">
-              <div id="product-details">
+              <div id="product-details-top">
                 <span
                   style={{
-                    fontWeight: 600,
-                    width: "28vmin",
+                    fontWeight: 500,
+                    width: "55vmin",
                     overflow: "hidden",
                     display: "inline-block",
                     whiteSpace: "nowrap",
@@ -59,26 +58,32 @@ const ShoppingCartOverlay = () => {
                 >
                   {item.title}
                 </span>
-                <span>{formatCurrency(item.defaultProductVariant.price)}</span>
+                {/* <h4 className="individualColours">Black</h4> */}
+                <div id="shopBag-colourandsize-container">
+                  <div className="shopBag-colour-picker"></div>
+                  <span className="shopBag-size-text">/ M</span>
+                  {/* dropdown section goes here */}
+                </div>
               </div>
               <div id="product-total-cost">
-                {formatCurrency(item.totalPrice)}
+                <span>{formatCurrency(item.defaultProductVariant.price)}</span>
+                {/* {formatCurrency(item.totalPrice)} */}
+                <button
+                  onClick={() => {
+                    removeFromCart(item._id);
+                  }}
+                  id="remove-product"
+                >
+                  <DeleteRoundedIcon fontSize="small" color="error" />
+                </button>
               </div>
             </div>
-            <button
-              onClick={() => {
-                removeFromCart(item._id);
-              }}
-              id="remove-product"
-            >
-              <DeleteRoundedIcon fontSize="small" color="error" />
-            </button>
           </ProudctInfo>
         ))}
-        <CheckoutButton layout key="3" onClick={handleClick}>
+        {/* <CheckoutButton layout key="3" onClick={handleClick}>
           <span>Proceed to checkout</span>
           <div id="checkout-price">{formatCurrency(getTotalCartPrice())}</div>
-        </CheckoutButton>
+        </CheckoutButton> */}
       </AnimatePresence>
     </Wrapper>
   );

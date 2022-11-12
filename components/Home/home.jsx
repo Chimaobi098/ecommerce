@@ -15,18 +15,31 @@ import { motion } from "framer-motion";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
-import { HomeProduct } from "../../pages";
-import Image from "next/image";
 
-const Home = ({ results }: HomeProduct) => {
-  console.log;
+const Home = ({ results }) => {
   const router = useRouter();
   const { getCartQuantity, cartOpen, setCartOpen } = useShoppingCart();
-  const { user, error } = useUser();
+  const { user, loading, error } = useUser();
   const [productData, setProductData] = useState(results);
+  console.log(productData);
   const [hasMore, setHasMore] = useState(true);
-  const lastId = useRef<string | null>(results[results.length - 1]._id);
+  const lastId = useRef(results[results.length - 1]._id);
   const [likes, setLikes] = useState({ likeCount: 300, likeState: false });
+  useEffect(() => {
+    async function fetchData() {
+      if (user) {
+        const data = await fetch("/api/users/createUser", {
+          method: "POST",
+          body: JSON.stringify(user),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const final = await data.json();
+      }
+    }
+    fetchData();
+  }, [user]);
 
   function handleLikes() {
     setLikes((prev) => {
@@ -63,7 +76,6 @@ const Home = ({ results }: HomeProduct) => {
       setHasMore(false);
     }
   }
-  console.log(user);
 
   return (
     <>
@@ -110,12 +122,8 @@ const Home = ({ results }: HomeProduct) => {
           {productData.map((product) => (
             <ProductInfo key={product._id}>
               <div id="vendor-info-container">
-                <Image
-                  placeholder="blur"
-                  blurDataURL="/placeholder.png"
-                  className="vendorImage"
-                  width={40}
-                  height={40}
+                <img
+                  id="vendorImage"
                   src={urlFor(product.vendor.logo).url()}
                   alt={product.title}
                   onClick={() => {
@@ -124,44 +132,60 @@ const Home = ({ results }: HomeProduct) => {
                 />
                 <span id="vendorName">{product.vendor.title}</span>
               </div>
-              <motion.div
+
+              <motion.img
+                id="productImage"
+                src={urlFor(product.defaultProductVariant.images[0])}
+                alt="Product Image"
+                onClick={() => {
+                  router.push(`/product/${product.slug.current}`);
+                }}
                 whileTap={{ scale: 0.9 }}
-                style={{ width: "100%", height: "45vh", position: "relative" }}
-              >
-                <Image
-                  placeholder="blur"
-                  blurDataURL="/placeholder.png"
-                  layout="fill"
-                  objectFit="contain"
-                  src={urlFor(product.defaultProductVariant.images[0]).url()}
-                  alt="Product Image"
-                  onClick={() => {
-                    router.push(`/product/${product.slug.current}`);
-                  }}
-                />
-              </motion.div>
+              />
 
               <div id="bottom-feedCard">
                 <div id="action-section">
                   <div id="left-action-side">
                     <motion.div whileTap={{ scale: 0.8 }} onClick={handleLikes}>
                       {likes.likeState ? (
-                        <FavoriteIcon fontSize="large" color="error" />
+                        <FavoriteIcon
+                          fontSize="large"
+                          sx={{ marginRight: "10px" }}
+                          color="error"
+                        />
                       ) : (
-                        <FavoriteBorderIcon fontSize="large" />
+                        <FavoriteBorderIcon
+                          fontSize="large"
+                          sx={{ marginRight: "10px" }}
+                        />
                       )}
                     </motion.div>
                     <CommentRoundedIcon fontSize="large" />
+                    {/* <CommentRoundedIcon fontSize="large" /> */}
                   </div>
                   <div id="right-action-side">
                     {/* <CommentRoundedIcon fontSize="large" /> */}
                   </div>
                 </div>
-                <h4>{`${likes.likeCount} likes`}</h4>
+                <h4>3000 likes</h4>
                 <div id="vendorName-Caption">
                   <p>{product.vendor.title}</p>
                   <p id="feedCardCaption">placeholder text</p>
                 </div>
+                {/* <motion.img  id='productImage' src={urlFor(product.defaultProductVariant.images[0])} alt="Product Image" onClick={() => {router.push(`/product/${product.slug.current}`) }} whileTap={{ scale: 0.9 }} />
+              
+              <div>
+                <div id='action-section'>
+                  <motion.div whileTap={{ scale: 0.8 }} onClick={handleLikes}>
+                    {
+likes.likeState ?
+                        <FavoriteIcon fontSize='large' sx={{ marginRight: '10px' }} color = 'error'/>:<FavoriteBorderIcon fontSize='large' sx={{ marginRight: '10px' }} /> 
+                        
+                    }
+                  </motion.div>
+                  <CommentRoundedIcon fontSize='large'/>
+                </div>
+                <h4 style={{ marginTop: '10px'}}>{`${likes.likeCount} likes`}</h4> */}
               </div>
             </ProductInfo>
           ))}
@@ -172,3 +196,9 @@ const Home = ({ results }: HomeProduct) => {
 };
 
 export default Home;
+
+export const getServerSideProps = async () => {
+  const results = await sanityClient.fetch(productQuery);
+
+  return { props: { results } };
+};
