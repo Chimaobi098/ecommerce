@@ -2,21 +2,22 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   overflow-y: scroll;
-  height: 100%;
+  height: 100vh;
   background: #fff;
   ::-webkit-scrollbar {
     display: none;
   }
   -ms-overflow-style: none;
   scrollbar-width: none;
-  margin-top: 15vmin;
+  margin-top: 9vh;
 `;
 export const NavBar = styled.nav`
   background: white;
   position: fixed;
   top: 0;
-  height: 15vmin;
+  height: 9vh;
   width: 100%;
+  max-width: 450px;
   display: flex;
   align-items: center;
   justify-content: center;

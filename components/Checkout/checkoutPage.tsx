@@ -9,32 +9,69 @@ import { useRouter } from "next/router";
 import { usePaystackPayment } from "react-paystack";
 import { UserProfile } from "@auth0/nextjs-auth0";
 import { sanityClient } from "../../lib/sanity";
+import { v4 as uuidv4 } from "uuid";
 
-
-
-interface CheckoutProps{
-  user: UserProfile
+interface CheckoutProps {
+  user: UserProfile;
+}
+interface OrderInfo {
+  title: string;
+  currentUID: string;
+  totalPrice: number;
+  isDelivered: boolean;
 }
 
-const CheckoutPage= ({user}:CheckoutProps) => {
+const CheckoutPage = ({ user }: CheckoutProps) => {
   const onSuccess = () => {
     alert("your payment was successful");
-    router.push("/");
+    fetch("/api/handleOrders", {
+      method: "POST",
+      body: JSON.stringify({
+        title: fullName,
+        user: {
+          _type: "reference",
+          _ref: currentUID,
+        },
+        totalPrice: getTotalCartPrice(),
+        isDelivered: false,
+        orderItems: cartItems.map((item) => ({
+          title: item.title,
+          quantity: item.quantity,
+          totalPrice: item.totalPrice,
+          productItem: {
+            _type: "reference",
+            _ref: item._id,
+          },
+          _key: uuidv4(),
+        })),
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          alert("Could not place order. Please contact dev");
+          router.push("/");
+          return;
+        }
+
+        alert("Order was successfully placed. Thank you!!!");
+      })
+      .catch((err) => {
+        console.log(err, "this didnt");
+      });
   };
 
   const onClose = () => {
-    alert("why did you close na");
+    alert("Don't leave; just try again 🥺👉👈");
   };
   const router = useRouter();
-  const[currentUID, setCurrentUID] = useState<string>('')
-  const { getTotalCartPrice } = useShoppingCart();
+  const [currentUID, setCurrentUID] = useState<string>("");
+  const { getTotalCartPrice, cartItems } = useShoppingCart();
   const [deliveryPhoneNumber, setDeliveryPhoneNumber] = useState<number>(0);
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
   const shippingFees = 2920;
   const totalAmount = getTotalCartPrice() + shippingFees;
- console.log(user)
-  
+  console.log(cartItems);
 
   const config = {
     email: user!.email!,
@@ -52,37 +89,43 @@ const CheckoutPage= ({user}:CheckoutProps) => {
   name,
   phoneNumber,
   address
-}`, {
-  auth0ID:user.sub
-}
+}`,
+        {
+          auth0ID: user.sub,
+        }
       );
- 
-      setCurrentUID(data[0]._id||'')
-      setFullName(data[0].name||'')
-      setDeliveryAddress(data[0].address||'')
-      setDeliveryPhoneNumber(data[0].phoneNumber|| 0)
-    }
 
-    getUID()
-  }, [])
-  
+      setCurrentUID(data[0]._id || "");
+      setFullName(data[0].name || "");
+      setDeliveryAddress(data[0].address || "");
+      setDeliveryPhoneNumber(data[0].phoneNumber || 0);
+    };
+
+    getUID();
+  }, []);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    
-     fetch('/api/updateUser',
-      {method: 'POST',
-      body: JSON.stringify({_id: currentUID, fullName, deliveryAddress, deliveryPhoneNumber})}
-      ).then(res => {
+
+    fetch("/api/updateUser", {
+      method: "POST",
+      body: JSON.stringify({
+        _id: currentUID,
+        fullName,
+        deliveryAddress,
+        deliveryPhoneNumber,
+      }),
+    })
+      .then((res) => {
         if (!res.ok) {
-          alert('Could not upload form data, try again later!')
-          return
+          alert("Could not upload form data, try again later!");
+          return;
         }
         initializePayment(onSuccess, onClose);
-        
-      }).catch(err => {
-      console.log(err,'this didnt')
-    })
-  
+      })
+      .catch((err) => {
+        console.log(err, "this didnt");
+      });
   }
 
   return (
@@ -95,9 +138,7 @@ const CheckoutPage= ({user}:CheckoutProps) => {
       >
         <ArrowBackRoundedIcon />
       </button>
-      <form
-        onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit}>
         <p className="section-title">Delivery Info</p>
         <TextField
           required
@@ -133,7 +174,6 @@ const CheckoutPage= ({user}:CheckoutProps) => {
           }}
           value={deliveryAddress}
         />
-        
 
         <p className="section-title">Delivery Method</p>
         <Card>
@@ -142,7 +182,7 @@ const CheckoutPage= ({user}:CheckoutProps) => {
               Door Delivery
             </span>
             <div>
-              Deliverd between Thursday 3 Nov and Monday 7 Nov for{" "}
+              Delivered between Thursday 3 Nov and Monday 7 Nov for{" "}
               <b>{formatCurrency(shippingFees)}</b>
             </div>
           </div>

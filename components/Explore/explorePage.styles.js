@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 export const Wrapper = styled.div`
-  padding-top: 27vmin;
   width: 100%;
   overflow-y: scroll;
   height: 100%;
@@ -11,11 +10,9 @@ export const Wrapper = styled.div`
 `;
 
 export const NavBar = styled.nav`
-  position: absolute;
   background-color: white;
-  top: 0;
+  margin-bottom: 15px;
   width: 100%;
-  height: 24vmin;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,12 +36,10 @@ export const NavBar = styled.nav`
     width: 100%;
     justify-content: space-between;
     .search-tag {
-      background-color: #919090;
       padding: 5px 10px;
-      border-radius: 20px;
-      color: white;
+      border-bottom: solid black 2px;
       font-weight: 500;
-      font-size: 3vmin;
+      font-size: 1rem;
     }
   }
 
@@ -63,7 +58,7 @@ export const SearchResultItems = styled(motion.button)`
   border: none;
   width: 100%;
   overflow: hidden;
-  height: 16vh;
+  height: 20vh;
   border-radius: 1rem;
   margin-bottom: 1.5vh;
   display: flex;

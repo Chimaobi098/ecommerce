@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 export const Wrapper = styled(motion.div)`
-  width: 100vw;
+  width: 100%;
   height: 110vh;
   background-color: white;
 
@@ -56,8 +56,6 @@ export const VendorProduct = styled(motion.div)`
     margin-bottom: 0.5rem;
     margin-top: 0;
   }
-
-
 `;
 
 export const CartButtons = styled.div`
@@ -67,7 +65,7 @@ export const CartButtons = styled.div`
 
   #quantity-control-container {
     display: flex;
-    width: 40vw;
+    width: 40%;
   }
   .quantity-change-buttons,
   #quantity {
@@ -80,9 +78,8 @@ export const CartButtons = styled.div`
   }
 
   #quantity {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    margin: auto 0;
     font-size: 1.4rem;
   }
 
@@ -91,9 +88,9 @@ export const CartButtons = styled.div`
     border-radius: 12px;
     border: none;
     color: white;
-    width: 40vw;
+    width: 40%;
     height: 60px;
-    font-size: 5vmin;
+    font-size: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;

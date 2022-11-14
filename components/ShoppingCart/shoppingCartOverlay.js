@@ -18,9 +18,7 @@ const ShoppingCartOverlay = () => {
   const { setCartOpen, cartItems, removeFromCart, getTotalCartPrice } =
     useShoppingCart();
 
-
   function handleClick() {
-   
     setCartOpen(false);
     router.push("/checkout");
   }
@@ -50,7 +48,7 @@ const ShoppingCartOverlay = () => {
                 <span
                   style={{
                     fontWeight: 600,
-                    width: "28vmin",
+                    width: "100%",
                     overflow: "hidden",
                     display: "inline-block",
                     whiteSpace: "nowrap",

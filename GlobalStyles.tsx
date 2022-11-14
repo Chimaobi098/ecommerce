@@ -10,11 +10,13 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 body{
+max-width: 450px;
 padding: 0;
-margin: 0;
+margin: auto;
 height: 100vh;
 overflow: hidden;
 background-color: #f5f5f5;
+
 }
 
 #__next{

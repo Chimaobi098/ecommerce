@@ -66,7 +66,7 @@ export default {
     {
       name: "likes",
       title: "Likes",
-      type: "nubmer",
+      type: "number",
     },
   ],
 

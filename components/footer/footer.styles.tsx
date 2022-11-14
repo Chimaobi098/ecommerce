@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.footer`
-  height: 15vmin;
+  height: 9vh;
   width: 100%;
+  max-width: 450px;
   background: white;
   padding: 0 2rem;
   position: fixed;

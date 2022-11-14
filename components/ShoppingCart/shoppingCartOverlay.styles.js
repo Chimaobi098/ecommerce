@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export const Wrapper = styled(motion.div)`
   height: 110vh;
-  width: 100vw;
+  width: 100%;
   background-color: white;
   position: relative;
   z-index: 99;
@@ -36,8 +36,8 @@ export const ProudctInfo = styled(motion.div)`
   width: 100%;
   #product-info-wrapper {
     display: flex;
-    margin-left: 10px;
-    width: 60vw;
+
+    width: 60%;
     justify-content: space-between;
     padding: 0 2vmin;
   }
@@ -45,16 +45,16 @@ export const ProudctInfo = styled(motion.div)`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    max-width: 60%;
   }
   #product-total-cost {
     display: flex;
     align-items: center;
     font-weight: 600;
-    font-size: 5vmin;
+    font-size: 1.2rem;
   }
   #product-image {
-    width: 30vmin;
-    height: 30vmin;
+    width: 30%;
     object-fit: contain;
   }
   #remove-product {
@@ -64,7 +64,7 @@ export const ProudctInfo = styled(motion.div)`
 `;
 
 export const CheckoutButton = styled(motion.button)`
-  width: 95vw;
+  width: 95%;
   border: none;
   border-radius: 5px;
   font-weight: 500;

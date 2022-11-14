@@ -4,23 +4,24 @@ export default {
   type: "document",
   fields: [
     {
+      name: 'title',
+      title: 'Title',
+      type: 'string'
+    },
+
+    {
       name: "user",
       title: "User",
-          type: "reference",
-          to: [{ type: 'users' }], 
-          options: {
-          disableNew: true
-      }
+      type: "reference",
+      to: { type: "users" },
+      options: {
+        disableNew: true,
       },
+    },
     {
       name: "totalPrice",
       title: "Total Price",
       type: "number",
-    },
-    {
-      name: "shippingAddress",
-      title: "Shipping Address",
-      type: "string",
     },
 
     {
@@ -31,17 +32,13 @@ export default {
     {
       title: "Is Delivered",
       name: "isDelivered",
-      type: 'boolean',
-     
+      type: "boolean",
     },
     {
       title: "Order Items",
       name: "orderItems",
-        type: 'array',
-        of: [
-            { type: 'reference', to: [{type:"product"}]}
-      ]
-     
+      type: "array",
+      of: [{ title: "Order Item", type: "orderItem" }],
     },
   ],
 };
