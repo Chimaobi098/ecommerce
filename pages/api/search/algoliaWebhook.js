@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   title,
   'price':defaultProductVariant.price,
   'path':slug.current
-  'productImages':defaultProductVariant.images[0]
+  'productImageUrl': defaultProductVariant.images[0]
 }`,
       },
     },
