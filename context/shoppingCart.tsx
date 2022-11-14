@@ -1,17 +1,76 @@
 import { AnimatePresence } from "framer-motion";
-import React, { useContext, createContext } from "react";
+import React, { useContext, createContext, ReactNode } from "react";
 import { useState } from "react";
 import ShoppingCartOverlay from "../components/ShoppingCart/shoppingCartOverlay";
 
-const ShoppingCartContext = createContext();
+const ShoppingCartContext = createContext({} as ShoppingCartContext);
 
 export const useShoppingCart = () => useContext(ShoppingCartContext);
 
-export const ShoppingCartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
-  const [cartOpen, setCartOpen] = useState(false);
+interface ShoppingCartProviderProps {
+  children: ReactNode;
+}
 
-  function getItemQuantity(id) {
+interface ShoppingCartContext {
+  modifyItemQuantity: (
+    productInfo: ProductInfo,
+    productQuantity: number
+  ) => void;
+  getItemQuantity: (id: string) => number | undefined;
+  getCartQuantity: () => number;
+  cartOpen: boolean;
+  cartItems: CartItem[];
+  removeFromCart: (id: string) => void;
+  getTotalCartPrice: () => number;
+  setCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface ProductInfo {
+  _id: string;
+  title: string;
+  slug: Slug;
+  moreFromVendor: MoreVendorItem[];
+  defaultProductVariant: DefaultProdVariant;
+}
+interface DefaultProdVariant {
+  barcode: {};
+  images: {}[];
+  price: number;
+  _type: string;
+}
+
+interface MoreVendorItem {
+  defaultProductVariant: {
+    _type: string;
+    images: [];
+    price: number;
+    taxable: boolean;
+    title: string;
+  };
+  slug: Slug;
+}
+
+interface CartItem {
+  _id: string;
+  totalPrice: number;
+  title: string;
+  slug: Slug;
+  quantity: number;
+  moreFromVendor: MoreVendorItem[];
+  defaultProductVariant: DefaultProdVariant;
+}
+interface Slug {
+  _type: string;
+  current: string;
+}
+
+export const ShoppingCartProvider = ({
+  children,
+}: ShoppingCartProviderProps) => {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartOpen, setCartOpen] = useState<boolean>(false);
+
+  function getItemQuantity(id: string) {
     const data = cartItems.find((item) => {
       return item._id == id;
     })?.quantity;
@@ -28,13 +87,16 @@ export const ShoppingCartProvider = ({ children }) => {
     return cartItems.length;
   }
 
-  function removeFromCart(id) {
+  function removeFromCart(id: string) {
     setCartItems((currentItems) => {
       return currentItems.filter((item) => item._id !== id);
     });
   }
 
-  function modifyItemQuantity(productInfo, productQuantity) {
+  function modifyItemQuantity(
+    productInfo: ProductInfo,
+    productQuantity: number
+  ) {
     setCartItems((currentItems) => {
       if (currentItems?.find((item) => item._id === productInfo._id) == null) {
         return [

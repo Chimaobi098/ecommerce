@@ -27,7 +27,6 @@ const Home = ({ results }: HomeProduct) => {
   const [hasMore, setHasMore] = useState(true);
   const lastId = useRef<string | null>(results[results.length - 1]._id);
   const [likes, setLikes] = useState({ likeCount: 300, likeState: false });
- 
 
   function handleLikes() {
     setLikes((prev) => {
@@ -64,7 +63,7 @@ const Home = ({ results }: HomeProduct) => {
       setHasMore(false);
     }
   }
-  console.log(user)
+  console.log(user);
 
   return (
     <>
