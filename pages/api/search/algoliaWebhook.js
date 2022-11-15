@@ -34,14 +34,13 @@ export default async function handler(req, res) {
     deleted: req.body.ids.deleted.filter((id) => !!id),
   };
 
-  sanityAlgolia
-    .webhookSync(sanityClient, { ids })
-    .then(() => {
-      res.status(200).send("ok");
-    })
-    .catch((res) => {
-      res.status(500).send("this didnt work");
-    });
+  try {
+    sanityAlgolia.webhookSync(sanityClient, { ids });
 
-  return;
+    res.status(200).send("ok");
+    return;
+  } catch (err) {
+    res.status(500).send({ message: err });
+    return;
+  }
 }
