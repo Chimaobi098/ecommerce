@@ -29,11 +29,13 @@ export default async function handler(req, res) {
   );
 
   try {
-    sanityClient.fetch(`* [_type == 'product' ][]._id`).then((ids) =>
-      sanityAlgolia.webhookSync(sanityClient, {
-        ids: { created: ids, updated: [], deleted: [] },
-      })
-    );
+    sanityClient
+      .fetch(`* [_type == 'product' && !(_id in path("drafts.**"))][]._id`)
+      .then((ids) =>
+        sanityAlgolia.webhookSync(sanityClient, {
+          ids: { created: ids, updated: [], deleted: [] },
+        })
+      );
     res.status(200).send("it worked");
     return;
   } catch (err) {
