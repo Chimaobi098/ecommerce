@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     deleted: req.body.ids.deleted.filter((id) => !!id),
   };
 
-  return sanityAlgolia
+  sanityAlgolia
     .webhookSync(sanityClient, { ids })
     .then(() => {
       res.status(200).send("ok");
@@ -42,4 +42,6 @@ export default async function handler(req, res) {
     .catch((res) => {
       res.status(500).send("this didnt work");
     });
+
+  return;
 }
