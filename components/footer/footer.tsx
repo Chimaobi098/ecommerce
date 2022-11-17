@@ -8,6 +8,8 @@ import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import VideogameAssetOutlinedIcon from "@mui/icons-material/VideogameAssetOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SearchIcon from "@mui/icons-material/Search";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const Footer = () => {
   const { pathname, push, replace } = useRouter();
@@ -41,6 +43,18 @@ const Footer = () => {
             <SearchIcon fontSize="large" style={{ color: "black" }} />
           ) : (
             <SearchOutlinedIcon fontSize="large" style={{ color: "black" }} />
+          )}
+        </a>
+      </Link>
+      <Link passHref href={"/profile"}>
+        <a>
+          {pathname == "/profile" ? (
+            <AccountCircleIcon fontSize="large" style={{ color: "black" }} />
+          ) : (
+            <AccountCircleOutlinedIcon
+              fontSize="large"
+              style={{ color: "black" }}
+            />
           )}
         </a>
       </Link>

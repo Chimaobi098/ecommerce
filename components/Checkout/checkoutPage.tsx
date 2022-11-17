@@ -10,10 +10,8 @@ import { usePaystackPayment } from "react-paystack";
 import { UserProfile } from "@auth0/nextjs-auth0";
 import { sanityClient } from "../../lib/sanity";
 import { v4 as uuidv4 } from "uuid";
+import { User } from "../../interfaces/interface";
 
-interface CheckoutProps {
-  user: UserProfile;
-}
 interface OrderInfo {
   title: string;
   currentUID: string;
@@ -21,7 +19,7 @@ interface OrderInfo {
   isDelivered: boolean;
 }
 
-const CheckoutPage = ({ user }: CheckoutProps) => {
+const CheckoutPage = ({ user }: User) => {
   const onSuccess = () => {
     alert("your payment was successful");
     fetch("/api/handleOrders", {

@@ -21,7 +21,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ProductInfoOverlay = ({ currentProduct }) => {
-  console.log(currentProduct, "this is where it all ends");
   const router = useRouter();
   const { modifyItemQuantity, getItemQuantity } = useShoppingCart();
   console.log(currentProduct);
@@ -140,13 +139,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
         <h2 style={{ marginTop: "50px" }}>More from this vendor</h2>
         <VendorProductsWrapper>
           {currentProduct?.moreFromVendor?.map((product) => (
-            <Link
-              href={`/product/${product.slug.current}`}
-              passHref
-              scroll
-              key={product._id}
-            >
-              <VendorProduct whileTap={{ scale: 0.9 }}>
+            <Link href={`/product/${product.slug.current}`} passHref scroll>
+              <VendorProduct whileTap={{ scale: 0.9 }} key={product._id}>
                 <div
                   style={{ width: "100%", height: "70%", position: "relative" }}
                 >
