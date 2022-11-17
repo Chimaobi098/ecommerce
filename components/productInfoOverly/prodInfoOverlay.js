@@ -138,8 +138,13 @@ const ProductInfoOverlay = ({ currentProduct }) => {
         </Accordion>
         <h2 style={{ marginTop: "50px" }}>More from this vendor</h2>
         <VendorProductsWrapper>
-          {currentProduct?.moreFromVendor?.map((product) => (
-            <Link href={`/product/${product.slug.current}`} passHref scroll>
+          {currentProduct?.moreFromVendor?.map((product, i) => (
+            <Link
+              href={`/product/${product.slug.current}`}
+              passHref
+              scroll
+              key={i}
+            >
               <VendorProduct whileTap={{ scale: 0.9 }} key={product._id}>
                 <div
                   style={{ width: "100%", height: "70%", position: "relative" }}
