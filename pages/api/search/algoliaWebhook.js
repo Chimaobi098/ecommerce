@@ -10,7 +10,6 @@ export default async function handler(req, res) {
     process.env.ALGOLIA_APP_ID,
     process.env.ALGOLIA_ADMIN_API_KEY
   );
-
   const algoliaIndex = algolia.initIndex("dev_ecommerce");
 
   const sanityAlgolia = indexer(
@@ -27,18 +26,18 @@ export default async function handler(req, res) {
 }`,
       },
     },
-    (document) => documenteq.body.ids
+    (document) => document
   );
 
-  const actions = {
+  const ids = {
     created: req.body.ids.created.filter((id) => !!id),
     updated: req.body.ids.updated.filter((id) => !!id),
     deleted: req.body.ids.deleted.filter((id) => !!id),
   };
-  console.log(actions);
+  console.log(ids);
 
   try {
-    sanityAlgolia.webhookSync(sanityClient, { ids: actions });
+    sanityAlgolia.webhookSync(sanityClient, { ids });
     res.status(200).send("ok");
     return;
   } catch (err) {
