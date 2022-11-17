@@ -1,4 +1,5 @@
 import algoliasearch from "algoliasearch";
+import { request } from "http";
 import indexer from "sanity-algolia";
 import { sanityClient } from "../../../lib/sanity";
 
@@ -26,12 +27,18 @@ export default async function handler(req, res) {
 }`,
       },
     },
-    (document) => document
+    (document) => documenteq.body.ids
   );
 
+  const actions = {
+    created: req.body.ids.created.filter((id) => !!id),
+    updated: req.body.ids.updated.filter((id) => !!id),
+    deleted: req.body.ids.deleted.filter((id) => !!id),
+  };
+  console.log(actions);
+
   try {
-    sanityAlgolia.webhookSync(sanityClient, { ids: { ...req.body.ids } });
-    console.log({ ...req.body.ids });
+    sanityAlgolia.webhookSync(sanityClient, { ids: actions });
     res.status(200).send("ok");
     return;
   } catch (err) {
