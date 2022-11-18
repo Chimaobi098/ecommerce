@@ -4,7 +4,7 @@ import { sanityClient, urlFor } from "../../../lib/sanity";
 
 export default async function handler(req, res) {
   // remember to add the secret cuz this shit is hackcable I mean everything is but still. You can't make it easy for them
-
+  //When I make a request to this end point it sends the data to algolia and everything works
   const algolia = algoliasearch(
     process.env.ALGOLIA_APP_ID,
     process.env.ALGOLIA_ADMIN_API_KEY
