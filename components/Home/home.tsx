@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useState } from "react";
 import { sanityClient, urlFor } from "../../lib/sanity";
-import { Wrapper, NavBar, ProductInfo } from "./home.styles";
+import { Wrapper, NavBar } from "./home.styles";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { CircularProgress } from "@mui/material";
 import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
@@ -10,32 +10,35 @@ import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
 import { useShoppingCart } from "../../context/shoppingCart";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
-import { useRouter } from "next/router";
-import { motion } from "framer-motion";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
 import { HomeProduct } from "../../pages";
-import Image from "next/image";
+import ProductContainer from "./productItem/productContainer";
 
 const Home = ({ results }: HomeProduct) => {
-  console.log;
-  const router = useRouter();
   const { getCartQuantity, cartOpen, setCartOpen } = useShoppingCart();
   const { user, error } = useUser();
   const [productData, setProductData] = useState(results);
   const [hasMore, setHasMore] = useState(true);
+  const [userLikedProducts, setUserLikedProducts] = useState();
   const lastId = useRef<string | null>(results[results.length - 1]._id);
-  const [likes, setLikes] = useState({ likeCount: 300, likeState: false });
+  console.log(results);
 
-  function handleLikes() {
-    setLikes((prev) => {
-      if (prev.likeState) {
-        return { likeCount: prev.likeCount - 1, likeState: false };
-      }
-      return { likeCount: prev.likeCount + 1, likeState: true };
-    });
-  }
+  useEffect(() => {
+    async function likedProducts() {
+      if (!user) return;
+      let response = await sanityClient.fetch(
+        `*[_type == "users" && userId == $curr] {
+     likedProducts
+
+    }`,
+        { curr: user?.sub }
+      );
+      console.log(response, "thisisit");
+
+      let likedProductsArray = response[0].likedProducts;
+      setUserLikedProducts(likedProductsArray || []);
+    }
+    likedProducts();
+  }, [user]);
 
   async function fetchNextPage() {
     const { current } = lastId;
@@ -46,12 +49,14 @@ const Home = ({ results }: HomeProduct) => {
       `*[_type == "product" && _id > $current] | order(_id) [0...3] {
      defaultProductVariant,
   _id,
+  
   title,
   slug,
   vendor->{
   title,
   logo,_id
-}
+},
+_id
     }`,
       { current }
     );
@@ -63,7 +68,6 @@ const Home = ({ results }: HomeProduct) => {
       setHasMore(false);
     }
   }
-  console.log(user);
 
   return (
     <>
@@ -108,64 +112,11 @@ const Home = ({ results }: HomeProduct) => {
           }}
         >
           {productData.map((product) => (
-            <ProductInfo key={product._id}>
-              <div id="vendor-info-container">
-                <Image
-                  placeholder="blur"
-                  blurDataURL="/placeholder.png"
-                  className="vendorImage"
-                  width={50}
-                  height={50}
-                  src={urlFor(product.vendor.logo).url()}
-                  alt={product.title}
-                  onClick={() => {
-                    router.push(`/vendor/${product.vendor._id}`);
-                  }}
-                />
-                <span style={{ marginLeft: "30px" }}>
-                  {product.vendor.title}
-                </span>
-              </div>
-              <motion.div
-                whileTap={{ scale: 0.9 }}
-                style={{ width: "100%", height: "45vh", position: "relative" }}
-              >
-                <Image
-                  placeholder="blur"
-                  blurDataURL="/placeholder.png"
-                  layout="fill"
-                  objectFit="contain"
-                  src={urlFor(product.defaultProductVariant.images[0]).url()}
-                  alt="Product Image"
-                  onClick={() => {
-                    router.push(`/product/${product.slug.current}`);
-                  }}
-                />
-              </motion.div>
-
-              <div style={{ paddingLeft: "3vw" }}>
-                <div id="action-section">
-                  <motion.div whileTap={{ scale: 0.8 }} onClick={handleLikes}>
-                    {likes.likeState ? (
-                      <FavoriteIcon
-                        fontSize="large"
-                        sx={{ marginRight: "10px" }}
-                        color="error"
-                      />
-                    ) : (
-                      <FavoriteBorderIcon
-                        fontSize="large"
-                        sx={{ marginRight: "10px" }}
-                      />
-                    )}
-                  </motion.div>
-                  <CommentRoundedIcon fontSize="large" />
-                </div>
-                <h4
-                  style={{ marginTop: "10px" }}
-                >{`${likes.likeCount} likes`}</h4>
-              </div>
-            </ProductInfo>
+            <ProductContainer
+              productProps={product}
+              userLikedProducts={userLikedProducts}
+              key={product._id}
+            />
           ))}
         </InfiniteScroll>
       </Wrapper>

@@ -37,19 +37,11 @@ export default async function handler(req, res) {
   console.log(ids);
 
   try {
-    sanityAlgolia.webhookSync(sanityClient, {
-      ids: {
-        created: [],
-        updated: [],
-        deleted: ["35f78f0b-8938-412d-aae0-80937ee4a744"],
-      },
-    });
-
-    res.status(200).send("it worked");
+    sanityAlgolia.webhookSync(sanityClient, { ids });
+    res.status(200).send("ok");
     return;
   } catch (err) {
-    console.log(err, "it did not work");
-    res.status(500).send("something went wrong");
+    res.status(500).send({ message: err });
     return;
   }
 }

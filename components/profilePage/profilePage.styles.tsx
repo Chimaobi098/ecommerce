@@ -28,6 +28,7 @@ export const Wrapper = styled.div`
     #hi,
     #user-name {
       font-size: 2rem;
+      font-weight: 500;
     }
     #hi {
       margin-top: 10px;

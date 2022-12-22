@@ -11,8 +11,10 @@ const productQuery = `*[_type == 'product'] | order(_id)[0...3]{
   vendor->{
   title,
   logo,
-  _id
-}
+  _id,
+
+},
+likes
 }`;
 export interface ProductVariant {
   images: {

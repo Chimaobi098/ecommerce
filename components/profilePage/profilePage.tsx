@@ -15,22 +15,27 @@ const ProfilePage = ({ user }: User) => {
     {
       profileItemName: "Orders",
       profileItemIcon: <ShoppingBagOutlinedIcon />,
+      profileUrl: "/profile/orders",
     },
     {
       profileItemName: "Recently Viewed",
       profileItemIcon: <RemoveRedEyeOutlinedIcon />,
+      profileUrl: "/profile/recently-viewed",
     },
     {
       profileItemName: "Rating & Reviews",
       profileItemIcon: <StarBorderRoundedIcon />,
+      profileUrl: "/profile/ratings-and-reviews",
     },
     {
       profileItemName: "My Details",
       profileItemIcon: <FolderSharedOutlinedIcon />,
+      profileUrl: "/profile/my-details",
     },
     {
-      profileItemName: "Liked Items",
+      profileItemName: "Liked Products",
       profileItemIcon: <FavoriteBorderOutlinedIcon />,
+      profileUrl: "/profile/liked-products",
     },
   ];
   const router = useRouter();
@@ -42,7 +47,12 @@ const ProfilePage = ({ user }: User) => {
         <div id="user-name">{user.nickname}</div>
       </header>
       {profileList.map((item, i) => (
-        <ProfileItem key={i}>
+        <ProfileItem
+          key={i}
+          onClick={() => {
+            router.push(`${item.profileUrl}`);
+          }}
+        >
           <div className="profile-name-container">
             {item.profileItemIcon}
             <div>{item.profileItemName}</div>

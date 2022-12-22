@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
   -ms-overflow-style: none;
   scrollbar-width: none;
   margin-top: 9vh;
+  padding-bottom: 20vh;
 `;
 export const NavBar = styled.nav`
   background: white;
@@ -24,40 +25,5 @@ export const NavBar = styled.nav`
   header {
     font-weight: 600;
     font-size: 1.8rem;
-  }
-`;
-
-export const ProductInfo = styled.div`
-  margin-bottom: 10px;
-  width: 100%;
-
-  #productImage {
-    width: 600px;
-    height: 500px;
-    margin: 0;
-    padding: 0;
-  }
-
-  #vendor-info-container {
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-    margin-bottom: 1vh;
-    padding: 0 10px;
-  }
-
-  .vendorImage {
-    
-    border-radius: 50%;
-    
-  }
-
-  #action-section {
-    display: flex;
-    margin-top: 10px;
-  }
-
-  .action-button {
-    margin-right: 10px;
   }
 `;
