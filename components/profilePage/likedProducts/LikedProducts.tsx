@@ -7,14 +7,24 @@ import {
 } from "./likedProducts.styles";
 import Image from "next/image";
 import { urlFor } from "../../../lib/sanity";
+interface Products {
+  products: {
+    defaultProductVariant: {
+      images: { asset: { _ref: string; _type: string } }[];
+      price: number;
+      _type: string;
+    };
+    title: string;
+  }[];
+}
 
-const LikedProductPage = ({ products }) => {
+const LikedProductPage = ({ products }: Products) => {
   return (
     <>
       <Header>Liked Products</Header>
       <Wrapper>
-        {products.map((product) => (
-          <ProductItem>
+        {products.map((product, i) => (
+          <ProductItem key={i}>
             <ProductImage>
               <Image
                 placeholder="blur"

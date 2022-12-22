@@ -6,7 +6,16 @@ import { useEffect, useState } from "react";
 import { sanityClient } from "../../lib/sanity";
 
 const LikedProducts = ({ user }: User) => {
-  const [products, setProducts] = useState([]);
+  interface Products {
+    defaultProductVariant: {
+      images: [];
+      price: number;
+      _type: string;
+    };
+    title: string;
+  }
+
+  const [products, setProducts] = useState<Products[]>([]);
   console.log(products);
   useEffect(() => {
     async function getData() {
