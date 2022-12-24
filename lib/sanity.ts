@@ -5,7 +5,7 @@ import createImageUrlBuilder from "@sanity/image-url";
 export const config = {
   projectId: "lm1r956o",
   dataset: "production",
-  apiVersison: "2021-10-21",
+  apiVersion: "2022-12-24",
   useCdn: true,
   token: process.env.SANITY_AUTH_TOKEN,
 };
