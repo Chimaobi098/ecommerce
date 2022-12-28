@@ -56,7 +56,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
       <div style={{ width: "100%", height: "40vh", position: "relative" }}>
         <Image
           layout="fill"
-          objectFit="contain"
+          objectFit="cover"
           src={urlFor(currentProduct.defaultProductVariant?.images[0]).url()}
           alt="Product Image"
         />
@@ -141,7 +141,9 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           <div id="vendorData">
             <p id="vendor-title">{currentProduct.vendor.title}</p>
             <p id="more-vendor-info">
-              {`${currentProduct.vendorProductCount} Products Available`}
+              {`${currentProduct.vendorProductCount} Product${
+                currentProduct.vendorProductCount == 1 ? "" : "s"
+              } Available`}
             </p>
           </div>
           <motion.div whileTap={{ scale: 0.9 }}>

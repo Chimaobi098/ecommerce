@@ -14,9 +14,15 @@ export const ProductInfo = styled.div`
   #vendor-info-container {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     font-weight: 600;
     margin-bottom: 1vh;
     padding: 0 10px;
+
+    #vendor-info {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .vendorImage {

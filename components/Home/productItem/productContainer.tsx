@@ -12,6 +12,8 @@ import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
 import debounce from "../../../utils/debounce";
 import ShareIcon from "@mui/icons-material/Share";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Button } from "@mui/material";
 
 interface ProductProps {
   productProps: {
@@ -100,19 +102,39 @@ const ProductContainer = ({
   return (
     <ProductInfo key={productProps._id}>
       <div id="vendor-info-container">
-        <Image
-          placeholder="blur"
-          blurDataURL="/placeholder.png"
-          className="vendorImage"
-          width={50}
-          height={50}
-          src={urlFor(productProps.vendor.logo).url()}
-          alt={productProps.title}
-          onClick={() => {
-            router.push(`/vendor/${productProps.vendor._id}`);
+        <div id="vendor-info">
+          <Image
+            placeholder="blur"
+            blurDataURL="/placeholder.png"
+            className="vendorImage"
+            width={50}
+            height={50}
+            src={urlFor(productProps.vendor.logo).url()}
+            alt={productProps.title}
+            onClick={() => {
+              router.push(`/vendor/${productProps.vendor._id}`);
+            }}
+          />
+          <span style={{ marginLeft: "30px" }}>
+            {productProps.vendor.title}
+          </span>
+        </div>
+        <Button
+          style={{ color: "black" }}
+          onClick={async () => {
+            try {
+              await navigator.share({
+                title: "Ecommerce",
+                text: "BUY THIS NOW!!!",
+                url: `/product/${productProps.slug.current}`,
+              });
+            } catch (err) {
+              alert(err);
+            }
           }}
-        />
-        <span style={{ marginLeft: "30px" }}>{productProps.vendor.title}</span>
+        >
+          <MoreHorizIcon fontSize="large" />
+        </Button>
       </div>
       <motion.div
         whileTap={{ scale: 0.9 }}
@@ -160,20 +182,6 @@ const ProductContainer = ({
             )}
           </motion.div>
           <CommentRoundedIcon fontSize="large" />
-          <ShareIcon
-            fontSize="large"
-            onClick={async () => {
-              try {
-                await navigator.share({
-                  title: "Ecommerce",
-                  text: "BUY THIS NOW!!!",
-                  url: `/product/${productProps.slug.current}`,
-                });
-              } catch (err) {
-                alert(err);
-              }
-            }}
-          />
         </div>
         <h4 style={{ marginTop: "10px" }}>{`${likes.likeCount} like${
           likes.likeCount > 1 || likes.likeCount == 0 ? "s" : ""
