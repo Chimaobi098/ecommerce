@@ -115,10 +115,10 @@ const Arcade = () => {
   return (
     <>
       <NavBar>
-        <header>Arcade</header>
+        <header>Games</header>
       </NavBar>
       <Head>
-        <title>Arcade || The best way to earn</title>
+        <title>Games || The best way to earn</title>
       </Head>
 
       <Wrapper>

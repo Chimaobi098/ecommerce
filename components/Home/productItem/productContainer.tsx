@@ -11,6 +11,7 @@ import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
 import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
 import debounce from "../../../utils/debounce";
+import ShareIcon from "@mui/icons-material/Share";
 
 interface ProductProps {
   productProps: {
@@ -115,13 +116,14 @@ const ProductContainer = ({
       </div>
       <motion.div
         whileTap={{ scale: 0.9 }}
-        style={{ width: "100%", height: "45vh", position: "relative" }}
+        style={{ width: "100%", height: "400px", position: "relative" }}
       >
+        <div></div>
         <Image
           placeholder="blur"
           blurDataURL="/placeholder.png"
           layout="fill"
-          objectFit="contain"
+          objectFit="cover"
           src={urlFor(productProps.defaultProductVariant.images[0]).url()}
           alt="Product Image"
           onClick={() => {
@@ -158,6 +160,20 @@ const ProductContainer = ({
             )}
           </motion.div>
           <CommentRoundedIcon fontSize="large" />
+          <ShareIcon
+            fontSize="large"
+            onClick={async () => {
+              try {
+                await navigator.share({
+                  title: "Ecommerce",
+                  text: "BUY THIS NOW!!!",
+                  url: `/product/${productProps.slug.current}`,
+                });
+              } catch (err) {
+                alert(err);
+              }
+            }}
+          />
         </div>
         <h4 style={{ marginTop: "10px" }}>{`${likes.likeCount} like${
           likes.likeCount > 1 || likes.likeCount == 0 ? "s" : ""

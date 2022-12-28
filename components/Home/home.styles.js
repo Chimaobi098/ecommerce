@@ -22,6 +22,7 @@ export const NavBar = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid hsl(0, 0%, 60%);
   header {
     font-weight: 600;
     font-size: 1.8rem;

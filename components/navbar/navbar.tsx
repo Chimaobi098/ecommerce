@@ -19,7 +19,7 @@ const Navbar = () => {
   if (pathname === "/") {
     return (
       <Wrapper>
-        <header>Home</header>
+        <header>ome</header>
         <Button
           onClick={() => {
             setCartOpen(true);

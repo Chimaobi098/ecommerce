@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   CartButtons,
   ProductInfoSection,
+  VendorPage,
   VendorProduct,
   VendorProductsWrapper,
   Wrapper,
@@ -136,6 +137,24 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             </p>
           </AccordionDetails>
         </Accordion>
+        <VendorPage>
+          <div id="vendorData">
+            <p id="vendor-title">{currentProduct.vendor.title}</p>
+            <p id="more-vendor-info">
+              {`${currentProduct.vendorProductCount} Products Available`}
+            </p>
+          </div>
+          <motion.div whileTap={{ scale: 0.9 }}>
+            <Link href={`/vendor/${currentProduct.vendor._id}`}>
+              <Image
+                src={urlFor(currentProduct.vendor.logo).url()}
+                alt="vendorLogo"
+                height={"60rem"}
+                width={"60rem"}
+              />
+            </Link>
+          </motion.div>
+        </VendorPage>
         <h2 style={{ marginTop: "50px" }}>More from this vendor</h2>
         <VendorProductsWrapper>
           {currentProduct?.moreFromVendor?.map((product, i) => (

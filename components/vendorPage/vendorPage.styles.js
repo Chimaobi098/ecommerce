@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const VendorNav = styled.nav`
   background: white;
-  position: fixed;
+
   top: 0;
-  height: 15vmin;
-  width: 100%;
+  height: 10%;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,8 +17,9 @@ export const VendorNav = styled.nav`
 `;
 
 export const Wrapper = styled.div`
-  margin-top: 15vmin;
   padding: 1rem;
+  overflow: scroll;
+  height: 90%;
 `;
 
 export const VendorInfo = styled.div`
@@ -28,8 +29,8 @@ export const VendorInfo = styled.div`
 
   #vendor-image {
     border-radius: 50%;
-    width: 20vmin;
-    height: 20vmin;
+    width: 5rem;
+    height: 5rem;
   }
 
   #vendor-info-wrapper {
@@ -46,13 +47,15 @@ export const VendorInfo = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 4vmin;
+    font-size: 1rem;
   }
 `;
 
 export const ProductImageWrapper = styled.div`
   width: 100%;
   display: grid;
+  margin-bottom: 100px;
+
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 7px;
   #product-image {

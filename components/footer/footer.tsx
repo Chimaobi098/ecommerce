@@ -16,17 +16,18 @@ const Footer = () => {
   console.log(pathname);
   return (
     <Wrapper>
-      <Link passHref href={"/"}>
-        <a>
+      <div className="icon-container">
+        <Link passHref href={"/"}>
           {pathname == "/" ? (
             <HomeIcon fontSize="large" style={{ color: "black" }} />
           ) : (
             <HomeOutlinedIcon fontSize="large" style={{ color: "black" }} />
           )}
-        </a>
-      </Link>
-      <Link passHref href={"/arcade"}>
-        <a>
+        </Link>
+        <p style={{ fontWeight: pathname == "/" ? 600 : 500 }}>Home</p>
+      </div>
+      <div className="icon-container">
+        <Link passHref href={"/arcade"}>
           {pathname == "/arcade" ? (
             <VideogameAssetIcon fontSize="large" style={{ color: "black" }} />
           ) : (
@@ -35,19 +36,22 @@ const Footer = () => {
               style={{ color: "black" }}
             />
           )}
-        </a>
-      </Link>
-      <Link passHref href={"/explore"}>
-        <a>
+        </Link>
+        <p style={{ fontWeight: pathname == "/arcade" ? 600 : 500 }}>Games</p>
+      </div>
+      <div className="icon-container">
+        <Link passHref href={"/explore"}>
           {pathname == "/explore" ? (
             <SearchIcon fontSize="large" style={{ color: "black" }} />
           ) : (
             <SearchOutlinedIcon fontSize="large" style={{ color: "black" }} />
           )}
-        </a>
-      </Link>
-      <Link passHref href={"/profile"}>
-        <a>
+        </Link>
+        <p style={{ fontWeight: pathname == "/explore" ? 600 : 500 }}>Search</p>
+      </div>
+
+      <div className="icon-container">
+        <Link passHref href={"/profile"}>
           {pathname == "/profile" ? (
             <AccountCircleIcon fontSize="large" style={{ color: "black" }} />
           ) : (
@@ -56,8 +60,11 @@ const Footer = () => {
               style={{ color: "black" }}
             />
           )}
-        </a>
-      </Link>
+        </Link>
+        <p style={{ fontWeight: pathname == "/profile" ? 600 : 500 }}>
+          Profile
+        </p>
+      </div>
     </Wrapper>
   );
 };

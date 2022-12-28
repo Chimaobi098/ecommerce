@@ -23,13 +23,15 @@ export const getServerSideProps = async (context) => {
   _id,
   title,
   slug,
-
+vendor->{
+title,logo,_id},
   'moreFromVendor':*[_type == 'product' && references(^.vendor->{_id}._id)&& ^._id != _id && !(_id in path('drafts.**'))]{
     slug,
     defaultProductVariant,
     title,
 
-  }
+  },
+  'vendorProductCount':count(*[_type == 'product' && references(^.vendor->{_id}._id)&& ^._id != _id && !(_id in path('drafts.**'))]),
 
 }
         `,

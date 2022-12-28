@@ -14,6 +14,34 @@ export const ProductInfoSection = styled.div`
   padding: 0 3vmin;
 `;
 
+export const VendorPage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-top: 20px;
+  width: 100%;
+  height: 20vh;
+
+  #vendor-title,
+  #more-vendor-info {
+    text-align: center;
+    margin: 0;
+  }
+  #vendor-title {
+    font-weight: 600;
+    font-size: 1.4rem;
+  }
+
+  #more-vendor-info {
+    font-size: 1rem;
+    color: hsl(132, 6%, 75%);
+  }
+  img {
+    border-radius: 50%;
+  }
+`;
+
 export const CloseMenu = styled(motion.div)`
   background: rgb(68, 68, 68, 0.4);
   backdrop-filter: blur(5px);

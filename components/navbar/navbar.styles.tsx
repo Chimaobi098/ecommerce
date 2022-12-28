@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.nav`
   background: white;
   max-width: 450px;
+  border-bottom: 1px solid grey;
   position: fixed;
   top: 0;
   height: 9vh;
