@@ -138,9 +138,8 @@ const ProductContainer = ({
       </div>
       <motion.div
         whileTap={{ scale: 0.9 }}
-        style={{ width: "100%", height: "400px", position: "relative" }}
+        style={{ width: "100%", height: "20rem", position: "relative" }}
       >
-        <div></div>
         <Image
           placeholder="blur"
           blurDataURL="/placeholder.png"
