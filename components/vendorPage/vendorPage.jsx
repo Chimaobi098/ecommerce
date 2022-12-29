@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { motion } from "framer-motion";
+
 import { useRouter } from "next/router";
 import React from "react";
 import { urlFor } from "../../lib/sanity";
@@ -13,6 +14,7 @@ const VendorPage = ({ vendorData }) => {
   const router = useRouter()
   return (
     <>
+      
       <VendorNav>
         <header>{vendorData.title}</header>
       </VendorNav>
