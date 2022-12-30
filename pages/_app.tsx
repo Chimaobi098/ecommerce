@@ -30,7 +30,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               overflow: "hidden",
             }}
           >
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               <Component {...pageProps} key={router.pathname} />
             </AnimatePresence>
           </main>
