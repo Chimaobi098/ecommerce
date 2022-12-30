@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 export const VendorNav = styled.nav`
@@ -20,6 +21,27 @@ export const Wrapper = styled.div`
   padding: 1rem;
   overflow: scroll;
   height: 90%;
+
+  #sub-nav {
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
+
+  .sub-nav-item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding-top: 1rem;
+    border-radius: 0.5rem;
+
+    #underline {
+      position: absolute;
+      background: black;
+      width: 100%;
+      height: 0.2rem;
+    }
+  }
 `;
 
 export const VendorInfo = styled.div`
@@ -51,18 +73,15 @@ export const VendorInfo = styled.div`
   }
 `;
 
-export const ProductImageWrapper = styled.div`
+export const ProductImageWrapper = styled(motion.div)`
   width: 100%;
   display: grid;
   margin-bottom: 100px;
 
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 7px;
-  #product-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  grid-template-columns: repeat(2, 1fr);
+
+  grid-column-gap: 7px;
+
   #image-wrapper {
     border-radius: 5px;
     overflow: hidden;

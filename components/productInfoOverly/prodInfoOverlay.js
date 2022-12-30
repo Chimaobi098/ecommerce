@@ -63,11 +63,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           ).url()}
         />
       </Head>
-      <Wrapper
-        initial={{ y: "100vh" }}
-        animate={{ y: "0vh" }}
-        exit={{ y: "100vh" }}
-      >
+      <Wrapper initial={{ y: "100vh" }} animate={{ y: "0vh" }}>
         <div style={{ width: "100%", height: "40vh", position: "relative" }}>
           <Image
             layout="fill"

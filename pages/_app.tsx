@@ -6,8 +6,10 @@ import { ShoppingCartProvider } from "../context/shoppingCart";
 import Navbar from "../components/navbar/navbar";
 import { AnimatePresence } from "framer-motion";
 import Script from "next/script";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   return (
     <>
       <Script id="google-tag-manager" strategy="afterInteractive">
@@ -28,8 +30,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               overflow: "hidden",
             }}
           >
-            <AnimatePresence>
-              <Component {...pageProps} />
+            <AnimatePresence mode="wait">
+              <Component {...pageProps} key={router.pathname} />
             </AnimatePresence>
           </main>
           <Footer />
