@@ -125,7 +125,9 @@ const VendorPage = ({ vendorData }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              {"theres nothing here yet"}
+              <div className="voucher-card"></div>
+              <div className="voucher-card"></div>
+              <div className="voucher-card"></div>
             </motion.div>
           )}
         </AnimatePresence>

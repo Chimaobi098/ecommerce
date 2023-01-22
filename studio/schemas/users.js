@@ -35,6 +35,12 @@ export default {
       type: "number",
     },
     {
+      name: "walletAmount",
+      title: "Wallet Amount",
+      type: "number",
+      initialValue: 0,
+    },
+    {
       title: "Liked Products",
       name: "likedProducts",
       type: "array",

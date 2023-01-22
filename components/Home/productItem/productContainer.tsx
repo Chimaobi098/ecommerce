@@ -11,7 +11,6 @@ import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
 import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
 import debounce from "../../../utils/debounce";
-import ShareIcon from "@mui/icons-material/Share";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Button } from "@mui/material";
 
@@ -94,7 +93,8 @@ const ProductContainer = ({
             auth0ID: user?.sub,
           }
         );
-        setUserId(userId[0]._id);
+        console.log(user);
+        setUserId(userId[0]?._id);
       }
     }
     handler();

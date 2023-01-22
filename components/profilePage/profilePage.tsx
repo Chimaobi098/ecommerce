@@ -9,13 +9,18 @@ import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-
+import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 const ProfilePage = ({ user }: User) => {
   const profileList = [
     {
       profileItemName: "Orders",
       profileItemIcon: <ShoppingBagOutlinedIcon />,
       profileUrl: "/profile/orders",
+    },
+    {
+      profileItemName: "Wallet",
+      profileItemIcon: <AccountBalanceWalletOutlinedIcon />,
+      profileUrl: "/profile/wallet",
     },
     {
       profileItemName: "Recently Viewed",

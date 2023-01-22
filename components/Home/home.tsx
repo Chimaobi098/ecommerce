@@ -33,8 +33,8 @@ const Home = ({ results }: HomeProduct) => {
         { curr: user?.sub }
       );
       console.log(response, "thisisit");
-
-      let likedProductsArray = response[0].likedProducts;
+      console.log(response, "this is it");
+      let likedProductsArray = response[0]?.likedProducts;
       setUserLikedProducts(likedProductsArray || []);
     }
     likedProducts();

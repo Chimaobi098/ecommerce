@@ -11,17 +11,6 @@ export default async function handler(req, res) {
   console.log(likeState, "this is the like state");
   if (likeState) {
     client
-      .patch(_id) // Document ID to patch
-      .inc({
-        likes: 1,
-      }) // Shallow merge
-      .commit() // Perform the patch and return a promise
-      .catch((err) => {
-        console.error("Oh no, the update failed: ", err.message);
-        res.status(500).json({ message: "Yh, that didnt work bro" });
-      });
-
-    client
       .patch(userId)
       .append("likedProducts", [likedProducts])
       .commit({

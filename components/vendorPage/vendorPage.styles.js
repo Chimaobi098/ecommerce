@@ -42,6 +42,16 @@ export const Wrapper = styled.div`
       height: 0.2rem;
     }
   }
+  .voucher-card {
+    width: 100%;
+    height: 16vh;
+    border-radius: 1rem;
+    border: solid 1px black;
+    margin-bottom: 2vh;
+    background-image: url("/slanted-gradient.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 `;
 
 export const VendorInfo = styled.div`
