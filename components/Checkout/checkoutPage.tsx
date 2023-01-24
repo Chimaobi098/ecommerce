@@ -213,6 +213,7 @@ const CheckoutPage = ({ user }: User) => {
           <button type="submit" style={{ width: "100%" }}>
             Pay
           </button>
+          <button style={{ width: "100%" }}>Pay With Wallet</button>
         </Card>
       </form>
     </Wrapper>
