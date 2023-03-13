@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   CartButtons,
   ProductInfoSection,
+  ProudctVariantBackground,
   VendorPage,
   VendorProduct,
   VendorProductsWrapper,
@@ -21,10 +22,14 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
+import ProductVariant from "./productVariant";
+import DefaultProduct from "./defaultProduct";
 
 const ProductInfoOverlay = ({ currentProduct }) => {
   const router = useRouter();
+  const [variantButtonState, setVariantButtonState] = useState("not-selected"); // either not-selected or selected
   const { modifyItemQuantity, getItemQuantity } = useShoppingCart();
+  const [overlayVisibility, setOverlayVisibility] = useState(false);
   console.log(currentProduct);
   const cartButtonState = () => {
     if (getItemQuantity(currentProduct._id) == null) return "Add to cart";
@@ -107,8 +112,12 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             <button
               id="add-to-cart"
               onClick={() => {
-                if (cartButtonState() == "In cart") return;
-                modifyItemQuantity(currentProduct, itemQuantity);
+                if (currentProduct.variants) {
+                  setOverlayVisibility(true);
+                } else {
+                  if (cartButtonState() == "In cart") return;
+                  modifyItemQuantity(currentProduct, itemQuantity);
+                }
               }}
             >
               {cartButtonState()}
@@ -211,6 +220,47 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           </VendorProductsWrapper>
         </ProductInfoSection>
       </Wrapper>
+      {overlayVisibility && (
+        <ProudctVariantBackground
+          id="variant-background"
+          onClick={(e) => {
+            console.log(e.target.id);
+            if (e.target.id == "variant-background") {
+              setOverlayVisibility(false);
+            }
+          }}
+        >
+          <motion.div
+            id="overlay-container"
+            initial={{ y: "70vh" }}
+            animate={{ y: "0vh" }}
+          >
+            <p>Choose A Variant</p>
+            <DefaultProduct
+              productInfo={currentProduct}
+              variantButtonState={variantButtonState}
+            />
+            {currentProduct.variants.map((variant) => (
+              <ProductVariant
+                key={variant._key}
+                productInfo={variant}
+                productId={currentProduct._id}
+                variantButtonState={variantButtonState}
+              ></ProductVariant>
+            ))}
+          </motion.div>
+          <button
+            id="add-variants-to-cart"
+            onClick={() => {
+              setVariantButtonState("selected");
+
+              alert("your items have been added to the cart");
+            }}
+          >
+            Add To Cart
+          </button>
+        </ProudctVariantBackground>
+      )}
     </>
   );
 };

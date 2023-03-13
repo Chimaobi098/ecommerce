@@ -11,21 +11,18 @@ export const Wrapper = styled.div`
 
 export const NavBar = styled.nav`
   background-color: white;
-  margin-bottom: 15px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  padding: 1rem;
+
   input {
     border: 1px solid #555;
-    padding: 2vmin 3vmin 2vmin 9vmin;
+    padding: 1vmin 2vmin 1vmin 9vmin;
     background: transparent url("searchIcon.svg") no-repeat 2.3vmin center;
     border-radius: 20px;
     width: 70%;
 
     &::placeholder {
-      font-size: 3.5vmin;
+      font-size: 1rem;
     }
   }
 
@@ -44,12 +41,7 @@ export const NavBar = styled.nav`
   }
 
   #search-tools {
-    display: flex;
-    width: 100%;
-    padding-top: 5px;
-    gap: 0rem;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
   }
 `;
 export const SearchResultItems = styled(motion.button)`

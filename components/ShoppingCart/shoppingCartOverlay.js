@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import {
+  CartItemWrapper,
   CheckoutButton,
+  CheckoutButtonWrapper,
+  CheckoutDetails,
   ProudctInfo,
   Wrapper,
 } from "./shoppingCartOverlay.styles";
@@ -17,7 +20,7 @@ const ShoppingCartOverlay = () => {
   const router = useRouter();
   const { setCartOpen, cartItems, removeFromCart, getTotalCartPrice } =
     useShoppingCart();
-
+  console.log(cartItems);
   function handleClick() {
     setCartOpen(false);
     router.push("/checkout");
@@ -34,49 +37,71 @@ const ShoppingCartOverlay = () => {
           <ArrowBackIcon />
         </button>
         <span style={{ fontWeight: 500 }}>Cart</span>
+        <div></div>
       </Header>
       <AnimatePresence>
-        {cartItems.map((item) => (
-          <ProudctInfo layout key={item._id} transition={{ type: "tween" }}>
-            <img
-              id="product-image"
-              src={urlFor(item.defaultProductVariant.images[0]).url()}
-              alt="prouduct image"
-            />
-            <div id="product-info-wrapper">
-              <div id="product-details">
-                <span
-                  style={{
-                    fontWeight: 600,
-                    width: "100%",
-                    overflow: "hidden",
-                    display: "inline-block",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {item.title}
-                </span>
-                <span>{formatCurrency(item.defaultProductVariant.price)}</span>
+        <CartItemWrapper>
+          {cartItems.map((item) => (
+            <ProudctInfo layout key={item._id} transition={{ type: "tween" }}>
+              <img
+                id="product-image"
+                src={urlFor(
+                  item.isVariant
+                    ? item?.images[0]
+                    : item?.defaultProductVariant.images[0]
+                ).url()}
+                alt="prouduct image"
+              />
+              <div id="product-info-wrapper">
+                <div id="product-details">
+                  <span
+                    style={{
+                      fontWeight: 600,
+                      width: "100%",
+                      overflow: "hidden",
+                      display: "inline-block",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {item.title}
+                  </span>
+                  <span>
+                    {formatCurrency(
+                      item.isVariant
+                        ? item.price
+                        : item.defaultProductVariant.price
+                    )}
+                  </span>
+                </div>
+                <div id="product-total-cost">
+                  {formatCurrency(item.totalPrice)}
+                </div>
               </div>
-              <div id="product-total-cost">
-                {formatCurrency(item.totalPrice)}
-              </div>
+              <button
+                onClick={() => {
+                  removeFromCart(item._id);
+                }}
+                id="remove-product"
+              >
+                <DeleteRoundedIcon fontSize="small" color="error" />
+              </button>
+            </ProudctInfo>
+          ))}
+        </CartItemWrapper>
+        <CheckoutDetails>
+          <div id="cart-details-wrapper">
+            <div id="cart-item-count">{cartItems.length} items</div>
+            <div id="checkout-price">
+              Total:{" "}
+              <span id="price">{formatCurrency(getTotalCartPrice())}</span>
             </div>
-            <button
-              onClick={() => {
-                removeFromCart(item._id);
-              }}
-              id="remove-product"
-            >
-              <DeleteRoundedIcon fontSize="small" color="error" />
-            </button>
-          </ProudctInfo>
-        ))}
-        <CheckoutButton layout key="3" onClick={handleClick}>
-          <span>Proceed to checkout</span>
-          <div id="checkout-price">{formatCurrency(getTotalCartPrice())}</div>
-        </CheckoutButton>
+          </div>
+          <hr />
+          <CheckoutButton layout key="3" onClick={handleClick}>
+            Checkout
+          </CheckoutButton>
+        </CheckoutDetails>
       </AnimatePresence>
     </Wrapper>
   );

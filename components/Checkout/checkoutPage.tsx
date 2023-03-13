@@ -7,7 +7,6 @@ import { useState } from "react";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import { useRouter } from "next/router";
 import { usePaystackPayment } from "react-paystack";
-import { UserProfile } from "@auth0/nextjs-auth0";
 import { sanityClient } from "../../lib/sanity";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "../../interfaces/interface";

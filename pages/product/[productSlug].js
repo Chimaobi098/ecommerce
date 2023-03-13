@@ -22,6 +22,7 @@ export const getServerSideProps = async (context) => {
   defaultProductVariant,
   _id,
   title,
+  variants,
   slug,
 vendor->{
 title,logo,_id},

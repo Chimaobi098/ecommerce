@@ -6,7 +6,7 @@ export const Wrapper = styled(motion.div)`
   width: 100%;
   background-color: white;
   position: relative;
-  z-index: 99;
+  z-index: 101;
   overflow-y: scroll;
   padding-bottom: 150px;
   display: flex;
@@ -22,6 +22,8 @@ export const Header = styled.header`
   button {
     background-color: transparent;
     border: none;
+    position: relative;
+    left: 0;
   }
 
   span {
@@ -34,9 +36,9 @@ export const ProudctInfo = styled(motion.div)`
   align-items: center;
   margin-bottom: 4vmin;
   width: 100%;
+
   #product-info-wrapper {
     display: flex;
-
     width: 60%;
     justify-content: space-between;
     padding: 0 2vmin;
@@ -67,31 +69,49 @@ export const CheckoutButton = styled(motion.button)`
   width: 95%;
   border: none;
   border-radius: 5px;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1rem;
   padding: 10px;
-  background-color: #0aad0a;
+  background-color: #000000;
   color: white;
+  text-align: center;
+
+  position: relative;
+`;
+
+export const CartItemWrapper = styled.div`
+  height: 100%;
+  overflow-y: scroll;
+`;
+
+export const CheckoutDetails = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-direction: column;
   align-items: center;
-
-  span {
-    font-size: 1rem;
-    font-weight: 600;
-  }
-
-  #button-content-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
   #checkout-price {
-    color: #d97d04;
-    background-color: white;
-    padding: 3px;
-    border-radius: 5px;
-    font-weight: 600;
-    font-size: 1.1rem;
+    color: grey;
+    font-weight: 500;
+    span {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #000000;
+    }
+  }
+
+  #cart-item-count {
+    color: grey;
+    font-weight: 500;
+  }
+
+  #cart-details-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    padding: 1rem 0.7rem;
   }
 `;

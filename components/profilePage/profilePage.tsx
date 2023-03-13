@@ -13,34 +13,15 @@ import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalance
 const ProfilePage = ({ user }: User) => {
   const profileList = [
     {
-      profileItemName: "Orders",
-      profileItemIcon: <ShoppingBagOutlinedIcon />,
-      profileUrl: "/profile/orders",
-    },
-    {
       profileItemName: "Wallet",
       profileItemIcon: <AccountBalanceWalletOutlinedIcon />,
       profileUrl: "/profile/wallet",
     },
-    {
-      profileItemName: "Recently Viewed",
-      profileItemIcon: <RemoveRedEyeOutlinedIcon />,
-      profileUrl: "/profile/recently-viewed",
-    },
-    {
-      profileItemName: "Rating & Reviews",
-      profileItemIcon: <StarBorderRoundedIcon />,
-      profileUrl: "/profile/ratings-and-reviews",
-    },
+
     {
       profileItemName: "My Details",
       profileItemIcon: <FolderSharedOutlinedIcon />,
       profileUrl: "/profile/my-details",
-    },
-    {
-      profileItemName: "Liked Products",
-      profileItemIcon: <FavoriteBorderOutlinedIcon />,
-      profileUrl: "/profile/liked-products",
     },
   ];
   const router = useRouter();

@@ -2,6 +2,7 @@ import { AnimatePresence } from "framer-motion";
 import React, { useContext, createContext, ReactNode } from "react";
 import { useState } from "react";
 import ShoppingCartOverlay from "../components/ShoppingCart/shoppingCartOverlay";
+import { ProudctInfo } from "../components/ShoppingCart/shoppingCartOverlay.styles";
 
 const ShoppingCartContext = createContext({} as ShoppingCartContext);
 
@@ -28,20 +29,22 @@ interface ShoppingCartContext {
 interface ProductInfo {
   _id: string;
   title: string;
-  slug: Slug;
-  moreFromVendor: MoreVendorItem[];
-  defaultProductVariant: DefaultProdVariant;
+  sku: string;
+  defaultProductVariant?: DefaultProdVariant;
+  isVariant: boolean;
+  price?: number;
+  images?: { asset: { _ref: string; _type: string } }[];
 }
-interface DefaultProdVariant {
-  barcode: {};
-  images: {}[];
+
+export interface DefaultProdVariant {
+  images: { asset: { _ref: string; _type: string } }[];
   price: number;
-  _type: string;
+  sku: string;
+  title: string;
 }
 
 interface MoreVendorItem {
   defaultProductVariant: {
-    _type: string;
     images: [];
     price: number;
     taxable: boolean;
@@ -54,11 +57,13 @@ interface CartItem {
   _id: string;
   totalPrice: number;
   title: string;
-  slug: Slug;
+  sku: string;
+  isVariant: boolean;
   quantity: number;
-  moreFromVendor: MoreVendorItem[];
-  defaultProductVariant: DefaultProdVariant;
+  defaultProductVariant?: DefaultProdVariant;
+  images?: { asset: { _ref: string; _type: string } }[];
 }
+
 interface Slug {
   _type: string;
   current: string;
@@ -67,9 +72,9 @@ interface Slug {
 export const ShoppingCartProvider = ({
   children,
 }: ShoppingCartProviderProps) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState([] as CartItem[]);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
-
+  console.log(cartItems, "its all here bro");
   function getItemQuantity(id: string) {
     const data = cartItems.find((item) => {
       return item._id == id;
@@ -98,24 +103,30 @@ export const ShoppingCartProvider = ({
     productQuantity: number
   ) {
     setCartItems((currentItems) => {
-      if (currentItems?.find((item) => item._id === productInfo._id) == null) {
+      if (
+        currentItems?.find(
+          (item) => item._id === productInfo._id && item.sku === productInfo.sku
+        ) == null
+      ) {
         return [
           ...currentItems,
           {
             ...productInfo,
             quantity: productQuantity,
-            totalPrice:
-              productInfo.defaultProductVariant.price * productQuantity,
+            totalPrice: productInfo.isVariant
+              ? productInfo.price! * productQuantity
+              : productInfo.defaultProductVariant!.price * productQuantity,
           },
         ];
       } else {
         return currentItems.map((item) => {
-          if (item._id == productInfo._id) {
+          if (item._id == productInfo._id && item.sku === productInfo.sku) {
             return {
               ...item,
               quantity: productQuantity,
-              totalPrice:
-                productInfo.defaultProductVariant.price * productQuantity,
+              totalPrice: productInfo.isVariant
+                ? productInfo.price! * productQuantity
+                : productInfo.defaultProductVariant!.price * productQuantity,
             };
           } else {
             return item;
