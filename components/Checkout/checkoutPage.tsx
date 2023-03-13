@@ -69,7 +69,6 @@ const CheckoutPage = ({ user }: User) => {
   const [fullName, setFullName] = useState<string>("");
   const shippingFees = 2920;
   const totalAmount = getTotalCartPrice() + shippingFees;
-  console.log(cartItems);
 
   const config = {
     email: user!.email!,
