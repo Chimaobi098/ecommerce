@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   CartButtons,
+  PlayButton,
   ProductInfoSection,
   ProudctVariantBackground,
   VendorPage,
@@ -24,13 +25,18 @@ import Link from "next/link";
 import Head from "next/head";
 import ProductVariant from "./productVariant";
 import DefaultProduct from "./defaultProduct";
+import { useUser } from "@auth0/nextjs-auth0";
+import { usePaystackPayment } from "react-paystack";
 
 const ProductInfoOverlay = ({ currentProduct }) => {
   const router = useRouter();
+  const { user, error } = useUser();
   const [variantButtonState, setVariantButtonState] = useState("not-selected"); // either not-selected or selected
   const { modifyItemQuantity, getItemQuantity } = useShoppingCart();
   const [overlayVisibility, setOverlayVisibility] = useState(false);
-  console.log(currentProduct);
+  const [showGameSettingsOverlay, setShowGameSettingsOverlay] = useState(false);
+  const [numberOfAttempts, setNumberOfAttempts] = useState(0);
+  console.log(user);
   const cartButtonState = () => {
     if (getItemQuantity(currentProduct._id) == null) return "Add to cart";
     if (getItemQuantity(currentProduct._id) !== itemQuantity) {
@@ -39,6 +45,13 @@ const ProductInfoOverlay = ({ currentProduct }) => {
       return "In cart";
     }
   };
+
+  const config = {
+    email: user?.email,
+    amount: numberOfAttempts * 100 * 100, // converting to kobo for paystack and multiplying by 100 (1attempt = 100naira)
+    publicKey: process.env.PAYSTACK_PUBLIC_KEY,
+  };
+  const initializePayment = usePaystackPayment(config);
 
   const [itemQuantity, setItemQuantity] = useState(
     getItemQuantity(currentProduct._id) || 1
@@ -53,6 +66,13 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     setItemQuantity((prev) => prev - 1);
   };
 
+  function onSuccess() {
+    alert("you have paid");
+  }
+
+  function onClose() {
+    alert("just try again");
+  }
   return (
     <>
       <Head>
@@ -69,7 +89,14 @@ const ProductInfoOverlay = ({ currentProduct }) => {
         />
       </Head>
       <Wrapper initial={{ y: "100vh" }} animate={{ y: "0vh" }}>
-        <div style={{ width: "100%", height: "40vh", position: "relative" }}>
+        <div
+          style={{
+            width: "100%",
+            height: "40vh",
+            position: "relative",
+            marginBottom: "2rem",
+          }}
+        >
           <Image
             layout="fill"
             objectFit="cover"
@@ -85,7 +112,27 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           >
             <CloseRoundedIcon />
           </CloseMenu>
-          <h4>{currentProduct.title}</h4>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <h4 style={{ margin: "0" }}>{currentProduct.title}</h4>
+            <PlayButton
+              onClick={() => {
+                if (user) {
+                  setShowGameSettingsOverlay(true);
+                  return;
+                }
+
+                router.replace("/api/auth/login");
+              }}
+            >
+              Play
+            </PlayButton>
+          </div>
+
           <h1>
             {formatCurrency(currentProduct?.defaultProductVariant?.price)}
           </h1>
@@ -220,6 +267,43 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           </VendorProductsWrapper>
         </ProductInfoSection>
       </Wrapper>
+      {showGameSettingsOverlay && (
+        <ProudctVariantBackground
+          id="variant-background"
+          onClick={(e) => {
+            console.log(e.target.id);
+            if (e.target.id == "variant-background") {
+              setShowGameSettingsOverlay(false);
+            }
+          }}
+        >
+          <motion.div
+            id="overlay-container"
+            initial={{ y: "70vh" }}
+            animate={{ y: "0vh" }}
+          >
+            <p>Set up Your Game</p>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+
+                initializePayment(onSuccess, onClose);
+              }}
+            >
+              <input
+                placeholder="how many attempts do you want?"
+                value={numberOfAttempts}
+                onChange={(e) => {
+                  setNumberOfAttempts(e.target.value);
+                }}
+              />
+
+              <span>Total cost: {formatCurrency(numberOfAttempts * 100)}</span>
+              <button type="submit">pay</button>
+            </form>
+          </motion.div>
+        </ProudctVariantBackground>
+      )}
       {overlayVisibility && (
         <ProudctVariantBackground
           id="variant-background"
@@ -235,7 +319,6 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             initial={{ y: "70vh" }}
             animate={{ y: "0vh" }}
           >
-            <p>Choose A Variant</p>
             <DefaultProduct
               productInfo={currentProduct}
               variantButtonState={variantButtonState}

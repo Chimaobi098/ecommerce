@@ -142,7 +142,6 @@ export const ProudctVariantBackground = styled(motion.div)`
   #add-variants-to-cart {
     position: absolute;
     bottom: 0;
-    
   }
 
   #overlay-container {
@@ -167,4 +166,18 @@ export const ProudctVariantBackground = styled(motion.div)`
     #variant-container {
     }
   }
+`;
+
+export const PlayButton = styled.button`
+  position: sticky;
+
+  top: 1rem;
+  left: 1rem;
+  background-color: #de5d17;
+  color: white;
+  z-index: 99;
+  font-weight: 500;
+  padding: 0.3rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
 `;
