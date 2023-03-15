@@ -36,7 +36,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
   const [overlayVisibility, setOverlayVisibility] = useState(false);
   const [showGameSettingsOverlay, setShowGameSettingsOverlay] = useState(false);
   const [numberOfAttempts, setNumberOfAttempts] = useState(0);
-  console.log(user);
+  console.log(currentProduct, "this is the current Product");
   const cartButtonState = () => {
     if (getItemQuantity(currentProduct._id) == null) return "Add to cart";
     if (getItemQuantity(currentProduct._id) !== itemQuantity) {
@@ -66,8 +66,23 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     setItemQuantity((prev) => prev - 1);
   };
 
-  function onSuccess() {
-    alert("you have paid");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    initializePayment(onSuccess, onClose);
+  };
+
+  async function onSuccess() {
+    let data = await fetch("/api/manageGameAttempts", {
+      method: "POST",
+      body: JSON.stringify({
+        numberOfAttempts,
+        productId: currentProduct._id,
+      }),
+    });
+    let res = await data.json();
+    window.location.href = `https://long1sland.github.io/wordsearch?sessionId=${res.sessionId}`;
+    console.log(res);
   }
 
   function onClose() {
@@ -283,16 +298,12 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             animate={{ y: "0vh" }}
           >
             <p>Set up Your Game</p>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-
-                initializePayment(onSuccess, onClose);
-              }}
-            >
+            <form onSubmit={handleSubmit}>
               <input
                 placeholder="how many attempts do you want?"
                 value={numberOfAttempts}
+                type="number"
+                required
                 onChange={(e) => {
                   setNumberOfAttempts(e.target.value);
                 }}

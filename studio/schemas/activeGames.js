@@ -9,10 +9,16 @@ export default {
       type: "number",
     },
     {
-      title: "Liked Products",
-      name: "likedProducts",
+      title: "User Name",
+      name: "userName",
       type: "reference",
       to: { type: "users" },
+    },
+    {
+      title: "Product To Win",
+      name: "productToWin",
+      type: "reference",
+      to: { type: "product" },
     },
   ],
 };

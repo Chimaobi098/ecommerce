@@ -1,9 +1,8 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import { Button } from "@mui/material";
-import { useState } from "react";
-import React from "react";
+import { useState, useEffect } from "react";
 import { usePaystackPayment } from "react-paystack";
-import { useEffect } from "react";
+
 import {
   StoreCard,
   TransactionHistoryWrapper,
@@ -41,7 +40,7 @@ const WalletPage = () => {
   }, [user]);
 
   const config = {
-    email: user!.email,
+    email: user!.email!,
     amount: Number(amount) * 100, // converting to kobo for paystack
     publicKey: process.env.PAYSTACK_PUBLIC_KEY!,
   };
