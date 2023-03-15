@@ -1,4 +1,5 @@
 import { config } from "../../lib/sanity";
+import NextCors from "nextjs-cors";
 
 const sanity = require("@sanity/client");
 
@@ -11,38 +12,48 @@ export default async function handler(req, res) {
     origin: "http://127.0.0.1:5500",
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
-  const { productId, numberOfAttempts } = JSON.parse(req.body);
 
-  if (req.method == "POST") {
-    const data = await client
-      .create({
-        _type: "activeGames",
-        productToWin: {
-          _type: "reference",
-          _ref: productId,
-        },
-        attemptsRemaining: Number(numberOfAttempts),
-      }) // Shallow merge
-      .catch((err) => {
-        console.error("Oh no, the update failed: ", err.message);
-        res
-          .status(500)
-          .json({ message: "sorry but the operation failed somewhere" });
-      });
+  const { method } = req;
 
-    res.status(200).send({ message: "that worked!!", sessionId: data._id });
-  }
+  switch (method) {
+    case "POST": {
+      const { productId, numberOfAttempts } = JSON.parse(req.body);
+      const data = await client
+        .create({
+          _type: "activeGames",
+          productToWin: {
+            _type: "reference",
+            _ref: productId,
+          },
+          attemptsRemaining: Number(numberOfAttempts),
+        }) // Shallow merge
+        .catch((err) => {
+          console.error("Oh no, the update failed: ", err.message);
+          res
+            .status(500)
+            .json({ message: "sorry but the operation failed somewhere" });
+        });
+      res.status(201).json(data);
+      break;
+    }
+    case "PUT": {
+      // handle PUT request
+      const { sessionId } = JSON.parse(req.body);
 
-  if (req.method == "PUT" && req.body) {
-    const { sessionId } = JSON.parse(req.body);
+      const data = await client
+        .patch(sessionId)
+        .dec({ attemptsRemaining: 1 })
+        .catch((err) => {
+          res.status(500).json({ message: err });
+        });
+      console.log(data);
+      res.status(200).json({ data });
+    }
 
-    const data = await client
-      .patch(sessionId)
-      .dec({ attemptsRemaining: 1 })
-      .catch((err) => {
-        res.status(500).json({ message: err });
-      });
-    console.log(data);
-    res.status(200).json({ data });
+    default: {
+      res.setHeader("Allow", ["POST", "PUT"]);
+      res.status(405).end(`Method ${method} Not Allowed`);
+      break;
+    }
   }
 }
