@@ -6,3 +6,4 @@ const Wallet = () => {
 };
 
 export default Wallet;
+export const getServerSideProps = withPageAuthRequired();
