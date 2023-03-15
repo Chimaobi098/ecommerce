@@ -32,4 +32,17 @@ export default async function handler(req, res) {
 
     res.status(200).send({ message: "that worked!!", sessionId: data._id });
   }
+
+  if (req.method == "PUT" && req.body) {
+    const { sessionId } = JSON.parse(req.body);
+
+    const data = await client
+      .patch(sessionId)
+      .dec({ attemptsRemaining: 1 })
+      .catch((err) => {
+        res.status(500).json({ message: err });
+      });
+    console.log(data);
+    res.status(200).json({ data });
+  }
 }
