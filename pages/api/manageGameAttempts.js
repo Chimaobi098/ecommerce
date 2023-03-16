@@ -6,9 +6,12 @@ const sanity = require("@sanity/client");
 const client = sanity(config);
 
 export default async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500/");
-  res.setHeader("Access-Control-Allow-Methods", "POST, PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  await NextCors(req, res, {
+    // Options
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
 
   const { method } = req;
 
@@ -45,9 +48,6 @@ export default async function handler(req, res) {
         });
       console.log(data);
       res.status(200).json({ data });
-    }
-    case "OPTIONS": {
-      res.status(200).end();
     }
 
     default: {
