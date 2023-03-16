@@ -17,6 +17,7 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "POST": {
+      console.log(req.body);
       const { productId, numberOfAttempts } = JSON.parse(req.body);
       const data = await client
         .create({
@@ -33,6 +34,7 @@ export default async function handler(req, res) {
             .status(500)
             .json({ message: "sorry but the operation failed somewhere" });
         });
+      console.log(data);
       res.status(201).json(data);
       break;
     }

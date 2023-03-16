@@ -81,8 +81,12 @@ const ProductInfoOverlay = ({ currentProduct }) => {
       }),
     });
     let res = await data.json();
-    window.location.href = `https://long1sland.github.io/wordsearch?sessionId=${res.sessionId}`;
     console.log(res);
+    if (res._id) {
+      window.location.href = `https://long1sland.github.io/wordsearch?sessionId=${res._id}`;
+    } else {
+      alert("there was an error contact us");
+    }
   }
 
   function onClose() {
