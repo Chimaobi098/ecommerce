@@ -41,7 +41,7 @@ export default async function handler(req, res) {
     case "PUT": {
       // handle PUT request
       const { sessionId } = JSON.parse(req.body);
-      console.log(sessionId);
+      console.log(req.body, "hello its me this is it");
       const data = await client
         .patch(sessionId)
         .dec({ attemptsRemaining: 1 })
