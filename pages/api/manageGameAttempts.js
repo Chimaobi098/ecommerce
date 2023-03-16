@@ -46,6 +46,9 @@ export default async function handler(req, res) {
       console.log(data);
       res.status(200).json({ data });
     }
+    case "OPTIONS": {
+      res.status(200).end();
+    }
 
     default: {
       res.setHeader("Allow", ["POST", "PUT"]);
