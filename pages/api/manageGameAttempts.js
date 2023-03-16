@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   await NextCors(req, res, {
     // Options
     methods: ["PUT", "POST"],
-    origin: "http://127.0.0.1:5500",
+    origin: "http://127.0.0.1:5500/",
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
 
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
     case "PUT": {
       // handle PUT request
       const { sessionId } = JSON.parse(req.body);
-
+      console.log(sessionId);
       const data = await client
         .patch(sessionId)
         .dec({ attemptsRemaining: 1 })
