@@ -8,7 +8,7 @@ const client = sanity(config);
 export default async function handler(req, res) {
   await NextCors(req, res, {
     // Options
-    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    methods: ["PUT", "POST"],
     origin: "http://127.0.0.1:5500",
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
@@ -45,6 +45,7 @@ export default async function handler(req, res) {
       const data = await client
         .patch(sessionId)
         .dec({ attemptsRemaining: 1 })
+        .commit()
         .catch((err) => {
           res.status(500).json({ message: err });
         });
