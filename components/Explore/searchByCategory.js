@@ -8,6 +8,7 @@ import { useState } from "react";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { AnimatePresence, motion } from "framer-motion";
 import { sanityClient } from "../../lib/sanity";
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
 const SearchByCategory = ({ categoryData }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -56,7 +57,12 @@ const SearchByCategory = ({ categoryData }) => {
   return (
     <AnimatePresence>
       {currentLevel.length > 0 && (
-        <button onClick={handleBackClick}>Back</button>
+        <button
+          onClick={handleBackClick}
+          style={{ background: "none", border: "none", cursor: "pointer" }}
+        >
+          <ArrowBackRoundedIcon />
+        </button>
       )}
       <CategoryWrapper>
         {currentData

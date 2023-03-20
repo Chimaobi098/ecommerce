@@ -20,6 +20,7 @@ export const Wrapper = styled.footer`
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
 
     p {
       font-weight: 600;
