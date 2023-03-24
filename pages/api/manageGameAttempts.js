@@ -39,7 +39,7 @@ export default async function handler(req, res) {
       break;
     }
     case "PUT": {
-      // handle PUT request     console.log(req.body, "hello its me this is it");
+      console.log(req.body, "hello its me this is it");
       const { sessionId } = JSON.parse(req.body);
 
       const data = await client
