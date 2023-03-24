@@ -21,6 +21,7 @@
     "@sanity/desk-tool": "^2.30.4",
     "@sanity/eslint-config-studio": "^2.0.0",
     "@sanity/vision": "^2.30.4",
+    "buffer": "^6.0.3",
     "eslint": "^8.6.0",
     "prop-types": "^15.7",
     "react": "^17.0",
@@ -28,7 +29,6 @@
     "react-dom": "^17.0",
     "styled-components": "^5.2.0"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/Long1sland/ecommerce.git"

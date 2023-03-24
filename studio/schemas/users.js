@@ -46,5 +46,11 @@ export default {
       type: "array",
       of: [{ type: "reference", to: [{ type: "product" }] }],
     },
+    {
+      title: "Saved Products",
+      name: "savedProducts",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "product" }] }],
+    },
   ],
 };

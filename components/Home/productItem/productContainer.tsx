@@ -13,6 +13,10 @@ import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
 import debounce from "../../../utils/debounce";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Button } from "@mui/material";
+import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import { useSanityUIDContext } from "../../../context/sanityUserId";
 
 interface ProductProps {
   productProps: {
@@ -23,31 +27,33 @@ interface ProductProps {
     _id: string;
   };
   userLikedProducts: { _key: string; _ref: string }[] | undefined;
+  userSavedProducts: { _key: string; _ref: string }[] | undefined;
 }
 
 const ProductContainer = ({
   productProps,
   userLikedProducts,
+  userSavedProducts,
 }: ProductProps) => {
+  const sanityUID = useSanityUIDContext();
+  console.log("Hi mom!", sanityUID);
   const router = useRouter();
   const [likes, setLikes] = useState({ likeCount: 5, likeState: false });
-  const [userId, setUserId] = useState("");
+  const [postSaveState, setPostSaveState] = useState(false);
+
   const { user, error } = useUser();
-  console.log(userId, "its all here");
   const handleLikes: (id: string) => void = useCallback(
     debounce((productId: string) => {
-      console.log("this actually ran bro so is it actually workgin? hope so");
       if (!user) {
         router.replace("/api/auth/login");
         return;
       }
-      console.log(productId, "this is where it all happens");
       fetch("/api/handleLikes", {
         method: "POST",
         body: JSON.stringify({
           _id: productId,
           likeState: !likes.likeState,
-          userId,
+          userId: sanityUID,
           likedProducts: {
             _type: "reference",
             _ref: productProps._id,
@@ -58,7 +64,32 @@ const ProductContainer = ({
         }),
       });
     }, 2000),
-    [userId]
+    [sanityUID]
+  );
+
+  const handlePostSave: (id: string) => void = useCallback(
+    debounce((productId: string) => {
+      if (!user) {
+        router.replace("/api/auth/login");
+        return;
+      }
+      fetch("/api/handlePostSave", {
+        method: "POST",
+        body: JSON.stringify({
+          productId,
+          saveState: !postSaveState,
+          sanityUID,
+          savedProduct: {
+            _type: "reference",
+            _ref: productProps._id,
+          },
+          productItemKey: userSavedProducts?.filter(
+            (product) => product._ref == productProps._id
+          )[0]?._key,
+        }),
+      });
+    }, 2000),
+    [sanityUID]
   );
 
   useEffect(() => {
@@ -83,22 +114,11 @@ const ProductContainer = ({
             .map((proudct) => proudct._ref)
             .includes(productProps._id),
         });
-
-        let userId = await sanityClient.fetch(
-          `
-*[_type == 'users' && userId ==$auth0ID]{
-  _id,
-}`,
-          {
-            auth0ID: user?.sub,
-          }
-        );
-        console.log(user);
-        setUserId(userId[0]?._id);
       }
     }
     handler();
   }, [user, userLikedProducts]);
+
   return (
     <ProductInfo key={productProps._id}>
       <div id="vendor-info-container">
@@ -119,20 +139,7 @@ const ProductContainer = ({
             {productProps.vendor.title}
           </span>
         </div>
-        <Button
-          style={{ color: "black" }}
-          onClick={async () => {
-            try {
-              await navigator.share({
-                title: "Ecommerce",
-                text: "BUY THIS NOW!!!",
-                url: `/product/${productProps.slug.current}`,
-              });
-            } catch (err) {
-              alert(err);
-            }
-          }}
-        >
+        <Button style={{ color: "black" }}>
           <MoreHorizIcon fontSize="large" />
         </Button>
       </div>
@@ -155,32 +162,74 @@ const ProductContainer = ({
 
       <div style={{ paddingLeft: "3vw" }}>
         <div id="action-section">
-          <motion.div
-            whileTap={{ scale: 0.8 }}
-            onClick={() => {
-              setLikes((prev) => {
-                if (prev.likeState) {
-                  return { likeCount: prev.likeCount - 1, likeState: false };
-                }
-                return { likeCount: prev.likeCount + 1, likeState: true };
-              });
-              handleLikes(productProps._id);
-            }}
-          >
-            {likes.likeState ? (
-              <FavoriteIcon
+          <div>
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              onClick={() => {
+                setLikes((prev) => {
+                  if (prev.likeState) {
+                    return { likeCount: prev.likeCount - 1, likeState: false };
+                  }
+                  return { likeCount: prev.likeCount + 1, likeState: true };
+                });
+                handleLikes(productProps._id);
+              }}
+            >
+              {likes.likeState ? (
+                <FavoriteIcon
+                  fontSize="large"
+                  sx={{ marginRight: "10px" }}
+                  color="error"
+                />
+              ) : (
+                <FavoriteBorderIcon
+                  fontSize="large"
+                  sx={{ marginRight: "10px" }}
+                />
+              )}
+            </motion.button>
+            <button>
+              <CommentRoundedIcon
                 fontSize="large"
                 sx={{ marginRight: "10px" }}
-                color="error"
               />
+            </button>
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              onClick={async () => {
+                try {
+                  await navigator.share({
+                    title: "Ecommerce",
+                    text: "BUY THIS NOW!!!",
+                    url: `/product/${productProps.slug.current}`,
+                  });
+                } catch (err) {
+                  alert(err);
+                }
+              }}
+            >
+              <SendRoundedIcon fontSize="large" sx={{ marginRight: "10px" }} />
+            </motion.button>
+          </div>
+          <motion.button
+            id="save-button"
+            whileTap={{ scale: 0.8 }}
+            onClick={() => {
+              setPostSaveState((prev) => {
+                handlePostSave(productProps._id);
+                return !prev;
+              });
+            }}
+          >
+            {postSaveState ? (
+              <BookmarkIcon fontSize="large" sx={{ marginRight: "10px" }} />
             ) : (
-              <FavoriteBorderIcon
+              <BookmarkBorderRoundedIcon
                 fontSize="large"
                 sx={{ marginRight: "10px" }}
               />
             )}
-          </motion.div>
-          <CommentRoundedIcon fontSize="large" />
+          </motion.button>
         </div>
         <h4 style={{ marginTop: "10px" }}>{`${likes.likeCount} like${
           likes.likeCount > 1 || likes.likeCount == 0 ? "s" : ""

@@ -23,6 +23,11 @@ const ProfilePage = ({ user }: User) => {
       profileItemIcon: <FolderSharedOutlinedIcon />,
       profileUrl: "/profile/my-details",
     },
+    {
+      profileItemName: "Saved Posts",
+      profileItemIcon: <FolderSharedOutlinedIcon />,
+      profileUrl: "/profile/saved-posts",
+    },
   ];
   const router = useRouter();
   console.log(user);

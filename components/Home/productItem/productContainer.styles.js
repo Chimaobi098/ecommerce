@@ -32,9 +32,13 @@ export const ProductInfo = styled.div`
   #action-section {
     display: flex;
     margin-top: 10px;
-  }
+    gap: 0.8rem;
+    justify-content: space-between;
 
-  .action-button {
-    margin-right: 10px;
+    button {
+      background-color: transparent;
+      border: none;
+      padding: 0;
+    }
   }
 `;

@@ -19,6 +19,7 @@ const Home = ({ results }: HomeProduct) => {
   const [productData, setProductData] = useState(results);
   const [hasMore, setHasMore] = useState(true);
   const [userLikedProducts, setUserLikedProducts] = useState();
+  const [userSavedProducts, setUserSavedProducts] = useState();
   const lastId = useRef<string | null>(results[results.length - 1]._id);
   console.log(results);
 
@@ -38,6 +39,21 @@ const Home = ({ results }: HomeProduct) => {
       setUserLikedProducts(likedProductsArray || []);
     }
     likedProducts();
+    async function savedProducts() {
+      if (!user) return;
+      let response = await sanityClient.fetch(
+        `*[_type == "users" && userId == $curr] {
+     savedProducts
+
+    }`,
+        { curr: user?.sub }
+      );
+      console.log(response, "thisisit");
+      console.log(response, "this is it");
+      let savedProductsArray = response[0]?.savedProducts;
+      setUserSavedProducts(savedProductsArray || []);
+    }
+    savedProducts();
   }, [user]);
 
   async function fetchNextPage() {
@@ -115,6 +131,7 @@ _id
             <ProductContainer
               productProps={product}
               userLikedProducts={userLikedProducts}
+              userSavedProducts={userSavedProducts}
               key={product._id}
             />
           ))}

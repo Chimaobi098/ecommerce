@@ -39,9 +39,9 @@ export default async function handler(req, res) {
       break;
     }
     case "PUT": {
-      // handle PUT request
+      // handle PUT request     console.log(req.body, "hello its me this is it");
       const { sessionId } = JSON.parse(req.body);
-      console.log(req.body, "hello its me this is it");
+
       const data = await client
         .patch(sessionId)
         .dec({ attemptsRemaining: 1 })
