@@ -23,6 +23,19 @@ export default {
       type: "text",
     },
     {
+      name: 'images',
+      title: 'Images',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+        },
+      ],
+    },
+    {
       name: "isRootCategory",
       title: "Root Category",
       type: "boolean",

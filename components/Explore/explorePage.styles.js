@@ -16,10 +16,12 @@ export const NavBar = styled.nav`
 
   input {
     border: 1px solid #555;
-    padding: 1vmin 2vmin 1vmin 9vmin;
+    padding: 1vmin 2vmin 1vmin 14vmin;
+    margin-left: 8px;
     background: transparent url("searchIcon.svg") no-repeat 2.3vmin center;
     border-radius: 20px;
-    width: 70%;
+    width: 100%;
+    margin:auto
 
     &::placeholder {
       font-size: 1rem;

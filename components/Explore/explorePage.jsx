@@ -8,9 +8,9 @@ import SearchByCategory from "./searchByCategory";
 import { buildTree } from "../../utils/buildtree";
 
 const ExplorePage = ({ searchResults, searchQuery }) => {
-  console.log(searchResults);
   const [categoryData, setCategoryData] = useState();
   const tree = useRef();
+  console.log(categoryData);
 
   useEffect(() => {
     async function getCategories() {

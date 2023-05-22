@@ -6,26 +6,43 @@ import { ProfileItem, Wrapper } from "./profilePage.styles";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
+import HouseOutlinedIcon from '@mui/icons-material/HouseOutlined';
+import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
 import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
+import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 const ProfilePage = ({ user }: User) => {
   const profileList = [
-    {
-      profileItemName: "Wallet",
-      profileItemIcon: <AccountBalanceWalletOutlinedIcon />,
-      profileUrl: "/profile/wallet",
-    },
-
     {
       profileItemName: "My Details",
       profileItemIcon: <FolderSharedOutlinedIcon />,
       profileUrl: "/profile/my-details",
     },
     {
-      profileItemName: "Saved Posts",
-      profileItemIcon: <FolderSharedOutlinedIcon />,
+      profileItemName: "Address book",
+      profileItemIcon: <HouseOutlinedIcon />,
+      profileUrl: "/profile/address",
+    },   
+     {
+      profileItemName: "Wallet",
+      profileItemIcon: <AccountBalanceWalletOutlinedIcon />,
+      profileUrl: "/profile/wallet",
+    },
+    {
+      profileItemName: "Saved Items",
+      profileItemIcon: <ShoppingBagOutlinedIcon />,
+      profileUrl: "/profile/saved-posts",
+    },
+    {
+      profileItemName: "Membership plans",
+      profileItemIcon: <DateRangeOutlinedIcon />,
+      profileUrl: "/profile/membership",
+    },
+    {
+      profileItemName: "Customer support",
+      profileItemIcon: <SupportAgentOutlinedIcon />,
       profileUrl: "/profile/saved-posts",
     },
   ];
@@ -39,12 +56,13 @@ const ProfilePage = ({ user }: User) => {
       </header>
       {profileList.map((item, i) => (
         <ProfileItem
+        className="cursor-pointer"
           key={i}
           onClick={() => {
             router.push(`${item.profileUrl}`);
           }}
         >
-          <div className="profile-name-container">
+          <div className="profile-name-container cursor-pointer">
             {item.profileItemIcon}
             <div>{item.profileItemName}</div>
           </div>
@@ -53,7 +71,7 @@ const ProfilePage = ({ user }: User) => {
       ))}
 
       <Button
-        variant="contained"
+      className="text-2xl mt-2 normal-case"
         color="error"
         onClick={() => {
           router.replace("/api/auth/logout");

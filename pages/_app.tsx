@@ -8,6 +8,7 @@ import { AnimatePresence } from "framer-motion";
 import Script from "next/script";
 import { SanityUIDProvider } from "../context/sanityUserId";
 import { useRouter } from "next/router";
+import '../global.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
