@@ -1,7 +1,8 @@
 import React from 'react'
+import Link from 'next/link'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
 import { User } from '../../interfaces/interface'
-import { NavBar } from '../../components/Home/home.styles'
+import { ProfileNav } from '../../components/Home/home.styles'
 import MembershipPage from '../../components/profilePage/membershipPage/membership'
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
@@ -9,10 +10,10 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 const Membership = ({ user }: User) => {
   return (
     <div>
-        <NavBar>
-            {/* <div className='text-left'><ArrowBackRoundedIcon /></div> */}
+        <ProfileNav>
+            <Link href='/profile'><div className=''><ArrowBackRoundedIcon /></div></Link>
         <header>Membership Plans</header>
-      </NavBar>
+      </ProfileNav>
       <MembershipPage user={user}/>
         
     </div>

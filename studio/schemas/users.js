@@ -15,7 +15,12 @@ export default {
     },
     {
       name: "name",
-      title: "Name",
+      title: "First Name",
+      type: "string",
+    },
+    {
+      name: "lastname",
+      title: "Last Name",
       type: "string",
     },
 
@@ -26,7 +31,27 @@ export default {
     },
     {
       name: "address",
-      title: "Address",
+      title: "Address Line 1",
+      type: "string",
+    },
+    {
+      name: "address2",
+      title: "Address Line 2",
+      type: "string",
+    },
+    {
+      name: "city",
+      title: "City",
+      type: "string",
+    },
+    {
+      name: "state",
+      title: "State/Province",
+      type: "string",
+    },
+    {
+      name: "country",
+      title: "Country",
       type: "string",
     },
     {
