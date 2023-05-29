@@ -1,6 +1,7 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { usePaystackPayment } from "react-paystack";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
@@ -23,18 +24,16 @@ const WalletPage = () => {
     const getUID = async () => {
       const data = await sanityClient.fetch(
         `
-*[_type == 'users' && userId ==$auth0ID]{
+*[_type == 'users' && userId == $auth0ID]{
   _id,
   name,
   phoneNumber,
   address
 }`,
-        {
-          auth0ID: user?.sub,
-        }
+    { auth0ID: user?.sub }
       );
 
-      setUserId(data[0]._id || "");
+      setUserId(data[0]?._id || "");
     };
 
     getUID();
@@ -100,16 +99,16 @@ const WalletPage = () => {
           <h2 className="text-2xl mx-2">Total Balance:</h2>
           </div>
           <div className="font-medium">
-          ₦1234.56
+          ₦{amount}
           </div>
            </div>
 
            <div className="flex flex-row justify-between gap-x-4 mb-12">
             <div className="w-2/4">
-              <button className="w-full bg-black text-white h-12 rounded-md">Deposit</button>
+              <Link href='/profile/wallet/deposit'><button className="w-full bg-black text-white h-12 rounded-md">Deposit</button></Link>
             </div>
             <div className="w-2/4">
-            <button className="w-full bg-white text-black h-12 border border-black rounded-md">Withdraw</button>
+            <Link href='/profile/wallet/withdraw'><button className="w-full bg-white text-black h-12 border border-black rounded-md">Withdraw</button></Link>
 
             </div>
 

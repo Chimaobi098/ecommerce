@@ -7,9 +7,8 @@ import { sanityClient } from '../../../lib/sanity'
 const Addressbook = ({user}: User) => {
     const [enabled, setEnabled] = useState(false)
     const [addressdetails, setaddressdetails] = useState()
-    if(user?.sub){
+
      console.log(addressdetails);
-    }
 
    
     
