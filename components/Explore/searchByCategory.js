@@ -18,7 +18,7 @@ const SearchByCategory = ({ categoryData}) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentLevel, setCurrentLevel] = useState([]);
   const [categorySearchResults, setCategorySearchResults] = useState();
-    console.log(selectedCategory);
+    console.log(categorySearchResults);
 
   const handleCategorySelection = (category) => {
     if (Object.values(currentData[category]).length == 0) {
@@ -101,11 +101,12 @@ const SearchByCategory = ({ categoryData}) => {
         {currentData
           ? Object.keys(currentData).map((category, i) => (
             
-            <div className="card rounded-lg shadow-lg h-auto cursor-pointer" onClick={() => handleCategorySelection(category)} key={category}>
+            <div className="card rounded-lg shadow-lg h-auto cursor-pointer" onClick={() => handleCategorySelection(category)} key={i}>
               
-              {categorySearchResults?.map((little) =>(
-              <div className="">
-                {little?.isRootCategory === true && category == little.title && <img src={urlFor(little.images[0]).url()} className="rounded-t-lg "/>}
+              {categorySearchResults?.map((little, i) =>(
+              <div className="" key={i}>
+                {little?.isRootCategory === true && category == little.title && <img  src={urlFor(little.images[0]).url()} className="rounded-t-lg "/>}
+                
                 
                 </div>
                 ))}
@@ -130,7 +131,7 @@ const SearchByCategory = ({ categoryData}) => {
             {currentData
           ? Object.keys(currentData).map((category, i) => (
               <CategoryItem
-                key={category}
+                key={i}
                 initial={{ x: 300, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: -300, opacity: 0 }}

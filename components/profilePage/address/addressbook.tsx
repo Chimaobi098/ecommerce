@@ -37,8 +37,8 @@ const Addressbook = ({user}: User) => {
   return (
     <div className='mx-4 '>
         {// @ts-ignore
-        user?.sub && addressdetails?.map((details)=>(
-        <div className='w-12/12 shadow-lg h-auto border border-gray-300'>
+        user?.sub && addressdetails?.map((details, i)=>(
+        <div className='w-12/12 shadow-lg h-auto border border-gray-300' key={i}>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Country</h3>
             <p className='text-base'>{details.country}</p>
