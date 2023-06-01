@@ -22,7 +22,7 @@ const WithdrawPage = () => {
                 <input type='number' placeholder='Account Number' className='h-full w-full pl-12 placeholder-gray-800 border border-gray-800'/>
             </div>
         </div>
-        <div className='text-blue-400 text-center'>Switch Bank Account  <ArrowForwardIosOutlinedIcon className='w-3 h-3'/> </div>
+        <div className='text-blue-400 text-center'>Switch Bank Account  <ArrowForwardIosOutlinedIcon className='w-2 h-2'/> </div>
 
         <div className='flex flex-col  gap-y-4 mt-10 text-right text-gray-400'>
             <div>Balance (NGN) 1234.56</div>
