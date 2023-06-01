@@ -35,6 +35,12 @@ export const NavBar = styled.nav`
 
 
 export const Wrapper = styled.div`
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   display: flex;
   flex-direction: column;
   align-items: center;

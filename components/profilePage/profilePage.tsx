@@ -50,7 +50,7 @@ const ProfilePage = ({ user }: User) => {
   // console.log(user);
   return (
     <>
-    <Wrapper className="mt-4 overflow-y-auto">
+    <Wrapper className="mt-4">
       <header>
         <div id="hi">Hi,</div>
         <div id="user-name">{user.nickname}</div>
