@@ -38,7 +38,7 @@ const Addressbook = () => {
       
         }
         getDetails();
-      }, []);
+      },[user]);
   return (
     <div className='mx-4 mb-12'>
         {// @ts-ignore

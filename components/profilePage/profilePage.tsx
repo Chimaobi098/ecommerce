@@ -50,7 +50,7 @@ const ProfilePage = ({ user }: User) => {
   // console.log(user);
   return (
     <>
-    <Wrapper>
+    <Wrapper className="mb-16 md:mb-2">
       <header>
         <div id="hi">Hi,</div>
         <div id="user-name">{user.nickname}</div>
@@ -98,7 +98,7 @@ const ProfilePage = ({ user }: User) => {
           <div className="text-sm text-gray-500 pt-2 ">Contact Us</div>
           <div className="cursor-pointer">Whatsapp</div>
           <div className="border-t pt-3 cursor-pointer ">Email</div>
-          <div className="border-t text-gray-500 mb-12 pt-3 cursor-pointer " onClick={handleClick}>Cancel</div>
+          <div className="border-t text-gray-500 mb-20 md:mb-8 pt-3 cursor-pointer " onClick={handleClick}>Cancel</div>
   
         </div>
     </Wrapper>
