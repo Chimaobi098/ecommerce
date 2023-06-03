@@ -40,7 +40,7 @@ const Addressbook = () => {
         getDetails();
       }, []);
   return (
-    <div className='mx-4 '>
+    <div className='mx-4 mb-12'>
         {// @ts-ignore
         addressdetails?.map((details, i)=>(
         <div className='w-12/12 shadow-lg h-auto border border-gray-300' key={i}>

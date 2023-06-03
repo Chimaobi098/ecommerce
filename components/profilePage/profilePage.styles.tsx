@@ -44,7 +44,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 70px;
+  padding-top: 50px;
   header {
     display: flex;
     justify-content: center;

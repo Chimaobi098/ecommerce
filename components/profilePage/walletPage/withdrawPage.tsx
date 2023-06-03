@@ -6,7 +6,7 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 
 const WithdrawPage = () => {
   return (
-    <div className='mt-20 mx-4'>
+    <div className=' mx-4'>
         <div className='py-8 flex flex-col gap-y-8 text-xl text-gray-800'>
             <div className='h-16 w-full relative'>
                 <AccountBalanceOutlinedIcon className='absolute top-5 left-2' />

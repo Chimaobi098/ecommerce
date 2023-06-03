@@ -50,7 +50,7 @@ const ProfilePage = ({ user }: User) => {
   // console.log(user);
   return (
     <>
-    <Wrapper className="mt-4">
+    <Wrapper>
       <header>
         <div id="hi">Hi,</div>
         <div id="user-name">{user.nickname}</div>
@@ -94,15 +94,15 @@ const ProfilePage = ({ user }: User) => {
         Log Out
       </Button>
 
-
-    </Wrapper>
-          <div className={` ${support ? 'translate-y-0' : 'translate-y-full'} w-full flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6  transition-all duration-500 ease-in-out transform-gpu`}>
+      <div className={` ${support ? 'translate-y-0' : 'translate-y-full'} w-full flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6  transition-all duration-500 ease-in-out transform-gpu`}>
           <div className="text-sm text-gray-500 pt-2 ">Contact Us</div>
           <div className="cursor-pointer">Whatsapp</div>
           <div className="border-t pt-3 cursor-pointer ">Email</div>
-          <div className="border-t text-gray-500 mb-8 pt-3 cursor-pointer " onClick={handleClick}>Cancel</div>
+          <div className="border-t text-gray-500 mb-12 pt-3 cursor-pointer " onClick={handleClick}>Cancel</div>
   
         </div>
+    </Wrapper>
+
         </>
   );
 };

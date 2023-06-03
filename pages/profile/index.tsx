@@ -2,7 +2,7 @@ import React from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { User } from "../../interfaces/interface";
 import ProfilePage from "../../components/profilePage/profilePage";
-import { NavBar } from "../../components/Home/home.styles";
+import { NavBar, Wrapper } from "../../components/Home/home.styles";
 
 
 const Profile = ({ user }: User) => {
@@ -11,8 +11,9 @@ const Profile = ({ user }: User) => {
           <NavBar>
         <header>My Account</header>
       </NavBar>
-  
+  <Wrapper>
   <ProfilePage user={user} />
+  </Wrapper>
   </>
   )
 };
