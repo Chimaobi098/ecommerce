@@ -1,34 +1,39 @@
 import React, {useState, useEffect} from 'react'
-import { User } from '../../../interfaces/interface'
+import { useUser } from '@auth0/nextjs-auth0/dist/frontend/use-user'
 import { Switch } from '@headlessui/react'
 import { sanityClient } from '../../../lib/sanity'
 
 
-const Addressbook = ({user}: User) => {
+const Addressbook = () => {
+  const { user, error } = useUser();
     const [enabled, setEnabled] = useState(false)
-    const [addressdetails, setaddressdetails] = useState()
+    const [addressdetails, setaddressdetails] = useState<any>()
+    console.log(addressdetails);
 
-     console.log(addressdetails);
+     
 
    
     
 
     useEffect(() => {
         async function getDetails() {
+          if (!user) return;
           const results = await sanityClient.fetch(
-            `*[_type == "users" && userId == $curr] {
+            `*[_type == "users" && email == $curr  ] {
                 _id,
                 name,
-                lastname,
+                lastname, 
                 country,
                 phoneNumber,
                 city,
                 address,
                 address2,
                 state,
+                userId
         }`,
-          { curr: user?.sub }
+          { curr: user?.email }
           );
+          
       setaddressdetails(results);
       
         }
@@ -37,7 +42,7 @@ const Addressbook = ({user}: User) => {
   return (
     <div className='mx-4 '>
         {// @ts-ignore
-        user?.sub && addressdetails?.map((details, i)=>(
+        addressdetails?.map((details, i)=>(
         <div className='w-12/12 shadow-lg h-auto border border-gray-300' key={i}>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Country</h3>
@@ -72,11 +77,7 @@ const Addressbook = ({user}: User) => {
             <p className='text-base'>{details.address2}</p>
             </div>
             
-            
-
-
-
-        </div>))}
+            </div>))}
         <div className='flex flex-row justify-between items-center my-4 mb-6 mx-2'>
             <div className='text-lg'>Make default</div>
             <div className=''><Switch

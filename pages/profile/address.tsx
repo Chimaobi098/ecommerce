@@ -1,12 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
-import { User } from '../../interfaces/interface'
+import { UseUser } from '@auth0/nextjs-auth0/dist/frontend/use-user'
 import { ProfileNav, Wrapper } from '../../components/Home/home.styles'
 import Addressbook from '../../components/profilePage/address/addressbook'
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
-const Address = ({ user }: User) => {
+const Address = () => {
   return (
     <>
     <div>
@@ -16,7 +16,7 @@ const Address = ({ user }: User) => {
       </ProfileNav>
       </div>
       <Wrapper>
-      <Addressbook user={user}/>
+      <Addressbook />
       </Wrapper>
 
       </>
