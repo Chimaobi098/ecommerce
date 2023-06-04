@@ -1,12 +1,21 @@
-import React from 'react'
+import React, {useState} from 'react'
 import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 
 const WithdrawPage = () => {
+    const [inputValue, setInputValue] = useState('');
+    const [showClearButton, setShowClearButton] = useState(false);
+    const handleclear = ()=>{
+        setInputValue('');
+        if(inputValue === ''){
+            setShowClearButton(false)
+        }
+    }
+
   return (
-    <div className=' mx-4'>
+    <div className=' mx-4 mb-8'>
         <div className='py-8 flex flex-col gap-y-8 text-xl text-gray-800'>
             <div className='h-16 w-full relative'>
                 <AccountBalanceOutlinedIcon className='absolute top-5 left-2' />
@@ -18,8 +27,14 @@ const WithdrawPage = () => {
             </div>
             <div className='h-16 w-full relative'>
                 <AccountBoxOutlinedIcon className='absolute top-5 left-2'/>
-                <CancelOutlinedIcon className='absolute top-5 right-4'/>
-                <input type='number' placeholder='Account Number' className='h-full w-full pl-12 placeholder-gray-800 border border-gray-800'/>
+                {showClearButton && (
+                    <CancelOutlinedIcon className='absolute top-5 right-4'onClick={handleclear}/>)}
+                <input type='number' value={inputValue} placeholder='Account Number' className='h-full w-full pl-12 placeholder-gray-800 border border-gray-800' onChange={(e) => setInputValue(e.target.value)}
+                onFocus={() => setShowClearButton(true)}
+                
+
+                
+                />
             </div>
         </div>
         <div className='text-blue-400 text-center'>Switch Bank Account  <ArrowForwardIosOutlinedIcon className='w-2 h-2'/> </div>

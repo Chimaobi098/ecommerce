@@ -14,7 +14,7 @@ const MembershipPage = ({ user }: User) => {
     }
     
   return (
-    <div className='mt-12 flex flex-col items-center mx-4'>
+    <div className='my-12  flex flex-col items-center mx-4'>
         <div className='text-3xl font-medium'>Full Access</div>
 
         <div className='text-2xl font-normal mt-8 mx-4 text-center'>Get plus membership and access to all features</div>
