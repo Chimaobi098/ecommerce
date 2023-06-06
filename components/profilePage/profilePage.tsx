@@ -55,7 +55,7 @@ const ProfilePage = ({ user }: User) => {
         <div id="hi">Hi,</div>
         <div id="user-name">{user.nickname}</div>
       </header>
-      <div className={`${support ? 'h-screen top-0 w-screen absolute z-10 backdrop-filter backdrop-blur-sm' : ''}`}></div>
+      <div className={`${support ? 'h-screen top-0 w-screen absolute z-10 backdrop-filter backdrop-blur-sm' : ''}`} onClick={handleClick}></div>
 
       {profileList.map((item, i) => (
         <ProfileItem
@@ -94,7 +94,7 @@ const ProfilePage = ({ user }: User) => {
         Log Out
       </Button>
 
-      <div className={` ${support ? 'translate-y-0' : 'translate-y-full'} w-full flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6  transition-all duration-500 ease-in-out transform-gpu`}>
+      <div className={` ${support ? 'translate-y-0' : 'translate-y-full'} w-full flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6  transition-all duration-500 ease-in-out transform-gpu`} >
           <div className="text-sm text-gray-500 pt-2 ">Contact Us</div>
           <div className="cursor-pointer">Whatsapp</div>
           <div className="border-t pt-3 cursor-pointer ">Email</div>
