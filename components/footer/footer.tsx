@@ -1,7 +1,6 @@
 import { Wrapper } from "./footer.styles";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
 import HomeIcon from "@mui/icons-material/Home";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";

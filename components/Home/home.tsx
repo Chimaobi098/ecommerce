@@ -1,11 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useState } from "react";
 import { sanityClient, urlFor } from "../../lib/sanity";
 import { Wrapper, NavBar } from "./home.styles";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { CircularProgress } from "@mui/material";
 import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
-import { useEffect } from "react";
 import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
 import { useShoppingCart } from "../../context/shoppingCart";

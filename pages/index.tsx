@@ -48,7 +48,7 @@ export interface HomeProduct {
     _id: string;
   }[];
 }
-
+//{ results }: HomeProduct
 const HomePage = ({ results }: HomeProduct) => {
   return <Home results={results} />;
 };
