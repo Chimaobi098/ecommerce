@@ -156,7 +156,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             {formatCurrency(currentProduct?.defaultProductVariant?.price)}
           </h1>
           <CartButtons primary>
-            <div id="quantity-control-container">
+            {/* <div id="quantity-control-container">
               <button
                 className="quantity-change-buttons"
                 onClick={() => {
@@ -174,8 +174,9 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               >
                 {<AddRoundedIcon />}
               </button>
-            </div>
+            </div> */}
             <button
+            className=" m-auto"
               id="add-to-cart"
               onClick={() => {
                 if (currentProduct.variants) {

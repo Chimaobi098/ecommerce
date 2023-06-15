@@ -22,6 +22,8 @@ interface ShoppingCartContext {
   cartOpen: boolean;
   cartItems: CartItem[];
   removeFromCart: (id: string) => void;
+  increaseCart: (id: string) => void;
+  decreaseCart: (id: string) => void;
   getTotalCartPrice: () => number;
   setCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -80,6 +82,8 @@ export const ShoppingCartProvider = ({
       return item._id == id;
     })?.quantity;
     return data;
+
+    
   }
 
   function getTotalCartPrice() {
@@ -95,6 +99,35 @@ export const ShoppingCartProvider = ({
   function removeFromCart(id: string) {
     setCartItems((currentItems) => {
       return currentItems.filter((item) => item._id !== id);
+    });
+  }
+  function increaseCart(id: string) {
+    setCartItems((currentItems) => {
+      return currentItems.map((item) => {
+        if (item._id === id) {
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+            totalPrice: (item.totalPrice /item.quantity) * (item.quantity + 1)
+          };
+        }
+        
+        return item;
+      });
+    });
+  }
+  function decreaseCart(id: string) {
+    setCartItems((currentItems) => {
+      return currentItems.map((item) => {
+        if (item._id === id && item.quantity > 1) {
+          return {
+            ...item,
+            quantity: item.quantity - 1,
+            totalPrice: (item.totalPrice /item.quantity) * (item.quantity - 1)
+          };
+        }
+        return item;
+      });
     });
   }
 
@@ -146,6 +179,8 @@ export const ShoppingCartProvider = ({
         cartItems,
         setCartOpen,
         removeFromCart,
+        increaseCart,
+        decreaseCart,
         getTotalCartPrice,
       }}
     >

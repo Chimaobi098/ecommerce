@@ -8,7 +8,7 @@ export const Wrapper = styled(motion.div)`
   position: relative;
   z-index: 101;
   overflow-y: scroll;
-  padding-bottom: 150px;
+  padding-bottom: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,7 +57,7 @@ export const ProudctInfo = styled(motion.div)`
   }
   #product-image {
     width: 30%;
-    object-fit: contain;
+    object-fit: cover;
   }
   #remove-product {
     background-color: transparent;
@@ -66,15 +66,6 @@ export const ProudctInfo = styled(motion.div)`
 `;
 
 export const CheckoutButton = styled(motion.button)`
-  width: 95%;
-  border: none;
-  border-radius: 5px;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 10px;
-  background-color: #000000;
-  color: white;
-  text-align: center;
 
   position: relative;
 `;
@@ -111,7 +102,6 @@ export const CheckoutDetails = styled.div`
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid grey;
-    border-bottom: 1px solid grey;
     padding: 1rem 0.7rem;
   }
 `;

@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/index.js", "lib/sanity.ts", "components/productInfoOverly/prodInfoOverlay.js", "utils/buildtree.js", "context/sanityUserId.js", "components/profilePage/address/addressbook.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/index.js", "lib/sanity.ts", "components/productInfoOverly/prodInfoOverlay.js", "utils/buildtree.js", "context/sanityUserId.js", "components/profilePage/address/addressbook.tsx", "components/ShoppingCart/shoppingCartOverlay.js"],
   "exclude": ["node_modules"]
 }
