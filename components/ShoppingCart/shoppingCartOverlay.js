@@ -30,6 +30,28 @@ const ShoppingCartOverlay = () => {
     setCartOpen(false);
     router.push("/checkout");
   }
+  const [swiped, setSwiped] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [dist, setDist] = useState(0);
+
+  const handleTouchStart = (event) => {
+    setStartX(event.touches[0].clientX);
+  };
+
+  const handleTouchMove = (event) => {
+    if (event.touches.length > 1) return;
+
+    const currentX = event.touches[0].clientX;
+    setDist(currentX - startX);
+  };
+
+  const handleTouchEnd = () => {
+    if (dist > 50) {
+      setSwiped(true);
+    } else {
+      setSwiped(false);
+    }
+  };
 
 
   return (
@@ -50,7 +72,10 @@ const ShoppingCartOverlay = () => {
           {cartItems.map((item) => 
           
           (
-            <ProudctInfo className="h-40 px-2 pt-2 border-t border-t-gray-700" key={item._id} transition={{ type: "tween" }}>
+            <ProudctInfo className="h-40 px-2 pt-2 relative border-t border-t-gray-700" key={item._id} transition={{ type: "tween" }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}>
               
               <img
               
@@ -63,21 +88,20 @@ const ShoppingCartOverlay = () => {
                 alt="prouduct image"
                 className="h-40"
               />
-              <div id="product-info-wrapper">
-                <div id="product-details" className="h-40 gap-y-20 text-xl">
-                  <span
-                    style={{
-                      fontWeight: 400,
-                      overflow: 'Hidden',
-                      width: "100%",
-                      display: "inline-block",
-                      
-                      textOverflow: "ellipsis",
-                    }}
-                  >
+              <div className=" h-40 flex flex-col justify-between w-full pl-2">
+                <div className=" text-xl w-full">
+                  <span>
                     {item.title}
                   </span>
-                  <span>
+
+                </div>
+                {/* <div id="product-total-cost">
+                  {formatCurrency(item.totalPrice)}
+                </div> */}
+
+      <div className="flex justify-between">
+                <div>
+                <span className="text-xl">
                     {formatCurrency(
                       item.isVariant
                         ? item.price
@@ -85,19 +109,6 @@ const ShoppingCartOverlay = () => {
                     )}
                   </span>
                 </div>
-                {/* <div id="product-total-cost">
-                  {formatCurrency(item.totalPrice)}
-                </div> */}
-              </div>
-              <div className="flex flex-col gap-y-20">
-              <button
-                onClick={() => {
-                  removeFromCart(item._id);
-                }}
-                id="remove-product"
-              >
-                <DeleteRoundedIcon fontSize="small" color="error" />
-              </button>
               <div className="flex flex-row w-20 cursor-pointer justify-evenly text-xl">
                 <div onClick={() => {
                   decreaseCart(item._id);
@@ -107,6 +118,20 @@ const ShoppingCartOverlay = () => {
                   increaseCart(item._id);
                 }}>+</div>
               </div>
+        </div>
+              </div>
+
+              <div className={`bg-red-500 h-full absolute -right-2 flex justify-center items-center cursor w-28 ${swiped ? 'translate-x-0' : 'translate-x-full'}`}
+              onClick={() => {
+                removeFromCart(item._id);
+              }}>
+              <button
+              className="text-white"
+                
+                id="remove-product"
+              >
+                <DeleteRoundedIcon fontSize="small" />
+              </button>
               </div>
             </ProudctInfo>
           ))}
@@ -121,7 +146,7 @@ const ShoppingCartOverlay = () => {
           </div>
           <hr />
 
-          <div className=" flex flex-row h-12 w-full justify-evenly mt-2 px-2 gap-x-4">
+          <div className=" flex flex-row h-12 w-full justify-evenly mt-2 mb-8 lg:mb-0 px-2 gap-x-4">
           <button className="bg-black h-full rounded-md w-full text-white" onClick={handleClick}>
             Checkout
           </button>

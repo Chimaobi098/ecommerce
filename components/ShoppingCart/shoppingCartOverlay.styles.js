@@ -34,12 +34,12 @@ export const Header = styled.header`
 export const ProudctInfo = styled(motion.div)`
   display: flex;
   align-items: center;
-  margin-bottom: 4vmin;
+  margin-bottom: 2vmin;
   width: 100%;
 
   #product-info-wrapper {
     display: flex;
-    width: 60%;
+    width: 690%;
     justify-content: space-between;
     padding: 0 2vmin;
   }
@@ -72,6 +72,7 @@ export const CheckoutButton = styled(motion.button)`
 
 export const CartItemWrapper = styled.div`
   height: 100%;
+  width: 95%;
   overflow-y: scroll;
 `;
 
