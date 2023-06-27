@@ -21,6 +21,7 @@ interface ShoppingCartContext {
   getCartQuantity: () => number;
   cartOpen: boolean;
   cartItems: CartItem[];
+  handleItemClick: (itemId:string) =>void;
   removeFromCart: (id: string) => void;
   increaseCart: (id: string) => void;
   decreaseCart: (id: string) => void;
@@ -63,6 +64,7 @@ interface CartItem {
   isVariant: boolean;
   quantity: number;
   defaultProductVariant?: DefaultProdVariant;
+  swiped:boolean;
   images?: { asset: { _ref: string; _type: string } }[];
 }
 
@@ -94,13 +96,23 @@ export const ShoppingCartProvider = ({
 
   function getCartQuantity() {
     return cartItems.length;
-  }
+  };
+
+
+  function handleItemClick(itemId:string) {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item._id === itemId ? { ...item, clicked: true } : { ...item, clicked: false }
+      )
+    );
+  };
 
   function removeFromCart(id: string) {
     setCartItems((currentItems) => {
       return currentItems.filter((item) => item._id !== id);
     });
   }
+
   function increaseCart(id: string) {
     setCartItems((currentItems) => {
       return currentItems.map((item) => {
@@ -130,6 +142,7 @@ export const ShoppingCartProvider = ({
       });
     });
   }
+  
 
   function modifyItemQuantity(
     productInfo: ProductInfo,
@@ -149,6 +162,7 @@ export const ShoppingCartProvider = ({
             totalPrice: productInfo.isVariant
               ? productInfo.price! * productQuantity
               : productInfo.defaultProductVariant!.price * productQuantity,
+              swiped: false,
           },
         ];
       } else {
@@ -160,6 +174,7 @@ export const ShoppingCartProvider = ({
               totalPrice: productInfo.isVariant
                 ? productInfo.price! * productQuantity
                 : productInfo.defaultProductVariant!.price * productQuantity,
+                swiped: false,
             };
           } else {
             return item;
@@ -178,6 +193,7 @@ export const ShoppingCartProvider = ({
         cartOpen,
         cartItems,
         setCartOpen,
+        handleItemClick,
         removeFromCart,
         increaseCart,
         decreaseCart,

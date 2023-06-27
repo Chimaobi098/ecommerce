@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   CartItemWrapper,
+  Deletebutton,
   CheckoutButton,
   CheckoutButtonWrapper,
   CheckoutDetails,
@@ -18,40 +19,68 @@ import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { sanityClient } from "../../lib/sanity"; 
 import { useRouter } from "next/router";
+import { Swipeable } from 'react-swipeable';
 
 
 
 const ShoppingCartOverlay = () => {
   const router = useRouter();
-  const { setCartOpen, cartItems, removeFromCart,increaseCart,decreaseCart, getTotalCartPrice } =
+  const { setCartOpen, cartItems, handleItemClick, removeFromCart,increaseCart,decreaseCart, getTotalCartPrice } =
     useShoppingCart();
   
+    // const ref = useRef();
+    // let downX;
+
+    // const onPointerMove = (e) =>{
+    //   const newX = e.clientX;
+    //   if(newX - downX < -30){
+    //     ref.current.style.transform = "translate(-55px)";
+    //   } else ref.current.style.transform = "translate(100%)";
+
+    // };
+    // const onPointerDown = (e) =>{
+    //   downX = e.clientX;
+    //   ref.current.addEventListener("pointermove", onPointerMove)
+    // };
+    // const onPointerUp = () =>
+    // ref.current.removeEventListener("pointermove", onPointerMove);
+
+
+    // const [startX, setStartX] = useState(0);
+    // const [endX, setEndX] = useState(0);
+  
+    // Handle the start of touch event
+
+
+    // const handleTouchStart = (event) => {
+    //   const touch = event.touches[0];
+    //   setStartX(touch.clientX);
+    // };
+  
+    // Handle the end of touch event
+    // const handleTouchEnd = (event, id) => {
+    //   const touch = event.changedTouches[0];
+    //   setEndX(touch.clientX);
+  
+    //   // Calculate the difference between start and end positions
+    //   const deltaX = endX - startX;
+  
+    //   // Move the div to the right if the swipe is greater than a threshold
+    //   if (deltaX > 100) {
+    //     cartItems.map((item)=>{
+    //       if(item._id === id){
+    //         divRef.current.style.transform = 'translateX(100%)';
+    //       }
+
+    //     })
+        
+    //   }
+    // };
+
   function handleClick() {
     setCartOpen(false);
     router.push("/checkout");
   }
-  const [swiped, setSwiped] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [dist, setDist] = useState(0);
-
-  const handleTouchStart = (event) => {
-    setStartX(event.touches[0].clientX);
-  };
-
-  const handleTouchMove = (event) => {
-    if (event.touches.length > 1) return;
-
-    const currentX = event.touches[0].clientX;
-    setDist(currentX - startX);
-  };
-
-  const handleTouchEnd = () => {
-    if (dist > 50) {
-      setSwiped(true);
-    } else {
-      setSwiped(false);
-    }
-  };
 
 
   return (
@@ -72,10 +101,10 @@ const ShoppingCartOverlay = () => {
           {cartItems.map((item) => 
           
           (
-            <ProudctInfo className="h-40 px-2 pt-2 relative border-t border-t-gray-700" key={item._id} transition={{ type: "tween" }}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}>
+            <ProudctInfo 
+            // onClick={() => handleItemClick(item._id)} 
+            className="h-40 pl-2 -mr-4 pt-2 relative border-t border-t-gray-700" key={item._id} transition={{ type: "tween" }}
+            >
               
               <img
               
@@ -89,12 +118,26 @@ const ShoppingCartOverlay = () => {
                 className="h-40"
               />
               <div className=" h-40 flex flex-col justify-between w-full pl-2">
-                <div className=" text-xl w-full">
+                <div className="flex flex-row justify-between">
+                <div className=" text-xl w-9/12">
                   <span>
                     {item.title}
                   </span>
 
                 </div>
+                <div className="w-3/12 flex justify-center">
+                <button
+              className="text-black"
+              onClick={() => {
+                removeFromCart(item._id);
+              }}
+                
+                id="remove-product"
+              >
+                <DeleteRoundedIcon fontSize="medium" />
+              </button>
+              </div>
+              </div>
                 {/* <div id="product-total-cost">
                   {formatCurrency(item.totalPrice)}
                 </div> */}
@@ -121,18 +164,11 @@ const ShoppingCartOverlay = () => {
         </div>
               </div>
 
-              <div className={`bg-red-500 h-full absolute -right-2 flex justify-center items-center cursor w-28 ${swiped ? 'translate-x-0' : 'translate-x-full'}`}
-              onClick={() => {
+               {/* <Deletebutton onClick={() => {
                 removeFromCart(item._id);
-              }}>
-              <button
-              className="text-white"
-                
-                id="remove-product"
-              >
-                <DeleteRoundedIcon fontSize="small" />
-              </button>
-              </div>
+              }}> */}
+
+              {/* </Deletebutton> */}
             </ProudctInfo>
           ))}
         </CartItemWrapper>

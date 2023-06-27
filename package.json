@@ -28,6 +28,7 @@
     "react-dom": "18.2.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-paystack": "^4.0.1",
+    "react-swipeable": "^7.0.1",
     "sanity-algolia": "^1.0.2",
     "styled-components": "^5.3.5"
   },

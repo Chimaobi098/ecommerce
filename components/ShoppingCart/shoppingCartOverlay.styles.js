@@ -36,6 +36,7 @@ export const ProudctInfo = styled(motion.div)`
   align-items: center;
   margin-bottom: 2vmin;
   width: 100%;
+  position: relative;
 
   #product-info-wrapper {
     display: flex;
@@ -64,10 +65,20 @@ export const ProudctInfo = styled(motion.div)`
     border: none;
   }
 `;
-
 export const CheckoutButton = styled(motion.button)`
 
   position: relative;
+`;
+export const Deletebutton = styled(motion.button)`
+background-color: #808080;
+height: 100%;
+width: 100px;
+display: flex;
+align-items: center;
+justify-content: center;
+position: absolute;
+right: -100px;
+top: 0px;
 `;
 
 export const CartItemWrapper = styled.div`
