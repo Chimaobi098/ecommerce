@@ -3,13 +3,13 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { User } from "../../interfaces/interface";
 import ProfilePage from "../../components/profilePage/profilePage";
 import { NavBar, Wrapper } from "../../components/Home/home.styles";
+import Login from "../../components/auth/login";
 
 const Profile = ({ user }: User) => {
   return (
     <>
-      <h1>Profile</h1>
       {!user ? (
-        <button>Login</button>
+        <Login />
       ) : (
         <Wrapper>
           <ProfilePage user={user} />
