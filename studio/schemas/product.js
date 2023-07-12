@@ -53,6 +53,12 @@ export default {
       to: { type: "vendor" },
     },
     {
+      name: "category",
+      title: "Category",
+      type: "reference",
+      to: { type: "category" },
+    },
+    {
       name: "blurb",
       title: "Blurb",
       type: "localeString",
