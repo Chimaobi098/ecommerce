@@ -344,7 +344,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
     
     <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
       <div className="">
-         <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48"/>
+         <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
            
       </div>
         <div className="mx-2">
@@ -395,7 +395,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="">
-                 <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48"/>
+                 <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
                    
               </div>
                 <div className="mx-2">
@@ -446,7 +446,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="">
-                 <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48"/>
+                 <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
                    
               </div>
                 <div className="mx-2">
@@ -497,7 +497,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="">
-                 <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48"/>
+                 <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full  min-h-48 max-h-48 h-48"/>
                    
               </div>
                 <div className="mx-2">
