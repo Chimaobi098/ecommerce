@@ -226,7 +226,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               </Link>
             </div>
           </VendorPage>
-          <h2 style={{ marginTop: "50px" }}>More from this vendor</h2>
+          <h2 style={{ marginTop: "50px" }} className="mx-4">More from this vendor</h2>
           <VendorProductsWrapper>
             {currentProduct?.moreFromVendor?.map((product, i) => (
               <Link
@@ -267,7 +267,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           </VendorProductsWrapper>
         </ProductInfoSection>
       </Wrapper>
-      <div className="fixed bottom-0 w-full md:w-[450px] bg-white p-4 pb-8 md:pb-0 z-[101] text-center">
+      <div className="fixed bottom-0 w-full md:w-[450px] bg-white p-4 z-[101] text-center">
           <CartButtons primary>
             {/* <div id="quantity-control-container">
               <button
