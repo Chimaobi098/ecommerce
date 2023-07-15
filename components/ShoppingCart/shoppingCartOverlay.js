@@ -27,55 +27,6 @@ const ShoppingCartOverlay = () => {
   const router = useRouter();
   const { setCartOpen, cartItems, handleItemClick, removeFromCart,increaseCart,decreaseCart, getTotalCartPrice } =
     useShoppingCart();
-  
-    // const ref = useRef();
-    // let downX;
-
-    // const onPointerMove = (e) =>{
-    //   const newX = e.clientX;
-    //   if(newX - downX < -30){
-    //     ref.current.style.transform = "translate(-55px)";
-    //   } else ref.current.style.transform = "translate(100%)";
-
-    // };
-    // const onPointerDown = (e) =>{
-    //   downX = e.clientX;
-    //   ref.current.addEventListener("pointermove", onPointerMove)
-    // };
-    // const onPointerUp = () =>
-    // ref.current.removeEventListener("pointermove", onPointerMove);
-
-
-    // const [startX, setStartX] = useState(0);
-    // const [endX, setEndX] = useState(0);
-  
-    // Handle the start of touch event
-
-
-    // const handleTouchStart = (event) => {
-    //   const touch = event.touches[0];
-    //   setStartX(touch.clientX);
-    // };
-  
-    // Handle the end of touch event
-    // const handleTouchEnd = (event, id) => {
-    //   const touch = event.changedTouches[0];
-    //   setEndX(touch.clientX);
-  
-    //   // Calculate the difference between start and end positions
-    //   const deltaX = endX - startX;
-  
-    //   // Move the div to the right if the swipe is greater than a threshold
-    //   if (deltaX > 100) {
-    //     cartItems.map((item)=>{
-    //       if(item._id === id){
-    //         divRef.current.style.transform = 'translateX(100%)';
-    //       }
-
-    //     })
-        
-    //   }
-    // };
 
   function handleClick() {
     setCartOpen(false);

@@ -18,7 +18,6 @@ export const VendorPage = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
   margin-top: 20px;
   width: 100%;
   height: 20vh;
@@ -112,11 +111,11 @@ export const CartButtons = styled.div`
   }
 
   #add-to-cart {
-    background-color: #0aad0a;
+    background-color: #000000;
     border-radius: 12px;
     border: none;
     color: white;
-    width: 40%;
+    width: 100%;
     height: 60px;
     font-size: 1rem;
     display: flex;
@@ -125,7 +124,9 @@ export const CartButtons = styled.div`
   }
 
   #add-to-cart:hover {
-    background-color: green;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
   }
 `;
 export const ProudctVariantBackground = styled(motion.div)`
