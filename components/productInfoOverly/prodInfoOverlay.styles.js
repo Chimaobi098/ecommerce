@@ -42,12 +42,12 @@ export const VendorPage = styled.div`
 `;
 
 export const CloseMenu = styled(motion.div)`
-  background: rgb(68, 68, 68, 0.4);
+  background: white;
   backdrop-filter: blur(5px);
   position: fixed;
-  color: white;
+  color: black;
   top: 2vmin;
-  right: 2vmin;
+  left: 2vmin;
   border-radius: 50%;
   width: 25px;
   height: 25px;

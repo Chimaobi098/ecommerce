@@ -17,7 +17,8 @@ import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { useShoppingCart } from "../../context/shoppingCart";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -124,12 +125,12 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           />
         </div>
         <ProductInfoSection>
-          <CloseMenu
+          <CloseMenu className="scale-125"
             onClick={() => {
               router.back();
             }}
           >
-            <CloseRoundedIcon />
+            <KeyboardArrowDownIcon />
           </CloseMenu>
           <div
             style={{
@@ -151,13 +152,18 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               Play
             </PlayButton> */}
           </div>
-          <div className="my-4">
-          <h1 className="text-sm">
+          <div className="my-4 flex flex-row items-center">
+          <h1 className="">
             {formatCurrency(currentProduct?.defaultProductVariant?.price)}
           </h1>
-          <div>
-            {/* star for rating */}
+          <div className="flex flex-row pb-1 scale-75 w-3/12">
+            <span><StarOutlineIcon /></span>
+            <span><StarOutlineIcon /></span>
+            <span><StarOutlineIcon /></span>
+            <span><StarOutlineIcon /></span>
+            <span><StarOutlineIcon /></span>
           </div>
+          <div className="scale-75 w-2/12">(2)</div>
           </div>
 
           <Accordion>
@@ -267,7 +273,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           </VendorProductsWrapper>
         </ProductInfoSection>
       </Wrapper>
-      <div className="fixed bottom-0 w-full md:w-[450px] bg-white p-4 z-[101] text-center">
+      <div className="fixed bottom-0 w-full md:w-[450px] bg-white py-2 px-4 z-[101] text-center">
           <CartButtons primary>
             {/* <div id="quantity-control-container">
               <button
