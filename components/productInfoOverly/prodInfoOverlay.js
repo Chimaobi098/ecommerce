@@ -17,8 +17,7 @@ import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useShoppingCart } from "../../context/shoppingCart";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -39,11 +38,11 @@ const ProductInfoOverlay = ({ currentProduct }) => {
   const [numberOfAttempts, setNumberOfAttempts] = useState(0);
   console.log(currentProduct, "this is the current Product");
   const cartButtonState = () => {
-    if (getItemQuantity(currentProduct._id) == null) return "Add to Bag";
+    if (getItemQuantity(currentProduct._id) == null) return "Add to cart";
     if (getItemQuantity(currentProduct._id) !== itemQuantity) {
       return "Update quantity";
     } else {
-      return "Already In Bag";
+      return "In cart";
     }
   };
 
@@ -112,7 +111,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
         <div
           style={{
             width: "100%",
-            height: "60vh",
+            height: "40vh",
             position: "relative",
             marginBottom: "2rem",
           }}
@@ -125,12 +124,12 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           />
         </div>
         <ProductInfoSection>
-          <CloseMenu className="scale-125"
+          <CloseMenu
             onClick={() => {
               router.back();
             }}
           >
-            <KeyboardArrowDownIcon />
+            <CloseRoundedIcon />
           </CloseMenu>
           <div
             style={{
@@ -138,8 +137,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               justifyContent: "space-between",
             }}
           >
-            <h4 style={{ margin: "0" }} className="text-2xl">{currentProduct.title}</h4>
-            {/* <PlayButton
+            <h4 style={{ margin: "0" }}>{currentProduct.title}</h4>
+            <PlayButton
               onClick={() => {
                 if (user) {
                   setShowGameSettingsOverlay(true);
@@ -150,22 +149,47 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               }}
             >
               Play
-            </PlayButton> */}
-          </div>
-          <div className="my-4 flex flex-row items-center">
-          <h1 className="">
-            {formatCurrency(currentProduct?.defaultProductVariant?.price)}
-          </h1>
-          <div className="flex flex-row pb-1 scale-75 w-3/12">
-            <span><StarOutlineIcon /></span>
-            <span><StarOutlineIcon /></span>
-            <span><StarOutlineIcon /></span>
-            <span><StarOutlineIcon /></span>
-            <span><StarOutlineIcon /></span>
-          </div>
-          <div className="scale-75 w-2/12">(2)</div>
+            </PlayButton>
           </div>
 
+          <h1>
+            {formatCurrency(currentProduct?.defaultProductVariant?.price)}
+          </h1>
+          <CartButtons primary>
+            {/* <div id="quantity-control-container">
+              <button
+                className="quantity-change-buttons"
+                onClick={() => {
+                  decrement();
+                }}
+              >
+                {<RemoveRoundedIcon />}
+              </button>
+              <div id="quantity">{itemQuantity}</div>
+              <button
+                className="quantity-change-buttons"
+                onClick={() => {
+                  increment();
+                }}
+              >
+                {<AddRoundedIcon />}
+              </button>
+            </div> */}
+            <button
+            className=" m-auto"
+              id="add-to-cart"
+              onClick={() => {
+                if (currentProduct.variants) {
+                  setOverlayVisibility(true);
+                } else {
+                  if (cartButtonState() == "In cart") return;
+                  modifyItemQuantity(currentProduct, itemQuantity);
+                }
+              }}
+            >
+              {cartButtonState()}
+            </button>
+          </CartButtons>
           <Accordion>
             <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
               <h3>Product Description</h3>
@@ -202,37 +226,27 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               </p>
             </AccordionDetails>
           </Accordion>
-
           <VendorPage>
-            <div className="flex flex-col w-full gap-y-4 mt-8 p-4">
-              <div className="">About this vendor</div>
-            <div className="flex flex-row gap-x-4">
-            <div>
-            <Image
+            <div id="vendorData">
+              <p id="vendor-title">{currentProduct.vendor.title}</p>
+              <p id="more-vendor-info">
+                {`${currentProduct.vendorProductCount} Product${
+                  currentProduct.vendorProductCount == 1 ? "" : "s"
+                } Available`}
+              </p>
+            </div>
+            <motion.div whileTap={{ scale: 0.9 }}>
+              <Link href={`/vendor/${currentProduct.vendor._id}`}>
+                <Image
                   src={urlFor(currentProduct.vendor.logo).url()}
                   alt="vendorLogo"
                   height={"60rem"}
                   width={"60rem"}
                 />
-              </div>
-              <div className=" flex flex-col gap-y-2">
-              <p>{currentProduct.vendor.title}</p>
-              <p className="text-sm text-gray-400">
-                {`${currentProduct.vendorProductCount} Product${
-                  currentProduct.vendorProductCount == 1 ? "" : "s"
-                } Available`}
-              </p>
-              </div>
-            </div>
-              <Link href={`/vendor/${currentProduct.vendor._id}`}>
-                <button className="text-black border border-black rounded h-10">
-                  View Vendor
-                </button>
-
               </Link>
-            </div>
+            </motion.div>
           </VendorPage>
-          <h2 style={{ marginTop: "50px" }} className="mx-4">More from this vendor</h2>
+          <h2 style={{ marginTop: "50px" }}>More from this vendor</h2>
           <VendorProductsWrapper>
             {currentProduct?.moreFromVendor?.map((product, i) => (
               <Link
@@ -273,44 +287,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           </VendorProductsWrapper>
         </ProductInfoSection>
       </Wrapper>
-      <div className="fixed bottom-0 w-full md:w-[450px] bg-white py-2 px-4 z-[101] text-center">
-          <CartButtons primary>
-            {/* <div id="quantity-control-container">
-              <button
-                className="quantity-change-buttons"
-                onClick={() => {
-                  decrement();
-                }}
-              >
-                {<RemoveRoundedIcon />}
-              </button>
-              <div id="quantity">{itemQuantity}</div>
-              <button
-                className="quantity-change-buttons"
-                onClick={() => {
-                  increment();
-                }}
-              >
-                {<AddRoundedIcon />}
-              </button>
-            </div> */}
-            <button
-            className=" m-auto"
-              id="add-to-cart"
-              onClick={() => {
-                if (currentProduct.variants) {
-                  setOverlayVisibility(true);
-                } else {
-                  if (cartButtonState() == "Already In Bag") return;
-                  modifyItemQuantity(currentProduct, itemQuantity);
-                }
-              }}
-            >
-              {cartButtonState()}
-            </button>
-          </CartButtons>
-          </div>
-      {/* {showGameSettingsOverlay && (
+      {showGameSettingsOverlay && (
         <ProudctVariantBackground
           id="variant-background"
           onClick={(e) => {
@@ -342,7 +319,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             </form>
           </motion.div>
         </ProudctVariantBackground>
-      )} */}
+      )}
       {overlayVisibility && (
         <ProudctVariantBackground
           id="variant-background"

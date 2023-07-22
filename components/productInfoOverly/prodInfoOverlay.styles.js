@@ -18,6 +18,7 @@ export const VendorPage = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 1rem;
   margin-top: 20px;
   width: 100%;
   height: 20vh;
@@ -42,12 +43,12 @@ export const VendorPage = styled.div`
 `;
 
 export const CloseMenu = styled(motion.div)`
-  background: white;
+  background: rgb(68, 68, 68, 0.4);
   backdrop-filter: blur(5px);
   position: fixed;
-  color: black;
+  color: white;
   top: 2vmin;
-  left: 2vmin;
+  right: 2vmin;
   border-radius: 50%;
   width: 25px;
   height: 25px;
@@ -111,11 +112,11 @@ export const CartButtons = styled.div`
   }
 
   #add-to-cart {
-    background-color: #000000;
+    background-color: #0aad0a;
     border-radius: 12px;
     border: none;
     color: white;
-    width: 100%;
+    width: 40%;
     height: 60px;
     font-size: 1rem;
     display: flex;
@@ -124,9 +125,7 @@ export const CartButtons = styled.div`
   }
 
   #add-to-cart:hover {
-    background-color: white;
-    color: black;
-    border: 2px solid black;
+    background-color: green;
   }
 `;
 export const ProudctVariantBackground = styled(motion.div)`
