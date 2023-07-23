@@ -19,6 +19,16 @@ export default {
       type: 'number',
     },
     {
+      title: 'Size',
+      name: 'size',
+      type: 'number',
+    },
+    {
+      title: 'Colour',
+      name: 'colour',
+      type: 'string',
+    },
+    {
       title: 'SKU',
       name: 'sku',
       type: 'string',

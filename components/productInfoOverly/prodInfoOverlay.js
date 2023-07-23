@@ -18,6 +18,7 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useShoppingCart } from "../../context/shoppingCart";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -138,24 +139,12 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             }}
           >
             <h4 style={{ margin: "0" }}>{currentProduct.title}</h4>
-            <PlayButton
-              onClick={() => {
-                if (user) {
-                  setShowGameSettingsOverlay(true);
-                  return;
-                }
-
-                router.replace("/api/auth/login");
-              }}
-            >
-              Play
-            </PlayButton>
+            
           </div>
 
           <h1>
             {formatCurrency(currentProduct?.defaultProductVariant?.price)}
           </h1>
-          <CartButtons primary>
             {/* <div id="quantity-control-container">
               <button
                 className="quantity-change-buttons"
@@ -175,9 +164,9 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                 {<AddRoundedIcon />}
               </button>
             </div> */}
+            <div className="w-full h-auto flex flex-grow justify-evenly text-white my-8">
             <button
-            className=" m-auto"
-              id="add-to-cart"
+            className="bg-[#0aad0a] hover:bg-[green] w-5/12 rounded-md h-12"
               onClick={() => {
                 if (currentProduct.variants) {
                   setOverlayVisibility(true);
@@ -189,7 +178,20 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             >
               {cartButtonState()}
             </button>
-          </CartButtons>
+            <button
+            className="bg-[#de5d17] hover:bg-[#be541a] w-5/12 h-12 rounded-md"
+              onClick={() => {
+                if (user) {
+                  setShowGameSettingsOverlay(true);
+                  return;
+                }
+
+                router.replace("/api/auth/login");
+              }}
+            >
+              Play
+            </button>
+            </div>
           <Accordion>
             <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
               <h3>Product Description</h3>
@@ -297,14 +299,19 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             }
           }}
         >
+          
           <motion.div
             id="overlay-container"
             initial={{ y: "70vh" }}
             animate={{ y: "0vh" }}
           >
-            <p>Set up Your Game</p>
-            <form onSubmit={handleSubmit}>
+            <p className="w-full"><ArrowBackIosNewIcon onClick={(e)=>{setShowGameSettingsOverlay(false);}} /></p>
+            <form className="w-full h-auto" onSubmit={handleSubmit}>
+              <div className="flex flex-col gap-y-16 mt-8">
+              <div className="flex flex-col w-full gap-y-2">
+                <label className="md:text-lg font-bold">Number of attempts:</label>
               <input
+              className="w-full border-2 rounded-md h-12 p-2"
                 placeholder="how many attempts do you want?"
                 value={numberOfAttempts}
                 type="number"
@@ -313,9 +320,27 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                   setNumberOfAttempts(e.target.value);
                 }}
               />
+              </div>
+                      <div className="flex flex-col w-full gap-y-2">  
+                      <label className="md:text-lg font-bold">Amount needed to pay:</label>
+                        <input
+                            className="w-full border-2 rounded-md h-12 p-2"
+                placeholder="how many attempts do you want?"
+                value={numberOfAttempts}
+                type="number"
+                required
+                // onChange={(e) => {
+                //   setNumberOfAttempts(e.target.value);
+                // }}
+              />
+              </div>
+              </div>
 
-              <span>Total cost: {formatCurrency(numberOfAttempts * 100)}</span>
-              <button type="submit">pay</button>
+              {/* <span>Total cost: {formatCurrency(numberOfAttempts * 100)}</span> */}
+             <button
+          className=" fixed bottom-0  md:right-0 bg-black text-white w-11/12 md:w-[420px] h-12 mb-6 rounded-sm md:mx-4" type="submit">pay</button>
+
+      
             </form>
           </motion.div>
         </ProudctVariantBackground>
@@ -335,6 +360,21 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             initial={{ y: "70vh" }}
             animate={{ y: "0vh" }}
           >
+                    <div
+          style={{
+            width: "100%",
+            height: "40vh",
+            position: "relative",
+            marginBottom: "2rem",
+          }}
+        >
+          <Image
+            layout="fill"
+            objectFit="cover"
+            src={urlFor(currentProduct.defaultProductVariant?.images[0]).url()}
+            alt="Product Image"
+          />
+        </div>
             <DefaultProduct
               productInfo={currentProduct}
               variantButtonState={variantButtonState}
@@ -349,6 +389,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             ))}
           </motion.div>
           <button
+          className="fixed bottom-0 bg-black text-white w-full h-12 mb-6 m-auto rounded-md"
             id="add-variants-to-cart"
             onClick={() => {
               setVariantButtonState("selected");
@@ -356,7 +397,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               alert("your items have been added to the cart");
             }}
           >
-            Add To Cart
+            Next
           </button>
         </ProudctVariantBackground>
       )}
