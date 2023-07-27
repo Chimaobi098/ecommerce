@@ -342,7 +342,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
 
               {/* <span>Total cost: {formatCurrency(numberOfAttempts * 100)}</span> */}
              <button
-          className=" fixed bottom-0  md:right-0 bg-black text-white w-11/12 md:w-[420px] h-12 mb-6 rounded-sm md:mx-4" type="submit">pay</button>
+          className=" fixed bottom-0  md:right-0 bg-black text-white w-11/12 md:w-[420px] h-12 mb-12 md:mb-6 rounded-sm md:mx-4" type="submit">pay</button>
 
       
             </form>
@@ -379,6 +379,14 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             alt="Product Image"
           />
         </div>
+        <CloseMenu
+        className="cursor-pointer"
+            onClick={() => {
+              setOverlayVisibility(false);
+            }}
+          >
+            <CloseRoundedIcon />
+          </CloseMenu>
 
           <DefaultColor
               productInfo={currentProduct}
@@ -406,9 +414,9 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               variantButtonState={variantButtonState}
             />
 
-            <div className=" fixed bottom-0 p-4 bg-white h-20 w-12/12 md:w-[457px]">
+            <div className=" fixed bottom-0 p-4 bg-white min-h-20 w-[457px]">
       <button
-          className=" bg-black text-white w-10/12  h-12 mb-6 rounded-sm mx-4"
+          className=" bg-black text-white w-10/12  h-12 mb-12 md:mb-6 rounded-sm mx-4"
             id="add-variants-to-cart"
             onClick={() => {
               setVariantButtonState("selected");
