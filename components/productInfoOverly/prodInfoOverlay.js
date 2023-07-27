@@ -26,6 +26,10 @@ import Link from "next/link";
 import Head from "next/head";
 import ProductVariant from "./productVariant";
 import DefaultProduct from "./defaultProduct";
+import DefaultColor from "./defaultColor";
+import DefaultSize from "./defaultSize";
+
+
 import { useUser } from "@auth0/nextjs-auth0";
 import { usePaystackPayment } from "react-paystack";
 
@@ -375,6 +379,13 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             alt="Product Image"
           />
         </div>
+
+          <DefaultColor
+              productInfo={currentProduct}
+              variantButtonState={variantButtonState}
+            />
+
+        <div className="w-full flex flex-row gap-x-2 items-center mt-2">
             <DefaultProduct
               productInfo={currentProduct}
               variantButtonState={variantButtonState}
@@ -387,9 +398,17 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                 variantButtonState={variantButtonState}
               ></ProductVariant>
             ))}
-          </motion.div>
-          <button
-          className="fixed bottom-0 bg-black text-white w-full h-12 mb-6 m-auto rounded-md"
+
+        </div>
+
+        <DefaultSize
+              productInfo={currentProduct}
+              variantButtonState={variantButtonState}
+            />
+
+            <div className=" fixed bottom-0 p-4 bg-white h-20 w-12/12 md:w-[457px]">
+      <button
+          className=" bg-black text-white w-10/12  h-12 mb-6 rounded-sm mx-4"
             id="add-variants-to-cart"
             onClick={() => {
               setVariantButtonState("selected");
@@ -399,8 +418,14 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           >
             Next
           </button>
+
+          </div>
+          </motion.div>
+
         </ProudctVariantBackground>
+        
       )}
+
     </>
   );
 };

@@ -128,7 +128,8 @@ export const CartButtons = styled.div`
   }
 `;
 export const ProudctVariantBackground = styled(motion.div)`
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.4);
   position: absolute;
@@ -137,6 +138,7 @@ export const ProudctVariantBackground = styled(motion.div)`
   left: 0;
   right: 0;
   bottom: 0;
+  overflow-y: auto;
 
   #add-variants-to-cart {
     position: absolute;
