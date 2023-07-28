@@ -20,6 +20,8 @@ interface ProductInfo {
     title: string;
     vendorProductCount: number;
     _id: string;
+    size: number;
+    colour: string;
   };
   variantButtonState: "selected" | "not-selected";
 }
@@ -29,6 +31,8 @@ const DefaultSize = ({ productInfo, variantButtonState }: ProductInfo) => {
   const [currentVariant, setCurrentVariant] = useState("");
   const [itemQuantity, setItemQuantity] = useState<number>(0);
   const { modifyItemQuantity, getItemQuantity } = useShoppingCart();
+  console.log(productInfo);
+  
 
   useEffect(() => {
     console.log(variantButtonState);
@@ -124,15 +128,15 @@ const DefaultSize = ({ productInfo, variantButtonState }: ProductInfo) => {
     <div>Select Size</div>
     <div className="sizes flex flex-row flex-wrap gap-x-2 text-sm items-center">
      <div className="each-side rounded-2xl bg-gray-300 w-1/12 flex flex-row justify-center items-center">
-        S
+     {productInfo.defaultProductVariant?.size}
        </div>
 
-     <div className="each-side rounded-2xl bg-gray-300 border w-1/12 flex flex-row justify-center items-center">
+     {/* <div className="each-side rounded-2xl bg-gray-300 border w-1/12 flex flex-row justify-center items-center">
         XL
      </div>
      <div className="each-side rounded-2xl bg-gray-300 border w-1/12 flex flex-row justify-center items-center">
       XXL
-     </div>
+     </div> */}
    </div>
 
   </div>

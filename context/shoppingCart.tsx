@@ -44,6 +44,8 @@ export interface DefaultProdVariant {
   price: number;
   sku: string;
   title: string;
+  size: number;
+  colour: string;
 }
 
 interface MoreVendorItem {

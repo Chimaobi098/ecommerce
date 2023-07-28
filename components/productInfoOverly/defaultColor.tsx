@@ -86,7 +86,7 @@ const DefaultColor = ({ productInfo, variantButtonState }: ProductInfo) => {
       {/* </div> */}
       {/* <div className="w-full flex flex-col gap-y-4">
       <div className=" gap-y-4"> */}
-      <div className="w-full text-left">Colour: Black</div>
+      <div className="w-full text-left">Colour: {productInfo.defaultProductVariant?.colour}</div>
       {/* <div className="border flex flex-row gap-x-2 items-center mt-2"> */}
       {/* <div className="w-2/12 border">
       <Image

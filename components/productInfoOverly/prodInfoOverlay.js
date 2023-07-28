@@ -416,7 +416,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
 
             <div className=" fixed bottom-0 p-4 bg-white min-h-20 w-[457px]">
       <button
-          className=" bg-black text-white w-10/12  h-12 mb-12 md:mb-6 rounded-sm mx-4"
+          className=" bg-black text-white w-10/12 ml-4 h-12 mb-12 md:mb-6 rounded-sm mx-4"
             id="add-variants-to-cart"
             onClick={() => {
               setVariantButtonState("selected");
