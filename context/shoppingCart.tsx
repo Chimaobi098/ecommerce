@@ -28,8 +28,6 @@ interface ShoppingCartContext {
   getTotalCartPrice: () => number;
   variantfunc: (id:string)=> void;
   variantId: string;
-  variantImage: string;
-  Imagefunc: (id:string)=> void;
   activateDefault:()=>void;
   deactivateDefault:()=>void;
   Default:boolean;
