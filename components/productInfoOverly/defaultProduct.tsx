@@ -28,7 +28,7 @@ const DefaultProduct = ({ productInfo, variantButtonState }: ProductInfo) => {
   console.log(ProudctInfo, "This is the product info thing");
   const [currentVariant, setCurrentVariant] = useState("");
   const [itemQuantity, setItemQuantity] = useState<number>(0);
-  const { modifyItemQuantity, getItemQuantity } = useShoppingCart();
+  const { modifyItemQuantity, getItemQuantity, variantfunc, variantId } = useShoppingCart();
 
   useEffect(() => {
     console.log(variantButtonState);
@@ -88,7 +88,10 @@ const DefaultProduct = ({ productInfo, variantButtonState }: ProductInfo) => {
       <div className=" gap-y-4">
       <div className="hidden">Colour: Black</div>
       <div className="border flex flex-row gap-x-2 items-center mt-2"> */}
-      <div className="w-2/12 border">
+      <div className="w-2/12 border" onClick={()=>{
+        variantfunc(productInfo.defaultProductVariant.sku);
+        console.log(variantId);
+         }}>
       <Image
         objectFit="contain"
         src={urlFor(productInfo.defaultProductVariant.images[0]).url()}

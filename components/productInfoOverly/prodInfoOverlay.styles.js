@@ -129,7 +129,7 @@ export const CartButtons = styled.div`
 `;
 export const ProudctVariantBackground = styled(motion.div)`
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.4);
   position: absolute;
@@ -148,7 +148,7 @@ export const ProudctVariantBackground = styled(motion.div)`
   #overlay-container {
     background-color: white;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     padding: 1rem 1.3rem 1rem 1.3rem;
 
     border-radius: 1rem 1rem 0rem 0rem;

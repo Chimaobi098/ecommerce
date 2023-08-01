@@ -18,14 +18,14 @@ interface ProductInfo {
     price: number;
     sku: string;
     title: string;
+    colour: string;
     _key: string;
-    
   };
   variantButtonState: "selected" | "not-selected";
   productId: string;
 }
 
-const ProductVariant = ({
+const ProductColor = ({
   productInfo,
   variantButtonState,
   productId,
@@ -33,7 +33,7 @@ const ProductVariant = ({
   console.log(ProudctInfo, "This is the product info thing");
   const [currentVariant, setCurrentVariant] = useState("");
   const [itemQuantity, setItemQuantity] = useState<number>(0);
-  const { modifyItemQuantity, getItemQuantity, variantfunc, Imagefunc } = useShoppingCart();
+  const { modifyItemQuantity, getItemQuantity, variantId } = useShoppingCart();
 
   useEffect(() => {
     console.log(variantButtonState);
@@ -54,13 +54,10 @@ const ProductVariant = ({
   return (
     <>
      {/* <div className="w-full flex flex-col gap-y-4">
-      <div className=" gap-y-4">
-      <div>Colour: Black</div>
-      <div className="border flex flex-row gap-x-2 items-center mt-2"> */}
-      <div className="w-2/12 border" onClick={()=>{
-        variantfunc(productInfo._key);
-        // console.log(variantId);
-         }}>
+      <div className=" gap-y-4"> */}
+      <div className="w-full text-left">Colour: {productInfo?.colour}</div>
+      {/* <div className="border flex flex-row gap-x-2 items-center mt-2"> */}
+      {/* <div className="w-2/12 border">
       <Image
         objectFit="contain"
         src={urlFor(productInfo?.images[0]).url()}
@@ -68,7 +65,7 @@ const ProductVariant = ({
         height="100%"
         width="100%"
       />
-      </div>
+      </div> */}
 
       {/* </div>
       </div>
@@ -123,4 +120,4 @@ const ProductVariant = ({
   );
 };
 
-export default ProductVariant;
+export default ProductColor;

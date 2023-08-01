@@ -28,6 +28,7 @@ import ProductVariant from "./productVariant";
 import DefaultProduct from "./defaultProduct";
 import DefaultColor from "./defaultColor";
 import DefaultSize from "./defaultSize";
+import ProductColor from "./productColor";
 
 
 import { useUser } from "@auth0/nextjs-auth0";
@@ -37,7 +38,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
   const router = useRouter();
   const { user, error } = useUser();
   const [variantButtonState, setVariantButtonState] = useState("not-selected"); // either not-selected or selected
-  const { modifyItemQuantity, getItemQuantity } = useShoppingCart();
+  const { modifyItemQuantity, getItemQuantity, variantId } = useShoppingCart();
   const [overlayVisibility, setOverlayVisibility] = useState(false);
   const [showGameSettingsOverlay, setShowGameSettingsOverlay] = useState(false);
   const [numberOfAttempts, setNumberOfAttempts] = useState(0);
@@ -50,6 +51,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
       return "In cart";
     }
   };
+
 
   const config = {
     email: user?.email,
@@ -353,7 +355,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
         <ProudctVariantBackground
           id="variant-background"
           onClick={(e) => {
-            console.log(e.target.id);
+            // console.log(e.target.id);
             if (e.target.id == "variant-background") {
               setOverlayVisibility(false);
             }
@@ -387,11 +389,46 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           >
             <CloseRoundedIcon />
           </CloseMenu>
+            <div className="text-left w-full mb-4">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <h4 style={{ margin: "0" }}>{currentProduct.title}</h4>
+            
+          </div>
 
-          <DefaultColor
-              productInfo={currentProduct}
-              variantButtonState={variantButtonState}
-            />
+          <h1>
+            {formatCurrency(currentProduct?.defaultProductVariant?.price)}
+          </h1>
+          </div>
+
+          <div className="flex-col w-full ">
+  {currentProduct.variants.map((variant) => {
+    if (variantId === variant._key) {
+      return (
+        <ProductColor
+          key={variant._key}
+          productInfo={variant}
+          productId={currentProduct._id}
+          variantButtonState={variantButtonState}
+        />
+      );
+    } else {
+      return null;
+    }
+  })}
+
+  {variantId === currentProduct.defaultProductVariant?.sku && (
+    <DefaultColor
+      productInfo={currentProduct}
+      variantButtonState={variantButtonState}
+    />
+  )}
+</div>
+
 
         <div className="w-full flex flex-row gap-x-2 items-center mt-2">
             <DefaultProduct
@@ -414,10 +451,10 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               variantButtonState={variantButtonState}
             />
 
-            <div className=" fixed bottom-0 p-4 bg-white min-h-20 w-[457px]">
-      <button
-          className=" bg-black text-white w-10/12 ml-4 h-12 mb-12 md:mb-6 rounded-sm mx-4"
-            id="add-variants-to-cart"
+            <div className="fixed bottom-0 px-4 pt-0 md:pt-8 bg-white h-24 w-full">
+          <button
+          className="w-full m-auto bg-black text-white h-12 rounded-sm"
+          
             onClick={() => {
               setVariantButtonState("selected");
 

@@ -26,6 +26,11 @@ interface ShoppingCartContext {
   increaseCart: (id: string) => void;
   decreaseCart: (id: string) => void;
   getTotalCartPrice: () => number;
+  variantfunc: (id:string)=> void;
+  variantId: string;
+  variantImage: string;
+  Imagefunc: (id:string)=> void;
+
   setCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -88,6 +93,20 @@ export const ShoppingCartProvider = ({
     return data;
 
     
+  }
+  
+
+  const [variantId, setVariantId] = useState('');
+  const [variantImage, setVariantImage] = useState('');
+
+
+  function variantfunc(id:string){
+    setVariantId(id);
+    console.log(variantId);
+  }
+  function Imagefunc(id:string){
+    setVariantImage(id);
+    console.log(variantImage);
   }
 
   function getTotalCartPrice() {
@@ -200,6 +219,10 @@ export const ShoppingCartProvider = ({
         increaseCart,
         decreaseCart,
         getTotalCartPrice,
+        variantId,
+        variantfunc,
+        variantImage,
+        Imagefunc
       }}
     >
       <AnimatePresence>{cartOpen && <ShoppingCartOverlay />}</AnimatePresence>
