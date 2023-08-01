@@ -14,21 +14,26 @@ import { ProudctVariantBackground } from "./prodInfoOverlay.styles";
 
 interface ProductInfo {
   productInfo: {
-    defaultProductVariant: DefaultProdVariant;
-    moreFromVendor: [];
-    slug: {};
+    images: { asset: { _ref: string; _type: string } }[];
+    price: number;
+    sku: string;
     title: string;
-    vendorProductCount: number;
-    _id: string;
+    colour: string;
+    _key: string;
   };
   variantButtonState: "selected" | "not-selected";
+  productId: string;
 }
 
-const DefaultColor = ({ productInfo, variantButtonState }: ProductInfo) => {
+const ProductImage = ({
+  productInfo,
+  variantButtonState,
+  productId,
+}: ProductInfo) => {
   console.log(ProudctInfo, "This is the product info thing");
   const [currentVariant, setCurrentVariant] = useState("");
   const [itemQuantity, setItemQuantity] = useState<number>(0);
-  const { modifyItemQuantity, getItemQuantity, Default } = useShoppingCart();
+  const { modifyItemQuantity, getItemQuantity, variantId } = useShoppingCart();
 
   useEffect(() => {
     console.log(variantButtonState);
@@ -37,12 +42,9 @@ const DefaultColor = ({ productInfo, variantButtonState }: ProductInfo) => {
 
       modifyItemQuantity(
         {
-          _id: productInfo._id,
-          title: productInfo.title,
-          sku: productInfo.defaultProductVariant.sku,
-          defaultProductVariant: productInfo.defaultProductVariant,
-
-          isVariant: false,
+          ...productInfo,
+          isVariant: true,
+          _id: productId,
         },
         itemQuantity
       );
@@ -51,10 +53,15 @@ const DefaultColor = ({ productInfo, variantButtonState }: ProductInfo) => {
 
   return (
     <>
-      {Default && <div className="w-full text-left">Colour: {productInfo.defaultProductVariant?.colour}</div>}
+      <Image
+            layout="fill"
+            objectFit="cover"
+            src={urlFor(productInfo?.images[0]).url()}
+            alt="Product Image"
+          />
 
     </>
   );
 };
 
-export default DefaultColor;
+export default ProductImage;

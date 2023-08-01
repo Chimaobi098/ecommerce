@@ -24,7 +24,7 @@ interface ProductInfo {
   variantButtonState: "selected" | "not-selected";
 }
 
-const DefaultColor = ({ productInfo, variantButtonState }: ProductInfo) => {
+const DefaultImage = ({ productInfo, variantButtonState }: ProductInfo) => {
   console.log(ProudctInfo, "This is the product info thing");
   const [currentVariant, setCurrentVariant] = useState("");
   const [itemQuantity, setItemQuantity] = useState<number>(0);
@@ -51,10 +51,17 @@ const DefaultColor = ({ productInfo, variantButtonState }: ProductInfo) => {
 
   return (
     <>
-      {Default && <div className="w-full text-left">Colour: {productInfo.defaultProductVariant?.colour}</div>}
+      {Default && <>          
+        <Image
+            layout="fill"
+            objectFit="cover"
+            src={urlFor(productInfo.defaultProductVariant.images[0]).url()}
+            alt="Product Image"
+          />
+          </>}
 
     </>
   );
 };
 
-export default DefaultColor;
+export default DefaultImage;

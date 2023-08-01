@@ -29,6 +29,8 @@ import DefaultProduct from "./defaultProduct";
 import DefaultColor from "./defaultColor";
 import DefaultSize from "./defaultSize";
 import ProductColor from "./productColor";
+import ProductImage from "./productImage";
+import DefaultImage from "./defaultImage";
 
 
 import { useUser } from "@auth0/nextjs-auth0";
@@ -374,12 +376,25 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             marginBottom: "2rem",
           }}
         >
-          <Image
-            layout="fill"
-            objectFit="cover"
-            src={urlFor(currentProduct.defaultProductVariant?.images[0]).url()}
-            alt="Product Image"
-          />
+          <DefaultImage
+        productInfo={currentProduct}
+        variantButtonState={variantButtonState}
+        />
+
+        {currentProduct.variants.map((variant) => {
+        if (variantId === variant._key) {
+        return (
+        <ProductImage
+          key={variant._key}
+          productInfo={variant}
+          productId={currentProduct._id}
+          variantButtonState={variantButtonState}
+        />
+      );
+      } else {
+      return null;
+      }
+      })}
         </div>
         <CloseMenu
         className="cursor-pointer"
@@ -406,9 +421,15 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           </div>
 
           <div className="flex-col w-full ">
-  {currentProduct.variants.map((variant) => {
-    if (variantId === variant._key) {
-      return (
+
+        <DefaultColor
+        productInfo={currentProduct}
+        variantButtonState={variantButtonState}
+        />
+
+        {currentProduct.variants.map((variant) => {
+        if (variantId === variant._key) {
+        return (
         <ProductColor
           key={variant._key}
           productInfo={variant}
@@ -416,17 +437,11 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           variantButtonState={variantButtonState}
         />
       );
-    } else {
+      } else {
       return null;
-    }
-  })}
+      }
+      })}
 
-  {variantId === currentProduct.defaultProductVariant?.sku && (
-    <DefaultColor
-      productInfo={currentProduct}
-      variantButtonState={variantButtonState}
-    />
-  )}
 </div>
 
 
@@ -451,7 +466,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               variantButtonState={variantButtonState}
             />
 
-            <div className="fixed bottom-0 px-4 pt-0 md:pt-8 bg-white h-24 w-full">
+            <div className="fixed bottom-0 px-4 pt-0 md:pt-16 bg-white h-32 w-full">
           <button
           className="w-full m-auto bg-black text-white h-12 rounded-sm"
           

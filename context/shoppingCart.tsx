@@ -30,6 +30,9 @@ interface ShoppingCartContext {
   variantId: string;
   variantImage: string;
   Imagefunc: (id:string)=> void;
+  activateDefault:()=>void;
+  deactivateDefault:()=>void;
+  Default:boolean;
 
   setCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -97,16 +100,18 @@ export const ShoppingCartProvider = ({
   
 
   const [variantId, setVariantId] = useState('');
-  const [variantImage, setVariantImage] = useState('');
+  const [Default, setDefault] = useState(true);
 
 
   function variantfunc(id:string){
     setVariantId(id);
     console.log(variantId);
   }
-  function Imagefunc(id:string){
-    setVariantImage(id);
-    console.log(variantImage);
+  function activateDefault(){
+    setDefault(false)
+  }
+  function deactivateDefault(){
+    setDefault(true)
   }
 
   function getTotalCartPrice() {
@@ -221,8 +226,10 @@ export const ShoppingCartProvider = ({
         getTotalCartPrice,
         variantId,
         variantfunc,
-        variantImage,
-        Imagefunc
+        Default,
+        activateDefault,
+        deactivateDefault
+
       }}
     >
       <AnimatePresence>{cartOpen && <ShoppingCartOverlay />}</AnimatePresence>
