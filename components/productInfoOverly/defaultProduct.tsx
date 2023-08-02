@@ -88,7 +88,7 @@ const DefaultProduct = ({ productInfo, variantButtonState }: ProductInfo) => {
       <div className=" gap-y-4">
       <div className="hidden">Colour: Black</div>
       <div className="border flex flex-row gap-x-2 items-center mt-2"> */}
-      <div className="w-2/12 rounded border" onClick={()=>{
+      <div className="w-2/12 rounded border hover:border-2 hover:border-black" onClick={()=>{
         variantfunc(productInfo.defaultProductVariant.sku);
         deactivateDefault();
         console.log(variantId);

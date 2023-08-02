@@ -57,7 +57,7 @@ const ProductVariant = ({
       <div className=" gap-y-4">
       <div>Colour: Black</div>
       <div className="border flex flex-row gap-x-2 items-center mt-2"> */}
-      <div className="w-2/12 border rounded" onClick={()=>{
+      <div className="w-2/12 border rounded hover:border-2 hover:border-black" onClick={()=>{
         variantfunc(productInfo._key);
         activateDefault();
         // console.log(variantId);

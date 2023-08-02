@@ -29,6 +29,7 @@ import DefaultProduct from "./defaultProduct";
 import DefaultColor from "./defaultColor";
 import DefaultSize from "./defaultSize";
 import ProductColor from "./productColor";
+import ProductSize from "./productsize";
 import ProductImage from "./productImage";
 import DefaultImage from "./defaultImage";
 
@@ -461,12 +462,34 @@ const ProductInfoOverlay = ({ currentProduct }) => {
 
         </div>
 
+        <div className="w-full mt-4 flex flex-col gap-y-4">
+
+      <div>Select Size</div>
+      <div className="sizes flex flex-row flex-wrap gap-x-2 text-sm items-center">
         <DefaultSize
               productInfo={currentProduct}
               variantButtonState={variantButtonState}
             />
 
-            <div className="fixed bottom-0 px-4 pt-0 md:pt-16 bg-white h-32 w-full">
+        {currentProduct.variants.map((variant) => {
+        if (variantId === variant._key) {
+        return (
+        <ProductSize
+          key={variant._key}
+          productInfo={variant}
+          productId={currentProduct._id}
+          variantButtonState={variantButtonState}
+            />
+          );
+          } else {
+          return null;
+          }
+          })}
+           </div>
+
+      </div>    
+
+            <div className="fixed bottom-0 px-4 pt-0 md:pt-12 bg-white h-32 w-full">
           <button
           className="w-full m-auto bg-black text-white h-12 rounded-sm"
           

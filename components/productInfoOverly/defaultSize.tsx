@@ -30,7 +30,7 @@ const DefaultSize = ({ productInfo, variantButtonState }: ProductInfo) => {
   console.log(ProudctInfo, "This is the product info thing");
   const [currentVariant, setCurrentVariant] = useState("");
   const [itemQuantity, setItemQuantity] = useState<number>(0);
-  const { modifyItemQuantity, getItemQuantity } = useShoppingCart();
+  const { modifyItemQuantity, getItemQuantity, Default } = useShoppingCart();
   // console.log(productInfo);
   
 
@@ -55,18 +55,16 @@ const DefaultSize = ({ productInfo, variantButtonState }: ProductInfo) => {
 
   return (
     <>
-    <div className="w-full mt-4 flex flex-col gap-y-4">
 
-    <div>Select Size</div>
-    <div className="sizes flex flex-row flex-wrap gap-x-2 text-sm items-center">
-     <div className="each-side rounded-2xl bg-gray-300 w-1/12 flex flex-row justify-center items-center">
+    
+     {Default && <div className="each-side rounded-2xl bg-gray-300 w-1/12 flex flex-row justify-center items-center hover:border hover:border-black">
      {productInfo.defaultProductVariant?.size}
-       </div>
+       </div>}
 
 
-   </div>
+  
 
-  </div>
+
     </>
   );
 };
