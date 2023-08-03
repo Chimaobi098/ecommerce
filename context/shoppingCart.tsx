@@ -208,6 +208,8 @@ export const ShoppingCartProvider = ({
     });
   }
 
+  
+
   return (
     <ShoppingCartContext.Provider
       value={{

@@ -35,87 +35,10 @@ const ProductColor = ({
   const [itemQuantity, setItemQuantity] = useState<number>(0);
   const { modifyItemQuantity, getItemQuantity, variantId } = useShoppingCart();
 
-  useEffect(() => {
-    console.log(variantButtonState);
-    if (variantButtonState == "selected") {
-      console.log("this actually worked ");
-
-      modifyItemQuantity(
-        {
-          ...productInfo,
-          isVariant: true,
-          _id: productId,
-        },
-        itemQuantity
-      );
-    }
-  }, [variantButtonState]);
 
   return (
     <>
-     {/* <div className="w-full flex flex-col gap-y-4">
-      <div className=" gap-y-4"> */}
-      <div className="w-full text-left">Colour: {productInfo?.colour}</div>
-      {/* <div className="border flex flex-row gap-x-2 items-center mt-2"> */}
-      {/* <div className="w-2/12 border">
-      <Image
-        objectFit="contain"
-        src={urlFor(productInfo?.images[0]).url()}
-        alt="Product Image"
-        height="100%"
-        width="100%"
-      />
-      </div> */}
-
-      {/* </div>
-      </div>
-
-      <div className="flex flex-col gap-y-4">
-
-        <div>Select Size</div>
-        <div className="sizes flex flex-row flex-wrap gap-x-2 text-sm items-center">
-          <div className="each-side rounded-2xl bg-gray-300 w-1/12 flex flex-row justify-center items-center">
-            S
-          </div>
-
-          <div className="each-side rounded-2xl bg-gray-300 border w-1/12 flex flex-row justify-center items-center">
-            XL
-          </div>
-          <div className="each-side rounded-2xl bg-gray-300 border w-1/12 flex flex-row justify-center items-center">
-            XXL
-          </div>
-        </div>
-
-      </div> */}
-      {/* <div id="product-variant">{productInfo.title}</div> */}
-      {/* <div>
-        <button
-          onClick={() => {
-            setItemQuantity((prev) => {
-              return prev + 1;
-            });
-          }}
-        >
-          +
-        </button>
-        <div>{itemQuantity}</div>
-        <button
-          onClick={() => {
-            setItemQuantity((prev) => {
-              if (prev == 0) {
-                return prev;
-              } else {
-                return prev - 1;
-              }
-            });
-          }}
-        >
-          -
-        </button>
-      </div> */}
-
-      
-    {/* </div> */}
+      <div className="w-full text-left">Colour: {productInfo?.colour}</div> 
     </>
   );
 };

@@ -34,25 +34,6 @@ const DefaultSize = ({ productInfo, variantButtonState }: ProductInfo) => {
   // console.log(productInfo);
   
 
-  useEffect(() => {
-    console.log(variantButtonState);
-    if (variantButtonState == "selected") {
-      console.log("this actually worked ");
-
-      modifyItemQuantity(
-        {
-          _id: productInfo._id,
-          title: productInfo.title,
-          sku: productInfo.defaultProductVariant.sku,
-          defaultProductVariant: productInfo.defaultProductVariant,
-
-          isVariant: false,
-        },
-        itemQuantity
-      );
-    }
-  }, [variantButtonState]);
-
   return (
     <>
 

@@ -495,6 +495,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           
             onClick={() => {
               setVariantButtonState("selected");
+              // modifyItemQuantity(currentProduct, itemQuantity);
 
               alert("your items have been added to the cart");
             }}

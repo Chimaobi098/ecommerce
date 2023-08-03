@@ -32,7 +32,7 @@ const DefaultProduct = ({ productInfo, variantButtonState }: ProductInfo) => {
 
   useEffect(() => {
     console.log(variantButtonState);
-    if (variantButtonState == "selected") {
+    if (variantButtonState == "selected" && variantId == productInfo.defaultProductVariant.sku) {
       console.log("this actually worked ");
 
       modifyItemQuantity(
@@ -44,7 +44,7 @@ const DefaultProduct = ({ productInfo, variantButtonState }: ProductInfo) => {
 
           isVariant: false,
         },
-        itemQuantity
+        itemQuantity + 1
       );
     }
   }, [variantButtonState]);

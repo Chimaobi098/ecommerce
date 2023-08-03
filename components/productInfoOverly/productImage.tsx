@@ -35,21 +35,6 @@ const ProductImage = ({
   const [itemQuantity, setItemQuantity] = useState<number>(0);
   const { modifyItemQuantity, getItemQuantity, variantId } = useShoppingCart();
 
-  useEffect(() => {
-    console.log(variantButtonState);
-    if (variantButtonState == "selected") {
-      console.log("this actually worked ");
-
-      modifyItemQuantity(
-        {
-          ...productInfo,
-          isVariant: true,
-          _id: productId,
-        },
-        itemQuantity
-      );
-    }
-  }, [variantButtonState]);
 
   return (
     <>

@@ -30,24 +30,6 @@ const DefaultImage = ({ productInfo, variantButtonState }: ProductInfo) => {
   const [itemQuantity, setItemQuantity] = useState<number>(0);
   const { modifyItemQuantity, getItemQuantity, Default } = useShoppingCart();
 
-  useEffect(() => {
-    console.log(variantButtonState);
-    if (variantButtonState == "selected") {
-      console.log("this actually worked ");
-
-      modifyItemQuantity(
-        {
-          _id: productInfo._id,
-          title: productInfo.title,
-          sku: productInfo.defaultProductVariant.sku,
-          defaultProductVariant: productInfo.defaultProductVariant,
-
-          isVariant: false,
-        },
-        itemQuantity
-      );
-    }
-  }, [variantButtonState]);
 
   return (
     <>

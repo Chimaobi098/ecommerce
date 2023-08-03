@@ -33,11 +33,11 @@ const ProductVariant = ({
   console.log(ProudctInfo, "This is the product info thing");
   const [currentVariant, setCurrentVariant] = useState("");
   const [itemQuantity, setItemQuantity] = useState<number>(0);
-  const { modifyItemQuantity, getItemQuantity, variantfunc, activateDefault } = useShoppingCart();
+  const { modifyItemQuantity, getItemQuantity, variantfunc, activateDefault, variantId } = useShoppingCart();
 
   useEffect(() => {
     console.log(variantButtonState);
-    if (variantButtonState == "selected") {
+    if (variantButtonState == "selected" && variantId == productInfo._key ) {
       console.log("this actually worked ");
 
       modifyItemQuantity(
@@ -46,7 +46,7 @@ const ProductVariant = ({
           isVariant: true,
           _id: productId,
         },
-        itemQuantity
+        itemQuantity + 1
       );
     }
   }, [variantButtonState]);
