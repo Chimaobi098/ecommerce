@@ -87,9 +87,8 @@ export const VendorProduct = styled(motion.div)`
 `;
 
 export const CartButtons = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
+  margin: 30px 0px;
+  border: 2px solid red;
 
   #quantity-control-container {
     display: flex;
@@ -113,11 +112,11 @@ export const CartButtons = styled.div`
 
   #add-to-cart {
     background-color: #0aad0a;
-    border-radius: 12px;
+    border-radius: 4px;
     border: none;
     color: white;
     width: 40%;
-    height: 60px;
+    height: 50px;
     font-size: 1rem;
     display: flex;
     justify-content: center;
@@ -129,7 +128,8 @@ export const CartButtons = styled.div`
   }
 `;
 export const ProudctVariantBackground = styled(motion.div)`
-  height: 100vh;
+  width: 100%;
+  min-height: 100%;
   backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.4);
   position: absolute;
@@ -138,6 +138,7 @@ export const ProudctVariantBackground = styled(motion.div)`
   left: 0;
   right: 0;
   bottom: 0;
+  overflow-y: auto;
 
   #add-variants-to-cart {
     position: absolute;
@@ -147,7 +148,7 @@ export const ProudctVariantBackground = styled(motion.div)`
   #overlay-container {
     background-color: white;
     width: 100%;
-    height: 70vh;
+    height: 100%;
     padding: 1rem 1.3rem 1rem 1.3rem;
 
     border-radius: 1rem 1rem 0rem 0rem;
@@ -169,15 +170,14 @@ export const ProudctVariantBackground = styled(motion.div)`
 `;
 
 export const PlayButton = styled.button`
-  position: sticky;
-
-  top: 1rem;
-  left: 1rem;
   background-color: #de5d17;
-  color: white;
-  z-index: 99;
-  font-weight: 500;
-  padding: 0.3rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: 4px;
   border: none;
+  color: white;
+  width: 40%;
+  height: 50px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

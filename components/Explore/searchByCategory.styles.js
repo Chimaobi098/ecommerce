@@ -8,6 +8,7 @@ export const Wrapper = styled(motion.div)`
 export const CategoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  
 `;
 
 export const CategoryItem = styled(motion.button)`
@@ -17,4 +18,44 @@ export const CategoryItem = styled(motion.button)`
   font-weight: 500;
   display: flex;
   justify-content: space-between;
+`;
+
+export const Filterbackground = styled(motion.div)`
+  height: 100vh;
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  #add-variants-to-cart {
+    position: absolute;
+    bottom: 0;
+  }
+
+  #overlay-container {
+    background-color: white;
+    width: 100%;
+    height: 70vh;
+    padding: 1rem 1.3rem 1rem 1.3rem;
+
+    border-radius: 1rem 1rem 0rem 0rem;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & > p {
+      font-weight: 600;
+      font-size: 1.4rem;
+      margin-top: 0;
+    }
+
+    #variant-container {
+    }
+  }
 `;

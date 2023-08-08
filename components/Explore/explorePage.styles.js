@@ -5,8 +5,8 @@ export const Wrapper = styled.div`
   width: 100%;
   overflow-y: scroll;
   height: 100%;
-  padding-left: 3vmin;
   padding-right: 3vmin;
+  
 `;
 
 export const NavBar = styled.nav`

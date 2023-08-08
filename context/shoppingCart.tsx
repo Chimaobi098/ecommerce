@@ -26,6 +26,12 @@ interface ShoppingCartContext {
   increaseCart: (id: string) => void;
   decreaseCart: (id: string) => void;
   getTotalCartPrice: () => number;
+  variantfunc: (id:string)=> void;
+  variantId: string;
+  activateDefault:()=>void;
+  deactivateDefault:()=>void;
+  Default:boolean;
+
   setCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -44,6 +50,8 @@ export interface DefaultProdVariant {
   price: number;
   sku: string;
   title: string;
+  size: number;
+  colour: string;
 }
 
 interface MoreVendorItem {
@@ -86,6 +94,22 @@ export const ShoppingCartProvider = ({
     return data;
 
     
+  }
+  
+
+  const [variantId, setVariantId] = useState('');
+  const [Default, setDefault] = useState(true);
+
+
+  function variantfunc(id:string){
+    setVariantId(id);
+    console.log(variantId);
+  }
+  function activateDefault(){
+    setDefault(false)
+  }
+  function deactivateDefault(){
+    setDefault(true)
   }
 
   function getTotalCartPrice() {
@@ -184,6 +208,8 @@ export const ShoppingCartProvider = ({
     });
   }
 
+  
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -198,6 +224,12 @@ export const ShoppingCartProvider = ({
         increaseCart,
         decreaseCart,
         getTotalCartPrice,
+        variantId,
+        variantfunc,
+        Default,
+        activateDefault,
+        deactivateDefault
+
       }}
     >
       <AnimatePresence>{cartOpen && <ShoppingCartOverlay />}</AnimatePresence>
