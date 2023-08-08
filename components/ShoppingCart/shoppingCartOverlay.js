@@ -25,12 +25,42 @@ import { Button } from "@mui/material";
 
 const ShoppingCartOverlay = () => {
   const router = useRouter();
-  const { setCartOpen, cartItems, handleItemClick, removeFromCart,increaseCart,decreaseCart, getTotalCartPrice } =
-    useShoppingCart();
+  const {
+    setCartOpen,
+    cartItems,
+    handleItemClick,
+    removeFromCart,
+    increaseCart,
+    decreaseCart,
+    getTotalCartPrice,
+  } = useShoppingCart();
 
   function handleClick() {
     setCartOpen(false);
     router.push("/checkout");
+  }
+  const [dragItems, setDragItems] = useState(
+    cartItems.map((item) => {
+      return { productId: item._id, isShowingDelete: false };
+    })
+  );
+
+  function handleDragEnd(event, id) {
+    const dragOffset = 600; // smaller means draw futher back for delete
+
+    if (event.x > dragOffset) {
+      setDragItems((prev) => {
+        const newDragging = [...prev];
+        const finalDragging = newDragging.map((draggingItem) => {
+          if (draggingItem.productId == id) {
+            draggingItem.isShowingDelete = false;
+          }
+          return draggingItem;
+        });
+        console.log(finalDragging);
+        return finalDragging;
+      });
+    }
   }
 
   return (
@@ -49,7 +79,7 @@ const ShoppingCartOverlay = () => {
       <AnimatePresence>
         <CartItemWrapper>
           {cartItems.map((item, i) => {
-            const currentItemState = dragging.find(
+            const currentItemState = dragItems.find(
               (dragItem) => item._id == dragItem.productId
             );
             console.log("this is the current item state", currentItemState);
@@ -69,7 +99,7 @@ const ShoppingCartOverlay = () => {
                   transition={{ type: "tween" }}
                   drag="x"
                   onDragStart={(event, info) => {
-                    setDragging((prev) => {
+                    setDragItems((prev) => {
                       const newDragging = [...prev];
                       const finalDragging = newDragging.map((draggingItem) => {
                         if (draggingItem.productId == item._id) {
