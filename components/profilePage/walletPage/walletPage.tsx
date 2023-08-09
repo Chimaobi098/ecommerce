@@ -35,7 +35,7 @@ const WalletPage = () => {
     const getUID = async () => {
       const data = await sanityClient.fetch(
         `
-*[_type == 'users' && userId == $auth0ID]{
+*[_type == 'users' && email == $auth0ID]{
   _id,
   name,
   phoneNumber,
@@ -45,7 +45,9 @@ const WalletPage = () => {
     //formerly user?.sub
       );
 
-      setUserId(data[0]?._id || "");
+      // setUserId(data[0]?._id || "");
+      setUserId(data);
+
     };
 
     getUID();

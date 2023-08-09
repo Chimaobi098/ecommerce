@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import Image from 'next/image';
 
 
 const DepositPage = () => {
@@ -54,6 +55,10 @@ const DepositPage = () => {
                 <button className='w-full h-full text-white bg-black rounded-md'>Top Up Now</button>
             </div>
         </div>
+        <div className='flex flex-row w-full justify-center py-4'>
+
+</div>
+
         <div className='flex flex-col  gap-y-4 my-4 text-gray-400'>
             <div>1. Minimum per transaction is NGN 100.00</div>
             <div>2. Maximum per transaction is  NGN 999,000</div>
