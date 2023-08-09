@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePaystackPayment } from "react-paystack";
 import { CloseOutlined } from "@mui/icons-material";
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import {
   StoreCard,
@@ -22,9 +22,13 @@ const WalletPage = () => {
   console.log(user);
 
   const [depositList, setDepositList] = useState(false)
+  const [accountdetails, setAccountdetails] = useState(false)
 
   const handleDeposit = () =>{
     setDepositList(!depositList)
+  }
+  const handleAccount = () =>{
+    setAccountdetails(!accountdetails)
   }
 
   useEffect(() => {
@@ -129,24 +133,58 @@ const WalletPage = () => {
       <TransactionHistoryWrapper>
         This is your transaction history
       </TransactionHistoryWrapper>
-      <div className={` ${depositList ? 'translate-y-0' : 'translate-y-full'} w-[457px] left-0 flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6 px-4 pb-12 transition-all duration-500 ease-in-out transform-gpu`} >
+      <div className={` ${depositList ? 'translate-y-0' : 'translate-y-full'} w-full left-0 flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6 px-4 pb-12 transition-all duration-500 ease-in-out transform-gpu`} >
           <div className="flex flex-row justify-between items-end ">
             <div className="mt-8 text-2xl font-medium">Select deposit method</div>
             <div><CloseOutlined onClick={handleDeposit} className="text-2xl mb-2 cursor-pointer"/></div>
             </div>
-          <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md">
+          <Link href='/profile/wallet/deposit'>
+            <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md">
             <div className="font-medium">Card</div>
             <div className="text-gray-400">Fund your account using debit/credit card</div>
             </div>
+            </Link>
 
-            <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md">
+            <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md" onClick={handleAccount}>
             <div className="font-medium">Bank Transfer</div>
-            <div className="text-gray-400">Fund your account using bank app</div>
+            <div className="text-gray-400" >Fund your account using bank app</div>
             </div>
 
           
   
         </div>
+
+          
+        <div className={` ${accountdetails ? 'translate-y-0' : 'translate-y-full'} w-full left-0 flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6 px-4 pb-12 transition-all duration-500 ease-in-out transform-gpu`} >
+          <div className="flex flex-row justify-between items-end ">
+            <div className="mt-8 text-2xl font-medium">Account details</div>
+            <div><CloseOutlined onClick={handleAccount} className="text-2xl mb-2 cursor-pointer"/></div>
+            </div>
+            <div className="text-left font-medium">Make payment into the account below</div>
+          <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md">
+            <div className="font-medium">Account Name</div>
+            <div className="text-gray-400">Ogbonna Chimaobi</div>
+            </div>
+
+            <div className="flex flex-row border p-4 text-left items-center justify-between cursor-pointer shadow-md">
+              <div className="flex flex-col text-left">
+            <div className="font-medium">Account Number</div>
+            <div className="text-gray-400">617 XXX 8052</div>
+             </div>
+
+             <div className="text-gray-700"><ContentCopyIcon /></div>
+            </div>
+
+            <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md">
+            <div className="font-medium">Bank Name</div>
+            <div className="text-gray-400">Fidelity bank</div>
+            </div>
+
+          
+  
+        </div>
+
+        
     </Wrapper>
   );
 };
