@@ -131,7 +131,7 @@ const WalletPage = () => {
       <div className={` ${depositList ? 'translate-y-0' : 'translate-y-full'} w-[457px] left-0 flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6 px-4 pb-12 transition-all duration-500 ease-in-out transform-gpu`} >
           <div className="flex flex-row justify-between items-end ">
             <div className="mt-8 text-2xl font-medium">Select deposit method</div>
-            <div><CloseOutlined onClick={handleDeposit} className="text-2xl cursor-pointer"/></div>
+            <div><CloseOutlined onClick={handleDeposit} className="text-2xl mb-2 cursor-pointer"/></div>
             </div>
           <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md">
             <div className="font-medium">Card</div>
