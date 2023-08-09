@@ -37,7 +37,8 @@ const WalletPage = () => {
   phoneNumber,
   address
 }`,
-    { auth0ID: user?.sub }
+    { auth0ID: user?.email }
+    //formerly user?.sub
       );
 
       setUserId(data[0]?._id || "");
