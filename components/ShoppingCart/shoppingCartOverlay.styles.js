@@ -31,14 +31,26 @@ export const Header = styled.header`
   }
 `;
 
+export const ProductInfoWrapper = styled.div`
+display: flex;
+justify-content: flex-end;
+align-items: center;
+  position: relative;
+  background: red;
+  height: 30vh;
+`;
+
 export const ProudctInfo = styled(motion.div)`
   display: flex;
+  background-color: white;
   align-items: center;
   margin-bottom: 2vmin;
   width: 100%;
-  position: relative;
+  position: absolute;
+  height: 30vh;
 
   #product-info-wrapper {
+    user-select: none;
     display: flex;
     width: 690%;
     justify-content: space-between;
@@ -66,25 +78,25 @@ export const ProudctInfo = styled(motion.div)`
   }
 `;
 export const CheckoutButton = styled(motion.button)`
-
   position: relative;
 `;
 export const Deletebutton = styled(motion.button)`
-background-color: #808080;
-height: 100%;
-width: 100px;
-display: flex;
-align-items: center;
-justify-content: center;
-position: absolute;
-right: -100px;
-top: 0px;
+  background-color: #808080;
+  height: 100%;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: -100px;
+  top: 0px;
 `;
 
 export const CartItemWrapper = styled.div`
   height: 100%;
   width: 95%;
   overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export const CheckoutDetails = styled.div`
