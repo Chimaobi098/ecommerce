@@ -23,6 +23,7 @@ const WalletPage = () => {
 
   const [depositList, setDepositList] = useState(false)
   const [accountdetails, setAccountdetails] = useState(false)
+  const [copied, setCopied] = useState(false);
 
   const handleDeposit = () =>{
     setDepositList(!depositList)
@@ -30,6 +31,20 @@ const WalletPage = () => {
   const handleAccount = () =>{
     setAccountdetails(!accountdetails)
   }
+  const handleCopyClick = () => {
+    const contentToCopy = document.getElementById('contentToCopy');
+    // @ts-ignore: Object is possibly 'null'.
+    const textToCopy = contentToCopy.innerText;
+
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset "copied" state after 2 seconds
+      })
+      .catch(error => {
+        console.error('Error copying text:', error);
+      });
+  };
 
   useEffect(() => {
     const getUID = async () => {
@@ -171,10 +186,11 @@ const WalletPage = () => {
             <div className="flex flex-row border p-4 text-left items-center justify-between cursor-pointer shadow-md">
               <div className="flex flex-col text-left">
             <div className="font-medium">Account Number</div>
-            <div className="text-gray-400">617 XXX 8052</div>
+            <div className="text-gray-400" id="contentToCopy">617 XXX 8052</div>
              </div>
 
-             <div className="text-gray-700"><ContentCopyIcon /></div>
+             <div className="text-gray-700" onClick={handleCopyClick}><ContentCopyIcon />
+             {copied ? 'Copied!' : ''}</div>
             </div>
 
             <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md">
