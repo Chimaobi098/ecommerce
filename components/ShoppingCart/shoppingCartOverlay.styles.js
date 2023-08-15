@@ -32,16 +32,18 @@ export const Header = styled.header`
 `;
 
 export const ProductInfoWrapper = styled.div`
-display: flex;
-justify-content: flex-end;
-align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   position: relative;
-  background: red;
+  background: #eeeeee;
   height: 30vh;
 `;
 
 export const ProudctInfo = styled(motion.div)`
   display: flex;
+  border-bottom: 3px solid #eeeeee;
+
   background-color: white;
   align-items: center;
   margin-bottom: 2vmin;
@@ -125,7 +127,6 @@ export const CheckoutDetails = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid grey;
     padding: 1rem 0.7rem;
   }
 `;
