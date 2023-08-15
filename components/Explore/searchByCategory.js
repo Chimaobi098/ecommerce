@@ -283,7 +283,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
       
     </div>
     <div>
-    <div className={` ${support ? 'h-full' : 'h-0'} w-screen z-[101] md:w-[450px] fixed bottom-0 bg-white transition-all duration-500 ease-in-out transform-gpu text-center`} >
+    <div className={` ${support ? 'h-full' : 'h-0'} w-screen z-[300] md:w-[450px] fixed bottom-0 bg-white transition-all duration-500 ease-in-out transform-gpu text-center`} >
       <div className="m-4 flex flex-col gap-y-16 overflow-y-scroll pb-16">
 
         <div className="flex flex-row justify-between items-center">
@@ -331,9 +331,9 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
 
 
       </div>
-      <div className="fixed bottom-0 w-full md:w-[450px] bg-white py-2 px-4 text-center pb-8">
+      {/* <div className="fixed bottom-0 w-full md:w-[450px] bg-white py-2 px-4 text-center pb-8">
         <button className="bg-black text-white w-full h-12 rounded-md">Apply Filters</button>
-      </div>
+      </div> */}
   
         </div>
     </div>
