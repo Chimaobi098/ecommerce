@@ -94,7 +94,7 @@ const ShoppingCartOverlay = () => {
                 </Button>
                 <ProudctInfo
                   // onClick={() => handleItemClick(item._id)}
-                  className="h-40 pl-2 -mr-4 pt-2 relative border-t border-t-gray-700"
+                  className="h-40 pl-2 -mr-4 pt-2 relative"
                   key={item._id}
                   transition={{ type: "tween" }}
                   drag="x"
@@ -115,8 +115,9 @@ const ShoppingCartOverlay = () => {
                   dragSnapToOrigin
                   style={{
                     left: `-${currentItemState?.isShowingDelete ? 100 : 0}px`,
-                    bottom: -12.7,
+                    bottom: -11,
                   }}
+                  dragTransition={{ bounceStiffness: 900, bounceDamping: 100 }}
                 >
                   <img
                     id="product-image"
@@ -130,11 +131,18 @@ const ShoppingCartOverlay = () => {
                   />
                   <div className=" h-40 flex flex-col justify-between w-full pl-2">
                     <div className="flex flex-row justify-between">
-                      <div className=" text-xl w-9/12">
+                      <div className=" text-lg w-9/12">
                         <span>{item.title}</span>
+                        <div className="text-lg">
+                          {formatCurrency(
+                            item.isVariant
+                              ? item.price
+                              : item.defaultProductVariant.price
+                          )}
+                        </div>
                       </div>
                       <div className="w-3/12 flex justify-center">
-                        <button
+                        {/* <button
                           className="text-black"
                           onClick={() => {
                             removeFromCart(item._id);
@@ -142,7 +150,7 @@ const ShoppingCartOverlay = () => {
                           id="remove-product"
                         >
                           <DeleteRoundedIcon fontSize="medium" />
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                     {/* <div id="product-total-cost">
@@ -150,16 +158,8 @@ const ShoppingCartOverlay = () => {
                 </div> */}
 
                     <div className="flex justify-between">
-                      <div>
-                        <span className="text-xl">
-                          {formatCurrency(
-                            item.isVariant
-                              ? item.price
-                              : item.defaultProductVariant.price
-                          )}
-                        </span>
-                      </div>
-                      <div className="flex flex-row w-20 cursor-pointer justify-evenly text-xl">
+                      <div></div>
+                      <div className="flex flex-row w-20 cursor-pointer justify-evenly text-xl text-gray-300">
                         <div
                           onClick={() => {
                             decreaseCart(item._id);
@@ -167,7 +167,7 @@ const ShoppingCartOverlay = () => {
                         >
                           -
                         </div>
-                        <div className="bg-gray-300 px-2 text-base flex items-center">
+                        <div className="bg-gray-100  px-3 text-base flex items-center text-black">
                           {item.quantity}
                         </div>
                         <div
