@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import PaymentIcon from '@mui/icons-material/Payment';
+import { usePaystackPayment } from "react-paystack";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Image from 'next/image';
