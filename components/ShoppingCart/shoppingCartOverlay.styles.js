@@ -8,7 +8,7 @@ export const Wrapper = styled(motion.div)`
   position: relative;
   z-index: 101;
   overflow-y: scroll;
-  padding-bottom: 120px;
+  padding-bottom: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
