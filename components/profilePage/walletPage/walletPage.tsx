@@ -18,11 +18,13 @@ const WalletPage = () => {
   const router = useRouter();
   const { user, error } = useUser();
   const [userId, setUserId] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState("0.00");
   console.log(user);
 
   const [depositList, setDepositList] = useState(false)
   const [accountdetails, setAccountdetails] = useState(false)
+  const [carddetails, setcarddetails] = useState(false)
+
   const [copied, setCopied] = useState(false);
 
   const handleDeposit = () =>{
@@ -30,6 +32,9 @@ const WalletPage = () => {
   }
   const handleAccount = () =>{
     setAccountdetails(!accountdetails)
+  }
+  const handleCard = () =>{
+    setcarddetails(!carddetails)
   }
   const handleCopyClick = () => {
     const contentToCopy = document.getElementById('contentToCopy');
@@ -128,7 +133,7 @@ const WalletPage = () => {
           <h2 className="text-2xl mx-2">Total Balance:</h2>
           </div> */}
           <div className="text-3xl md:text-4xl font-medium">
-          ₦{amount}1500
+          ₦{amount}
           </div>
           <h4 className="text-gray-500 text-sm">Available</h4>
            </div>
@@ -155,12 +160,13 @@ const WalletPage = () => {
             <div className="mt-8 text-2xl font-medium">Select deposit method</div>
             <div><CloseOutlined onClick={handleDeposit} className="text-2xl mb-2 cursor-pointer"/></div>
             </div>
-          <Link href='/profile/wallet/deposit'>
-            <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md">
+          
+
+            <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md" onClick={handleCard}>
             <div className="font-medium">Card</div>
             <div className="text-gray-400">Fund your account using debit/credit card</div>
             </div>
-            </Link>
+            
 
             <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md" onClick={handleAccount}>
             <div className="font-medium">Bank Transfer</div>
@@ -170,6 +176,8 @@ const WalletPage = () => {
           
   
         </div>
+
+        
 
           
         <div className={` ${accountdetails ? 'translate-y-0' : 'translate-y-full'} w-full left-0 flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6 px-4 pb-12 transition-all duration-500 ease-in-out transform-gpu`} >
@@ -196,6 +204,35 @@ const WalletPage = () => {
             <div className="flex flex-col border p-4 text-left cursor-pointer shadow-md">
             <div className="font-medium">Bank Name</div>
             <div className="text-gray-400">Fidelity bank</div>
+            </div>
+
+          
+  
+        </div>
+
+        <div className={` ${carddetails ? 'translate-y-0' : 'translate-y-full'} w-full left-0 flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6 px-4 pb-12 transition-all duration-500 ease-in-out transform-gpu`} >
+          <div className="flex flex-row justify-between items-end ">
+            <div className="mt-8 text-2xl font-medium">Input Top Up Amount</div>
+            <div><CloseOutlined onClick={handleCard} className="text-2xl mb-2 cursor-pointer"/></div>
+            </div>
+          <div className="flex flex-col text-left w-full">
+          <form
+          className=""
+        onSubmit={(e) => {
+          e.preventDefault();
+          initializePayment(onSuccess, onClose);
+        }}
+      >
+          <input type='number' placeholder='Amount (NGN)' className='h-16 w-full pl-4 placeholder-gray-800 border border-gray-800 text-lg my-8'
+          onChange={(e) => {
+            setAmount(e.target.value)
+          }}
+          value={amount}
+          />
+            
+          <button type="submit" className='w-full h-16 text-white bg-black rounded-md'>Top Up Now</button>
+
+          </form>
             </div>
 
           
