@@ -46,9 +46,12 @@ const ShoppingCartOverlay = () => {
   );
 
   function handleDragEnd(event, id) {
-    const dragOffset = 600; // smaller means draw futher back for delete
+    const isTouch = event.pointerType == "touch" ? true : false;
 
-    if (event.x > dragOffset) {
+    console.log(event);
+    const dragOffset = isTouch ? 200 : 600; // smaller means draw futher back for delete
+
+    if (event.pageX > dragOffset) {
       setDragItems((prev) => {
         const newDragging = [...prev];
         const finalDragging = newDragging.map((draggingItem) => {
