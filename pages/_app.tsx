@@ -8,7 +8,7 @@ import { AnimatePresence } from "framer-motion";
 import Script from "next/script";
 import { SanityUIDProvider } from "../context/sanityUserId";
 import { useRouter } from "next/router";
-import '../global.css'
+import "../global.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -29,6 +29,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <ShoppingCartProvider>
             <main
               style={{
+                backgroundColor: "white",
+                fontFamily: "fantasy",
+                // fontFamily: "sans-serif",
+                // fontSize: "10px",
                 paddingBottom: "15vmin ",
                 height: "100%",
                 overflow: "hidden",
