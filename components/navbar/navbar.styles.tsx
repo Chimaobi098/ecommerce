@@ -14,6 +14,6 @@ export const Wrapper = styled.nav`
   justify-content: center;
   header {
     font-weight: 600;
-    font-size: 1.8rem;
+    font-size: 5.8rem;
   }
 `;

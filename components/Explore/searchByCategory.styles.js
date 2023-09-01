@@ -8,13 +8,12 @@ export const Wrapper = styled(motion.div)`
 export const CategoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  
 `;
 
 export const CategoryItem = styled(motion.button)`
   all: unset;
-  border-top: 1px solid grey;
-  padding: 1rem;
+  border-top: 0.1px solid grey;
+  padding: 1.5rem;
   font-weight: 500;
   display: flex;
   justify-content: space-between;

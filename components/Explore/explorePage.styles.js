@@ -6,7 +6,6 @@ export const Wrapper = styled.div`
   overflow-y: scroll;
   height: 100%;
   padding-right: 3vmin;
-  
 `;
 
 export const NavBar = styled.nav`
