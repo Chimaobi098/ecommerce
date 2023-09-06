@@ -16,6 +16,7 @@ import localeBlockContent from "./locale/BlockContent";
 import users from "./users";
 import orders from "./orders";
 import orderItem from "./orderItem";
+import coupons from "./coupons";
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -35,6 +36,7 @@ export default createSchema({
     localeText,
     localeBlockContent,
     localeString,
+    coupons,
     productVariant,
     users,
     activeGames,

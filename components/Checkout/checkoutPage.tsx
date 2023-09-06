@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { useShoppingCart } from "../../context/shoppingCart";
 import { Wrapper, Card } from "./checkoutPage.styles";
@@ -62,12 +62,17 @@ const CheckoutPage = ({ user }: User) => {
   };
   const router = useRouter();
   const [currentUID, setCurrentUID] = useState<string>("");
+  const [couponCode, setCouponCode] = useState("");
   const { getTotalCartPrice, cartItems } = useShoppingCart();
   const [deliveryPhoneNumber, setDeliveryPhoneNumber] = useState<number>(0);
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
+  const [couponDiscount, setCouponDiscount] = useState(0);
   const shippingFees = 2920;
-  const totalAmount = getTotalCartPrice() + shippingFees;
+  const totalAmount =
+    getTotalCartPrice() -
+    (getTotalCartPrice() * (couponDiscount / 100) || 1) +
+    shippingFees;
 
   const config = {
     email: user!.email!,
@@ -136,7 +141,7 @@ const CheckoutPage = ({ user }: User) => {
       </button>
       <form onSubmit={handleSubmit}>
         <p className="section-title">Delivery Info</p>
-        <TextField
+        {/* <TextField
           required
           label="Phone Number"
           type="number"
@@ -146,7 +151,22 @@ const CheckoutPage = ({ user }: User) => {
             setDeliveryPhoneNumber(Number(e.target.value));
           }}
           value={deliveryPhoneNumber}
-        />
+        /> */}
+        <Card
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <h2 style={{ fontWeight: "semi", fontSize: "1rem" }}>Shipping</h2>
+            <p style={{ fontSize: "0.8rem", color: "grey", padding: "1rem 0" }}>
+              {deliveryAddress || "Add An Address"}
+            </p>
+          </div>
+          <ArrowBackRoundedIcon />
+        </Card>
         <TextField
           required
           label="Full Name"
@@ -183,37 +203,77 @@ const CheckoutPage = ({ user }: User) => {
             </div>
           </div>
         </Card>
-        <p className="section-title">Shipment Details</p>
+
         <Card>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
-          error explicabo quasi cumque adipisci qui hic, obcaecati quas omnis p
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde voluptas
-          ab, praesentium placeat, officia mollitia magni similique commodi
-          temporibus totam sunt nihil! Maiores cumque odit quis laboriosam?
-          Quisquam, in atque.
-        </Card>
-        <Card>
+          <h2 style={{ fontSize: "1.3rem", marginBottom: "1rem" }}>Summary</h2>
+
           <div className="item-details-container">
             <div>
-              <b>Items Total</b>
+              <b>Sub Total</b>
             </div>
             <div>{formatCurrency(getTotalCartPrice())}</div>
           </div>
           <div className="item-details-container">
-            <b>Shipping Fees</b>
+            <div>
+              <b>Discount</b>
+            </div>
+            <div>{`${couponDiscount}%`}</div>
+          </div>
+          <div className="item-details-container">
+            <b>Shipping</b>
             <div>{formatCurrency(shippingFees)}</div>
           </div>
           <hr />
           <div className="item-details-container" id="total-container">
-            <div>Total</div>
-            <div style={{ color: "orange" }}>{formatCurrency(totalAmount)}</div>
+            <div>{`${2} items`}</div>
+            <div style={{ display: "flex", gap: "1rem" }}>
+              <div>Total</div>
+              <div style={{ color: "orange" }}>
+                {formatCurrency(totalAmount)}
+              </div>
+            </div>
           </div>
+
           <button type="submit" style={{ width: "100%" }}>
             Pay
           </button>
           <button style={{ width: "100%" }}>Pay With Wallet</button>
         </Card>
       </form>
+      <div>
+        <div>coupon</div>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+
+            sanityClient
+              .fetch(
+                `
+*[_type=='coupons'&&couponCode==$couponCode]`,
+                {
+                  couponCode: couponCode,
+                }
+              )
+              .then((res) => {
+                if (res.length > 0) {
+                  alert(
+                    `Your discount of ${res[0].discountPercentage} has been applied`
+                  );
+                  setCouponDiscount(res[0].discountPercentage);
+                } else {
+                  alert("Invalid Coupon");
+                }
+              })
+              .catch((err) => console.log(err));
+          }}
+        >
+          <input
+            value={couponCode}
+            onChange={(e) => setCouponCode(e.target.value)}
+          />
+          <Button type="submit">Apply</Button>
+        </form>
+      </div>
     </Wrapper>
   );
 };
