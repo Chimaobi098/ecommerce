@@ -30,6 +30,11 @@ export default {
       type: "string",
     },
     {
+      name: "dob",
+      title: "Date of Birth",
+      type: "date",
+    },
+    {
       name: "address",
       title: "Address Line 1",
       type: "string",

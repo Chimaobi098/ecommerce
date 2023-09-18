@@ -36,7 +36,7 @@ const ProfilePage = ({ user }: User) => {
       profileUrl: "/profile/wallet",
     },
     {
-      profileItemName: "Saved Items",
+      profileItemName: "Wishlist",
       profileItemIcon: <ShoppingBagOutlinedIcon />,
       profileUrl: "/profile/saved-posts",
     },
