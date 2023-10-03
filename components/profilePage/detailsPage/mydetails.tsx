@@ -9,9 +9,10 @@ const MyDetails = () => {
     const [enabled, setEnabled] = useState(false)
     const [addressdetails, setaddressdetails] = useState<any>()
     const [userdetails, setUserdetails] = useState({
-
+      firstname: "",
+      lastname: "",
     })
-    console.log(addressdetails);
+    console.log(userdetails);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
@@ -27,13 +28,13 @@ const documentId = 'your-document-id';
 // Define the updated data you want to apply
 const updatedData = {
   // Update the fields you want to change
-  name: 'New Name',
-  email: 'newemail@example.com',
+  firstname: userdetails.firstname,
+  lastname: userdetails.lastname,
   // Add more fields as needed
 };
 
 // Define the URL of your Sanity.io API
-const apiUrl = 'https://your-sanity-project.api.sanity.io/v1/data/mutate/your-dataset';
+const apiUrl = 'https://ecommerceproj.sanity.studio.api.sanity.io/v1/data/mutate/production';
 
 // Create a function to send the update request
 const updateDocument = async () => {
@@ -100,15 +101,21 @@ updateDocument();
         <div className='w-12/12 h-auto border-gray-300'>
             <div className=' px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>FIRST NAME</h3>
-            <input type="text" name='firstname' className='text-base h-8 outline-none' />
+            <input type="text" name='firstname' className='text-base h-8 outline-none w-full' 
+            onChange={handleChange}
+            value={userdetails.firstname}
+            />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>LAST NAME</h3>
-            <input type="text" name='lastname' className='text-base h-8 outline-none' />
+            <input type="text" name='lastname' className='text-base h-8 outline-none w-full'
+            onChange={handleChange}
+            value={userdetails.lastname}
+             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>EMAIL ADDRESS</h3>
-            <input type="email" name='email' className='text-base h-8 outline-none' />
+            <input type="email" name='email' className='text-base h-8 outline-none w-full' />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>DATE OF BIRTH</h3>
@@ -140,3 +147,7 @@ updateDocument();
 }
 
 export default MyDetails
+
+
+              
+                    

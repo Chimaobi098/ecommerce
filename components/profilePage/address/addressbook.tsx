@@ -46,35 +46,35 @@ const Addressbook = () => {
         <div className='w-12/12 shadow-lg h-auto border border-gray-300' key={i}>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Country</h3>
-            <p className='text-base'>{details.country}</p>
+            <input type="email" name='email' className='text-base h-8 outline-none w-full' />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>First Name</h3>
-            <p className='text-base'>{details.name}</p>
+            <input type="email" name='email' className='text-base h-8 outline-none w-full' />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Last Name</h3>
-            <p className='text-base'>{details.lastname}</p>
+            <input type="email" name='email' className='text-base h-8 outline-none w-full' />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Phone Number</h3>
-            <p className='text-base'>{details.phoneNumber}</p>
+            <input type="email" name='email' className='text-base h-8 outline-none w-full' />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>State/Province</h3>
-            <p className='text-base'>{details.state}</p>
+            <input type="email" name='email' className='text-base h-8 outline-none w-full' />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>City</h3>
-            <p className='text-base'>{details.city}</p>
+            <input type="email" name='email' className='text-base h-8 outline-none w-full' />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Address Line 1</h3>
-            <p className='text-base'>{details.address}</p>
+            <input type="email" name='email' className='text-base h-8 outline-none w-full' />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Address Line 2</h3>
-            <p className='text-base'>{details.address2}</p>
+            <input type="email" name='email' className='text-base h-8 outline-none w-full' />
             </div>
             
             </div>))}
