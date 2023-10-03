@@ -21,7 +21,6 @@ const Home = ({ results }: HomeProduct) => {
   const [userLikedProducts, setUserLikedProducts] = useState();
   const [userSavedProducts, setUserSavedProducts] = useState();
   const lastId = useRef<string | null>(results[results.length - 1]._id);
-  console.log(results);
 
   useEffect(() => {
     async function likedProducts() {
@@ -33,8 +32,6 @@ const Home = ({ results }: HomeProduct) => {
     }`,
         { curr: user?.sub }
       );
-      console.log(response, "thisisit");
-      console.log(response, "this is it");
       let likedProductsArray = response[0]?.likedProducts;
       setUserLikedProducts(likedProductsArray || []);
     }
@@ -48,8 +45,6 @@ const Home = ({ results }: HomeProduct) => {
     }`,
         { curr: user?.sub }
       );
-      console.log(response, "thisisit");
-      console.log(response, "this is it");
       let savedProductsArray = response[0]?.savedProducts;
       setUserSavedProducts(savedProductsArray || []);
     }
@@ -84,6 +79,8 @@ _id
       setHasMore(false);
     }
   }
+
+  console.log(productData, "this is all product data");
 
   return (
     <>
@@ -127,14 +124,16 @@ _id
             alignItems: "center",
           }}
         >
-          {productData.map((product) => (
-            <ProductContainer
+          {productData.map((product) => {
+if(product.vendor&& product.vendor.logo)return (<ProductContainer
               productProps={product}
               userLikedProducts={userLikedProducts}
               userSavedProducts={userSavedProducts}
               key={product._id}
-            />
-          ))}
+            />)
+          }
+            
+          )}
         </InfiniteScroll>
       </Wrapper>
     </>
