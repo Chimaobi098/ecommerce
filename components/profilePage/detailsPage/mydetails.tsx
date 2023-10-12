@@ -11,66 +11,46 @@ const MyDetails = () => {
     const [userdetails, setUserdetails] = useState({
       firstname: "",
       lastname: "",
+      deliveryPhoneNumber:"",
+      deliveryAddress: "",
+      
     })
     console.log(userdetails);
+    console.log(addressdetails);
+
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
       setUserdetails((prevValues) => ({ ...prevValues, [name]: value }));
     };
 
-     
-// Import any necessary libraries or modules
+    const handleSaveChanges = async () => {
+      if (!user) return;
+  
+      // Prepare the data to send to the server
+      const data = {
+        _id: addressdetails._id, // You should set this based on your data structure
+        fullName: userdetails.firstname,
+        deliveryAddress: userdetails.deliveryAddress,
+        deliveryPhoneNumber: userdetails.deliveryPhoneNumber,
 
-// Define the document ID you want to update
-const documentId = 'your-document-id';
-
-// Define the updated data you want to apply
-const updatedData = {
-  // Update the fields you want to change
-  firstname: userdetails.firstname,
-  lastname: userdetails.lastname,
-  // Add more fields as needed
-};
-
-// Define the URL of your Sanity.io API
-const apiUrl = 'https://ecommerceproj.sanity.studio.api.sanity.io/v1/data/mutate/production';
-
-// Create a function to send the update request
-const updateDocument = async () => {
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer your-auth-token', // Add your authentication token here
-      },
-      body: JSON.stringify({
-        // Specify the update operation
-        patch: [
-          {
-            // Use the document ID you want to update
-            id: documentId,
-            set: updatedData, // Apply the updated data
-          },
-        ],
-      }),
-    });
-
-    if (response.ok) {
-      // Document was successfully updated
-      console.log('Document updated successfully');
-    } else {
-      // Handle errors here
-      console.error('Error updating document:', response.status, response.statusText);
-    }
-  } catch (error) {
-    console.error('An error occurred:', error);
-  }
-};
-
-// Call the updateDocument function to send the update request
-updateDocument();
+      };
+  
+      try {
+        const response = await fetch('http://localhost:3000/api/updateUser', {
+          method: 'POST',
+          body: JSON.stringify(data),
+        });
+  
+        if (response.ok) {
+          console.log('Data saved successfully');
+        } else {
+          console.error('Failed to save data');
+        }
+      } catch (error) {
+        console.error('Error while saving data', error);
+      }
+    };
 
    
     
@@ -114,12 +94,21 @@ updateDocument();
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
-            <h3 className='text-base font-medium text-gray-600 mb-2'>EMAIL ADDRESS</h3>
-            <input type="email" name='email' className='text-base h-8 outline-none w-full' />
+            <h3 className='text-base font-medium text-gray-600 mb-2'>EMAIL ADDRESS</h3>{
+              
+                <input type="text" name='deliveryAddress' className='text-base h-8 outline-none w-full' 
+                onChange={handleChange}
+            value={userdetails.deliveryAddress}
+                // value={addressdetails[0].email}
+                />
+
+}
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>DATE OF BIRTH</h3>
-            <input type="date" name='dob' className='text-base h-8 outline-none' />
+            <input type="text" name='deliveryPhoneNumber' className='text-base h-8 outline-none'
+            onChange={handleChange}
+            value={userdetails.deliveryPhoneNumber}/>
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mt-8 mb-2'>GENDER</h3>
@@ -139,7 +128,7 @@ updateDocument();
             </div>
             
             <div className=" flex flex-row h-12 w-full justify-evenly mt-2 mb-8 lg:mb-0 px-2 gap-x-4">
-            <button type="submit" className=' h-12 bg-black text-white rounded-md w-3/4'>SAVE CHANGES</button>
+            <button type="submit" className=' h-12 bg-black text-white rounded-md w-3/4'onClick={handleSaveChanges} >SAVE CHANGES</button>
         </div>
         
         </div>
