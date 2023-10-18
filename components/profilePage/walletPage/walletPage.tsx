@@ -20,7 +20,7 @@ const WalletPage: React.FC = () => {
   const [userId, setUserId] = useState<string>("");
   const [walletDeposit, setWalletDeposit] = useState("");
   const [amount, setAmount] = useState<string>("0.00");
-  console.log(walletDeposit);
+  console.log(user);
   
 
   const [depositList, setDepositList] = useState<boolean>(false);
