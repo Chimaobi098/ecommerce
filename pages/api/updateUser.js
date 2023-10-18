@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     );
 const data = await client
   .patch(_id) // Document ID to patch
-    .set({ name: fullName, title: fullName, address: deliveryAddress, phoneNumber:deliveryPhoneNumber}) // Shallow merge
+    .set({ name: fullName, lastname: fullName, email: deliveryAddress, dob:deliveryPhoneNumber}) // Shallow merge
   .commit() // Perform the patch and return a promise
   .catch((err) => {
       console.error('Oh no, the update failed: ', err.message)

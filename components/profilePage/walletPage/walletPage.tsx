@@ -18,7 +18,10 @@ const WalletPage: React.FC = () => {
   const router = useRouter();
   const { user, error } = useUser();
   const [userId, setUserId] = useState<string>("");
+  const [walletDeposit, setWalletDeposit] = useState("");
   const [amount, setAmount] = useState<string>("0.00");
+  console.log(walletDeposit);
+  
 
   const [depositList, setDepositList] = useState<boolean>(false);
   const [accountdetails, setAccountdetails] = useState<boolean>(false);
@@ -59,7 +62,7 @@ const WalletPage: React.FC = () => {
       const data = await sanityClient.fetch<{ _id: string }[]>(
         `
         *[_type == 'users' && email == $auth0ID]{
-          _id
+          _id,
         }`, { auth0ID: user?.email }
       );
 
@@ -70,6 +73,26 @@ const WalletPage: React.FC = () => {
 
     getUID();
   }, [user]);
+
+  useEffect(() => {
+    async function getDetails() {
+      if (!user) return;
+      const results = await sanityClient.fetch(
+        `*[_type == "users" && email == $curr  ] {
+            _id,
+            walletAmount
+            
+    }`,
+      { curr: user?.email }
+      );
+      
+  setWalletDeposit(results[0]?.walletAmount);
+  console.log(results);
+  
+  
+    }
+    getDetails();
+  },[user]);
 
   const config = {
     email: user?.email!,
@@ -93,6 +116,7 @@ const WalletPage: React.FC = () => {
           router.push("/profile/wallet");
         } else {
           alert("Money was successfully added. Thank you!!!");
+          window.location.reload();
         }
       })
       .catch((err) => {
@@ -104,33 +128,16 @@ const WalletPage: React.FC = () => {
     alert("Don't leave; just try again 🥺👉👈");
   };
 
+
   return (
     <Wrapper className="mt-20 mx-4">
-      {/* <StoreCard>
-        <div>2000</div>
-      </StoreCard> */}
-      {/* <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          initializePayment(onSuccess, onClose);
-        }}
-      >
-        <input
-          type="number"
-          onChange={(e) => {
-            setAmount(e.target.value);
-          }}
-          value={amount}
-        />
-        <Button type="submit">Add Money</Button>
-      </form> */}
       <div className="flex flex-col items-center justify-center text-2xl py-12 gap-y-2">
         {/* <div className="flex flex-row items-center">
           <VisibilityOutlinedIcon />
           <h2 className="text-2xl mx-2">Total Balance:</h2>
           </div> */}
           <div className="text-3xl md:text-4xl font-medium">
-          ₦{amount}
+          ₦{walletDeposit}
           </div>
           <h4 className="text-gray-500 text-sm">Available</h4>
            </div>
@@ -224,7 +231,6 @@ const WalletPage: React.FC = () => {
           onChange={(e) => {
             setAmount(e.target.value)
           }}
-          value={amount}
           />
             
           <button type="submit" className='w-full h-16 text-white bg-black rounded-md'>Top Up Now</button>

@@ -7,6 +7,7 @@ import { sanityClient } from '../../../lib/sanity'
 const MyDetails = () => {
   const { user, error } = useUser();
     const [enabled, setEnabled] = useState(false)
+      const [userId, setUserId] = useState<string>("");
     const [addressdetails, setaddressdetails] = useState<any>()
     const [userdetails, setUserdetails] = useState({
       firstname: "",
@@ -24,6 +25,23 @@ const MyDetails = () => {
       setUserdetails((prevValues) => ({ ...prevValues, [name]: value }));
     };
 
+    useEffect(() => {
+      const getUID = async () => {
+        const data = await sanityClient.fetch<{ _id: string }[]>(
+          `
+          *[_type == 'users' && email == $auth0ID]{
+            _id
+          }`, { auth0ID: user?.email }
+        );
+  
+        setUserId(data[0]?._id || "");
+        console.log(data)
+      };
+      
+  
+      getUID();
+    }, [user]);
+
     const handleSaveChanges = async () => {
       if (!user) return;
   
@@ -36,20 +54,21 @@ const MyDetails = () => {
 
       };
   
-      try {
-        const response = await fetch('http://localhost:3000/api/updateUser', {
-          method: 'POST',
+        alert("Your payment was successful");
+        fetch("/api/upateUser", {
+          method: "POST",
           body: JSON.stringify(data),
-        });
-  
-        if (response.ok) {
-          console.log('Data saved successfully');
-        } else {
-          console.error('Failed to save data');
-        }
-      } catch (error) {
-        console.error('Error while saving data', error);
-      }
+        })
+          .then((res) => {
+            if (!res.ok) {
+              alert("Could not add to the wallet. Please contact dev");
+            } else {
+              alert("Money was successfully added. Thank you!!!");
+            }
+          })
+          .catch((err) => {
+            console.log(err, "This didn't");
+          });
     };
 
    
