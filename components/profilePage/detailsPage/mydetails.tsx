@@ -191,8 +191,8 @@ const MyDetails = () => {
             
             </div>
             
-            <div className=" flex flex-row h-12 w-full justify-evenly mt-2 mb-8 lg:mb-0 px-2 gap-x-4">
-            <button type="submit" className=' h-12 bg-black text-white rounded-md w-3/4'>SAVE CHANGES</button>
+            <div className=" mt-8 w-12/12">
+            <button type="submit" className='h-12 bg-black text-white rounded-md w-full '>UPDATE DETAILS</button>
         </div>
         </form>
         <ToastContainer />

@@ -146,8 +146,8 @@ const Addressbook = () => {
           handleSaveChanges();}}
           >
       
-        <div className='w-12/12 shadow-lg h-auto border border-gray-300 '>
-            <div className='border-t border-t-gray-300 px-2 py-3'>
+        <div className='w-12/12 h-auto'>
+            <div className='px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Country</h3>
             <input type="text" name='country' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.country}
             onChange={handleChange}
@@ -205,7 +205,7 @@ const Addressbook = () => {
             </div>
             
             </div>
-        <div className='flex flex-row justify-between items-center my-4 mb-6 mx-2'>
+        {/* <div className='flex flex-row justify-between items-center my-4 mb-6 mx-2'>
             <div className='text-lg'>Make default</div>
             <div className=''><Switch
         checked={enabled}
@@ -221,9 +221,9 @@ const Addressbook = () => {
         />
       </Switch></div>
             
-        </div>
-        <div className='flex flex-row justify-center'>
-            <button type="submit" className=' h-12 bg-black text-white rounded-md w-3/4'>Save Address</button>
+        </div> */}
+        <div className='mt-8 w-12/12'>
+            <button type="submit" className=' h-12 bg-black text-white rounded-md w-full '>SAVE ADDRESS</button>
         </div>
         </form>
         <ToastContainer />
