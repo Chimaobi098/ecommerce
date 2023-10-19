@@ -1,0 +1,8 @@
+{
+    "functions": {
+      "api/addToWallet": {
+        "runtime": "nodejs16.x",
+        "timeout": 30
+      }
+    }
+  }
