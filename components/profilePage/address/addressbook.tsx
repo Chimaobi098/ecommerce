@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import { useUser } from '@auth0/nextjs-auth0/dist/frontend/use-user'
 import { Switch } from '@headlessui/react'
 import { sanityClient } from '../../../lib/sanity'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Addressbook = () => {
@@ -65,16 +67,43 @@ const Addressbook = () => {
 
       };
   
-        alert("Updating Profile...");
+      toast.info('Updating Address...', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
         fetch("/api/updateAddress", {
           method: "POST",
           body: JSON.stringify(data),
         })
           .then((res) => {
             if (!res.ok) {
-              alert("Error Updating Profile");
+              toast.error('Error Updating Address 😞', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
             } else {
-              alert("Address Updated Successfully 😉");
+              toast.success('Address Details Updated Successfully 😉', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
             }
           })
           .catch((err) => {
@@ -92,7 +121,7 @@ const Addressbook = () => {
           const results = await sanityClient.fetch(
             `*[_type == "users" && email == $curr  ] {
                 _id,
-                name,
+                firstname,
                 lastname, 
                 country,
                 phoneNumber,
@@ -117,57 +146,60 @@ const Addressbook = () => {
           handleSaveChanges();}}
           >
       
-        <div className='w-12/12 shadow-lg h-auto border border-gray-300'>
+        <div className='w-12/12 shadow-lg h-auto border border-gray-300 '>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Country</h3>
-            <input type="text" name='country' className='text-base h-8 outline-none w-full'
+            <input type="text" name='country' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.country}
             onChange={handleChange}
             value={userdetails.country}
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>First Name</h3>
-            <input type="text" name='firstname' className='text-base h-8 outline-none w-full' 
+            <input type="text" name='firstname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.firstname}
             onChange={handleChange}
             value={userdetails.firstname}
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Last Name</h3>
-            <input type="text" name='lastname' className='text-base h-8 outline-none w-full' 
+            <input type="text" name='lastname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.lastname} 
             onChange={handleChange}
             value={userdetails.lastname}
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Phone Number</h3>
-            <input type="text" name='phone' className='text-base h-8 outline-none w-full' onChange={handleChange}
+            <input type="text" name='phone' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.phone}
+             onChange={handleChange}
             value={userdetails.phone}
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>State/Province</h3>
-            <input type="text" name='state' className='text-base h-8 outline-none w-full'
+            <input type="text" name='state' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.state}
             onChange={handleChange}
             value={userdetails.state}
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>City</h3>
-            <input type="text" name='city' className='text-base h-8 outline-none w-full'
+            <input type="text" name='city' className='text-base h-8 outline-none w-full placeholder-gray-700'placeholder={addressdetails?.city}
             onChange={handleChange}
             value={userdetails.city}
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Address Line 1</h3>
-            <input type="text" name='address1' className='text-base h-8 outline-none w-full' onChange={handleChange}
+            <input type="text" name='address1' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.address1}
+            onChange={handleChange}
             value={userdetails.address1}
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Address Line 2</h3>
-            <input type="text" name='address2' className='text-base h-8 outline-none w-full' onChange={handleChange}
+            <input type="text" name='address2' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.address2}
+            onChange={handleChange}
             value={userdetails.address2}
             />
             </div>
@@ -194,6 +226,7 @@ const Addressbook = () => {
             <button type="submit" className=' h-12 bg-black text-white rounded-md w-3/4'>Save Address</button>
         </div>
         </form>
+        <ToastContainer />
         </div>
   )
 }
