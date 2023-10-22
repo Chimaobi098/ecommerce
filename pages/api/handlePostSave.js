@@ -4,23 +4,24 @@ const sanity = require("@sanity/client");
 const client = sanity(config);
 
 export default async function handler(req, res) {
-  console.log(req.body);
-  const { userId, productId } = JSON.parse(req.body);
+  const { sanityUID, productId,savedProduct } = JSON.parse(req.body);
 
-  let userDoc = await client.getDocument(userId);
+  let userDoc = await client.getDocument(sanityUID);
+
+  console.log(userDoc,'this is user document')
 
   // check if product id is already in liked products array
 
-  let saveState = userDoc.savedProducts.find(
+  let saveState = userDoc.savedProducts?.find(
     (product) => product._ref == productId
   );
 
-  if (saveState) {
+  if (!saveState) {
     try {
       await client
-        .patch(userId)
+        .patch(sanityUID)
         .setIfMissing({ savedProducts: [] })
-        .append("savedProducts", [productId])
+        .append("savedProducts", [savedProduct])
         .commit({
           // Adds a `_key` attribute to array items, unique within the array, to
           // ensure it can be addressed uniquely in a real-time collaboration context
@@ -33,7 +34,7 @@ export default async function handler(req, res) {
   } else {
     try {
       await client
-        .patch(userId)
+        .patch(sanityUID)
         .unset([`savedProducts[_key=="${saveState._key}"]`])
         .commit();
     } catch (err) {
