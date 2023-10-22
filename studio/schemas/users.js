@@ -14,7 +14,7 @@ export default {
       type: "string",
     },
     {
-      name: "name",
+      name: "firstname",
       title: "First Name",
       type: "string",
     },
@@ -32,10 +32,15 @@ export default {
     {
       name: "dob",
       title: "Date of Birth",
-      type: "date",
+      type: "text",
     },
     {
-      name: "address",
+      name: "gender",
+      title: "Gender",
+      type: "string",
+    },
+    {
+      name: "address1",
       title: "Address Line 1",
       type: "string",
     },
@@ -60,7 +65,7 @@ export default {
       type: "string",
     },
     {
-      name: "phoneNumber",
+      name: "phone",
       title: "Phone Number",
       type: "number",
     },
