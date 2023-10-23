@@ -58,16 +58,7 @@ const WalletPage: React.FC = () => {
       );
 
       setUserId(data[0]?._id || "");
-      console.log(data)
-    };
-    
 
-    getUID();
-  }, [user]);
-
-  useEffect(() => {
-    async function getDetails() {
-      if (!user) return;
       const results = await sanityClient.fetch(
         `*[_type == "users" && email == $curr  ] {
             _id,
@@ -76,14 +67,13 @@ const WalletPage: React.FC = () => {
     }`,
       { curr: user?.email }
       );
-      
-  setWalletDeposit(results[0]?.walletAmount);
-  console.log(results);
-  
-  
-    }
-    getDetails();
-  },[user]);
+      setWalletDeposit(results[0]?.walletAmount);
+      console.log(data)
+    };
+    
+
+    getUID();
+  }, [user]);
 
   const config = {
     email: user?.email!,
@@ -215,3 +205,5 @@ const WalletPage: React.FC = () => {
 };
 
 export default WalletPage;
+
+
