@@ -7,10 +7,10 @@ import Navbar from "../components/navbar/navbar";
 import { AnimatePresence } from "framer-motion";
 import Script from "next/script";
 import { SanityUIDProvider } from "../context/sanityUserId";
-import { useRouter } from "next/router";
+import { useRouter }  from "next/router";
 import '../global.css'
 import { ShippingDataProvider } from '../context/shippingContext';
-import { Router, Routes, Route } from "react-router";
+//import { Router, Routes, Route } from "react-router";
 //import Productcheckout from "./productcheckout";
 
 function MyApp({ Component, pageProps }: AppProps) {
