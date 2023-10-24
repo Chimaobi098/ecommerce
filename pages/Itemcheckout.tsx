@@ -157,7 +157,7 @@ const Productcheckout = ({ user }: User) => {
               { couponCode || ""}
             </p>
           </div>
-          {couponCode == "" ?   
+          {couponCode == 0 ?   
           <button style={{ background: 'lightgray', padding: '12px', borderRadius: '7px'  }} className="Add-button" onClick={(e) => { 
             e.preventDefault();
             showDiscount(e);
