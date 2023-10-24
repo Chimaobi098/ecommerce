@@ -17,6 +17,12 @@ import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { useSanityUIDContext } from "../../../context/sanityUserId";
+import More from '../../../public/More.svg';
+import Like from '../../../public/Like.svg';
+import Share from '../../../public/Share.svg';
+import comment from '../../../public/Comment.svg';
+import Bookmark from '../../../public/Bookmark.svg';
+
 
 interface ProductProps {
   productProps: {
@@ -144,7 +150,8 @@ const ProductContainer = ({
               </span>
             </div>
             <Button style={{ color: "black" }}>
-              <MoreHorizIcon fontSize="large" />
+              {/* <MoreHorizIcon fontSize="medium" /> */}
+             <Image src={More} width={0} height={0} alt="more icon" />    
             </Button>
           </div>
           <motion.div
@@ -169,6 +176,7 @@ const ProductContainer = ({
               <div>
                 <motion.button
                   whileTap={{ scale: 0.8 }}
+                  style={{  width: "2rem" }}
                   onClick={() => {
                     setLikes((prev) => {
                       if (prev.likeState) {
@@ -183,26 +191,26 @@ const ProductContainer = ({
                   }}
                 >
                   {likes.likeState ? (
-                    <FavoriteIcon
-                      fontSize="large"
-                      sx={{ marginRight: "10px" }}
+                    <Image
+                      src={Like}
                       color="error"
-                    />
+                      alt="active like icon"                     />
                   ) : (
-                    <FavoriteBorderIcon
-                      fontSize="large"
-                      sx={{ marginRight: "10px" }}
+                    <Image
+                       src={Like}
+                       alt="like icon"
                     />
                   )}
                 </motion.button>
-                <button>
-                  <CommentRoundedIcon
-                    fontSize="large"
-                    sx={{ marginRight: "10px" }}
+                <button style={{  width: "2rem"  }}>
+                  <Image
+                    src={comment}
+                    alt="comment icon"
                   />
                 </button>
                 <motion.button
                   whileTap={{ scale: 0.8 }}
+                  style={{  width: "2rem" }}
                   onClick={async () => {
                     try {
                       await navigator.share({
@@ -215,14 +223,15 @@ const ProductContainer = ({
                     }
                   }}
                 >
-                  <SendRoundedIcon
-                    fontSize="large"
-                    sx={{ marginRight: "10px" }}
+                  <Image
+                    src={Share}
+                    alt="share icon"
                   />
                 </motion.button>
               </div>
               <motion.button
                 id="save-button"
+                style={{  width: "3rem" }}
                 whileTap={{ scale: 0.8 }}
                 onClick={() => {
                   setPostSaveState((prev) => {
@@ -232,11 +241,11 @@ const ProductContainer = ({
                 }}
               >
                 {postSaveState ? (
-                  <BookmarkIcon fontSize="large" sx={{ marginRight: "10px" }} />
+                  <Image src={Bookmark} alt="active bookmark icon" />
                 ) : (
-                  <BookmarkBorderRoundedIcon
-                    fontSize="large"
-                    sx={{ marginRight: "10px" }}
+                  <Image
+                    src={Bookmark}
+                    alt="bookmark icon"
                   />
                 )}
               </motion.button>

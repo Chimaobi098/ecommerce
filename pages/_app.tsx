@@ -9,9 +9,13 @@ import Script from "next/script";
 import { SanityUIDProvider } from "../context/sanityUserId";
 import { useRouter } from "next/router";
 import '../global.css'
+import { ShippingDataProvider } from '../context/shippingContext';
+import { Router, Routes, Route } from "react-router";
+//import Productcheckout from "./productcheckout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const hideFooterOnCheckout = router.pathname == '/Itemcheckout';
 
   return (
     <>
@@ -26,10 +30,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </Script>
       <UserProvider>
         <SanityUIDProvider>
+          <ShippingDataProvider>
           <ShoppingCartProvider>
             <main
               style={{
-                paddingBottom: "15vmin ",
+                paddingBottom: "15vmin",
                 height: "100%",
                 overflow: "hidden",
                 position: "relative",
@@ -39,9 +44,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <Component {...pageProps} key={router.pathname} />
               </AnimatePresence>
             </main>
-            <Footer />
+            {!hideFooterOnCheckout && <Footer />}  {/* COnditionally render the footer */}
             <GlobalStyle />
           </ShoppingCartProvider>
+          </ShippingDataProvider>
         </SanityUIDProvider>
       </UserProvider>
     </>

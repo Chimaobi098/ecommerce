@@ -21,6 +21,7 @@ export const Wrapper = styled.div`
   padding: 1rem;
   overflow: scroll;
   height: 90%;
+  background: white;
 
   #sub-nav {
     display: flex;
@@ -68,8 +69,10 @@ export const VendorInfo = styled.div`
   #vendor-info-wrapper {
     display: flex;
     justify-content: space-between;
-    flex-grow: 3;
-    max-width: 50vmin;
+    flex-grow: 0;
+    gap: 30px;
+    max-width: 45vmin;
+    
     h3 {
       margin: 0;
     }

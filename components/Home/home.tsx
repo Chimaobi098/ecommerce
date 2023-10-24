@@ -12,6 +12,8 @@ import { useShoppingCart } from "../../context/shoppingCart";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { HomeProduct } from "../../pages";
 import ProductContainer from "./productItem/productContainer";
+import Shop from '../../public/noun-shopping-bag-858425.svg';
+import Image from "next/image";
 
 const Home = ({ results }: HomeProduct) => {
   const { getCartQuantity, cartOpen, setCartOpen } = useShoppingCart();
@@ -102,7 +104,7 @@ _id
             color="error"
             overlap="rectangular"
           >
-            <LocalMallIcon fontSize="medium" style={{ color: "black" }} />
+            <Image src={Shop} width={40} height={40}  alt="shop icon" />
           </Badge>
         </Button>
       </NavBar>

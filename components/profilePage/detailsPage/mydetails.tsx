@@ -146,7 +146,7 @@ updateDocument();
   )
 }
 
-export default MyDetails
+export default MyDetails;
 
 
               
