@@ -175,7 +175,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             </div> */}
             <div className="w-full h-auto flex flex-grow justify-evenly text-white my-8">
             <button
-            className="bg-[#0aad0a] hover:bg-[green] w-5/12 rounded-md h-12"
+              style={{ color: "black", border: "2px solid black"}}
+            className="border w-5/12 rounded-md h-12"
               onClick={() => {
                 if (currentProduct.variants) {
                   setOverlayVisibility(true);
@@ -185,10 +186,10 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                 }
               }}
             >
-              {cartButtonState()}
+              Add to Bag
             </button>
             <button
-            className="bg-[#de5d17] hover:bg-[#be541a] w-5/12 h-12 rounded-md"
+            className="bg-[#0aad0a] hover:bg-[green] w-5/12 h-12 rounded-md"
               onClick={() => {
                 if (user) {
                   setShowGameSettingsOverlay(true);
@@ -202,8 +203,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             </button>
             </div>
           <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
-              <h3>Product Description</h3>
+            <AccordionSummary style={{ padding: "15px" }} expandIcon={<ExpandMoreRoundedIcon />}>
+              <h3 style={{ fontWeight: "bold"}}>Product Description</h3>
             </AccordionSummary>
             <AccordionDetails>
               <p>
@@ -214,8 +215,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             </AccordionDetails>
           </Accordion>
           <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
-              <h3>Size Guide</h3>
+            <AccordionSummary style={{ padding: "15px" }} expandIcon={<ExpandMoreRoundedIcon />}>
+              <h3 style={{ fontWeight: "bold" }}>Size Guide</h3>
             </AccordionSummary>
             <AccordionDetails>
               <p>
@@ -226,8 +227,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             </AccordionDetails>
           </Accordion>
           <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
-              <h3>Shipping Info</h3>
+            <AccordionSummary style={{ padding: "15px" }} expandIcon={<ExpandMoreRoundedIcon />}>
+              <h3 style={{ fontWeight: "bold"}}>Shipping Info</h3>
             </AccordionSummary>
             <AccordionDetails>
               <p>
@@ -257,7 +258,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               </Link>
             </motion.div>
           </VendorPage>
-          <h2 style={{ marginTop: "50px" }}>More from this vendor</h2>
+          <h2 style={{ marginTop: "50px", fontSize: "20px", fontWeight: "bold" }}>More from this vendor</h2>
           <VendorProductsWrapper>
             {currentProduct?.moreFromVendor?.map((product, i) => (
               <Link

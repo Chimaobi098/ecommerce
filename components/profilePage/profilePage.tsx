@@ -13,6 +13,13 @@ import Button from "@mui/material/Button";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
+import walleticon from "../../public/et_wallet.svg";
+import homeUser from "../../public/uit_house-user.svg"
+import Image from "next/image";
+import Question from "../../public/question-mark_3524335.png";
+
+const ProfilePage = ({ user }: User) => {
+  const [support, setSupport] = useState(false)
 
 const ProfilePage = ({ user }: User) => {
   const [loading, setLoading] = useState(false);
@@ -44,12 +51,12 @@ const ProfilePage = ({ user }: User) => {
     },
     {
       profileItemName: "Address book",
-      profileItemIcon: <HouseOutlinedIcon />,
+      profileItemIcon: <Image src={homeUser} width={0} height={0} />,
       profileUrl: "/profile/address",
     },
     {
       profileItemName: "Wallet",
-      profileItemIcon: <AccountBalanceWalletOutlinedIcon />,
+      profileItemIcon: <Image src={walleticon} width={0} height={0} />,
       profileUrl: "/profile/wallet",
     },
     {
@@ -57,11 +64,11 @@ const ProfilePage = ({ user }: User) => {
       profileItemIcon: <ShoppingBagOutlinedIcon />,
       profileUrl: "/profile/saved-posts",
     },
-    {
-      profileItemName: "Membership plans",
-      profileItemIcon: <DateRangeOutlinedIcon />,
-      profileUrl: "/profile/membership",
-    },
+    // {
+    //   profileItemName: "Membership plans",
+    //   profileItemIcon: <DateRangeOutlinedIcon />,
+    //   profileUrl: "/profile/membership",
+    // },
   ];
 
   const handleClick = () => {
@@ -110,12 +117,15 @@ const ProfilePage = ({ user }: User) => {
           </ProfileItem>
         ))}
 
-        <ProfileItem className="cursor-pointer" onClick={handleClick}>
+      <ProfileItem
+        className="cursor-pointer"
+        onClick={handleClick} 
+        >
           <div className="profile-name-container cursor-pointer">
-            <SupportAgentOutlinedIcon />
-            <div>Customer support</div>
+          <Image src={Question} width={23} height={19} />
+            <div>Help center</div>
           </div>
-          <ArrowForwardIosRoundedIcon />
+          <ArrowForwardIosRoundedIcon style={{ color: "grey", fontSize: "16px", }} />
         </ProfileItem>
 
         <Button
@@ -144,9 +154,9 @@ const ProfilePage = ({ user }: User) => {
             Cancel
           </div>
         </div>
-      </Wrapper>
-    </>
+    </Wrapper>
+        </>
   );
 };
-
+}
 export default ProfilePage;

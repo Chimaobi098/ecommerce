@@ -1,11 +1,13 @@
 import { Button } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-
+import Profile from "../../public/216487_add_user_icon.svg";
 import { useRouter } from "next/router";
 import React from "react";
 import { urlFor } from "../../lib/sanity";
 import GridOnIcon from "@mui/icons-material/GridOn";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+//import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import Shopicon from "../../public/Shop.svg";
+
 import {
   ProductImageWrapper,
   VendorInfo,
@@ -30,8 +32,10 @@ const VendorPage = ({ vendorData }) => {
     {
       label: "vouchers",
       icon: (
-        <LocalOfferIcon
-          style={{ color: selected == "vouchers" ? null : "hsl(0, 0%, 66%)" }}
+        <Image
+           src={Shopicon}
+           width={0}
+           height={0}
         />
       ),
     },
@@ -63,7 +67,10 @@ const VendorPage = ({ vendorData }) => {
             </div>
           </div>
         </VendorInfo>
-        <Button style={{ width: "100%" }}>Follow</Button>
+        <div style={{ display: "flex", justifyContent:"flex-end", gap: "1rem"  }}>
+        <Button style={{ display: "flex", color: "black", fontWeight: "bold",   width: "35%", background: "grey", borderRadius: "12px"  }}>Follow</Button>
+        <Button style={{ display: "flex", border: "1px solid", borderColor: "white", background: "grey", borderRadius: "12px"   }}><Image src={Profile} width={0} height={0} /></Button>
+         </div>
         <ul id="sub-nav">
           {sectionItems.map((item, i) => (
             <li
@@ -76,9 +83,6 @@ const VendorPage = ({ vendorData }) => {
               {item.icon}
               {selected == item.label ? (
                 <motion.div
-                  initial={{ x: 0, y: 0 }}
-                  id="underline"
-                  layoutId="underline"
                 ></motion.div>
               ) : null}
             </li>
@@ -125,9 +129,7 @@ const VendorPage = ({ vendorData }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <div className="voucher-card"></div>
-              <div className="voucher-card"></div>
-              <div className="voucher-card"></div>
+      
             </motion.div>
           )}
         </AnimatePresence>
