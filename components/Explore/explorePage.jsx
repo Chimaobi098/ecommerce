@@ -6,6 +6,7 @@ import Link from "next/link";
 import { sanityClient } from "../../lib/sanity";
 import SearchByCategory from "./searchByCategory";
 import { buildTree } from "../../utils/buildtree";
+import Image from "next/image";
 
 const ExplorePage = ({ searchResults, searchQuery }) => {
   const [categoryData, setCategoryData] = useState();
@@ -39,7 +40,7 @@ const ExplorePage = ({ searchResults, searchQuery }) => {
             key={searchResult._id}
           >
             <SearchResultItems whileTap={{ scale: 0.9 }}>
-              <img src={urlFor(searchResult.productImageUrl)} />
+              <Image src={urlFor(searchResult.productImageUrl)} />
               <div id="product-info">
                 <h4>{searchResult.title}</h4>
                 <h3>{formatCurrency(searchResult.price)}</h3>

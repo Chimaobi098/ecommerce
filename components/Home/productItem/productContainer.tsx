@@ -95,7 +95,7 @@ const ProductContainer = ({
         }),
       });
     }, 2000),
-    [sanityUID]
+    [productProps._id, sanityUID]
   );
 
   useEffect(() => {

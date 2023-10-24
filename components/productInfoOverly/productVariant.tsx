@@ -49,7 +49,7 @@ const ProductVariant = ({
         itemQuantity + 1
       );
     }
-  }, [variantButtonState]);
+  }, [itemQuantity, modifyItemQuantity, productId, productInfo, variantId, variantButtonState]);
 
   return (
     <>

@@ -29,7 +29,7 @@ const Explore = () => {
     return () => {
       ignore = true;
     };
-  }, [searchQuery]);
+  }, [searchQuery, index]);
 
   return (
     <>

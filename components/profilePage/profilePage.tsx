@@ -120,7 +120,7 @@ const ProfilePage = ({ user }: User) => {
         onClick={handleClick} 
         >
           <div className="profile-name-container cursor-pointer">
-          <Image src={Question} width={23} height={19} />
+          <Image src={Question} width={23} height={19} alt="question icon" />
             <div>Help center</div>
           </div>
           <ArrowForwardIosRoundedIcon style={{ color: "grey", fontSize: "16px", }} />

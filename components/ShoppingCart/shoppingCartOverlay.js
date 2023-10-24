@@ -23,7 +23,7 @@ import { useRouter } from "next/router";
 import { Swipeable } from "react-swipeable";
 import { Button } from "@mui/material";
 //import { useNavigate} from "react-router-dom";
-
+import Image from "next/image";
 
 const ShoppingCartOverlay = () => {
   const router = useRouter();
@@ -130,7 +130,7 @@ const ShoppingCartOverlay = () => {
                   }}
                   dragTransition={{ bounceStiffness: 900, bounceDamping: 100 }}
                 >
-                  <img
+                  <Image
                     id="product-image"
                     src={urlFor(
                       item.isVariant

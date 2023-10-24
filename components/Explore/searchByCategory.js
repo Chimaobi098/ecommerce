@@ -12,6 +12,8 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CheckIcon from '@mui/icons-material/Check';
 import {useSanityUIDContext} from '../../context/sanityUserId'
+import Image from "next/image";
+
 
 const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
   const sanityUID = useSanityUIDContext();
@@ -346,7 +348,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
     
     <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
       <div className="">
-         <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+         <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
            
       </div>
         <div className="mx-2">
@@ -397,7 +399,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="">
-                 <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+                 <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
                    
               </div>
                 <div className="mx-2">
@@ -448,7 +450,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="">
-                 <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+                 <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
                    
               </div>
                 <div className="mx-2">
@@ -499,7 +501,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="">
-                 <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full  min-h-48 max-h-48 h-48"/>
+                 <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full  min-h-48 max-h-48 h-48"/>
                    
               </div>
                 <div className="mx-2">

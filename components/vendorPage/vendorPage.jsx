@@ -36,6 +36,7 @@ const VendorPage = ({ vendorData }) => {
            src={Shopicon}
            width={0}
            height={0}
+           alt="shop icon"
         />
       ),
     },

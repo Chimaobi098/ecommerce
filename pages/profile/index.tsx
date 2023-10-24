@@ -12,7 +12,7 @@ const Profile = ({ user }: User) => {
     <>
         <NavBar style={{ textAlign: "center", display: "flex", justifyContent: "center", }}>
         <header style={{ width: "100%" }}>My Account</header>
-        <Image src={settingIcon} width={0} height={0} /> 
+        <Image src={settingIcon} width={0} height={0} alt="setting icon" /> 
       </NavBar>
   <Wrapper>
   <ProfilePage user={user} />

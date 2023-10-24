@@ -31,7 +31,7 @@ const LikedProducts = ({ user }: User) => {
       setProducts(likedProducts[0].likedProducts);
     }
     getData();
-  }, []);
+  }, [user?.sub]);
 
   return <LikedProductPage products={products} />;
 };
