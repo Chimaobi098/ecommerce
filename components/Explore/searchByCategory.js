@@ -348,7 +348,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
     
     <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
       <div className="">
-         <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+         <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" alt="product variant icon" />
            
       </div>
         <div className="mx-2">
@@ -399,7 +399,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="">
-                 <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+                 <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" alt="default product variant icon" />
                    
               </div>
                 <div className="mx-2">
@@ -450,7 +450,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="">
-                 <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+                 <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" alt="default Product Variant" />
                    
               </div>
                 <div className="mx-2">
@@ -501,7 +501,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="">
-                 <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full  min-h-48 max-h-48 h-48"/>
+                 <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full  min-h-48 max-h-48 h-48" alt="default Product variant" />
                    
               </div>
                 <div className="mx-2">

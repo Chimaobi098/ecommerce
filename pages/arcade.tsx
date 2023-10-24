@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { CloseMenu } from "../components/productInfoOverly/prodInfoOverlay.styles";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { NavBar } from "../components/Home/home.styles";
-import import Image from 'next/image';
+import Image from 'next/image';
 
 
 // styling

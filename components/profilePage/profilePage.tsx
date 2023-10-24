@@ -49,12 +49,12 @@ const ProfilePage = ({ user }: User) => {
     },
     {
       profileItemName: "Address book",
-      profileItemIcon: <Image src={homeUser} width={0} height={0} />,
+      profileItemIcon: <Image src={homeUser} width={0} height={0} alt="address icon" />,
       profileUrl: "/profile/address",
     },
     {
       profileItemName: "Wallet",
-      profileItemIcon: <Image src={walleticon} width={0} height={0} />,
+      profileItemIcon: <Image src={walleticon} width={0} height={0} alt="wallet icon" />,
       profileUrl: "/profile/wallet",
     },
     {

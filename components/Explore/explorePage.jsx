@@ -40,7 +40,7 @@ const ExplorePage = ({ searchResults, searchQuery }) => {
             key={searchResult._id}
           >
             <SearchResultItems whileTap={{ scale: 0.9 }}>
-              <Image src={urlFor(searchResult.productImageUrl)} />
+              <Image src={urlFor(searchResult.productImageUrl)} alt="url link" />
               <div id="product-info">
                 <h4>{searchResult.title}</h4>
                 <h3>{formatCurrency(searchResult.price)}</h3>
