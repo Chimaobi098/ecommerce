@@ -30,7 +30,7 @@ interface OrderInfo {
 const Productcheckout = ({ user }: User) => {   
   const router = useRouter();
   const [currentUID, setCurrentUID] = useState<string>("");
-  const [couponCode, setCouponCode] = useState("");
+  const [couponCode, setCouponCode] = useState<number>(0);
   const { getTotalCartPrice, cartItems } = useShoppingCart();
   const [deliveryPhoneNumber, setDeliveryPhoneNumber] = useState<number>(0);
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
@@ -155,18 +155,18 @@ const Productcheckout = ({ user }: User) => {
         >
           <div style={{ display: "flex", justifyContent: "space-between", width: "100%", }}> 
           <div style={{ }}>
-            <h2 style={{ fontWeight: "semi", fontSize: "1rem" }}>{couponCode == "" ? "Enter Discount code" : "Discount code" }  </h2>
+            <h2 style={{ fontWeight: "semi", fontSize: "1rem" }}>{couponCode == 0 ? "Enter Discount code" : "Discount code" }  </h2>
             <p style={{ fontSize: "0.8rem", color: "grey", padding: "0.1rem 0" }}>
               { couponCode || ""}
             </p>
           </div>
-          {couponCode == "1" ?   
+          {couponCode == 0 ?   
           <button style={{ background: 'lightgray', padding: '12px', borderRadius: '7px'  }} className="Add-button" onClick={(e) => { 
             e.preventDefault();
             showDiscount(e);
           }
           }>
-            <Image src={Arrowbutton} width={10} height={10} alt="arrow-image" />
+            <Image src={Arrowbutton} unoptimized={true} width={10} height={10} alt="arrow-image" />
           </button>   
           :  ""
            }
@@ -177,7 +177,7 @@ const Productcheckout = ({ user }: User) => {
             <div className="discount-dropdown" style={{ position: "relative", top: "10px",  width: "320px", padding: "20px" }}> 
             <form style={{ width: "270px", border: "2px solid", borderRadius: "7px", marginBottom: "15px", padding: "10px" }}>
               <input type="number" 
-                 onChange={(e) => setCouponCode(e.target.value)}
+                 onChange={(e) => setCouponCode(Number.parseInt(e.target.value))}
                 value={couponCode} 
                 placeholder="yyyyyyy" 
                 className="couponform" 

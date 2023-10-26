@@ -24,7 +24,6 @@ const LikedProducts = ({ user }: User) => {
       likedProducts[]->{
     title,defaultProductVariant
   }
-
     }`,
         { curr: user?.sub }
       );

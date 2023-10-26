@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
-  swcMinify: true,
+  reactStrictMode: true,
+  //swcMinify: true,
   images: {
     domains: ["cdn.sanity.io"],
   },
@@ -21,3 +21,18 @@ module.exports = {
   pageDataCollectionTimeout: 1000000,
   // Other configurations...
 };
+
+
+// next.config.js
+module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'assets.example.com',
+        port: '',
+        pathname: '/account123/**',
+      },
+    ],
+  },
+}
