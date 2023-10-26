@@ -104,7 +104,7 @@ _id
             color="error"
             overlap="rectangular"
           >
-            <Image src={Shop} width={40} height={40}  alt="shop icon" />
+            <Image src={Shop} unoptimized={true} width={40} height={40}  alt="shop icon" />
           </Badge>
         </Button>
       </NavBar>

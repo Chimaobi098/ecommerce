@@ -3,7 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   //swcMinify: true,
   images: {
-    domains: ["cdn.sanity.io"],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'assets.example.com',
+        port: '',
+        pathname: '/account123/**',
+      },
+    ],
   },
   env: {
     ALGOLIA_APP_ID: "QWFLVVGLBV",

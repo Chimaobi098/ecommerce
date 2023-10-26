@@ -135,6 +135,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             objectFit="cover"
             src={urlFor(currentProduct.defaultProductVariant?.images[0]).url()}
             alt="Product Image"
+            unoptimized={true}
           />
         </div>
         <ProductInfoSection>
@@ -183,10 +184,12 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             className="border w-5/12 rounded-md h-12"
               onClick={() => {
                 if (currentProduct.variants) {
+                  console.log("add Product");
                   setOverlayVisibility(true);
                 } else {
                   if (cartButtonState() == "In cart") return;
                   modifyItemQuantity(currentProduct, itemQuantity);
+                  console.log("Product added");
                 }
               }}
             >
@@ -258,6 +261,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                   alt="vendorLogo"
                   height={"60rem"}
                   width={"60rem"}
+                  unoptimized={true}
                 />
               </Link>
             </motion.div>
@@ -286,6 +290,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                         product.defaultProductVariant.images[0]
                       ).url()}
                       alt="Product Image"
+                      unoptimized={true}
                     />
                   </div>
                   <div style={{ padding: "0 0.5rem" }}>
@@ -385,6 +390,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           <DefaultImage
         productInfo={currentProduct}
         variantButtonState={variantButtonState}
+        unoptimized={true}
         />
 
         {currentProduct.variants.map((variant) => {
