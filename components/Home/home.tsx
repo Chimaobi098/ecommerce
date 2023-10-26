@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
 import { useShoppingCart } from "../../context/shoppingCart";
-import LocalMallIcon from "@mui/icons-material/LocalMall";
+//import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { HomeProduct } from "../../pages";
 import ProductContainer from "./productItem/productContainer";
 import Shop from '../../public/noun-shopping-bag-858425.svg';

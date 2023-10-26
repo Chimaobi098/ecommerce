@@ -1,4 +1,6 @@
-import { Button, TextField } from "@mui/material";
+// 🚀 Fast
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import React, { useEffect } from "react";
 import { useShoppingCart } from "../../context/shoppingCart";
 import { Wrapper, Card } from "./checkoutPage.styles";

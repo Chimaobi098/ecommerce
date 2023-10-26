@@ -1,4 +1,6 @@
-import { Button, TextField } from "@mui/material";
+// 🚀 Fast
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import React, { useEffect } from "react";
 import { useShoppingCart } from "../context/shoppingCart";
 import { Wrapper, Card } from "../components/Checkout/checkoutPage.styles";
@@ -103,10 +105,11 @@ const ShippingPage = ({ user }: User) => {
   const config = {
     amount: totalAmount * 100, // converting to kobo for paystack
     publicKey: process.env.PAYSTACK_PUBLIC_KEY!,
-  };
+    email: ""
+  }
   const initializePayment = usePaystackPayment(config);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: any) {
     e.preventDefault();
 
      setShippingData({
@@ -253,7 +256,7 @@ const ShippingPage = ({ user }: User) => {
           className="input-field"
           margin="normal"
           onChange={(e) => {
-            setPhoneNumber(e.target.value);
+            setPhoneNumber(Number.parseInt(e.target.value));
           }}
           value={PhoneNumber}
         />
@@ -289,7 +292,7 @@ const ShippingPage = ({ user }: User) => {
           margin="normal"
           value={Unit}
           onChange={(e) => {
-            setUnit(e.target.value);
+            setUnit(Number.parseInt(e.target.value));
           }}
         />
 
@@ -315,7 +318,7 @@ const ShippingPage = ({ user }: User) => {
           margin="normal"
           value={Postal}
           onChange={(e) => {
-            setPostal(e.target.value);
+            setPostal(Number.parseInt(e.target.value));
           }}
         />
 
@@ -345,7 +348,7 @@ const ShippingPage = ({ user }: User) => {
         </div>
 
          <div style={{ border: "2px solid white", textAlign: "center", color: "white" }} className="Submitbtn">
-        <button style={{ background: "gray", borderRadius: "6px", padding: "12px" }} onClick={handleSubmit}>
+        <button style={{ background: "gray", borderRadius: "6px", padding: "12px" }} onClick={(e) => handleSubmit(e)}>
           Save Address  
         </button>
         </div>

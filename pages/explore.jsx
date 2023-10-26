@@ -3,7 +3,7 @@ import ExplorePage from "../components/Explore/explorePage";
 import { useEffect } from "react";
 import algoliasearch from "algoliasearch";
 import { NavBar } from "../components/Explore/explorePage.styles";
-import { Button } from "@mui/material";
+//import { Button } from "@mui/material";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 
 const Explore = () => {

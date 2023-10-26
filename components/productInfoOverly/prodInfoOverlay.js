@@ -13,7 +13,11 @@ import { urlFor } from "../../lib/sanity";
 import { formatCurrency } from "../../utils/currencyFormatter.ts";
 import { CloseMenu } from "./prodInfoOverlay.styles";
 import { motion } from "framer-motion";
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+// 🚀 Fast
+
+import  Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails"; 
+import AccordionSummary  from "@mui/material/AccordionSummary";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";

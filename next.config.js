@@ -13,3 +13,11 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+
+
+// next.config.js
+module.exports = {
+  pageDataCollectionTimeout: 1000000,
+  // Other configurations...
+};

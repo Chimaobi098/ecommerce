@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import  Button  from "@mui/material/Button";
 import { AnimatePresence, motion } from "framer-motion";
 import Profile from "../../public/216487_add_user_icon.svg";
 import { useRouter } from "next/router";

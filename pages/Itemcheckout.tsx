@@ -1,7 +1,9 @@
 'use client';
 
 import { useShippingData } from "../context/shippingContext";
-import { Button, TextField } from "@mui/material";
+// 🚀 Fast
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import React, { useEffect } from "react";
 import { useShoppingCart } from "../context/shoppingCart";
 import { Wrapper, Card } from "../components/Checkout/checkoutPage.styles";
@@ -13,7 +15,7 @@ import { usePaystackPayment } from "react-paystack";
 import { sanityClient } from "../lib/sanity";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "../interfaces/interface";
-import { border } from "@mui/system";
+//import { border } from "@mui/system";
 import Arrowbutton from '../public/upArrow.svg';
 import Image from "next/image";
 import './productcheckout.module.css';
@@ -28,7 +30,7 @@ interface OrderInfo {
 const Productcheckout = ({ user }: User) => {   
   const router = useRouter();
   const [currentUID, setCurrentUID] = useState<string>("");
-  const [couponCode, setCouponCode] = useState(0);
+  const [couponCode, setCouponCode] = useState("");
   const { getTotalCartPrice, cartItems } = useShoppingCart();
   const [deliveryPhoneNumber, setDeliveryPhoneNumber] = useState<number>(0);
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
@@ -45,6 +47,7 @@ const Productcheckout = ({ user }: User) => {
   const config = {
     amount: totalAmount * 100, // converting to kobo for paystack
     publicKey: process.env.PAYSTACK_PUBLIC_KEY!,
+    email: ""
   };
   const initializePayment = usePaystackPayment(config);
   const { shippingData } = useShippingData();
@@ -81,20 +84,20 @@ const Productcheckout = ({ user }: User) => {
       
 
 
-    const handleShippingAddress = (e) => {    
+    const handleShippingAddress = (e: any) => {    
      e.preventDefault();
      router.push('/shippingPage')
      // Your code logic
     } 
  
  
-    function showDiscount(e) {
+    function showDiscount(e: any) {
       e.preventDefault();
       setDiscount(!discount);  
         
     }
 
-    const handleDiscount = (e) => {
+    const handleDiscount = (e: any) => {
        e.preventDefault();
        setCouponCode(couponCode);
 
@@ -152,12 +155,12 @@ const Productcheckout = ({ user }: User) => {
         >
           <div style={{ display: "flex", justifyContent: "space-between", width: "100%", }}> 
           <div style={{ }}>
-            <h2 style={{ fontWeight: "semi", fontSize: "1rem" }}>{couponCode == 0 ? "Enter Discount code" : "Discount code" }  </h2>
+            <h2 style={{ fontWeight: "semi", fontSize: "1rem" }}>{couponCode == "" ? "Enter Discount code" : "Discount code" }  </h2>
             <p style={{ fontSize: "0.8rem", color: "grey", padding: "0.1rem 0" }}>
               { couponCode || ""}
             </p>
           </div>
-          {couponCode == "" ?   
+          {couponCode == "1" ?   
           <button style={{ background: 'lightgray', padding: '12px', borderRadius: '7px'  }} className="Add-button" onClick={(e) => { 
             e.preventDefault();
             showDiscount(e);

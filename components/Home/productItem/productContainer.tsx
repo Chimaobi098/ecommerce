@@ -12,7 +12,8 @@ import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
 import debounce from "../../../utils/debounce";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { Button } from "@mui/material";
+// 🚀 Fast
+import Button from '@mui/material/Button';
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
