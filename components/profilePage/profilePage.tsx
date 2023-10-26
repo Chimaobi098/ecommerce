@@ -18,8 +18,6 @@ import homeUser from "../../public/uit_house-user.svg"
 import Image from "next/image";
 import Question from "../../public/question-mark_3524335.png";
 
-const ProfilePage = ({ user }: User) => {
-  const [support, setSupport] = useState(false)
 
 const ProfilePage = ({ user }: User) => {
   const [loading, setLoading] = useState(false);
@@ -156,5 +154,5 @@ const ProfilePage = ({ user }: User) => {
   );
 
 };
-};
+
 export default ProfilePage;
