@@ -9,7 +9,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import {
-  StoreCard,
   TransactionHistoryWrapper,
   Wrapper,
 } from "./walletPage.styles";
@@ -33,22 +32,6 @@ const WalletPage: React.FC = () => {
   const handleCard = () => {
     setcarddetails(!carddetails);
   };
-
-  // const handleCopyClick = () => {
-  //   const contentToCopy = document.getElementById('contentToCopy');
-  //   if (contentToCopy) {
-  //     const textToCopy = contentToCopy.innerText;
-
-  //     navigator.clipboard.writeText(textToCopy)
-  //       .then(() => {
-  //         setCopied(true);
-  //         setTimeout(() => setCopied(false), 2000);
-  //       })
-  //       .catch(error => {
-  //         console.error('Error copying text:', error);
-  //       });
-  //   }
-  // };
 
   useEffect(() => {
     const getUID = async () => {
@@ -142,12 +125,8 @@ const WalletPage: React.FC = () => {
   return (
     <Wrapper className="mt-20 mx-4">
       <div className="flex flex-col items-center justify-center text-2xl py-12 gap-y-2">
-        {/* <div className="flex flex-row items-center">
-          <VisibilityOutlinedIcon />
-          <h2 className="text-2xl mx-2">Total Balance:</h2>
-          </div> */}
           <div className="text-3xl md:text-4xl font-medium">
-          ₦{walletDeposit}
+          ₦
           </div>
           <h4 className="text-gray-500 text-sm">Available</h4>
            </div>
