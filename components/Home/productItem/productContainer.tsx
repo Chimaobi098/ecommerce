@@ -11,12 +11,12 @@ import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
 import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
 import debounce from "../../../utils/debounce";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+//import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 // 🚀 Fast
 import Button from '@mui/material/Button';
-import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import SendRoundedIcon from "@mui/icons-material/SendRounded";
+//import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
+//import BookmarkIcon from "@mui/icons-material/Bookmark";
+//import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { useSanityUIDContext } from "../../../context/sanityUserId";
 import More from '../../../public/More.svg';
 import Like from '../../../public/Like.svg';
@@ -147,7 +147,7 @@ const ProductContainer = ({
             {productProps.vendor.title}
           </span>
         </div>
-        <Button style={{ color: "black" }}>
+        <Button style={{ color: "black", paddingLeft: "50px" }}>
           <Image src={More} unoptimized={true} alt="more icon" />
         </Button>
       </div>
@@ -191,13 +191,14 @@ const ProductContainer = ({
                 <Image src={Like}
                   unoptimized={true}
                   alt="like icon"
-                  
+                  style={{ background: "red" }}  
                 />
               ) : (
                 <Image
                  src={Like}
                 alt="like icon"
                 unoptimized={true}
+                  
                     />
               )}
             </motion.button>
@@ -240,7 +241,7 @@ const ProductContainer = ({
             )}
           </motion.button>
         </div>
-        <h4 style={{ marginTop: "10px" }}>{`${likes.likeCount} like${
+        <h4 style={{ marginTop: "10px", marginLeft: "10px" }}>{`${likes.likeCount} like${
           likes.likeCount > 1 || likes.likeCount == 0 ? "s" : ""
         }`}</h4>
       </div>

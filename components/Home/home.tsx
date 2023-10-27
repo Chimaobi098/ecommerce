@@ -95,8 +95,9 @@ _id
           style={{
             width: "60px",
             height: "60px",
+            paddingTop: "13px",
             borderRadius: "50%",
-            color: "grey",
+            color: "black",
           }}
         >
           <Badge
@@ -104,7 +105,7 @@ _id
             color="error"
             overlap="rectangular"
           >
-            <Image src={Shop} unoptimized={true} width={40} height={40}  alt="shop icon" />
+            <Image src={Shop} className="shopImg" style={{ width: "40px", height: "40px", border: "1px solid red" }} unoptimized={true} width={40} height={40} alt="shop icon" />
           </Badge>
         </Button>
       </NavBar>

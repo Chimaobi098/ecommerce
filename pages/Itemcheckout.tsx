@@ -19,6 +19,8 @@ import { User } from "../interfaces/interface";
 import Arrowbutton from '../public/upArrow.svg';
 import Image from "next/image";
 import './productcheckout.module.css';
+import greaterIcon from "../public/greater-than-symbol.png";
+
 
 interface OrderInfo {
     title: string;
@@ -139,7 +141,7 @@ const Productcheckout = ({ user }: User) => {
           }
           } 
            style={{ background: 'lightgray', padding: '12px', borderRadius: '7px' }} className="Add-button">
-            Add
+            <Image src={greaterIcon} width={25} height={20} style={{ width: "10px"}} alt="greater icon"  />
           </button>
           
         </Card>
@@ -156,12 +158,12 @@ const Productcheckout = ({ user }: User) => {
           <div style={{ display: "flex", justifyContent: "space-between", width: "100%", }}> 
           <div style={{ }}>
             <h2 style={{ fontWeight: "semi", fontSize: "1rem" }}>{couponCode == 0 ? "Enter Discount code" : "Discount code" }  </h2>
-            <p style={{ fontSize: "0.8rem", color: "grey", padding: "0.1rem 0" }}>
+            <p style={{ fontSize: "0.8rem", color: "white", padding: "0.1rem 0" }}>
               { couponCode || ""}
             </p>
           </div>
           {couponCode == 0 ?   
-          <button style={{ background: 'lightgray', padding: '12px', borderRadius: '7px'  }} className="Add-button" onClick={(e) => { 
+          <button style={{ background: 'white', padding: '12px', borderRadius: '7px'  }} className="Add-button" onClick={(e) => { 
             e.preventDefault();
             showDiscount(e);
           }
@@ -214,7 +216,7 @@ const Productcheckout = ({ user }: User) => {
             <b>Shipping</b>
             <div>{formatCurrency(shippingFees)}</div>
           </div>
-          <hr />
+          
           <div className="item-details-container" id="total-container">
             <div>{`${2} items`}</div>
             <div style={{ display: "flex", gap: "1rem" }}>
@@ -225,8 +227,9 @@ const Productcheckout = ({ user }: User) => {
             </div>
           </div>
 
+          <hr />
 
-         <button style={{ background: "gray", margin: "0 auto", borderRadius: "6px", padding: "9px", textAlign: "center", justifyContent: "center", display: "flex", width:"70%", border: "1px solid black" }}>
+         <button style={{ background: "green", color: "white",  margin: "20px auto", borderRadius: "6px", padding: "9px", textAlign: "center", justifyContent: "center", display: "flex", width:"80%", border: "1px solid green" }}>
           Submit Order
          </button>
           
