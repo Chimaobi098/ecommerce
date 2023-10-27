@@ -21,7 +21,7 @@ const WalletPage: React.FC = () => {
   const [userId, setUserId] = useState<string>("");
   const [walletDeposit, setWalletDeposit] = useState("");
   const [amount, setAmount] = useState<string>("0.00");
-  console.log(user);
+  console.log(walletDeposit);
   
 
   const [carddetails, setcarddetails] = useState<boolean>(false);
@@ -125,9 +125,9 @@ const WalletPage: React.FC = () => {
   return (
     <Wrapper className="mt-20 mx-4">
       <div className="flex flex-col items-center justify-center text-2xl py-12 gap-y-2">
-          <div className="text-3xl md:text-4xl font-medium">
-          ₦
-          </div>
+          { walletDeposit && (<div className="text-3xl md:text-4xl font-medium">
+          ₦ {walletDeposit}
+          </div>)}
           <h4 className="text-gray-500 text-sm">Available</h4>
            </div>
 
