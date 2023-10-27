@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 import { User } from "../interfaces/interface";
 import { Email } from "@mui/icons-material";
 import { useShippingData } from '../context/shippingContext';
-
+import Less from '../public/less-than-symbol.png';
 
 
 interface OrderInfo {
@@ -212,7 +212,7 @@ const ShippingPage = ({ user }: User) => {
         <ArrowBackRoundedIcon />
       </button>
       <form>
-        <p className="section-title">Shipping Info</p>
+        <p className="section-title" style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>Shipping </p>
         {/* <TextField
           required
           label="Phone Number"
@@ -298,7 +298,7 @@ const ShippingPage = ({ user }: User) => {
 
         <TextField
           required
-          label="City"
+          label="lga"
           type="text"
           className="input-field"
           margin="normal"
@@ -347,8 +347,8 @@ const ShippingPage = ({ user }: User) => {
         />
         </div>
 
-         <div style={{ border: "2px solid white", textAlign: "center", color: "white" }} className="Submitbtn">
-        <button style={{ background: "gray", borderRadius: "6px", padding: "12px" }} onClick={(e) => handleSubmit(e)}>
+         <div style={{ textAlign: "center", color: "white" }} className="Submitbtn">
+        <button style={{ background: "gray", borderRadius: "6px", padding: "12px 80px",  }} onClick={(e) => handleSubmit(e)}>
           Save Address  
         </button>
         </div>

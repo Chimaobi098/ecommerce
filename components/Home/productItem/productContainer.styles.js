@@ -39,6 +39,8 @@ export const ProductInfo = styled.div`
       background-color: transparent;
       border: none;
       padding: 0;
+      drop-shadow: 10px 10px 0 0 rgb(0,0,0,0.4);
+      padding: 0 5px;
     }
   }
 `;

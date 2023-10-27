@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
   margin-top: 9vh;
   padding-bottom: 20vh;
 `;
+
 export const NavBar = styled.nav`
   background: white;
   position: fixed;
@@ -31,6 +32,8 @@ export const NavBar = styled.nav`
     text-align: center;
   }
 `;
+
+
 export const ProfileNav = styled.nav`
   background: white;
   position: fixed;
@@ -49,3 +52,5 @@ export const ProfileNav = styled.nav`
     text-align: center;
   }
 `;
+
+
