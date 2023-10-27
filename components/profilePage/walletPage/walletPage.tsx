@@ -1,8 +1,10 @@
 import { useUser } from "@auth0/nextjs-auth0";
+import  Button  from "@mui/material/Button";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePaystackPayment } from "react-paystack";
-import { CloseOutlined } from "@mui/icons-material";
+import  CloseOutlined  from "@mui/icons-material/CloseOutlined";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

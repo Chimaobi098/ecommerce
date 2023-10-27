@@ -13,7 +13,11 @@ import { urlFor } from "../../lib/sanity";
 import { formatCurrency } from "../../utils/currencyFormatter.ts";
 import { CloseMenu } from "./prodInfoOverlay.styles";
 import { motion } from "framer-motion";
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+// 🚀 Fast
+
+import  Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails"; 
+import AccordionSummary  from "@mui/material/AccordionSummary";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
@@ -131,6 +135,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             objectFit="cover"
             src={urlFor(currentProduct.defaultProductVariant?.images[0]).url()}
             alt="Product Image"
+            unoptimized={true}
           />
         </div>
         <ProductInfoSection>
@@ -175,20 +180,23 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             </div> */}
             <div className="w-full h-auto flex flex-grow justify-evenly text-white my-8">
             <button
-            className="bg-[#0aad0a] hover:bg-[green] w-5/12 rounded-md h-12"
+              style={{ color: "black", border: "2px solid black"}}
+            className="border w-5/12 rounded-md h-12"
               onClick={() => {
                 if (currentProduct.variants) {
+                  console.log("add Product");
                   setOverlayVisibility(true);
                 } else {
                   if (cartButtonState() == "In cart") return;
                   modifyItemQuantity(currentProduct, itemQuantity);
+                  console.log("Product added");
                 }
               }}
             >
-              {cartButtonState()}
+              Add to Bag
             </button>
             <button
-            className="bg-[#de5d17] hover:bg-[#be541a] w-5/12 h-12 rounded-md"
+            className="bg-[#0aad0a] hover:bg-[green] w-5/12 h-12 rounded-md"
               onClick={() => {
                 if (user) {
                   setShowGameSettingsOverlay(true);
@@ -202,8 +210,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             </button>
             </div>
           <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
-              <h3>Product Description</h3>
+            <AccordionSummary style={{ padding: "15px" }} expandIcon={<ExpandMoreRoundedIcon />}>
+              <h3 style={{ fontWeight: "bold"}}>Product Description</h3>
             </AccordionSummary>
             <AccordionDetails>
               <p>
@@ -214,8 +222,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             </AccordionDetails>
           </Accordion>
           <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
-              <h3>Size Guide</h3>
+            <AccordionSummary style={{ padding: "15px" }} expandIcon={<ExpandMoreRoundedIcon />}>
+              <h3 style={{ fontWeight: "bold" }}>Size Guide</h3>
             </AccordionSummary>
             <AccordionDetails>
               <p>
@@ -226,8 +234,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             </AccordionDetails>
           </Accordion>
           <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}>
-              <h3>Shipping Info</h3>
+            <AccordionSummary style={{ padding: "15px" }} expandIcon={<ExpandMoreRoundedIcon />}>
+              <h3 style={{ fontWeight: "bold"}}>Shipping Info</h3>
             </AccordionSummary>
             <AccordionDetails>
               <p>
@@ -253,11 +261,12 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                   alt="vendorLogo"
                   height={"60rem"}
                   width={"60rem"}
+                  unoptimized={true}
                 />
               </Link>
             </motion.div>
           </VendorPage>
-          <h2 style={{ marginTop: "50px" }}>More from this vendor</h2>
+          <h2 style={{ marginTop: "50px", fontSize: "20px", fontWeight: "bold" }}>More from this vendor</h2>
           <VendorProductsWrapper>
             {currentProduct?.moreFromVendor?.map((product, i) => (
               <Link
@@ -281,6 +290,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                         product.defaultProductVariant.images[0]
                       ).url()}
                       alt="Product Image"
+                      unoptimized={true}
                     />
                   </div>
                   <div style={{ padding: "0 0.5rem" }}>
@@ -380,6 +390,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           <DefaultImage
         productInfo={currentProduct}
         variantButtonState={variantButtonState}
+        unoptimized={true}
         />
 
         {currentProduct.variants.map((variant) => {

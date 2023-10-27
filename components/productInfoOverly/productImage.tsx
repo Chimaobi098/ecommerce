@@ -43,6 +43,7 @@ const ProductImage = ({
             objectFit="cover"
             src={urlFor(productInfo?.images[0]).url()}
             alt="Product Image"
+            unoptimized={true}
           />
 
     </>

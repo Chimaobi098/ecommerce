@@ -12,11 +12,18 @@ import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
 import debounce from "../../../utils/debounce";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { Button } from "@mui/material";
+// 🚀 Fast
+import Button from '@mui/material/Button';
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { useSanityUIDContext } from "../../../context/sanityUserId";
+import More from '../../../public/More.svg';
+import Like from '../../../public/Like.svg';
+import Share from '../../../public/Share.svg';
+import comment from '../../../public/Comment.svg';
+import Bookmark from '../../../public/Bookmark.svg';
+
 
 interface ProductProps {
   productProps: {
@@ -131,6 +138,7 @@ const ProductContainer = ({
             height={50}
             src={urlFor(productProps.vendor.logo).url()}
             alt={productProps.title}
+            unoptimized={true}
             onClick={() => {
               router.push(`/vendor/${productProps.vendor._id}`);
             }}
@@ -140,7 +148,7 @@ const ProductContainer = ({
           </span>
         </div>
         <Button style={{ color: "black" }}>
-          <MoreHorizIcon fontSize="large" />
+          <Image src={More} unoptimized={true} alt="more icon" />
         </Button>
       </div>
       <motion.div
@@ -154,6 +162,7 @@ const ProductContainer = ({
           objectFit="cover"
           src={urlFor(productProps.defaultProductVariant.images[0]).url()}
           alt="Product Image"
+          unoptimized={true}
           onClick={() => {
             router.push(`/product/${productProps.slug.current}`);
           }}
@@ -179,22 +188,21 @@ const ProductContainer = ({
               }}
             >
               {likes.likeState ? (
-                <FavoriteIcon
-                  fontSize="large"
-                  sx={{ marginRight: "10px" }}
-                  color="error"
+                <Image src={Like}
+                  unoptimized={true}
+                  alt="like icon"
+                  
                 />
               ) : (
-                <FavoriteBorderIcon
-                  fontSize="large"
-                  sx={{ marginRight: "10px" }}
-                />
+                <Image
+                 src={Like}
+                alt="like icon"
+                unoptimized={true}
+                    />
               )}
             </motion.button>
             <button>
-              <CommentRoundedIcon
-                fontSize="large"
-                sx={{ marginRight: "10px" }}
+              <Image src={comment} unoptimized={true} alt="comment icon"
               />
             </button>
             <motion.button
@@ -211,7 +219,7 @@ const ProductContainer = ({
                 }
               }}
             >
-              <SendRoundedIcon fontSize="large" sx={{ marginRight: "10px" }} />
+              <Image src={Share} unoptimized={true} alt="share icon" />
             </motion.button>
           </div>
           <motion.button
@@ -225,11 +233,9 @@ const ProductContainer = ({
             }}
           >
             {postSaveState ? (
-              <BookmarkIcon fontSize="large" sx={{ marginRight: "10px" }} />
+              <Image src={Bookmark} unoptimized={true} alt="bookmark icon" />
             ) : (
-              <BookmarkBorderRoundedIcon
-                fontSize="large"
-                sx={{ marginRight: "10px" }}
+              <Image src={Bookmark} unoptimized={true} alt="bookmark icon"
               />
             )}
           </motion.button>

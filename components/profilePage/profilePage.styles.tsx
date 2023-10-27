@@ -4,7 +4,7 @@ export const ProfileItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  border-top: 1px solid lightgray;
   padding: 0 10px;
 
   width: 100%;
@@ -44,18 +44,19 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
+  padding-top: 40px;
   header {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    
     #hi,
     #user-name {
       font-size: 1.7rem;
       font-weight: 500;
     }
     #hi {
-      margin-top: 10px;
+      margin-bottom: 20px;
       text-align: center;
     }
     #user-name {

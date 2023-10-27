@@ -21,7 +21,9 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { sanityClient } from "../../lib/sanity";
 import { useRouter } from "next/router";
 import { Swipeable } from "react-swipeable";
-import { Button } from "@mui/material";
+import  Button  from "@mui/material/Button";
+import { useNavigate} from "react-router-dom"
+
 
 const ShoppingCartOverlay = () => {
   const router = useRouter();
@@ -35,10 +37,16 @@ const ShoppingCartOverlay = () => {
     getTotalCartPrice,
   } = useShoppingCart();
 
-  function handleClick() {
-    setCartOpen(false);
-    router.push("/checkout");
+  //const navigate = useNavigate();
+
+  function handleCheckout(e) {
+   // setCartOpen(false);
+    //navigate('/checkout');
+    e.preventDefault();
+    router.push('/Itemcheckout');
+    console.log("Purchase Successful!");
   }
+
   const [dragItems, setDragItems] = useState(
     cartItems.map((item) => {
       return { productId: item._id, isShowingDelete: false };
@@ -81,13 +89,13 @@ const ShoppingCartOverlay = () => {
       </Header>
       <AnimatePresence>
         <CartItemWrapper>
-          {cartItems.map((item, i) => {
+          {cartItems.map((item, index) => {
             const currentItemState = dragItems.find(
               (dragItem) => item._id == dragItem.productId
             );
             console.log("this is the current item state", currentItemState);
             return (
-              <ProductInfoWrapper key={item}>
+              <ProductInfoWrapper key={index}>
                 <Button
                   onClick={() => {
                     removeFromCart(item._id);
@@ -207,7 +215,7 @@ const ShoppingCartOverlay = () => {
           <div className=" flex flex-row h-12 w-full justify-evenly mt-2 mb-8 lg:mb-0 px-2 gap-x-4">
             <button
               className="bg-black h-full rounded-md w-full text-white"
-              onClick={handleClick}
+              onClick={(e) => handleCheckout(e)}
             >
               Checkout
             </button>

@@ -1,5 +1,5 @@
-import React from 'react'
-import Link from 'next/link'
+import React from 'react';
+import Link from 'next/link';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
 import { UseUser } from '@auth0/nextjs-auth0/dist/frontend/use-user'
 import { ProfileNav, Wrapper } from '../../components/Home/home.styles'

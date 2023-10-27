@@ -39,6 +39,7 @@ const DefaultImage = ({ productInfo, variantButtonState }: ProductInfo) => {
             objectFit="cover"
             src={urlFor(productInfo.defaultProductVariant.images[0]).url()}
             alt="Product Image"
+            unoptimized={true}
           />
           </>}
 

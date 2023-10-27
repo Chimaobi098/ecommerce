@@ -39,4 +39,16 @@ export const Card = styled.div`
     font-size: 1rem;
     font-weight: 600;
   }
+  
+`;
+
+export const Button =  styled.div`
+    border: 2px solid black;
+    background-color: black;
+
+  .Add-button{
+     border: 4px solid blue;
+     padding: 2px;
+  }
+
 `;

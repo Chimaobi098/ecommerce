@@ -201,7 +201,7 @@ const MyDetails = () => {
   )
 }
 
-export default MyDetails
+export default MyDetails;
 
 
               
