@@ -68,11 +68,10 @@ export const VendorInfo = styled.div`
 
   #vendor-info-wrapper {
     display: flex;
-    border: 2px solid;
     justify-content: space-between;
     flex-grow: 1;
     gap: 30px;
-    max-width: 50vmin;
+    max-width: 60vmin;
     
     h3 {
       margin: 0;

@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { urlFor } from "../../lib/sanity";
 import GridOnIcon from "@mui/icons-material/GridOn";
-//import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import Shopicon from "../../public/Shop.svg";
 
 import {
