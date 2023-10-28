@@ -138,7 +138,6 @@ const ProductContainer = ({
             height={50}
             src={urlFor(productProps.vendor.logo).url()}
             alt={productProps.title}
-            unoptimized={true}
             onClick={() => {
               router.push(`/vendor/${productProps.vendor._id}`);
             }}
@@ -148,7 +147,7 @@ const ProductContainer = ({
           </span>
         </div>
         <Button style={{ color: "black", paddingLeft: "50px" }}>
-          <Image src={More} unoptimized={true} alt="more icon" />
+          <Image src={More} alt="more icon" />
         </Button>
       </div>
       <motion.div
@@ -158,11 +157,9 @@ const ProductContainer = ({
         <Image
           placeholder="blur"
           blurDataURL="/placeholder.png"
-          layout="fill"
           objectFit="cover"
           src={urlFor(productProps.defaultProductVariant.images[0]).url()}
           alt="Product Image"
-          unoptimized={true}
           onClick={() => {
             router.push(`/product/${productProps.slug.current}`);
           }}
@@ -195,7 +192,6 @@ const ProductContainer = ({
                 <Image
                  src={Like}
                  alt="like icon"
-                 style={{ border: "2px solid"}}  
                     />
               )}
             </motion.button>
@@ -218,7 +214,7 @@ const ProductContainer = ({
               }}
 
             >
-              <Image src={Share} style={{ fontSize: "60px", border: "3px solid" }} alt="share icon" />
+              <Image src={Share} alt="share icon" />
             </motion.button>
           </div>
           <motion.button
@@ -234,7 +230,7 @@ const ProductContainer = ({
             {postSaveState ? (
               <Image src={Bookmark}  alt="bookmark icon" />
             ) : (
-              <Image  src={Bookmark}  alt="bookmark icon" style={{ border: "3px solid red" }} 
+              <Image  src={Bookmark}  alt="bookmark icon"  
               />
             )}
           </motion.button>
