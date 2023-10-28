@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 
 export const VendorNav = styled.nav`
-  background: white;
-
   top: 0;
   height: 10%;
 
@@ -14,6 +12,7 @@ export const VendorNav = styled.nav`
   header {
     font-weight: 600;
     font-size: 1.8rem;
+    border-bottom: 1px solid gray;
   }
 `;
 
@@ -69,9 +68,9 @@ export const VendorInfo = styled.div`
   #vendor-info-wrapper {
     display: flex;
     justify-content: space-between;
-    flex-grow: 0;
+    flex-grow: 1;
     gap: 30px;
-    max-width: 45vmin;
+    max-width: 60vmin;
     
     h3 {
       margin: 0;
@@ -83,6 +82,7 @@ export const VendorInfo = styled.div`
     flex-direction: column;
     align-items: center;
     font-size: 1rem;
+    
   }
 `;
 
