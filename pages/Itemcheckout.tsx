@@ -142,7 +142,7 @@ const Productcheckout = ({ user }: User) => {
            handleShippingAddress(e);
           }
           } 
-           style={{ background: 'lightgray', padding: '12px', borderRadius: '7px' }} className="Add-button">
+           style={{  padding: '12px', borderRadius: '7px' }} className="Add-button">
             <Image src={downarrow} width={15} height={15} style={{ width: "10px"}} alt="greater icon"  />
           </button>
           

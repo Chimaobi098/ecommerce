@@ -31,14 +31,14 @@ const VendorPage = ({ vendorData }) => {
     },
     {
       label: "vouchers",
-      icon: (
-        <Image
-           src={Shopicon}
-           width={0}
-           height={0}
-           unoptimized={true}
-        />
-      ),
+      // icon: (
+      //   <Image
+      //      src={LocalOfferIcon}
+      //      width={0}
+      //      height={0}
+      //      unoptimized={true}
+      //   />
+      // ),
     },
   ];
   return (
@@ -52,6 +52,9 @@ const VendorPage = ({ vendorData }) => {
             src={urlFor(vendorData.logo)}
             alt="vendor image"
             id="vendor-image"
+            layout="fill"
+            width={60}
+            height={60}
             unoptimized={true}
           />
           <div id="vendor-info-wrapper">
@@ -115,8 +118,8 @@ const VendorPage = ({ vendorData }) => {
                       blurDataURL="/placeholder.png"
                       id="product-image"
                       alt="product Image"
-                      width="300px"
-                      height="300px"
+                      width={300}
+                      heigth={300}
                       unoptimized={true}
                     />
                   </motion.div>
@@ -131,8 +134,7 @@ const VendorPage = ({ vendorData }) => {
               key="2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-            >
-      
+            >      
             </motion.div>
           )}
         </AnimatePresence>
