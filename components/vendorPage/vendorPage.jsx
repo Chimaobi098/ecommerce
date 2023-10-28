@@ -48,7 +48,7 @@ const VendorPage = ({ vendorData }) => {
       </VendorNav>
       <Wrapper>
         <VendorInfo>
-          <img
+          <Image
             src={urlFor(vendorData.logo)}
             alt="vendor image"
             id="vendor-image"
