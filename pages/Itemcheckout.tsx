@@ -20,6 +20,8 @@ import Arrowbutton from '../public/upArrow.svg';
 import Image from "next/image";
 import './productcheckout.module.css';
 import greaterIcon from "../public/greater-than-symbol.png";
+import downarrow from "../public/noun-chevron-arrow-2074151.svg";
+
 
 
 interface OrderInfo {
@@ -141,7 +143,7 @@ const Productcheckout = ({ user }: User) => {
           }
           } 
            style={{ background: 'lightgray', padding: '12px', borderRadius: '7px' }} className="Add-button">
-            <Image src={greaterIcon} width={25} height={20} style={{ width: "10px"}} alt="greater icon"  />
+            <Image src={downarrow} width={15} height={15} style={{ width: "10px"}} alt="greater icon"  />
           </button>
           
         </Card>
@@ -163,12 +165,12 @@ const Productcheckout = ({ user }: User) => {
             </p>
           </div>
           {couponCode == 0 ?   
-          <button style={{ background: 'white', padding: '12px', borderRadius: '7px'  }} className="Add-button" onClick={(e) => { 
+          <button style={{ background: 'white', padding: '12px',   }} className="Add-button" onClick={(e) => { 
             e.preventDefault();
             showDiscount(e);
           }
           }>
-            <Image src={Arrowbutton} unoptimized={true} width={10} height={10} alt="arrow-image" />
+            <Image src={downarrow} unoptimized={true} width={15} height={15} alt="arrow-image" />
           </button>   
           :  ""
            }
@@ -197,7 +199,7 @@ const Productcheckout = ({ user }: User) => {
 
              
 
-        <Card>
+        <Card style={{ boxShadow: "0 5px 5px 1px rgb( 0, 0, 0, 0.2)"}} >
           <h2 style={{ fontSize: "1.3rem", marginBottom: "1rem" }}>Summary</h2>
 
           <div className="item-details-container">
@@ -228,11 +230,13 @@ const Productcheckout = ({ user }: User) => {
           </div>
 
           <hr />
+          
+        </Card>
 
-         <button style={{ background: "green", color: "white",  margin: "20px auto", borderRadius: "6px", padding: "9px", textAlign: "center", justifyContent: "center", display: "flex", width:"80%", border: "1px solid green" }}>
+        <Card>
+        <button style={{ background: "green", color: "white",  margin: "20px auto", borderRadius: "6px", padding: "9px", textAlign: "center", justifyContent: "center", display: "flex", width:"80%", border: "1px solid green" }}>
           Submit Order
          </button>
-          
         </Card>
       </form>
       

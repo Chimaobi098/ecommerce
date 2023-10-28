@@ -68,10 +68,11 @@ export const VendorInfo = styled.div`
 
   #vendor-info-wrapper {
     display: flex;
+    border: 2px solid;
     justify-content: space-between;
-    flex-grow: 0;
+    flex-grow: 1;
     gap: 30px;
-    max-width: 45vmin;
+    max-width: 50vmin;
     
     h3 {
       margin: 0;
@@ -83,6 +84,7 @@ export const VendorInfo = styled.div`
     flex-direction: column;
     align-items: center;
     font-size: 1rem;
+    
   }
 `;
 

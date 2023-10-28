@@ -36,6 +36,7 @@ const VendorPage = ({ vendorData }) => {
            src={Shopicon}
            width={0}
            height={0}
+           unoptimized={true}
         />
       ),
     },
@@ -51,6 +52,7 @@ const VendorPage = ({ vendorData }) => {
             src={urlFor(vendorData.logo)}
             alt="vendor image"
             id="vendor-image"
+            unoptimized={true}
           />
           <div id="vendor-info-wrapper">
             <div className="vendor-info-items">
@@ -115,6 +117,7 @@ const VendorPage = ({ vendorData }) => {
                       alt="product Image"
                       width="300px"
                       height="300px"
+                      unoptimized={true}
                     />
                   </motion.div>
                 ))

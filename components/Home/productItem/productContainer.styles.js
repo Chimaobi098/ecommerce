@@ -32,15 +32,18 @@ export const ProductInfo = styled.div`
   #action-section {
     display: flex;
     margin-top: 10px;
-    gap: 0.8rem;
+    gap: 0.1rem;
     justify-content: space-between;
 
     button {
       background-color: transparent;
-      border: none;
       padding: 0;
       drop-shadow: 10px 10px 0 0 rgb(0,0,0,0.4);
-      padding: 0 5px;
+      padding: 0 5px; 
     }
+  }
+
+  Image{
+    border: 3px solid;
   }
 `;

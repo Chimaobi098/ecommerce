@@ -19,10 +19,10 @@ import Button from '@mui/material/Button';
 //import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { useSanityUIDContext } from "../../../context/sanityUserId";
 import More from '../../../public/More.svg';
-import Like from '../../../public/Like.svg';
-import Share from '../../../public/Share.svg';
-import comment from '../../../public/Comment.svg';
-import Bookmark from '../../../public/Bookmark.svg';
+import Like from '../../../public/Like.png';
+import Share from '../../../public/Share.png';
+import comment from '../../../public/Comment.png';
+import Bookmark from '../../../public/Bookmark.png';
 
 
 interface ProductProps {
@@ -186,24 +186,21 @@ const ProductContainer = ({
                 });
                 handleLikes(productProps._id);
               }}
-            >
+              >
               {likes.likeState ? (
                 <Image src={Like}
-                  unoptimized={true}
-                  alt="like icon"
-                  style={{ background: "red" }}  
+                  alt="like icon"              
                 />
               ) : (
                 <Image
                  src={Like}
-                alt="like icon"
-                unoptimized={true}
-                  
+                 alt="like icon"
+                 style={{ border: "2px solid"}}  
                     />
               )}
             </motion.button>
             <button>
-              <Image src={comment} unoptimized={true} alt="comment icon"
+              <Image src={comment}  alt="comment icon"
               />
             </button>
             <motion.button
@@ -219,8 +216,9 @@ const ProductContainer = ({
                   alert(err);
                 }
               }}
+
             >
-              <Image src={Share} unoptimized={true} alt="share icon" />
+              <Image src={Share} style={{ fontSize: "60px", border: "3px solid" }} alt="share icon" />
             </motion.button>
           </div>
           <motion.button
@@ -234,9 +232,9 @@ const ProductContainer = ({
             }}
           >
             {postSaveState ? (
-              <Image src={Bookmark} unoptimized={true} alt="bookmark icon" />
+              <Image src={Bookmark}  alt="bookmark icon" />
             ) : (
-              <Image src={Bookmark} unoptimized={true} alt="bookmark icon"
+              <Image  src={Bookmark}  alt="bookmark icon" style={{ border: "3px solid red" }} 
               />
             )}
           </motion.button>
