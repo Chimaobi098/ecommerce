@@ -78,7 +78,7 @@ const Addressbook = () => {
         theme: "dark",
         });
         fetch("/api/updateAddress", {
-          method: "POST",
+          method: "PATCH",
           body: JSON.stringify(data),
         })
           .then((res) => {
