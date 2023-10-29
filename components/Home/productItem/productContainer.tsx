@@ -136,6 +136,7 @@ const ProductContainer = ({
             className="vendorImage"
             width={50}
             height={50}
+            unoptimized={true}
             src={urlFor(productProps.vendor.logo).url()}
             alt={productProps.title}
             onClick={() => {
@@ -158,6 +159,7 @@ const ProductContainer = ({
           placeholder="blur"
           blurDataURL="/placeholder.png"
           objectFit="cover"
+          unoptimized={true}
           src={urlFor(productProps.defaultProductVariant.images[0]).url()}
           alt="Product Image"
           onClick={() => {
