@@ -10,8 +10,9 @@ export default async function handler(req, res) {
   let userDoc = await client.getDocument(userId);
 
   // check if product id is already in liked products array
+  console.log(userDoc,'thi si sthe user doc')
 
-  let likeState = userDoc.likedProducts.find((product) => product._ref == _id);
+  let likeState = userDoc.likedProducts?.find((product) => product._ref == _id);
 
   if (!likeState) {
     try {
@@ -52,7 +53,7 @@ export default async function handler(req, res) {
       console.error("Oh no, the update failed: ", err.message);
       res.status(500).json({ message: "Yh, that didnt work" });
     }
-  }
+  } 
 
   //Add product to liked products in sanity
 

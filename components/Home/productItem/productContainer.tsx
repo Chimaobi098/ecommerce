@@ -20,6 +20,7 @@ import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { useSanityUIDContext } from "../../../context/sanityUserId";
 import More from '../../../public/More.svg';
 import Like from '../../../public/Like.svg';
+import ActiveLike from '../../../public/like-active.svg'
 import Share from '../../../public/Share.svg';
 import comment from '../../../public/Comment.svg';
 import Bookmark from '../../../public/Bookmark.svg';
@@ -193,8 +194,7 @@ const ProductContainer = ({
                 >
                   {likes.likeState ? (
                     <Image
-                      src={Like}
-                      color="error"
+                      src={ActiveLike}
                       alt="active like icon"                     />
                   ) : (
                     <Image
