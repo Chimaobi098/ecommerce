@@ -64,6 +64,12 @@ export default {
       title: "Phone Number",
       type: "number",
     },
+    
+    {
+      name: "gender",
+      title: "Gender",
+      type: "string",
+    },
     {
       name: "walletAmount",
       title: "Wallet Amount",

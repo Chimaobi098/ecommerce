@@ -11,6 +11,9 @@ const MyDetails = () => {
     const [userdetails, setUserdetails] = useState({
       firstname: "",
       lastname: "",
+      email: ""
+      , gender: "",
+      dateOfBirth:""
     })
     console.log(userdetails);
 
@@ -72,7 +75,7 @@ const updateDocument = async () => {
 // Call the updateDocument function to send the update request
 updateDocument();
 
-   
+   console.log(userdetails,'this is the current state of user details')
     
 
     useEffect(() => {
@@ -87,11 +90,21 @@ updateDocument();
                 lastname, 
                 phoneNumber,
                 userId
+                ,gender
         }`,
           { curr: user?.email }
           );
+
+          console.log(results,'these are the details in detail')
           
-      setaddressdetails(results);
+          setaddressdetails(results);
+          setUserdetails({
+            firstname: results[0].name || "",
+            lastname: results[0].lastname || "",
+            email: results[0].email || 0,
+            gender: results[0].gender || "",
+            dateOfBirth: results[0].dob || ""
+          });
       
         }
         getDetails();
@@ -115,22 +128,22 @@ updateDocument();
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>EMAIL ADDRESS</h3>
-            <input type="email" name='email' className='text-base h-8 outline-none w-full' />
+          <input type="email" name='email' className='text-base h-8 outline-none w-full'onChange={(e) => setUserdetails(prev =>({...prev,email:e.target.value}))} value={userdetails.email} />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>DATE OF BIRTH</h3>
-            <input type="date" name='dob' className='text-base h-8 outline-none' />
+            <input type="date" name='dob' value = {userdetails.dateOfBirth} onChange={(e) => setUserdetails(prev => ({...prev,dateOfBirth:e.target.value}))} className='text-base h-8 outline-none' />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mt-8 mb-2'>GENDER</h3>
             <div className='text-base mb-8 flex flex-col gap-y-2'>
                 <div className='flex gap-x-4'>
-                    <input type='radio' value="Male" name="gender" id='male' />
+                    <input type='radio' value="Male" onChange={(e) => setUserdetails(prev =>({...prev,gender:e.target.value}))} name="gender" id='male' />
                     <label htmlFor="male">Male</label>
                 </div>
                 <div className='border-t border-t-gray-300'></div>
                 <div className='flex gap-x-4 '>
-                    <input type='radio' value="Female" name="gender" id='female' />
+                    <input type='radio' value="Female" name="gender" id='female' onChange={(e) => setUserdetails(prev =>({...prev,gender:e.target.value}))}/>
                     <label htmlFor="female">Female</label>
                 </div>
             </div>

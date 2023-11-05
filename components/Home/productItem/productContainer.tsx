@@ -13,18 +13,17 @@ import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
 import debounce from "../../../utils/debounce";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 // 🚀 Fast
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { useSanityUIDContext } from "../../../context/sanityUserId";
-import More from '../../../public/More.svg';
-import Like from '../../../public/Like.svg';
-import ActiveLike from '../../../public/like-active.svg'
-import Share from '../../../public/Share.svg';
-import comment from '../../../public/Comment.svg';
-import Bookmark from '../../../public/Bookmark.svg';
-
+import More from "../../../public/More.svg";
+import Like from "../../../public/Like.svg";
+import ActiveLike from "../../../public/like-active.svg";
+import Share from "../../../public/Share.svg";
+import comment from "../../../public/Comment.svg";
+import Bookmark from "../../../public/Bookmark.svg";
 
 interface ProductProps {
   productProps: {
@@ -127,136 +126,117 @@ const ProductContainer = ({
     handler();
   }, [user, userLikedProducts]);
 
-  
-  
-
   return (
-
     <ProductInfo key={productProps._id}>
-          <div id="vendor-info-container">
-            <div id="vendor-info">
-              <Image
-                placeholder="blur"
-                blurDataURL="/placeholder.png"
-                className="vendorImage"
-                width={50}
-                height={50}
-                src={urlFor(productProps.vendor.logo).url()}
-                alt={productProps.title}
-                onClick={() => {
-                  router.push(`/vendor/${productProps.vendor._id}`);
-                }}
-              />
-              <span style={{ marginLeft: "30px" }}>
-                {productProps.vendor.title}
-              </span>
-            </div>
-            <Button style={{ color: "black" }}>
-              {/* <MoreHorizIcon fontSize="medium" /> */}
-             <Image src={More} width={0} height={0} alt="more icon" />    
-            </Button>
-          </div>
-          <motion.div
-            whileTap={{ scale: 0.9 }}
-            style={{ width: "100%", height: "20rem", position: "relative" }}
-          >
-            <Image
-              placeholder="blur"
-              blurDataURL="/placeholder.png"
-              layout="fill"
-              objectFit="cover"
-              src={urlFor(productProps.defaultProductVariant.images[0]).url()}
-              alt="Product Image"
-              onClick={() => {
-                router.push(`/product/${productProps.slug.current}`);
-              }}
-            />
-          </motion.div>
+      <div id="vendor-info-container">
+        <div id="vendor-info">
+          <Image
+            placeholder="blur"
+            blurDataURL="/placeholder.png"
+            className="vendorImage"
+            width={50}
+            height={50}
+            src={urlFor(productProps.vendor.logo).url()}
+            alt={productProps.title}
+            onClick={() => {
+              router.push(`/vendor/${productProps.vendor._id}`);
+            }}
+          />
+          <span style={{ marginLeft: "30px" }}>
+            {productProps.vendor.title}
+          </span>
+        </div>
+        <Button style={{ color: "black" }}>
+          {/* <MoreHorizIcon fontSize="medium" /> */}
+          <Image src={More} width={0} height={0} alt="more icon" />
+        </Button>
+      </div>
+      <motion.div
+        whileTap={{ scale: 0.9 }}
+        style={{ width: "100%", height: "20rem", position: "relative" }}
+      >
+        <Image
+          placeholder="blur"
+          blurDataURL="/placeholder.png"
+          layout="fill"
+          objectFit="cover"
+          src={urlFor(productProps.defaultProductVariant.images[0]).url()}
+          alt="Product Image"
+          onClick={() => {
+            router.push(`/product/${productProps.slug.current}`);
+          }}
+        />
+      </motion.div>
 
-          <div style={{ paddingLeft: "3vw" }}>
-            <div id="action-section">
-              <div>
-                <motion.button
-                  whileTap={{ scale: 0.8 }}
-                  style={{  width: "2rem" }}
-                  onClick={() => {
-                    setLikes((prev) => {
-                      if (prev.likeState) {
-                        return {
-                          likeCount: prev.likeCount - 1,
-                          likeState: false,
-                        };
-                      }
-                      return { likeCount: prev.likeCount + 1, likeState: true };
-                    });
-                    handleLikes(productProps._id);
-                  }}
-                >
-                  {likes.likeState ? (
-                    <Image
-                      src={ActiveLike}
-                      alt="active like icon"                     />
-                  ) : (
-                    <Image
-                       src={Like}
-                       alt="like icon"
-                    />
-                  )}
-                </motion.button>
-                <button style={{  width: "2rem"  }}>
-                  <Image
-                    src={comment}
-                    alt="comment icon"
-                  />
-                </button>
-                <motion.button
-                  whileTap={{ scale: 0.8 }}
-                  style={{  width: "2rem" }}
-                  onClick={async () => {
-                    try {
-                      await navigator.share({
-                        title: "Ecommerce",
-                        text: "BUY THIS NOW!!!",
-                        url: `/product/${productProps.slug.current}`,
-                      });
-                    } catch (err) {
-                      alert(err);
-                    }
-                  }}
-                >
-                  <Image
-                    src={Share}
-                    alt="share icon"
-                  />
-                </motion.button>
-              </div>
-              <motion.button
-                id="save-button"
-                style={{  width: "3rem" }}
-                whileTap={{ scale: 0.8 }}
-                onClick={() => {
-                  setPostSaveState((prev) => {
-                    handlePostSave(productProps._id);
-                    return !prev;
+      <div style={{ paddingLeft: "3vw" }}>
+        <div id="action-section">
+          <div>
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              style={{ width: "2rem" }}
+              onClick={() => {
+                setLikes((prev) => {
+                  if (prev.likeState) {
+                    return {
+                      likeCount: prev.likeCount - 1,
+                      likeState: false,
+                    };
+                  }
+                  return { likeCount: prev.likeCount + 1, likeState: true };
+                });
+                handleLikes(productProps._id);
+              }}
+            >
+              {likes.likeState ? (
+                <Image src={ActiveLike} alt="active like icon" quality={100} />
+              ) : (
+                <Image src={Like} alt="like icon" quality={100} />
+              )}
+            </motion.button>
+            <button style={{ width: "2rem" }}>
+              <Image src={comment} alt="comment icon" quality={100} />
+            </button>
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              style={{ width: "2rem" }}
+              onClick={async () => {
+                try {
+                  await navigator.share({
+                    title: "Ecommerce",
+                    text: "BUY THIS NOW!!!",
+                    url: `/product/${productProps.slug.current}`,
                   });
-                }}
-              >
-                {postSaveState ? (
-                  <Image src={Bookmark} alt="active bookmark icon" />
-                ) : (
-                  <Image
-                    src={Bookmark}
-                    alt="bookmark icon"
-                  />
-                )}
-              </motion.button>
-            </div>
-            <h4 style={{ marginTop: "10px" }}>{`${likes.likeCount} like${
-              likes.likeCount > 1 || likes.likeCount == 0 ? "s" : ""
-            }`}</h4>
+                } catch (err) {
+                  alert(err);
+                }
+              }}
+            >
+              <Image src={Share} alt="share icon" />
+            </motion.button>
           </div>
-        </ProductInfo>
-      
+          <motion.button
+            id="save-button"
+            style={{ width: "3rem" }}
+            whileTap={{ scale: 0.8 }}
+            onClick={() => {
+              setPostSaveState((prev) => {
+                handlePostSave(productProps._id);
+                return !prev;
+              });
+            }}
+          >
+            {postSaveState ? (
+              <Image src={Bookmark} alt="active bookmark icon" quality={100} />
+            ) : (
+              <Image src={Bookmark} alt="bookmark icon" quality={100} />
+            )}
+          </motion.button>
+        </div>
+        <h4 style={{ marginTop: "10px" }}>{`${likes.likeCount} like${
+          likes.likeCount > 1 || likes.likeCount == 0 ? "s" : ""
+        }`}</h4>
+      </div>
+    </ProductInfo>
   );
 };
 
