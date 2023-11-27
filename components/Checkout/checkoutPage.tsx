@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import React, { useEffect } from "react";
 import { useShoppingCart } from "../../context/shoppingCart";
-import { Wrapper, Card } from "./checkoutPage.styles";
+import { WrapperCard, CardStyle } from "./checkoutPage.styles";
 import { formatCurrency } from "../../utils/currencyFormatter";
 import { useState } from "react";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
@@ -132,7 +132,7 @@ const CheckoutPage = ({ user }: User) => {
   }
 
   return (
-    <Wrapper>
+    <WrapperCard>
       <button
         style={{ position: "absolute", top: 0, right: 0 }}
         onClick={() => {
@@ -154,7 +154,7 @@ const CheckoutPage = ({ user }: User) => {
           }}
           value={deliveryPhoneNumber}
         /> */}
-        <Card
+        <CardStyle
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -168,7 +168,7 @@ const CheckoutPage = ({ user }: User) => {
             </p>
           </div>
           <ArrowBackRoundedIcon />
-        </Card>
+        </CardStyle>
         <TextField
           required
           label="Full Name"
@@ -194,7 +194,7 @@ const CheckoutPage = ({ user }: User) => {
         />
 
         <p className="section-title">Delivery Method</p>
-        <Card>
+        <CardStyle>
           <div>
             <span style={{ fontWeight: 600, fontSize: "1.2rem" }}>
               Door Delivery
@@ -204,9 +204,9 @@ const CheckoutPage = ({ user }: User) => {
               <b>{formatCurrency(shippingFees)}</b>
             </div>
           </div>
-        </Card>
+        </CardStyle>
 
-        <Card>
+        <CardStyle>
           <h2 style={{ fontSize: "1.3rem", marginBottom: "1rem" }}>Summary</h2>
 
           <div className="item-details-container">
@@ -240,7 +240,7 @@ const CheckoutPage = ({ user }: User) => {
             Pay
           </button>
           <button style={{ width: "100%" }}>Pay With Wallet</button>
-        </Card>
+        </CardStyle>
       </form>
       <div>
         <div>coupon</div>
@@ -276,7 +276,7 @@ const CheckoutPage = ({ user }: User) => {
           <Button type="submit">Apply</Button>
         </form>
       </div>
-    </Wrapper>
+    </WrapperCard>
   );
 };
 

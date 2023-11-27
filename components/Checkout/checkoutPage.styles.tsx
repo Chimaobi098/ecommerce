@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const WrapperCard = styled.div`
   width: 100%;
   height: 100vh;
   padding: 0 3vw;
@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Card = styled.div`
+export const CardStyle = styled.div`
   width: 100%;
   box-shadow: "10px 10px 20px";
   min-height: 15vh;

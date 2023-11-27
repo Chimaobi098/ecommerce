@@ -7,7 +7,7 @@ import { sanityClient } from "../../lib/sanity";
 import SearchByCategory from "./searchByCategory";
 import { buildTree } from "../../utils/buildtree";
 
-const ExplorePage = ({ searchResults, searchQuery }) => {
+const ExplorePage = ({ searchResults, searchQuery, setIsNavVisible }) => {
   const [categoryData, setCategoryData] = useState();
   const tree = useRef();
   console.log(categoryData);
@@ -30,7 +30,7 @@ const ExplorePage = ({ searchResults, searchQuery }) => {
   return (
     <Wrapper>
       {searchResults.length == 0 || !searchQuery ? (
-        <SearchByCategory categoryData={tree.current} />
+        <SearchByCategory setIsNavVisible={setIsNavVisible} categoryData={tree.current} searchQuery={searchQuery}  />
       ) : (
         searchResults?.hits?.map((searchResult) => (
           <Link
@@ -38,9 +38,10 @@ const ExplorePage = ({ searchResults, searchQuery }) => {
             passHref
             key={searchResult._id}
           >
-            <SearchResultItems whileTap={{ scale: 0.9 }}>
-              <img src={urlFor(searchResult.productImageUrl)} />
+            <SearchResultItems  whileTap={{ scale: 0.9 }}>
+              <img  src={urlFor(searchResult.productImageUrl)} />
               <div id="product-info">
+                <div><h1>Products</h1></div>
                 <h4>{searchResult.title}</h4>
                 <h3>{formatCurrency(searchResult.price)}</h3>
               </div>

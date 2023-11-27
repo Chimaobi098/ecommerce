@@ -16,8 +16,8 @@ interface ShoppingCartContext {
   modifyItemQuantity: (
     productInfo: ProductInfo,
     productQuantity: number
-  ) => void;
-  getItemQuantity: (id: string) => number | undefined;
+    ) => void;
+    getItemQuantity: (id: string) => number | undefined;
   getCartQuantity: () => number;
   cartOpen: boolean;
   cartItems: CartItem[];
@@ -31,7 +31,8 @@ interface ShoppingCartContext {
   activateDefault:()=>void;
   deactivateDefault:()=>void;
   Default:boolean;
-
+  getWallet: () => number;
+  setWallet: (number: number) => void;
   setCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -86,16 +87,20 @@ export const ShoppingCartProvider = ({
 }: ShoppingCartProviderProps) => {
   const [cartItems, setCartItems] = useState([] as CartItem[]);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
+  const [appWallet, setAppWallet] = useState(1400.56);
   console.log(cartItems, "its all here bro");
   function getItemQuantity(id: string) {
     const data = cartItems.find((item) => {
       return item._id == id;
     })?.quantity;
     return data;
-
     
   }
   
+  const value = {
+    getWallet: () => appWallet,
+    setWallet: (newBalance) => setAppWallet(newBalance),
+  };
 
   const [variantId, setVariantId] = useState('');
   const [Default, setDefault] = useState(true);
@@ -208,7 +213,15 @@ export const ShoppingCartProvider = ({
     });
   }
 
-  
+  function getWallet(){
+    console.log(appWallet);
+   return appWallet;    
+  }
+
+  function setWallet(number: number){
+     setAppWallet(number);
+     console.log(appWallet);
+  }
 
   return (
     <ShoppingCartContext.Provider
@@ -228,8 +241,10 @@ export const ShoppingCartProvider = ({
         variantfunc,
         Default,
         activateDefault,
-        deactivateDefault
-
+        deactivateDefault,
+         getWallet,
+         setWallet,
+         
       }}
     >
       <AnimatePresence>{cartOpen && <ShoppingCartOverlay />}</AnimatePresence>

@@ -19,10 +19,10 @@ import Button from '@mui/material/Button';
 //import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { useSanityUIDContext } from "../../../context/sanityUserId";
 import More from '../../../public/More.svg';
-import Like from '../../../public/Like.png';
-import Share from '../../../public/Share.png';
-import comment from '../../../public/Comment.png';
-import Bookmark from '../../../public/Bookmark.png';
+import Like from '../../../public/Like.svg';
+import Share from '../../../public/Share.svg';
+import comment from '../../../public/Comment.svg';
+import Bookmark from '../../../public/Bookmark.svg';
 
 
 interface ProductProps {
@@ -148,7 +148,7 @@ const ProductContainer = ({
           </span>
         </div>
         <Button style={{ color: "black", paddingLeft: "50px" }}>
-          <Image src={More} alt="more icon" />
+          <Image src={More} alt="more icon" width={0} height={0} unoptimized={true} />
         </Button>
       </div>
       <motion.div
@@ -160,6 +160,8 @@ const ProductContainer = ({
           blurDataURL="/placeholder.png"
           objectFit="cover"
           unoptimized={true}
+          width={450}
+          height={320}
           src={urlFor(productProps.defaultProductVariant.images[0]).url()}
           alt="Product Image"
           onClick={() => {
@@ -188,17 +190,23 @@ const ProductContainer = ({
               >
               {likes.likeState ? (
                 <Image src={Like}
-                  alt="like icon"              
+                  alt="like icon"  
+                  unoptimized={true}
+                  width={0}
+                  height={0}            
                 />
               ) : (
                 <Image
                  src={Like}
                  alt="like icon"
+                 
+                 width={35}
+                 height={35}
                     />
               )}
             </motion.button>
             <button>
-              <Image src={comment}  alt="comment icon"
+              <Image src={comment}  width={35} height={35} alt="comment icon"
               />
             </button>
             <motion.button
@@ -216,7 +224,7 @@ const ProductContainer = ({
               }}
 
             >
-              <Image src={Share} alt="share icon" />
+              <Image src={Share} width={35} height={35}  style={{ border: "3px solid red" }} alt="share icon" />
             </motion.button>
           </div>
           <motion.button
@@ -230,9 +238,9 @@ const ProductContainer = ({
             }}
           >
             {postSaveState ? (
-              <Image src={Bookmark}  alt="bookmark icon" />
+              <Image src={Bookmark} unoptimized={true} width={0} height={0} alt="bookmark icon" />
             ) : (
-              <Image  src={Bookmark}  alt="bookmark icon"  
+              <Image  src={Bookmark}  width={35} height={35} alt="bookmark icon"  
               />
             )}
           </motion.button>

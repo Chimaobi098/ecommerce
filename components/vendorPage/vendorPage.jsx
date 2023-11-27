@@ -31,14 +31,15 @@ const VendorPage = ({ vendorData }) => {
     },
     {
       label: "vouchers",
-      // icon: (
-      //   <Image
-      //      src={LocalOfferIcon}
-      //      width={0}
-      //      height={0}
-      //      unoptimized={true}
-      //   />
-      // ),
+      icon: (
+        <Image
+           src={Shopicon}
+           width={0}
+           height={0}
+           unoptimized={true}
+           alt="shop icon"
+        />
+      ),
     },
   ];
   return (
@@ -74,7 +75,7 @@ const VendorPage = ({ vendorData }) => {
         </VendorInfo>
         <div style={{ display: "flex", justifyContent:"flex-end", gap: "1rem"  }}>
         <Button style={{ display: "flex", color: "black", fontWeight: "bold",   width: "35%", background: "grey", borderRadius: "12px"  }}>Follow</Button>
-        <Button style={{ display: "flex", border: "1px solid", borderColor: "white", background: "grey", borderRadius: "12px"   }}><Image src={Profile} width={0} height={0} /></Button>
+        <Button style={{ display: "flex", border: "1px solid", borderColor: "white", background: "grey", borderRadius: "12px"   }}><Image src={Profile} unoptimized={true} width={0} height={0} /></Button>
          </div>
         <ul id="sub-nav">
           {sectionItems.map((item, i) => (

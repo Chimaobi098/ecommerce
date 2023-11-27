@@ -17,7 +17,7 @@ import walleticon from "../../public/et_wallet.svg";
 import homeUser from "../../public/uit_house-user.svg"
 import Image from "next/image";
 import Question from "../../public/question-mark_3524335.png";
-
+import Signout from "../../public/Signoutbtn.png";
 
 const ProfilePage = ({ user }: User) => {
   const [loading, setLoading] = useState(false);
@@ -75,7 +75,7 @@ const ProfilePage = ({ user }: User) => {
 
   return (
     <>
-      <Wrapper className="mb-16 md:mb-2">
+      <Wrapper className="mb-16   md:mb-2">
         {/* Render the loading page if loading is true */}
         {loading && (
           <div className="loading-page h-screen top-0 w-screen absolute z-10 bg-white flex justify-center items-center">
@@ -85,7 +85,7 @@ const ProfilePage = ({ user }: User) => {
           </div>
         )}
 
-        <header>
+        <header style={{ top: "0px", marginBottom: "0px" }}>
           <div id="hi">Hi,</div>
           <div id="user-name">{user.nickname}</div>
         </header>
@@ -93,7 +93,7 @@ const ProfilePage = ({ user }: User) => {
         <div
           className={`${
             support
-              ? "h-screen top-0 w-screen absolute z-10 backdrop-filter backdrop-blur-sm"
+              ? "h-screen  top-0 w-screen absolute z-10 backdrop-filter backdrop-blur-sm"
               : ""
           }`}
           onClick={handleClick}
@@ -111,7 +111,7 @@ const ProfilePage = ({ user }: User) => {
               {item.profileItemIcon}
               <div>{item.profileItemName}</div>
             </div>
-            <ArrowForwardIosRoundedIcon />
+            <ArrowForwardIosRoundedIcon style={{ color: "grey", fontSize: "16px", }} />
           </ProfileItem>
         ))}
 
@@ -123,7 +123,10 @@ const ProfilePage = ({ user }: User) => {
           <ArrowForwardIosRoundedIcon style={{ color: "grey", fontSize: "16px", }} />
         </ProfileItem>
 
+        <ProfileItem className="cursor-pointer">
+          <Image className="Image" src={Signout}  width={30} height={30} alt="signout icon" />
         <Button
+          style={{  marginRight: "250px" }}
           className="text-2xl mt-2 normal-case"
           color="error"
           onClick={() => {
@@ -133,7 +136,9 @@ const ProfilePage = ({ user }: User) => {
         >
           Log Out
         </Button>
-
+        <ArrowForwardIosRoundedIcon style={{ color: "grey", fontSize: "16px", }} />
+          </ProfileItem>  
+        
         <div
           className={` ${
             support ? "translate-y-0" : "translate-y-full"

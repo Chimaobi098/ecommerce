@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   overflow-y: scroll;
   height: 100%;
   padding-right: 3vmin;
-  
+  background: white;
 `;
 
 export const NavBar = styled.nav`
@@ -16,9 +16,10 @@ export const NavBar = styled.nav`
 
   input {
     border: 1px solid #555;
-    padding: 1vmin 1vmin 1vmin 7vmin;
-    background: transparent url("searchIcon.svg") no-repeat 1.5vmin center;
+    padding: 1vmin 1vmin 1vmin 13vmin;
+    background:  url("searchIcon.svg") no-repeat 1.5vmin center;\
     border-radius: 10px;
+    background-color: rgb(243 244 246);
     width: 300px;
 
     &::placeholder {
@@ -28,11 +29,13 @@ export const NavBar = styled.nav`
 
   #search-tags {
     padding: 5px;
+    border: 3px solid;
     display: flex;
     font-size: 0.8rem;
     width: 100%;
     justify-content: space-between;
     .search-tag {
+      border: 3px solid;
       padding: 5px 10px;
       border-bottom: solid black 2px;
       font-weight: 500;
@@ -42,6 +45,7 @@ export const NavBar = styled.nav`
 
   #search-tools {
     text-align: center;
+    border: 3px solid;
   }
 `;
 export const SearchResultItems = styled(motion.button)`

@@ -1,27 +1,27 @@
 'use client';
 
-import { useShippingData } from "../context/shippingContext";
+import { useShippingData } from "../../context/shippingContext";
 // 🚀 Fast
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import React, { useEffect } from "react";
-import { useShoppingCart } from "../context/shoppingCart";
-import { Wrapper, Card } from "../components/Checkout/checkoutPage.styles";
-import { formatCurrency } from "../utils/currencyFormatter";
+import { useShoppingCart } from "../../context/shoppingCart";
+import { WrapperCard, CardStyle } from "../../components/Checkout/checkoutPage.styles";
+import { formatCurrency } from "../../utils/currencyFormatter";
 import { useState } from "react";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import { useRouter } from "next/router";
 import { usePaystackPayment } from "react-paystack";
-import { sanityClient } from "../lib/sanity";
+import { sanityClient, urlFor } from "../../lib/sanity";
 import { v4 as uuidv4 } from "uuid";
-import { User } from "../interfaces/interface";
+import { User } from "../../interfaces/interface";
 //import { border } from "@mui/system";
 import Arrowbutton from '../public/upArrow.svg';
 import Image from "next/image";
-import './productcheckout.module.css';
+import '../productcheckout.module.css';
 import greaterIcon from "../public/greater-than-symbol.png";
-import downarrow from "../public/noun-chevron-arrow-2074151.svg";
-
+import downarrow from "../../public/noun-chevron-arrow-2074151.svg";
+//import { goToPage } from "../../components/ShoppingCart/shoppingCartOverlay";
 
 
 interface OrderInfo {
@@ -31,11 +31,13 @@ interface OrderInfo {
     isDelivered: boolean;
   }
 
-const Productcheckout = ({ user }: User) => {   
+const ItemCheckout = ({ user }: User) => {   
   const router = useRouter();
+  //const { items } = useRouter();
+  //const cartItems = items ? JSON.parse(items) : [];
   const [currentUID, setCurrentUID] = useState<string>("");
   const [couponCode, setCouponCode] = useState<number>(0);
-  const { getTotalCartPrice, cartItems } = useShoppingCart();
+  const { getTotalCartPrice, cartItems  } = useShoppingCart();
   const [deliveryPhoneNumber, setDeliveryPhoneNumber] = useState<number>(0);
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
@@ -56,6 +58,10 @@ const Productcheckout = ({ user }: User) => {
   const initializePayment = usePaystackPayment(config);
   const { shippingData } = useShippingData();
 
+  useEffect(() => {
+    
+
+  }, []);
 
   // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
   //   e.preventDefault();
@@ -107,11 +113,13 @@ const Productcheckout = ({ user }: User) => {
 
     }
 
+    
+
     return (
     <div>
      
 
-      <Wrapper>
+      <WrapperCard>
       <button
         style={{ position: "absolute", top: 0, right: 0 }}
         onClick={() => {
@@ -123,7 +131,7 @@ const Productcheckout = ({ user }: User) => {
       <form>
         <p style={{ textAlign: 'center' }} className="section-title">Checkout</p>
         
-        <Card
+        <CardStyle
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -146,10 +154,10 @@ const Productcheckout = ({ user }: User) => {
             <Image src={downarrow} width={15} height={15} style={{ width: "10px"}} alt="greater icon"  />
           </button>
           
-        </Card>
+        </CardStyle>
 
 
-        <Card
+        <CardStyle
           style={{
             display: "flex",
             flexDirection: "column",
@@ -195,11 +203,11 @@ const Productcheckout = ({ user }: User) => {
             ""
           )
         }
-        </Card>
+        </CardStyle>
 
              
 
-        <Card style={{ boxShadow: "0 5px 5px 1px rgb( 0, 0, 0, 0.2)"}} >
+        <CardStyle style={{ boxShadow: "0 5px 5px 1px rgb( 0, 0, 0, 0.2)"}} >
           <h2 style={{ fontSize: "1.3rem", marginBottom: "1rem" }}>Summary</h2>
 
           <div className="item-details-container">
@@ -231,21 +239,23 @@ const Productcheckout = ({ user }: User) => {
 
           <hr />
           
-        </Card>
+          
+          
+        </CardStyle>
 
-        <Card>
+        <CardStyle>
         <button style={{ background: "green", color: "white",  margin: "20px auto", borderRadius: "6px", padding: "9px", textAlign: "center", justifyContent: "center", display: "flex", width:"80%", border: "1px solid green" }}>
           Submit Order
          </button>
-        </Card>
+        </CardStyle>
       </form>
       
-    </Wrapper>
+    </WrapperCard>
     </div>
   )
 }
 
-export default Productcheckout;
+export default ItemCheckout;
 
 
 
@@ -307,6 +317,8 @@ import { usePaystackPayment } from "react-paystack";
 import { sanityClient } from "../../lib/sanity";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "../../interfaces/interface";
+import { urlFor } from '../../ecommerce.github.io/lib/sanity';
+import DefaultProduct from '../components/productInfoOverly/defaultProduct';
 
 interface OrderInfo {
   title: string;

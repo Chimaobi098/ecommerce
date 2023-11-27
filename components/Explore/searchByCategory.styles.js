@@ -3,17 +3,27 @@ import { motion } from "framer-motion";
 
 export const Wrapper = styled(motion.div)`
   width: 100%;
-  background-color: red;
+  background-color: white;
 `;
+
 export const CategoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  
+  background: white;
+  .card{
+     height: 280px;
+
+  }
+  .card img{
+    width: 190px;
+    height: 200px;
+  }
 `;
 
 export const CategoryItem = styled(motion.button)`
   all: unset;
-  border-top: 1px solid grey;
+  border-top: 1px solid rgb(243 244 246);
+  border-bottom: 1px solid rgb(229 231 235);
   padding: 1rem;
   font-weight: 500;
   display: flex;

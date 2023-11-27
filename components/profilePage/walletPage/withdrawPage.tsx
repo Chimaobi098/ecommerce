@@ -3,10 +3,16 @@ import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlin
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import ProductInfoOverlay from '../../productInfoOverly/prodInfoOverlay';
+import { useShoppingCart } from '../../../context/shoppingCart';
+
 
 const WithdrawPage = () => {
     const [inputValue, setInputValue] = useState('');
     const [showClearButton, setShowClearButton] = useState(false);
+    
+    const { getWallet } = useShoppingCart();
+    const [balance, setBalance] = useState(getWallet());
     const handleclear = ()=>{
         setInputValue('');
         if(inputValue === ''){
@@ -40,8 +46,8 @@ const WithdrawPage = () => {
         <div className='text-blue-400 text-center'>Switch Bank Account  <ArrowForwardIosOutlinedIcon className='w-2 h-2'/> </div>
 
         <div className='flex flex-col  gap-y-4 mt-10 text-right text-gray-400'>
-            <div>Balance (NGN) 1234.56</div>
-            <div className='text-gray-600'>Withdrawable Balance (NGN) 1234.56</div>
+            <div>Balance (NGN) {balance}</div>
+            <div className='text-gray-600'>Withdrawable Balance (NGN) {balance}</div>
 
         </div>
         <div className='py-8 flex flex-col gap-y-8 text-xl text-gray-800'>
@@ -60,10 +66,10 @@ const WithdrawPage = () => {
 
         </div>
 
-
+    
 
     </div>
   )
 }
 
-export default WithdrawPage
+export default WithdrawPage;

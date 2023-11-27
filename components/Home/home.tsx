@@ -91,6 +91,7 @@ _id
         <Button
           onClick={() => {
             setCartOpen(true);
+            console.log("Shop cart opened");
           }}
           style={{
             width: "60px",
@@ -133,6 +134,7 @@ if(product.vendor&& product.vendor.logo)return (<ProductContainer
               userLikedProducts={userLikedProducts}
               userSavedProducts={userSavedProducts}
               key={product._id}
+
             />)
           }
             

@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import React, { useEffect } from "react";
 import { useShoppingCart } from "../context/shoppingCart";
-import { Wrapper, Card } from "../components/Checkout/checkoutPage.styles";
+import { WrapperCard, CardStyle } from "../components/Checkout/checkoutPage.styles";
 import { formatCurrency } from "../utils/currencyFormatter";
 import { useState } from "react";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
@@ -202,7 +202,7 @@ const ShippingPage = ({ user }: User) => {
 //   }
 
   return (
-    <Wrapper>
+    <WrapperCard>
       <button
         style={{ position: "absolute", top: 0, right: 0 }}
         onClick={() => {
@@ -354,7 +354,7 @@ const ShippingPage = ({ user }: User) => {
         </div>
 
      </form>    
-    </Wrapper>
+    </WrapperCard>
   );
 };
 

@@ -12,8 +12,13 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CheckIcon from '@mui/icons-material/Check';
 import {useSanityUIDContext} from '../../context/sanityUserId'
+import ReactModal from "react-modal";
+import { NavBar } from "./explorePage.styles";
+import {useRouter} from "next/router";
 
-const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
+
+
+const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIsNavVisible, searchQuery }) => {
   const sanityUID = useSanityUIDContext();
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentLevel, setCurrentLevel] = useState([]);
@@ -23,6 +28,10 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [support, setSupport] = useState(false);
   const [sort, setSort] = useState('recommend');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [feature, setFeature] = useState(false);
+
+  const router = useRouter();
 
   const handleLikes = function(id) {
     (function(productId) {
@@ -51,8 +60,21 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
   };
   console.log(handleLikes);
 
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
   const handlefilter = () =>{
-    setSupport(!support)
+    setIsModalVisible(true);
+    setFeature(true);
+    //setSupport(!support)
   }
 
   const toggleVisibility = () => {
@@ -62,6 +84,8 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
 
   const handleCategorySelection = (category) => {
     if (Object.values(currentData[category]).length == 0) {
+      setIsNavVisible(false);
+      console.log("Navbar is not visible");
       fetchCategoryProducts();
     }
     setSelectedCategory(category);
@@ -78,6 +102,17 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
       return updatedCurrentLevel;
     });
   };
+
+  function showModal(e) {
+    e.preventDefault();
+    setIsModalVisible(true);
+  }
+
+  const hideModal = () => {
+    setIsModalVisible(false);
+  };
+
+
   useEffect(() => {
     async function getCategories() {
       const results = await sanityClient.fetch(`*[_type == 'category' ]{
@@ -173,6 +208,22 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
 
 
   return (
+    <>
+    
+    {isModalVisible && (
+      <ReactModal
+      style={customStyles}
+        isOpen={isModalVisible}
+        onRequestClose={hideModal}
+        contentLabel="This category is comming soon"
+      >
+        <div>
+          <p>{feature ? "Feature still in development" : "Category coming soon"} </p>
+          <button onClick={hideModal}>Close</button>
+        </div>
+      </ReactModal>
+    )}
+
     <AnimatePresence>
       {currentLevel.length > 0 && (
         <div className="flex flex-row my-4 mx-4">
@@ -192,20 +243,15 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
         {currentData
           ? Object.keys(currentData).map((category, i) => (
             
-            <div className="card rounded-lg shadow-lg h-auto cursor-pointer" onClick={() => handleCategorySelection(category)} key={i}>
+            <div className="card rounded-lg shadow-lg  cursor-pointer" onClick={(e) => {i < 2 ? showModal(e) : handleCategorySelection(category); setIsNavVisible(false);  }} key={i}>
               
               {categorySearchResults?.map((little) =>(
               <div className="" key={little._id}>
-                {little?.isRootCategory === true && category == little.title && <img  src={urlFor(little.images[0]).url()} className="rounded-t-lg "/>}
-                
-                
+                {little?.isRootCategory === true && category == little.title && <img  src={urlFor(little.images[0]).url()} className="rounded-t-lg "/>}                
                 </div>
                 ))}
               <div className="my-3 text-center ml-4">{category}</div>
               
-              
-              
-
 
             </div>
                 /* <span>{category}</span> */
@@ -230,7 +276,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
 
 
 
-                <ArrowForwardIosRoundedIcon />
+                <ArrowForwardIosRoundedIcon style={{  color: "lightgrey" }} />
               </CategoryItem>
             ))
           : null}
@@ -346,7 +392,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
     
     <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
       <div className="">
-         <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+         <img unoptimized={true} src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
            
       </div>
         <div className="mx-2">
@@ -396,8 +442,8 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
             <div key={product._id} className="explore-card " >
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
-              <div className="">
-                 <img src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+              <div className="" onClick={() => router.push(`product/${product.slug.current}`)}>
+                 <img unoptimized={true} src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
                    
               </div>
                 <div className="mx-2">
@@ -544,8 +590,8 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
                 
                   )))}
 
-</div>
-        </div>
+                </div>
+               </div>
 
 
         }
@@ -555,7 +601,9 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts}) => {
           )
           }       
           </CategoryWrapper>
+
     </AnimatePresence>
+    </>
   );
 };
 

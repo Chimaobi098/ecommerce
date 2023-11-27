@@ -36,10 +36,13 @@ import ProductColor from "./productColor";
 import ProductSize from "./productsize";
 import ProductImage from "./productImage";
 import DefaultImage from "./defaultImage";
-
-
+import ReactModal from "react-modal";
+//import { useShoppingCart } from "../../context/shoppingCart";
 import { useUser } from "@auth0/nextjs-auth0";
 import { usePaystackPayment } from "react-paystack";
+import Modal from 'react-modal';
+//import balance from "../profilePage/walletPage/withdrawPage";
+// import { useShoppingCart } from "../../context/shoppingCart";  
 
 const ProductInfoOverlay = ({ currentProduct }) => {
   const router = useRouter();
@@ -49,6 +52,11 @@ const ProductInfoOverlay = ({ currentProduct }) => {
   const [overlayVisibility, setOverlayVisibility] = useState(false);
   const [showGameSettingsOverlay, setShowGameSettingsOverlay] = useState(false);
   const [numberOfAttempts, setNumberOfAttempts] = useState(0);
+  const [productModal, setProductModal] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [showVariant, setShowVariant] = useState(false);
+  const [openPlay, setOpenPlay] = useState(false);
+  const [amountToPay, setAmountToPay] = useState("");
   console.log(currentProduct, "this is the current Product");
   const cartButtonState = () => {
     if (getItemQuantity(currentProduct._id) == null) return "Add to cart";
@@ -59,6 +67,12 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     }
   };
 
+  const { getWallet, setWallet } = useShoppingCart();
+
+  const handleInputChange = (event) => {
+    const newValue = event.target.value;
+    setAmountToPay(numberOfAttempts * 100);
+  }
 
   const config = {
     email: user?.email,
@@ -66,7 +80,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     publicKey: process.env.PAYSTACK_PUBLIC_KEY,
   };
   const initializePayment = usePaystackPayment(config);
-
+  const { getCartQuantity, cartOpen, setCartOpen } = useShoppingCart();
   const [itemQuantity, setItemQuantity] = useState(
     getItemQuantity(currentProduct._id) || 1
   );
@@ -80,11 +94,27 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     setItemQuantity((prev) => prev - 1);
   };
 
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    initializePayment(onSuccess, onClose);
+    console.log(amountToPay);
+   
+   //  window.location.href = `http://localhost:8080?existingParams=value&numberofAttempts=${numberOfAttempts}`
   };
+  // initializePayment(onSuccess, onClose);
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
 
   async function onSuccess() {
     let data = await fetch("/api/manageGameAttempts", {
@@ -103,11 +133,239 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     }
   }
 
+  function hideModal() {
+    setIsModalVisible(false);
+  }
+
+  function OpenModal(){
+    setIsModalVisible(true);
+  }
+
   function onClose() {
     alert("just try again");
   }
+
+  function handleGamePayment(e){
+   console.log(amountToPay);
+   const balance =  getWallet() - amountToPay; 
+   setWallet(balance); 
+   console.log(balance);  
+   return balance; 
+}
+
+  // Inside your component
+// useEffect(() => {
+//   Modal.setAppElement('#'); // Replace '#root' with your app's root element ID
+// }, []);
+
   return (
     <>
+    {productModal  ? (
+      <ReactModal 
+      style={customStyles}
+        isOpen={isModalVisible}
+        onRequestClose={hideModal}
+        contentLabel="Do you want to continue shopping"
+      >
+        <div>
+        <h1>Your Item has been added to the cart.</h1>
+
+        <ul>
+          <li><button onClick={hideModal}>Continue Shopping</button></li>
+          <li><button onClick={() => setCartOpen(true)}>Go to Checkout</button></li>
+        </ul>
+
+        <button onClick={hideModal}>Close</button>
+        </div>
+      </ReactModal>        
+    ) : ( 
+      "" 
+      )}
+
+      {showVariant ?  (
+        <>
+            <ProudctVariantBackground
+          id="variant-background"
+          onClick={(e) => {
+            // console.log(e.target.id);
+            if (e.target.id == "variant-background") {
+              setOverlayVisibility(false);
+            }
+          }}
+          >
+          
+          <motion.div
+            id="overlay-container"
+            initial={{ y: "70vh" }}
+            animate={{ y: "0vh" }}
+            >
+            
+              <ReactModal 
+        isOpen={true}
+        onRequestClose={hideModal}
+        contentLabel="Do you want to continue shopping"
+      >
+      
+      </ReactModal>
+   
+         <div
+          style={{
+            width: "100%",
+            height: "40vh",
+            position: "relative",
+            marginBottom: "2rem",
+          }}
+        >
+          
+      <DefaultImage
+        productInfo={currentProduct}
+        variantButtonState={variantButtonState}
+        unoptimized={true}
+        />
+
+        {currentProduct.variants.map((variant) => {
+        if (variantId === variant._key) {
+        return (
+        <ProductImage
+          key={variant._key}
+          productInfo={variant}
+          productId={currentProduct._id}
+          variantButtonState={variantButtonState}
+        />
+      );
+      } else {
+      return null;
+      }
+      })}
+        </div>
+        <CloseMenu
+        className="cursor-pointer"
+            onClick={() => {
+              setOverlayVisibility(false);
+              router.back();
+            }}
+          >
+            <CloseRoundedIcon />
+          </CloseMenu>
+            <div className="text-left w-full mb-4">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <h4 style={{ margin: "0" }}>{currentProduct.title}</h4>
+            
+          </div>
+
+          <h1>
+            {formatCurrency(currentProduct?.defaultProductVariant?.price)}
+          </h1>
+          </div>
+
+          <div className="flex-col w-full ">
+
+        <DefaultColor
+        productInfo={currentProduct}
+        variantButtonState={variantButtonState}
+        />
+
+        {currentProduct.variants.map((variant) => {
+        if (variantId === variant._key) {
+        return (
+        <ProductColor
+          key={variant._key}
+          productInfo={variant}
+          productId={currentProduct._id}
+          variantButtonState={variantButtonState}
+        />
+      );
+      } else {
+      return null;
+      }
+      })}
+</div>
+
+
+        <div className="w-full flex flex-row gap-x-2 items-center mt-2">
+            <DefaultProduct
+              productInfo={currentProduct}
+              variantButtonState={variantButtonState}
+            />
+            {currentProduct.variants.map((variant) => (
+              <ProductVariant
+                key={variant._key}
+                productInfo={variant}
+                productId={currentProduct._id}
+                variantButtonState={variantButtonState}
+              ></ProductVariant>
+            ))}
+
+        </div>
+
+        <div className="w-full mt-4 flex flex-col gap-y-4">
+
+      <div>
+        Select Size
+        
+        </div>
+      <div className="sizes flex flex-row flex-wrap gap-x-2 text-sm items-center">
+        <DefaultSize
+              productInfo={currentProduct}
+              variantButtonState={variantButtonState}
+            />
+
+        {currentProduct.variants.map((variant) => {
+        if (variantId === variant._key) {
+        return (
+        <ProductSize
+          key={variant._key}
+          productInfo={variant}
+          productId={currentProduct._id}
+          variantButtonState={variantButtonState}
+            />
+          );
+          } else {
+          return null;
+          }
+          })}
+           </div>
+
+      </div>    
+
+            <div className="fixed bottom-0 px-4 pt-0 md:pt-12 bg-white h-32 w-full">
+            
+          <button
+          className="w-full m-auto bg-black text-white h-12 rounded-sm"
+          
+            onClick={() => {
+              setVariantButtonState("selected");
+               modifyItemQuantity(currentProduct, itemQuantity);
+               console.log("Variants product mode")
+               setProductModal(true);
+               OpenModal(); 
+               setShowVariant(false);
+               if (user && openPlay) {
+                setShowGameSettingsOverlay(true);
+                 return;
+               }
+             // alert("your items have been added to the cart");
+            }}
+          >
+            Next
+          </button>
+          
+           
+          </div>
+          </motion.div>
+        </ProudctVariantBackground>
+        </>
+      ) : (
+        ""
+      )}
+
+       { showVariant == false ?( 
+      <>
       <Head>
         <title>{`Ecommerce || ${currentProduct.title}`}</title>
         <meta
@@ -183,14 +441,27 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               style={{ color: "black", border: "2px solid black"}}
             className="border w-5/12 rounded-md h-12"
               onClick={() => {
-                if (currentProduct.variants) {
-                  console.log("add Product");
-                  setOverlayVisibility(true);
-                } else {
-                  if (cartButtonState() == "In cart") return;
-                  modifyItemQuantity(currentProduct, itemQuantity);
-                  console.log("Product added");
-                }
+                // if (currentProduct.variants) {
+                //   console.log("add Product");
+                //   setOverlayVisibility(true);
+                // } else {
+                //   if (cartButtonState() == "In cart") return;
+                //   modifyItemQuantity(currentProduct, itemQuantity);
+                //   console.log("Product added");
+                // }
+                if(currentProduct.variants == null) {
+                modifyItemQuantity(currentProduct, itemQuantity);
+                setProductModal(true);
+                  OpenModal();
+                  console.log("No Variant");
+                }else{ 
+                  if(currentProduct.variants.length > 0){ 
+                  setShowVariant(true);
+                  console.log("Variant Product");
+                  setOpenPlay(false);
+
+                  }
+                }  
               }}
             >
               Add to Bag
@@ -198,13 +469,24 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             <button
             className="bg-[#0aad0a] hover:bg-[green] w-5/12 h-12 rounded-md"
               onClick={() => {
-                if (user) {
-                  setShowGameSettingsOverlay(true);
+               // router.replace("/api/auth/login");
+               setOpenPlay(true);
+               if(currentProduct.variants == null) {
+                modifyItemQuantity(currentProduct, itemQuantity)
+                setShowGameSettingsOverlay(true);
+                  console.log("No Variant");
+                }else{ 
+                  if(currentProduct.variants.length > 0){ 
+                  setShowVariant(true);
+                  console.log("Variant Product");
+                  }
+                }  
+                if (user && openPlay) {
+                 setShowGameSettingsOverlay(true);
                   return;
                 }
-
-                router.replace("/api/auth/login");
               }}
+              
             >
               Play
             </button>
@@ -308,6 +590,12 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           </VendorProductsWrapper>
         </ProductInfoSection>
       </Wrapper>
+      </>
+       ) : 
+       ( 
+        ""
+       )}
+
       {showGameSettingsOverlay && (
         <ProudctVariantBackground
           id="variant-background"
@@ -344,10 +632,13 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                       <label className="md:text-lg font-bold">Amount needed to pay:</label>
                         <input
                             className="w-full border-2 rounded-md h-12 p-2"
-                placeholder="how many attempts do you want?"
-                value={numberOfAttempts}
+                placeholder="how much is needed to pay?"
+                value={amountToPay}
                 type="number"
                 required
+                onChange={(e) => {
+                 setAmountToPay(numberOfAttempts * 100); 
+                }}
                 // onChange={(e) => {
                 //   setNumberOfAttempts(e.target.value);
                 // }}
@@ -356,7 +647,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
               </div>
 
               {/* <span>Total cost: {formatCurrency(numberOfAttempts * 100)}</span> */}
-             <button
+             <button  onClick={() => {console.log("Play User"); handleGamePayment()}}
           className=" fixed bottom-0  md:right-0 bg-black text-white w-11/12 md:w-[420px] h-12 mb-12 md:mb-6 rounded-sm md:mx-4" type="submit">pay</button>
 
       
@@ -364,163 +655,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           </motion.div>
         </ProudctVariantBackground>
       )}
-      {overlayVisibility && (
-        <ProudctVariantBackground
-          id="variant-background"
-          onClick={(e) => {
-            // console.log(e.target.id);
-            if (e.target.id == "variant-background") {
-              setOverlayVisibility(false);
-            }
-          }}
-        >
-          <motion.div
-            id="overlay-container"
-            initial={{ y: "70vh" }}
-            animate={{ y: "0vh" }}
-          >
-                    <div
-          style={{
-            width: "100%",
-            height: "40vh",
-            position: "relative",
-            marginBottom: "2rem",
-          }}
-        >
-          <DefaultImage
-        productInfo={currentProduct}
-        variantButtonState={variantButtonState}
-        unoptimized={true}
-        />
-
-        {currentProduct.variants.map((variant) => {
-        if (variantId === variant._key) {
-        return (
-        <ProductImage
-          key={variant._key}
-          productInfo={variant}
-          productId={currentProduct._id}
-          variantButtonState={variantButtonState}
-        />
-      );
-      } else {
-      return null;
-      }
-      })}
-        </div>
-        <CloseMenu
-        className="cursor-pointer"
-            onClick={() => {
-              setOverlayVisibility(false);
-            }}
-          >
-            <CloseRoundedIcon />
-          </CloseMenu>
-            <div className="text-left w-full mb-4">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <h4 style={{ margin: "0" }}>{currentProduct.title}</h4>
-            
-          </div>
-
-          <h1>
-            {formatCurrency(currentProduct?.defaultProductVariant?.price)}
-          </h1>
-          </div>
-
-          <div className="flex-col w-full ">
-
-        <DefaultColor
-        productInfo={currentProduct}
-        variantButtonState={variantButtonState}
-        />
-
-        {currentProduct.variants.map((variant) => {
-        if (variantId === variant._key) {
-        return (
-        <ProductColor
-          key={variant._key}
-          productInfo={variant}
-          productId={currentProduct._id}
-          variantButtonState={variantButtonState}
-        />
-      );
-      } else {
-      return null;
-      }
-      })}
-
-</div>
-
-
-        <div className="w-full flex flex-row gap-x-2 items-center mt-2">
-            <DefaultProduct
-              productInfo={currentProduct}
-              variantButtonState={variantButtonState}
-            />
-            {currentProduct.variants.map((variant) => (
-              <ProductVariant
-                key={variant._key}
-                productInfo={variant}
-                productId={currentProduct._id}
-                variantButtonState={variantButtonState}
-              ></ProductVariant>
-            ))}
-
-        </div>
-
-        <div className="w-full mt-4 flex flex-col gap-y-4">
-
-      <div>Select Size</div>
-      <div className="sizes flex flex-row flex-wrap gap-x-2 text-sm items-center">
-        <DefaultSize
-              productInfo={currentProduct}
-              variantButtonState={variantButtonState}
-            />
-
-        {currentProduct.variants.map((variant) => {
-        if (variantId === variant._key) {
-        return (
-        <ProductSize
-          key={variant._key}
-          productInfo={variant}
-          productId={currentProduct._id}
-          variantButtonState={variantButtonState}
-            />
-          );
-          } else {
-          return null;
-          }
-          })}
-           </div>
-
-      </div>    
-
-            <div className="fixed bottom-0 px-4 pt-0 md:pt-12 bg-white h-32 w-full">
-          <button
-          className="w-full m-auto bg-black text-white h-12 rounded-sm"
-          
-            onClick={() => {
-              setVariantButtonState("selected");
-              // modifyItemQuantity(currentProduct, itemQuantity);
-
-              alert("your items have been added to the cart");
-            }}
-          >
-            Next
-          </button>
-
-          </div>
-          </motion.div>
-
-        </ProudctVariantBackground>
-        
-      )}
-
+      
     </>
   );
 };

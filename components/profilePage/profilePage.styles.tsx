@@ -6,16 +6,20 @@ export const ProfileItem = styled.div`
   align-items: center;
   border-top: 1px solid lightgray;
   padding: 0 10px;
-
   width: 100%;
-  height: 10vh;
+  height: 13vh;
   .profile-name-container {
     display: flex;
     div {
       margin-left: 10px;
     }
   }
+  .Image{
+    color: red;
+  }
 `;
+
+
 export const NavBar = styled.nav`
   background: white;
   position: fixed;
@@ -44,7 +48,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
+  padding-top: 14px;
   header {
     display: flex;
     justify-content: center;
