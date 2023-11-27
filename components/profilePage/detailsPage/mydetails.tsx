@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const MyDetails = () => {
   const { user, error } = useUser();
-    const [enabled, setEnabled] = useState(false)
     const [profileDetails, setProfileDetails] = useState<any>("")
       const [userId, setUserId] = useState<string>("");
     const [userdetails, setUserdetails] = useState({
@@ -93,7 +92,7 @@ const MyDetails = () => {
         theme: "dark",
         });
         fetch("/api/updateUser", {
-          method: "POST",
+          method: "PATCH",
           body: JSON.stringify(data),
         })
           .then((res) => {
@@ -108,6 +107,8 @@ const MyDetails = () => {
                 progress: undefined,
                 theme: "dark",
                 });
+                
+                
             } else {
               toast.success('Profile Updated Successfully 😉', {
                 position: "top-right",
@@ -119,6 +120,7 @@ const MyDetails = () => {
                 progress: undefined,
                 theme: "dark",
                 });
+                console.log(data);
             }
           })
           .catch((err) => {
@@ -140,14 +142,14 @@ const MyDetails = () => {
             <div className=' px-2 py-3'>
               
             <h3 className='text-base font-medium text-gray-600 mb-2'>FIRST NAME</h3>
-            <input type="text" name='firstname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={profileDetails?.firstname}  
+            <input type="text" name='firstname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={profileDetails?.firstname ||''}  
             onChange={handleChange}
             value={userdetails.firstname}
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>LAST NAME</h3>
-            <input type="text" name='lastname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={profileDetails?.lastname}
+            <input type="text" name='lastname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={profileDetails?.lastname ||''}
             onChange={handleChange}
             value={userdetails.lastname}
              />

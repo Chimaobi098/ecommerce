@@ -65,6 +65,7 @@ const Home = ({ results }: HomeProduct) => {
   
   title,
   slug,
+  category,
   vendor->{
   title,
   logo,_id

@@ -78,7 +78,7 @@ const Addressbook = () => {
         theme: "dark",
         });
         fetch("/api/updateAddress", {
-          method: "POST",
+          method: "PATCH",
           body: JSON.stringify(data),
         })
           .then((res) => {
@@ -149,7 +149,7 @@ const Addressbook = () => {
         <div className='w-12/12 h-auto'>
             <div className='px-2 py-3'>
             <h3 className='font-thin text-xs text-gray-700 mb-2'>Country</h3>
-            <input type="text" name='country' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.country}
+            <input type="text" name='country' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.country ||''}
             onChange={handleChange}
             value={userdetails.country}
              />
