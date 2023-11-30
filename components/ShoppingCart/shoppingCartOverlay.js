@@ -28,7 +28,7 @@ import  Card  from "@mui/material/Card";
 import { useShippingData } from "../../context/shippingContext";
 import downarrow from "../../public/noun-chevron-arrow-2074151.svg"; 
 import { WrapperCard, CardStyle } from "../Checkout/checkoutPage.styles";
-
+import Image from "next/image";
 
 
   
@@ -155,7 +155,7 @@ const ShoppingCartOverlay = () => {
             showDiscount(e);
           }
           }>
-            <img src={downarrow} unoptimized={true} width={15} height={15} alt="arrow-image" />
+            <Image src={downarrow} unoptimized={true} width={15} height={15} alt="arrow-image" />
           </button>   
           :  ""
            }

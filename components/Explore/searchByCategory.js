@@ -15,7 +15,7 @@ import {useSanityUIDContext} from '../../context/sanityUserId'
 import ReactModal from "react-modal";
 import { NavBar } from "./explorePage.styles";
 import {useRouter} from "next/router";
-
+import Image from "next/image";
 
 
 const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIsNavVisible, searchQuery }) => {
@@ -392,7 +392,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
     
     <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
       <div className="">
-         <img unoptimized={true} src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+         <Image unoptimized={true} src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
            
       </div>
         <div className="mx-2">
@@ -443,7 +443,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="" onClick={() => router.push(`product/${product.slug.current}`)}>
-                 <img unoptimized={true} src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+                 <Image unoptimized={true} src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
                    
               </div>
                 <div className="mx-2">

@@ -99,7 +99,7 @@ export const ShoppingCartProvider = ({
   
   const value = {
     getWallet: () => appWallet,
-    setWallet: (newBalance) => setAppWallet(newBalance),
+    setWallet: (newBalance: number ) => setAppWallet(newBalance),
   };
 
   const [variantId, setVariantId] = useState('');
