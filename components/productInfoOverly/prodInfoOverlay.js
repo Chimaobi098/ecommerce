@@ -100,7 +100,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     e.preventDefault();
     console.log(amountToPay);
    
-     window.location.href = `http://localhost:8080?existingParams=value&numberofAttempts=${numberOfAttempts}`
+     window.location.href = `https://long1sland.github.io/wordsearch/?existingParams=value&numberofAttempts=${numberOfAttempts}`
   };
   // initializePayment(onSuccess, onClose);
 
