@@ -11,12 +11,12 @@ export const CategoryWrapper = styled.div`
   flex-direction: column;
   background: white;
   .card{
-     height: 280px;
+     height: 200px;
 
   }
   .card img{
     width: 190px;
-    height: 200px;
+    height: 150px;
   }
 `;
 
