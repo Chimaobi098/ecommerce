@@ -12,8 +12,8 @@ export const Wrapper = styled.div`
 export const NavBar = styled.nav`
   background-color: white;
   width: 100%;
-  padding: 1rem;
-
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
   input {
     border: 1px solid #555;
     padding: 1vmin 1vmin 1vmin 13vmin;

@@ -4,19 +4,22 @@ import { motion } from "framer-motion";
 export const Wrapper = styled(motion.div)`
   width: 100%;
   background-color: white;
+  border: 3px solid red;
 `;
 
 export const CategoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background: white;
+  //border: 3px solid red;
+  justify-content: flex-start;
   .card{
-     height: 200px;
-
+    height: 230px;
+    
   }
   .card img{
     width: 190px;
-    height: 150px;
+    height: 190px;
   }
 `;
 

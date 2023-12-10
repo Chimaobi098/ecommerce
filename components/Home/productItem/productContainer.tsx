@@ -23,7 +23,7 @@ import Like from '../../../public/Like.svg';
 import Share from '../../../public/Share.svg';
 import comment from '../../../public/Comment.svg';
 import Bookmark from '../../../public/Bookmark.svg';
-
+import ReactModal from "react-modal";
 
 interface ProductProps {
   productProps: {
@@ -43,11 +43,11 @@ const ProductContainer = ({
   userSavedProducts,
 }: ProductProps) => {
   const sanityUID = useSanityUIDContext();
-
+   const [feature, setFeature] = useState(true);
   const router = useRouter();
   const [likes, setLikes] = useState({ likeCount: 5, likeState: false });
   const [postSaveState, setPostSaveState] = useState(false);
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const { user, error } = useUser();
   const handleLikes: (id: string) => void = useCallback(
     debounce((productId: string) => {
@@ -99,6 +99,27 @@ const ProductContainer = ({
     [sanityUID]
   );
 
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
+
+  function showModal(e) {
+    e.preventDefault();
+    setIsModalVisible(true);
+  }
+
+  const hideModal = () => {
+    setIsModalVisible(false);
+  };
+
   useEffect(() => {
     async function handler() {
       let likeCountData = await sanityClient.fetch(
@@ -127,6 +148,20 @@ const ProductContainer = ({
   }, [user, userLikedProducts]);
 
   return (
+    <> 
+    {isModalVisible && (
+      <ReactModal
+        style={customStyles}
+        isOpen={isModalVisible}
+        onRequestClose={hideModal}
+        contentLabel="This category is comming soon"
+      >
+        <div>
+          <p>{feature ? "Feature still in development" : "Category coming soon"} </p>
+          <button onClick={hideModal}>Close</button>
+        </div>
+      </ReactModal>
+    )}
     <ProductInfo key={productProps._id}>
       <div id="vendor-info-container">
         <div id="vendor-info">
@@ -160,8 +195,8 @@ const ProductContainer = ({
           blurDataURL="/placeholder.png"
           objectFit="cover"
           unoptimized={true}
-          width={450}
-          height={320}
+          width={430}
+          height={390}
           src={urlFor(productProps.defaultProductVariant.images[0]).url()}
           alt="Product Image"
           onClick={() => {
@@ -174,22 +209,25 @@ const ProductContainer = ({
         <div id="action-section">
           <div>
             <motion.button
-              whileTap={{ scale: 0.8 }}
-              onClick={() => {
-                setLikes((prev) => {
-                  if (prev.likeState) {
-                    return {
-                      likeCount: prev.likeCount - 1,
-                      likeState: false,
-                    };
-                  }
-                  return { likeCount: prev.likeCount + 1, likeState: true };
-                });
-                handleLikes(productProps._id);
-              }}
+             //onClick={setIsModalVisible(true)}
+              // whileTap={{ scale: 0.8 }}
+              // onClick={() => {
+              //   setIsModalVisible(true);   
+              //   setLikes((prev) => {
+              //     if (prev.likeState) {
+              //       return {
+              //         likeCount: prev.likeCount - 1,
+              //         likeState: false,
+              //       };
+              //     }
+              //     return { likeCount: prev.likeCount + 1, likeState: true };
+              //   });
+              //   handleLikes(productProps._id);
+              // }}
               >
               {likes.likeState ? (
                 <Image src={Like}
+               //   onClick={setIsModalVisible(true)}
                   alt="like icon"  
                   unoptimized={true}
                   width={0}
@@ -199,19 +237,19 @@ const ProductContainer = ({
                 <Image
                  src={Like}
                  alt="like icon"
-                 
+             //    onClick={setIsModalVisible(true)}
                  width={35}
                  height={35}
                     />
               )}
             </motion.button>
             <button>
-              <Image src={comment}  width={35} height={35} alt="comment icon"
+              <Image src={comment}  width={35} height={35} alt="comment icon" 
               />
             </button>
             <motion.button
               whileTap={{ scale: 0.8 }}
-              onClick={async () => {
+              onClick={  async () => {
                 try {
                   await navigator.share({
                     title: "Ecommerce",
@@ -231,6 +269,7 @@ const ProductContainer = ({
             id="save-button"
             whileTap={{ scale: 0.8 }}
             onClick={() => {
+              setIsModalVisible(true);
               setPostSaveState((prev) => {
                 handlePostSave(productProps._id);
                 return !prev;
@@ -250,6 +289,7 @@ const ProductContainer = ({
         }`}</h4>
       </div>
     </ProductInfo>
+    </>
   );
 };
 
