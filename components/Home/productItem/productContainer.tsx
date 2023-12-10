@@ -111,7 +111,7 @@ const ProductContainer = ({
   };
 
 
-  function showModal(e) {
+  function showModal(e: any) {
     e.preventDefault();
     setIsModalVisible(true);
   }
