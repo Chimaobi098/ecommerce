@@ -276,7 +276,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
 
 
 
-                <ArrowForwardIosRoundedIcon style={{  color: "lightgrey" }} />
+                <ArrowForwardIosRoundedIcon style={{ color: "grey", fontSize: "16px", }} />
               </CategoryItem>
             ))
           : null}
@@ -585,15 +585,10 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
         
             </div>
           </div>
-                
-        
-                
                   )))}
 
                 </div>
                </div>
-
-
         }
         </>
         ))}

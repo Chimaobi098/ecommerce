@@ -196,7 +196,7 @@ const ProductContainer = ({
           objectFit="cover"
           unoptimized={true}
           width={430}
-          height={390}
+          height={370}
           src={urlFor(productProps.defaultProductVariant.images[0]).url()}
           alt="Product Image"
           onClick={() => {
