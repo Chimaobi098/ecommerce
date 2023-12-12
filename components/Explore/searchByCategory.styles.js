@@ -14,11 +14,11 @@ export const CategoryWrapper = styled.div`
   //border: 3px solid red;
   justify-content: flex-start;
   .card{
-    height: 230px;
-    border: 4px solid red;
+    height: 100%;
+    //border: 4px solid red;
   }
   .card img{
-    border: 3px solid red;
+    //border: 3px solid red;
   }
 `;
 
