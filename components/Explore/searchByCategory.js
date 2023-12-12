@@ -392,7 +392,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
     
     <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
       <div className="">
-         <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+         <Image style={{ border: "2px solid red", borderRadius: "1rem", width: "100%", height:"1rem", minHeight: "1rem", maxHeight: "1rem" }} src={urlFor(product.defaultProductVariant.images[0]).url()}   />
            
       </div>
         <div className="mx-2">
@@ -443,7 +443,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="" onClick={() => router.push(`product/${product.slug.current}`)}>
-                 <Image  src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+                 <Image style={{ border: "2px solid red", borderRadius: "1rem", width: "100%", height:"1rem", minHeight: "1rem", maxHeight: "1rem" }}  src={urlFor(product.defaultProductVariant.images[0]).url()} />
                    
               </div>
                 <div className="mx-2">
