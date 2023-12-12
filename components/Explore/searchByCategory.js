@@ -247,7 +247,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
               
               {categorySearchResults?.map((little) =>(
               <div className="" key={little._id}>
-                {little?.isRootCategory === true && category == little.title && <img  src={urlFor(little.images[0]).url()} className="rounded-t-lg "/>}                
+                {little?.isRootCategory === true && category == little.title && <img src={urlFor(little.images[0]).url()} className="rounded-t-lg border border-red-600"/>}                
                 </div>
                 ))}
               <div className="my-3 text-center ml-4">{category}</div>
@@ -383,7 +383,6 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
   
         </div>
     </div>
-
             <div className=" grid grid-cols-2 gap-4 my-8 ml-4">
           {sort ==='low' && (categoryItem.Orderasc?.map((product) => (
             
@@ -392,7 +391,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
     
     <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
       <div className="">
-         <Image style={{ border: "2px solid red", borderRadius: "1rem", width: "100%", height:"1rem", minHeight: "1rem", maxHeight: "1rem" }} src={urlFor(product.defaultProductVariant.images[0]).url()}   />
+         <img style={{ border: "2px solid red", borderRadius: "1rem", width: "100%", height:"1rem", minHeight: "1rem", maxHeight: "1rem" }} src={urlFor(product.defaultProductVariant.images[0]).url()}   />
            
       </div>
         <div className="mx-2">
@@ -443,7 +442,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="" onClick={() => router.push(`product/${product.slug.current}`)}>
-                 <Image style={{ border: "2px solid red", borderRadius: "1rem", width: "100%", height:"1rem", minHeight: "1rem", maxHeight: "1rem" }}  src={urlFor(product.defaultProductVariant.images[0]).url()} />
+                 <img style={{ border: "2px solid red", borderRadius: "1rem", width: "100%", height:"1rem", minHeight: "1rem", maxHeight: "1rem" }}  src={urlFor(product.defaultProductVariant.images[0]).url()} />
                    
               </div>
                 <div className="mx-2">
