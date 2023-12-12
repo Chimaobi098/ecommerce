@@ -15,11 +15,10 @@ export const CategoryWrapper = styled.div`
   justify-content: flex-start;
   .card{
     height: 230px;
-    
+    border: 4px solid red;
   }
   .card img{
-    width: 190px;
-    height: 190px;
+    border: 3px solid red;
   }
 `;
 

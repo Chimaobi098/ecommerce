@@ -387,7 +387,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
           {sort ==='low' && (categoryItem.Orderasc?.map((product) => (
             
 
-    <div key={product._id} className="explore-card " >
+    <div key={product._id} className="explore-card">
     
     <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
       <div className="">
