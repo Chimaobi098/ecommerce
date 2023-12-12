@@ -10,8 +10,7 @@ import { buildTree } from "../../utils/buildtree";
 const ExplorePage = ({ searchResults, searchQuery, setIsNavVisible }) => {
   const [categoryData, setCategoryData] = useState();
   const tree = useRef();
-  console.log(categoryData);
-
+  
   useEffect(() => {
     async function getCategories() {
       const results = await sanityClient.fetch(`*[_type == 'category' ]{
@@ -27,6 +26,7 @@ const ExplorePage = ({ searchResults, searchQuery, setIsNavVisible }) => {
     getCategories();
   }, []);
 
+  console.log(categoryData);
   return (
     <Wrapper>
       {searchResults.length == 0 || !searchQuery ? (

@@ -6,7 +6,7 @@ const ProductDetails = ({ currentProduct }) => {
   return (
     <ProductInfoOverlay
       currentProduct={currentProduct[0]}
-      key={currentProduct[0]._id}
+      key={currentProduct[0]?._id}
     />
   );
 };

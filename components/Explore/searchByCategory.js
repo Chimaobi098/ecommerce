@@ -142,7 +142,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
       { keyword: selectedCategory }
     );
 
-    // setCategorySearchResults(results);
+     setCategorySearchResults(results);
   };
 
 
@@ -392,7 +392,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
     
     <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
       <div className="">
-         <Image unoptimized={true} src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+         <Image src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
            
       </div>
         <div className="mx-2">
@@ -443,7 +443,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="" onClick={() => router.push(`product/${product.slug.current}`)}>
-                 <Image unoptimized={true} src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
+                 <Image  src={urlFor(product.defaultProductVariant.images[0]).url()} className="rounded-t-lg w-full h-48 min-h-48 max-h-48"/>
                    
               </div>
                 <div className="mx-2">
@@ -490,7 +490,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
         {sort ==='high' && (categoryItem.orderdesc?.map((product) => (
             
 
-            <div key={product._id} className="explore-card " >
+            <div key={product._id} className="explore-card">
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="">
