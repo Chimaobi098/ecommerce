@@ -391,7 +391,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
     
     <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
       <div className="">
-         <img style={{  borderRadius: "1rem", width: "100%", height:"10rem", minHeight: "1rem", maxHeight: "12rem" }} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" src={urlFor(product.defaultProductVariant.images[0]).url()}   />
+         <img style={{  borderRadius: "0.6rem", width: "100%", height:"7rem", minHeight: "1rem", maxHeight: "12rem" }} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" src={urlFor(product.defaultProductVariant.images[0]).url()}   />
            
       </div>
         <div className="mx-2">
@@ -442,7 +442,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="" onClick={() => router.push(`product/${product.slug.current}`)}>
-                 <img style={{  borderRadius: "1rem", width: "100%", height:"10rem", minHeight: "1rem", maxHeight: "12rem" }} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" src={urlFor(product.defaultProductVariant.images[0]).url()} />
+                 <img style={{  borderRadius: "0.6rem", width: "100%", height: "7rem", minHeight: "1rem", maxHeight: "12rem" }} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" src={urlFor(product.defaultProductVariant.images[0]).url()} />
                    
               </div>
                 <div className="mx-2">
