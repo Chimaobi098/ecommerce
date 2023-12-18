@@ -33,6 +33,7 @@ const WalletPage: React.FC = () => {
     setcarddetails(!carddetails);
   };
 
+  console.log(user)
   useEffect(() => {
     const getUID = async () => {
       const data = await sanityClient.fetch<{ _id: string }[]>(
@@ -43,6 +44,7 @@ const WalletPage: React.FC = () => {
       );
 
       setUserId(data[0]?._id || "");
+      console.log(data)
 
       const results = await sanityClient.fetch(
         `*[_type == "users" && email == $curr  ] {
@@ -53,7 +55,7 @@ const WalletPage: React.FC = () => {
       { curr: user?.email }
       );
       setWalletDeposit(results[0]?.walletAmount);
-      console.log(data)
+      console.log(results)
     };
     
 
