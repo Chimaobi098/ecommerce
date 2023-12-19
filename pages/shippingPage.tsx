@@ -96,7 +96,7 @@ const ShippingPage = ({ user }: User) => {
   const [Postal, setPostal] = useState<number>(0);
   const [state, setState] = useState<string>("");
   const [country, setCountry] = useState<string>("");
-  const shippingFees = 2920;
+  const shippingFees = 0;
   const totalAmount =
     getTotalCartPrice() -
     (getTotalCartPrice() * (couponDiscount / 100) || 1) +

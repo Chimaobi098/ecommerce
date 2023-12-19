@@ -45,7 +45,7 @@ const ShoppingCartOverlay = () => {
   } = useShoppingCart();
 
 
-  const shippingFees = 2920;
+  const shippingFees = 0;
   // const navigate = useNavigate();
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [discount, setDiscount] = useState(false);
@@ -92,7 +92,9 @@ const ShoppingCartOverlay = () => {
     router.push("/Itemcheckout"); 
    }
 
+   const handleShippingAddress = () => {
 
+   }
   return (
     <>
     {checkoutMode ? (
@@ -105,7 +107,7 @@ const ShoppingCartOverlay = () => {
       >
         <ArrowBackRoundedIcon />
       </button>
-      <form>
+      <form className="">
         <p style={{ textAlign: 'center' }} className="section-title">Checkout</p>
         
         <CardStyle

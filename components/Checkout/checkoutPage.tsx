@@ -12,7 +12,7 @@ import { usePaystackPayment } from "react-paystack";
 import { sanityClient } from "../../lib/sanity";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "../../interfaces/interface";
-
+import { useNavigate } from "react-router";
 interface OrderInfo {
   title: string;
   currentUID: string;
@@ -21,6 +21,7 @@ interface OrderInfo {
 }
 
 const CheckoutPage = ({ user }: User) => {
+  const navigate = useNavigate();
   const onSuccess = () => {
     alert("your payment was successful");
     fetch("/api/handleOrders", {
@@ -70,7 +71,7 @@ const CheckoutPage = ({ user }: User) => {
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
   const [couponDiscount, setCouponDiscount] = useState(0);
-  const shippingFees = 2920;
+  const shippingFees = 0;
   const totalAmount =
     getTotalCartPrice() -
     (getTotalCartPrice() * (couponDiscount / 100) || 1) +
@@ -136,7 +137,7 @@ const CheckoutPage = ({ user }: User) => {
       <button
         style={{ position: "absolute", top: 0, right: 0 }}
         onClick={() => {
-          router.back();
+          router.push('/')
         }}
       >
         <ArrowBackRoundedIcon />

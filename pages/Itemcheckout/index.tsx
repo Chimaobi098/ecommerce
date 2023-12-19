@@ -9,7 +9,7 @@ import { useShoppingCart } from "../../context/shoppingCart";
 import { WrapperCard, CardStyle } from "../../components/Checkout/checkoutPage.styles";
 import { formatCurrency } from "../../utils/currencyFormatter";
 import { useState } from "react";
-import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useRouter } from "next/router";
 import { usePaystackPayment } from "react-paystack";
 import { sanityClient, urlFor } from "../../lib/sanity";
@@ -21,6 +21,8 @@ import Image from "next/image";
 import '../productcheckout.module.css';
 import greaterIcon from "../public/greater-than-symbol.png";
 import downarrow from "../../public/noun-chevron-arrow-2074151.svg";
+
+import Addressbook from "../../components/profilePage/address/addressbook";
 //import { goToPage } from "../../components/ShoppingCart/shoppingCartOverlay";
 
 
@@ -37,12 +39,14 @@ const ItemCheckout = ({ user }: User) => {
   //const cartItems = items ? JSON.parse(items) : [];
   const [currentUID, setCurrentUID] = useState<string>("");
   const [couponCode, setCouponCode] = useState<number>(0);
+  const [showModal, setShowModal] = React.useState(false);
+ 
   const { getTotalCartPrice, cartItems  } = useShoppingCart();
   const [deliveryPhoneNumber, setDeliveryPhoneNumber] = useState<number>(0);
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
   const [couponDiscount, setCouponDiscount] = useState(0);
-  const shippingFees = 2920;
+  const shippingFees = 0;
   const totalAmount =
     getTotalCartPrice() -
     (getTotalCartPrice() * (couponDiscount / 100) || 1) +
@@ -96,7 +100,7 @@ const ItemCheckout = ({ user }: User) => {
 
     const handleShippingAddress = (e: any) => {    
      e.preventDefault();
-     router.push('/shippingPage')
+     router.push('/profile/address')
      // Your code logic
     } 
  
@@ -121,16 +125,16 @@ const ItemCheckout = ({ user }: User) => {
 
       <WrapperCard>
       <button
-        style={{ position: "absolute", top: 0, right: 0 }}
+        style={{ position: "absolute", top: 0, left: 0 }}
         onClick={() => {
           router.back();
         }}
       >
-        <ArrowBackRoundedIcon />
+        <ArrowBackIosIcon />
       </button>
       <form>
         <p style={{ textAlign: 'center' }} className="section-title">Checkout</p>
-        
+      
         <CardStyle
           style={{
             display: "flex",
@@ -144,6 +148,7 @@ const ItemCheckout = ({ user }: User) => {
             <p style={{ fontSize: "0.8rem", color: "grey", padding: "0.1rem 0" }}>
               {shippingData?.StreetAddress}
               {shippingData?.Postal}
+            
             </p>
           </div>
           <button onClick={(e) =>{ 
@@ -151,7 +156,7 @@ const ItemCheckout = ({ user }: User) => {
           }
           } 
            style={{  padding: '12px', borderRadius: '7px' }} className="Add-button">
-            <Image src={downarrow} width={15} height={15} style={{ width: "10px"}} alt="greater icon"  />
+            <Image src={downarrow} width={15} height={15}  alt="greater icon"  />
           </button>
           
         </CardStyle>
@@ -224,7 +229,7 @@ const ItemCheckout = ({ user }: User) => {
           </div>
           <div className="item-details-container">
             <b>Shipping</b>
-            <div>{formatCurrency(shippingFees)}</div>
+            <div>{formatCurrency(0)}</div>
           </div>
           
           <div className="item-details-container" id="total-container">
@@ -244,9 +249,43 @@ const ItemCheckout = ({ user }: User) => {
         </CardStyle>
 
         <CardStyle>
-        <button style={{ background: "green", color: "white",  margin: "20px auto", borderRadius: "6px", padding: "9px", textAlign: "center", justifyContent: "center", display: "flex", width:"80%", border: "1px solid green" }}>
+        <button   type="button"
+        onClick={() => setShowModal(true)}
+        style={{ background: "green", color: "white",  margin: "20px auto", borderRadius: "6px", padding: "9px", textAlign: "center", justifyContent: "center", display: "flex", width:"80%", border: "1px solid green" }}>
           Submit Order
-         </button>
+         </button>{showModal ? (
+        <>
+          <div
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+          >
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              
+               
+                {/*body*/}
+                <div className="relative p-6 flex-auto">
+                  <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
+                     your order has been sent successfully
+                  </p>
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b" >
+                  <button
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => (setShowModal(false), router.push('/'))}
+                  >
+                    Close
+                  </button>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
         </CardStyle>
       </form>
       
