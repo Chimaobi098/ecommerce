@@ -140,64 +140,64 @@ const Addressbook = () => {
         getDetails();
       },[user]);
   return (
-    <div className='mx-4 mb-12'>
+    <div className='mx-4 mb-12 text-base '>
       <form onSubmit={(e) => {
           e.preventDefault();
           handleSaveChanges();}}
           >
       
-        <div className='w-12/12 h-auto'>
+        <div className='w-12/12 h-auto text-base '>
             <div className='px-2 py-3'>
-            <h3 className='font-thin text-xs text-gray-700 mb-2'>Country</h3>
+            <h3 className='font-thin text-gray-700 mb-2'>Country</h3>
             <input type="text" name='country' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.country ||''}
             onChange={handleChange}
             value={userdetails.country}
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
-            <h3 className='font-thin text-xs text-gray-700 mb-2'>First Name</h3>
+            <h3 className='font-thin text-gray-700 mb-2 t'>First Name</h3>
             <input type="text" name='firstname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.firstname}
             onChange={handleChange}
             value={userdetails.firstname}
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
-            <h3 className='font-thin text-xs text-gray-700 mb-2'>Last Name</h3>
+            <h3 className='font-thin text-gray-700 mb-2'>Last Name</h3>
             <input type="text" name='lastname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.lastname} 
             onChange={handleChange}
             value={userdetails.lastname}
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
-            <h3 className='font-thin text-xs text-gray-700 mb-2'>Phone Number</h3>
+            <h3 className='font-thin text-gray-700 mb-2'>Phone Number</h3>
             <input type="text" name='phone' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.phone}
              onChange={handleChange}
             value={userdetails.phone}
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
-            <h3 className='font-thin text-xs text-gray-700 mb-2'>State/Province</h3>
+            <h3 className='font-thin text-gray-700 mb-2'>State/Province</h3>
             <input type="text" name='state' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.state}
             onChange={handleChange}
             value={userdetails.state}
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
-            <h3 className='font-thin text-xs text-gray-700 mb-2'>City</h3>
+            <h3 className='font-thin text-gray-700 mb-2'>City</h3>
             <input type="text" name='city' className='text-base h-8 outline-none w-full placeholder-gray-700'placeholder={addressdetails?.city}
             onChange={handleChange}
             value={userdetails.city}
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
-            <h3 className='font-thin text-xs text-gray-700 mb-2'>Address Line 1</h3>
+            <h3 className='font-thin text-gray-700 mb-2'>Address Line 1</h3>
             <input type="text" name='address1' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.address1}
             onChange={handleChange}
             value={userdetails.address1}
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
-            <h3 className='font-thin text-xs text-gray-700 mb-2'>Address Line 2</h3>
+            <h3 className='font-thin text-gray-700 mb-2'>Address Line 2</h3>
             <input type="text" name='address2' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.address2}
             onChange={handleChange}
             value={userdetails.address2}

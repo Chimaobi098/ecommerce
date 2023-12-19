@@ -11,11 +11,15 @@ import { useRouter } from "next/router";
 import '../global.css'
 import { ShippingDataProvider } from '../context/shippingContext';
 import { Router, Routes, Route } from "react-router";
+import CheckoutPage from "../components/Checkout/checkoutPage";
+import { userInfo } from "os";
 //import Productcheckout from "./productcheckout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const hideFooterOnCheckout = router.pathname == '/Itemcheckout';
+  const hideOnAddressbook = router.pathname == '/Addressbook';
+ 
 
   return (
     <>
@@ -45,6 +49,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               </AnimatePresence>
             </main>
             {!hideFooterOnCheckout && <Footer />}  {/* COnditionally render the footer */}
+            {/* {!hideOnAddressbook && <CheckoutPage  />} */}
             <GlobalStyle />
           </ShoppingCartProvider>
           </ShippingDataProvider>
