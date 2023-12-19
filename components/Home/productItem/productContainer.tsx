@@ -43,7 +43,8 @@ const ProductContainer = ({
   userSavedProducts,
 }: ProductProps) => {
   const sanityUID = useSanityUIDContext();
-   const [feature, setFeature] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [feature, setFeature] = useState(true);
   const router = useRouter();
   const [likes, setLikes] = useState({ likeCount: 5, likeState: false });
   const [postSaveState, setPostSaveState] = useState(false);
@@ -149,6 +150,14 @@ const ProductContainer = ({
 
   return (
     <> 
+    {loading && (
+          <div className="loading-page h-screen top-0 w-screen absolute z-10 bg-white flex justify-center items-center">
+            <svg className="animate-spin h-16 w-16 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </div>
+        )}
+
     {isModalVisible && (
       <ReactModal
         style={customStyles}
@@ -188,7 +197,7 @@ const ProductContainer = ({
       </div>
       <motion.div
         whileTap={{ scale: 0.9 }}
-        style={{ width: "100%", height: "20rem", position: "relative" }}
+        style={{ width: "100%", height: "20rem", position: "relative", overflowY: 'hidden' }}
       >
         <Image
           placeholder="blur"
@@ -200,6 +209,7 @@ const ProductContainer = ({
           src={urlFor(productProps.defaultProductVariant.images[0]).url()}
           alt="Product Image"
           onClick={() => {
+            setLoading(true);
             router.push(`/product/${productProps.slug.current}`);
           }}
         />

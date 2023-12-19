@@ -16,7 +16,7 @@ export const NavBar = styled.nav`
   padding-left: 0.5rem;
   input {
     border: 1px solid #555;
-    padding: 1vmin 1vmin 1vmin 13vmin;
+    // padding: 1vmin 1vmin 1vmin 13vmin;
     background:  url("searchIcon.svg") no-repeat 1.5vmin center;\
     border-radius: 10px;
     background-color: rgb(243 244 246);

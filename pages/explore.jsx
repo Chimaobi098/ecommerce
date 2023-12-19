@@ -72,7 +72,7 @@ const Explore = () => {
         <div className=" mb-0 flex flex-row items-center justify-between">
           <div id="w-10/12">
             <input
-              style={{ padding: "0.4rem 1.9rem", textAlign: "left", }}
+              style={{ padding: "0.2rem 2.1rem", textAlign: "left", }}
               placeholder="Search for products"
               type="search"
               onChange={(e) => {

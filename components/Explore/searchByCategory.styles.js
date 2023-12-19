@@ -14,10 +14,17 @@ export const CategoryWrapper = styled.div`
   //border: 3px solid red;
   justify-content: flex-start;
   .card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     height: 100%;
     //border: 4px solid red;
   }
   .card img{
+    width: 100%;
+    height: 32vh;
+    // aspect-ratio: 1/1;
+    object-fit: cover;
     //border: 3px solid red;
   }
 `;
