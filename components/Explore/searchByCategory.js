@@ -246,7 +246,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
       )}
       <CategoryWrapper >
         {currentLevel.length < 1 ? (
-      <div className="explore-card w-[100%] grid grid-cols-2 grid-rows-2 gap-4 mb-[10vh] px-4 h-[80vh]">
+      <div className="explore-card w-[100%] grid grid-cols-2 grid-rows-2 gap-4 mb-[20vh] px-4 h-[80vh]">
         {currentData
           ? Object.keys(currentData).map((category, i) => (
             
