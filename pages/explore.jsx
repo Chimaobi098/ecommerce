@@ -69,10 +69,9 @@ const Explore = () => {
     )}
       {isNavVisible && (  
       <NavBar>
-        <div className=" mb-0 flex flex-row items-center justify-between">
-          <div id="w-10/12">
-            <input
-              style={{ padding: "0.2rem 2.1rem", textAlign: "left", }}
+        <div className="px-4 mb-0 flex flex-row items-center justify-between">
+          <div className="w-[80%]">
+            <input className="py-[0.2rem] px-[1rem] text-left"
               placeholder="Search for products"
               type="search"
               onChange={(e) => {
@@ -81,7 +80,7 @@ const Explore = () => {
               value={searchQuery}
             />
           </div>
-          <div className="w-1/12" onClick={showModal}>
+          <div className="w-auto" onClick={showModal}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

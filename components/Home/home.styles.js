@@ -17,6 +17,7 @@ export const NavBar = styled.nav`
   background: white;
   position: fixed;
   top: 0;
+  z-index: 5;
   height: 9vh;
   width: 100%;
   padding-right: 10px; 

@@ -210,7 +210,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
   return (
     <>
     {loading && (
-      <div className="loading-page h-[100%] top-0 w-[100%] absolute z-10 bg-white flex justify-center items-center">
+      <div className="loading-page h-[100%] top-0 w-[100%] absolute z-[100] bg-white flex justify-center items-center">
         <svg className="animate-spin h-16 w-16 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
@@ -246,7 +246,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
       )}
       <CategoryWrapper >
         {currentLevel.length < 1 ? (
-      <div className="explore-card grid grid-cols-2 grid-rows-2 gap-4 my-[2vh] mx-4 h-[80vh]" >
+      <div className="explore-card w-[100%] grid grid-cols-2 grid-rows-2 gap-4 mb-[10vh] px-4 h-[80vh]">
         {currentData
           ? Object.keys(currentData).map((category, i) => (
             
@@ -449,7 +449,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="" onClick={() => {setLoading(true); router.push(`product/${product.slug.current}`)}}>
-                 <img style={{   width: "100%", height: "70%", minHeight: "1rem" }} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" src={urlFor(product.defaultProductVariant.images[0]).url()} />
+                 <img style={{ width: "100%", height: "100%", minHeight: "1rem" }} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" src={urlFor(product.defaultProductVariant.images[0]).url()} />
                    
               </div>
                 <div className="mx-2">

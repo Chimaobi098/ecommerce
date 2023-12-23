@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   width: 100%;
   overflow-y: scroll;
   height: 100%;
-  padding-right: 3vmin;
+  // padding-right: 3vmin;
   background: white;
 `;
 
@@ -13,14 +13,13 @@ export const NavBar = styled.nav`
   background-color: white;
   width: 100%;
   padding-top: 0.5rem;
-  padding-left: 0.5rem;
+  padding-bottom: 2vh;
   input {
     border: 1px solid #555;
-    // padding: 1vmin 1vmin 1vmin 13vmin;
     background:  url("searchIcon.svg") no-repeat 1.5vmin center;\
     border-radius: 10px;
     background-color: rgb(243 244 246);
-    width: 300px;
+    width: 100%;
 
     &::placeholder {
       font-size: 1rem;

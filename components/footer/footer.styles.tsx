@@ -9,6 +9,7 @@ export const Wrapper = styled.footer`
   position: fixed;
   bottom: 0;
   display: flex;
+  z-Index: 90;
   justify-content: space-between;
   align-items: center;
   a {

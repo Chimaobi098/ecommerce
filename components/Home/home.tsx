@@ -23,6 +23,7 @@ const Home = ({ results }: HomeProduct) => {
   const [userLikedProducts, setUserLikedProducts] = useState();
   const [userSavedProducts, setUserSavedProducts] = useState();
   const lastId = useRef<string | null>(results[results.length - 1]._id);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function likedProducts() {
@@ -85,8 +86,20 @@ _id
 
   console.log(productData, "this is all product data");
 
+  if(loading == true){
+    console.log('Fantastic!!!!!!!!!!!!!!!')
+  }
+
   return (
     <>
+        {loading && (
+          <div className="loading-page h-[100%] top-0 w-[100%] absolute z-[100] bg-white flex justify-center items-center">
+            <svg className="animate-spin h-16 w-16 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </div>
+        )}
+
       <NavBar>
         <header>Home</header>
         <Button
@@ -132,6 +145,7 @@ _id
           {productData.map((product) => {
 if(product.vendor&& product.vendor.logo)return (<ProductContainer
               productProps={product}
+              setLoading={setLoading}
               userLikedProducts={userLikedProducts}
               userSavedProducts={userSavedProducts}
               key={product._id}
