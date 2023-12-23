@@ -71,7 +71,7 @@ const Explore = () => {
       <NavBar>
         <div className="px-4 mb-0 flex flex-row items-center justify-between">
           <div className="w-[80%]">
-            <input className="py-[0.2rem] px-[1rem] text-left"
+            <input className="py-[0.2rem] px-[2.1rem] text-left"
               placeholder="Search for products"
               type="search"
               onChange={(e) => {
