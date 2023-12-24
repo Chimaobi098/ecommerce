@@ -447,7 +447,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
 
             <div key={product._id} className="explore-card " >
             
-            <div className="card rounded-lg shadow-lg h-[210px] cursor-pointer">
+            <div className="card rounded-lg shadow-lg h-[220px] cursor-pointer">
               <div className="" onClick={() => {setLoading(true); router.push(`product/${product.slug.current}`)}}>
                  <img style={{ width: "100%", maxHeight: "140px", minHeight: "1rem", objectFit: 'cover' }} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" src={urlFor(product.defaultProductVariant.images[0]).url()} />
                    
