@@ -89,6 +89,7 @@ const ShoppingCartOverlay = () => {
    
     e.preventDefault();
     setCheckoutMode(true);
+    setCartOpen(false)
     router.push("/Itemcheckout"); 
    }
 

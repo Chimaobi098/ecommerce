@@ -10,6 +10,11 @@ const MyDetails = () => {
   const { user, error } = useUser();
     const [profileDetails, setProfileDetails] = useState<any>("")
       const [userId, setUserId] = useState<string>("");
+      const [firstname, setFirstname] = useState('')
+      const [lastname, setLastname] = useState('')
+      const [gender, setGender] = useState('')
+      const [dob, setDob] = useState('')
+      const [email, setEmail] = useState('')
     const [userdetails, setUserdetails] = useState({
       firstname: "",
       lastname: "",
@@ -30,28 +35,29 @@ const MyDetails = () => {
       setUserdetails(updatedUserDetails);
     };
 
-    useEffect(() => {
-      const getUID = async () => {
-        const data = await sanityClient.fetch<{ _id: string }[]>(
-          `
-          *[_type == 'users' && email == $auth0ID]{
-            _id
-          }`, { auth0ID: user?.email }
-        );
+    // useEffect(() => {
+    //   const getUID = async () => {
+    //     const data = await sanityClient.fetch<{ _id: string }[]>(
+    //       `
+    //       *[_type == 'users' && email == $auth0ID]{
+    //         _id
+    //       }`, { auth0ID: user?.email }
+    //     );
   
-        setUserId(data[0]?._id || "");
-        console.log(data)
-      };
+    //     setUserId(data[0]?._id || "");
+    //     console.log(data)
+    //   };
       
   
-      getUID();
-    }, [user]);
+    //   getUID();
+    // }, [user]);
 
     useEffect(() => {
       async function getDetails() {
         if (!user) return;
+        var curr = user?.email
         const results = await sanityClient.fetch(
-          `*[_type == "users" && email == $curr  ] {
+          `*[_type == "users" && email == "${curr}"] {
               _id,
               firstname,
               lastname, 
@@ -61,16 +67,40 @@ const MyDetails = () => {
               userId
       }`,
         { curr: user?.email }
-        );
+        )
         
-        setProfileDetails(results[0]);
-    
+        setProfileDetails(results);
+      
+        
+        
       }
       getDetails();
     },[user]);
 
+    useEffect(()=>{
+      // setEmail(user?.email)
+
+      if(profileDetails != ''){
+        setFirstname(profileDetails[0].firstname)
+        setLastname(profileDetails[0].lastname)
+        setGender(profileDetails[0].gender)
+        setEmail(profileDetails[0].email)
+        setDob(profileDetails[0].dob)
+      }
+    }, [profileDetails])
+
+
+
     const handleSaveChanges = async () => {
-  
+      alert(dob)
+
+      // if(profileDetails == ''){
+      //   var doc = {_type: "users", firstname: firstname, lastname: lastname, 
+      //   email: email, dob: dob, gender: gender}
+
+      //   sanityClient.create(doc).then(()=>{alert('GREAT!!!!!!!!')})
+      // }
+      
       // Prepare the data to send to the server
       const data = {
         _id: userId, // You should set this based on your data structure
@@ -143,23 +173,23 @@ const MyDetails = () => {
               
             <h3 className='text-base font-medium text-gray-600 mb-2'>FIRST NAME</h3>
             <input type="text" name='firstname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={profileDetails?.firstname ||''}  
-            onChange={handleChange}
-            value={userdetails.firstname}
+            onChange={(e)=>{setFirstname(e.target.value)}}
+            value={firstname}
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>LAST NAME</h3>
             <input type="text" name='lastname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={profileDetails?.lastname ||''}
-            onChange={handleChange}
-            value={userdetails.lastname}
+            onChange={(e)=>{setLastname(e.target.value)}}
+            value={lastname}
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>EMAIL ADDRESS</h3>
               
                 <input type="text" name='email' className='text-base h-8 outline-none w-full' disabled
-                onChange={handleChange}
-                value={profileDetails?.email}
+                onChange={(e)=>{setEmail(e.target.value)}}
+                value={email}
             
             />
 
@@ -167,15 +197,15 @@ const MyDetails = () => {
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>DATE OF BIRTH</h3>
             <input type="date" name='dob' className='text-base h-8 outline-none'
-            onChange={handleChange}
-            value={userdetails.dob}/>
+            onChange={(e)=>{setDob(e.target.value)}}
+            value={dob}/>
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mt-8 mb-2'>GENDER</h3>
             <div className='text-base mb-8 flex flex-col gap-y-2'>
                 <div className='flex gap-x-4'>
                     <input type='radio' value="Male" name="gender" id='male' 
-                              checked={userdetails.gender === 'Male'}
+                              checked={gender === 'Male'}
                               onChange={handleRadioChange}
                               />
                     <label htmlFor="male">Male</label>
@@ -183,7 +213,7 @@ const MyDetails = () => {
                 <div className='border-t border-t-gray-300'></div>
                 <div className='flex gap-x-4 '>
                     <input type='radio' value="Female" name="gender" id='female'
-                    checked={userdetails.gender === 'Female'}
+                    checked={gender === 'Female'}
                     onChange={handleRadioChange}
                      />
                     <label htmlFor="female">Female</label>

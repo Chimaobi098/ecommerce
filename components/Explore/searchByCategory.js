@@ -447,14 +447,14 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
 
             <div key={product._id} className="explore-card " >
             
-            <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
+            <div className="card rounded-lg shadow-lg h-[210px] cursor-pointer">
               <div className="" onClick={() => {setLoading(true); router.push(`product/${product.slug.current}`)}}>
-                 <img style={{ width: "100%", height: "100%", minHeight: "1rem" }} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" src={urlFor(product.defaultProductVariant.images[0]).url()} />
+                 <img style={{ width: "100%", maxHeight: "140px", minHeight: "1rem", objectFit: 'cover' }} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" src={urlFor(product.defaultProductVariant.images[0]).url()} />
                    
               </div>
-                <div className="mx-2">
+                <div className="mx-2 flex-grow flex flex-col justify-between py-[5px]">
                 <div className="flex flex-row justify-between items-center text-lg">
-              <div className="my-3 text-center">₦{product.defaultProductVariant.price}</div>
+              <div className="text-center">₦{product.defaultProductVariant.price}</div>
               <div>
               <motion.button
                       whileTap={{ scale: 0.8 }}
@@ -481,7 +481,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
                     </motion.button>
               </div>
               </div>
-              <div className=" text-sm text-gray-600" key={product.id}>{product.title}
+              <div className=" text-sm text-gray-600 leading-[1]" key={product.id}>{product.title}
               
               </div>
         
