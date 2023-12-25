@@ -86,9 +86,6 @@ _id
 
   console.log(productData, "this is all product data");
 
-  if(loading == true){
-    console.log('Fantastic!!!!!!!!!!!!!!!')
-  }
 
   return (
     <>

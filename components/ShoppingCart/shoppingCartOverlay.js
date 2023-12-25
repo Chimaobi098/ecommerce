@@ -88,6 +88,7 @@ const ShoppingCartOverlay = () => {
   function handleCheckout(e) {
    
     e.preventDefault();
+    // setCartOpen(false);
     setCheckoutMode(true);
     router.push("/Itemcheckout"); 
    }
@@ -102,7 +103,8 @@ const ShoppingCartOverlay = () => {
       <button
         style={{ position: "absolute", top: 0, right: 0 }}
         onClick={() => {
-          router.back();
+          router.push('/');
+          setCheckoutMode(false)
         }}
       >
         <ArrowBackRoundedIcon />
@@ -231,10 +233,12 @@ const ShoppingCartOverlay = () => {
       
     </WrapperCard>
     ) : ""}
-    <Wrapper initial={{ y: "100vh" }} animate={{ y: 0 }} exit={{ y: "100vh" }}>
+    <Wrapper initial={{ y: "100vh" }} animate={{ y: 0 }} exit={{ y: "100vh" , transition: {duration: 0.1} }}>
       <Header>
         <button
           onClick={() => {
+            // alert(router.pathname)
+            // router.push('/');
             setCartOpen(false);
           }}
         >
