@@ -209,7 +209,8 @@ const ShoppingCartOverlay = () => {
                  onChange={(e) => setCouponCode(Number.parseInt(e.target.value))}
                 value={couponCode} 
                 placeholder="yyyyyyy" 
-                className="couponform" 
+                className="couponform"
+                style={{width: '100%'}}
               />
              </form> 
              <button onClick={handleDiscount} style={{ border: "2px solid green", color: "white", backgroundColor: "green", borderRadius: "12px", width: "270px", padding: "10px" }} className="couponbtn">
@@ -245,7 +246,7 @@ const ShoppingCartOverlay = () => {
           </div>
           
           <div className="item-details-container" id="total-container">
-            <div>{`${2} items`}</div>
+            <div>{cartItems.length > 1? `${cartItems.length} items`: `${cartItems.length} item`}</div>
             <div style={{ display: "flex", gap: "1rem" }}>
               <div>Total</div>
               <div style={{ color: "orange" }}>
