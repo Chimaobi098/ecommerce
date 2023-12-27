@@ -27,6 +27,7 @@ export const CardStyle = styled.div`
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 2vh;
+  position: relative;
 
   .item-details-container {
     display: flex;
@@ -38,6 +39,14 @@ export const CardStyle = styled.div`
     margin: 1rem 0;
     font-size: 1rem;
     font-weight: 600;
+  }
+
+  .Add-button{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 10px;
   }
   
 `;

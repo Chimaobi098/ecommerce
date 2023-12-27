@@ -23,6 +23,7 @@ interface ShoppingCartContext {
   cartItems: CartItem[];
   handleItemClick: (itemId:string) =>void;
   removeFromCart: (id: string) => void;
+  removeAllCartItems: (id: string) => void;
   increaseCart: (id: string) => void;
   decreaseCart: (id: string) => void;
   getTotalCartPrice: () => number;
@@ -142,6 +143,12 @@ export const ShoppingCartProvider = ({
     });
   }
 
+  function removeAllCartItems(id: string){
+    setCartItems((currentItems) => {
+      return currentItems.filter((item) => {item._id !== id})
+    })
+  }
+
   function increaseCart(id: string) {
     setCartItems((currentItems) => {
       return currentItems.map((item) => {
@@ -234,6 +241,7 @@ export const ShoppingCartProvider = ({
         setCartOpen,
         handleItemClick,
         removeFromCart,
+        removeAllCartItems,
         increaseCart,
         decreaseCart,
         getTotalCartPrice,

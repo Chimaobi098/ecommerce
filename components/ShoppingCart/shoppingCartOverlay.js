@@ -29,6 +29,8 @@ import { useShippingData } from "../../context/shippingContext";
 import downarrow from "../../public/noun-chevron-arrow-2074151.svg"; 
 import { WrapperCard, CardStyle } from "../Checkout/checkoutPage.styles";
 import Image from "next/image";
+import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
+import { ArrowForwardIos } from "@mui/icons-material";
 
 
   
@@ -37,8 +39,10 @@ const ShoppingCartOverlay = () => {
   const {
     setCartOpen,
     cartItems,
+    setCartItems,
     handleItemClick,
     removeFromCart,
+    removeAllCartItems,
     increaseCart,
     decreaseCart,
     getTotalCartPrice,
@@ -51,7 +55,9 @@ const ShoppingCartOverlay = () => {
   const [discount, setDiscount] = useState(false);
   const { shippingData } = useShippingData();
   const [couponCode, setCouponCode] = useState(0);
-  const [checkoutMode, setCheckoutMode] = useState(false); 
+  const [checkoutMode, setCheckoutMode] = useState(false);
+  const [routeCtrl, setRouteCtrl] = useState(0)
+  const [showModal, setShowModal] = useState(false)
   const totalAmount =
     getTotalCartPrice() -
     (getTotalCartPrice() * (couponDiscount / 100) || 1) +
@@ -93,22 +99,54 @@ const ShoppingCartOverlay = () => {
     router.push("/Itemcheckout"); 
    }
 
-   const handleShippingAddress = () => {
-
+   const handleShippingAddress = (e) => {    
+    e.preventDefault();
+    setCartOpen(false);
+    router.push('/profile/address')
    }
+
+   function showDiscount(e) {
+    e.preventDefault();
+    setDiscount(!discount);  
+      
+  }
+
+  const handleDiscount = (e) => {
+     e.preventDefault();
+     setCouponCode(couponCode);
+
+  }
+
+  //  This is to catch if the user is using the browser's navigation buttons to go back in router history
+   if(router.pathname == '/' && checkoutMode && routeCtrl == 0){
+    // alert('router control + 1')
+    setRouteCtrl(routeCtrl + 1)
+   }
+   if(router.pathname == '/Itemcheckout' && checkoutMode && routeCtrl == 1){
+    // alert('router control = 2')
+    setRouteCtrl(routeCtrl + 1)
+   }
+   if(router.pathname == '/' && checkoutMode && routeCtrl == 2){
+    // alert('router control back to 0')
+    setRouteCtrl(0)
+    setCheckoutMode(false)
+   }
+   
   return (
     <>
     {checkoutMode ? (
       <WrapperCard>
       <button
-        style={{ position: "absolute", top: 0, right: 0 }}
+        style={{ position: "absolute", top: 0, left: '2%' }}
         onClick={() => {
           router.push('/');
+          setRouteCtrl(0);
           setCheckoutMode(false)
         }}
       >
-        <ArrowBackRoundedIcon />
+        <ArrowBackIos />
       </button>
+      
       <form className="">
         <p style={{ textAlign: 'center' }} className="section-title">Checkout</p>
         
@@ -127,12 +165,10 @@ const ShoppingCartOverlay = () => {
               {shippingData?.Postal}
             </p>
           </div>
+
           <button onClick={(e) =>{ 
-           handleShippingAddress(e);
-          }
-          } 
-           style={{  padding: '12px', borderRadius: '7px' }} className="Add-button">
-            <img src={downarrow} width={15} height={15} style={{ width: "10px"}} alt="greater icon"  />
+           handleShippingAddress(e)}} className="Add-button">
+            <ArrowForwardIos style={{fontSize: '15px'}}/>
           </button>
           
         </CardStyle>
@@ -154,12 +190,12 @@ const ShoppingCartOverlay = () => {
             </p>
           </div>
           {couponCode == 0 ?   
-          <button style={{ background: 'white', padding: '12px',   }} className="Add-button" onClick={(e) => { 
+          <button className="Add-button" onClick={(e) => { 
             e.preventDefault();
             showDiscount(e);
           }
           }>
-            <Image src={downarrow} unoptimized={true} width={15} height={15} alt="arrow-image" />
+            <ArrowForwardIos style={{fontSize: '15px'}}/>
           </button>   
           :  ""
            }
@@ -225,9 +261,43 @@ const ShoppingCartOverlay = () => {
         </CardStyle>
 
         <CardStyle>
-        <button style={{ background: "green", color: "white",  margin: "20px auto", borderRadius: "6px", padding: "9px", textAlign: "center", justifyContent: "center", display: "flex", width:"80%", border: "1px solid green" }}>
+        <button type="button"
+        onClick={() => {setShowModal(true), removeAllCartItems('null')}}
+        style={{ background: "green", color: "white",  margin: "20px auto", borderRadius: "6px", padding: "9px", textAlign: "center", justifyContent: "center", display: "flex", width:"80%", border: "1px solid green" }}>
           Submit Order
-         </button>
+         </button>{showModal ? (
+        <>
+          <div
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+          >
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              
+               
+                {/*body*/}
+                <div className="relative p-6 flex-auto">
+                  <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
+                     your order has been sent successfully
+                  </p>
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b" >
+                  <button
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => (setShowModal(false), setCartOpen(false), router.push('/'))}
+                  >
+                    Close
+                  </button>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
         </CardStyle>
       </form>
       

@@ -23,6 +23,7 @@ import greaterIcon from "../public/greater-than-symbol.png";
 import downarrow from "../../public/noun-chevron-arrow-2074151.svg";
 
 import Addressbook from "../../components/profilePage/address/addressbook";
+import { ArrowForwardIos } from "@mui/icons-material";
 //import { goToPage } from "../../components/ShoppingCart/shoppingCartOverlay";
 
 
@@ -41,7 +42,7 @@ const ItemCheckout = ({ user }: User) => {
   const [couponCode, setCouponCode] = useState<number>(0);
   const [showModal, setShowModal] = React.useState(false);
  
-  const { getTotalCartPrice, cartItems  } = useShoppingCart();
+  const { getTotalCartPrice, cartItems, removeAllCartItems  } = useShoppingCart();
   const [deliveryPhoneNumber, setDeliveryPhoneNumber] = useState<number>(0);
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
@@ -120,12 +121,12 @@ const ItemCheckout = ({ user }: User) => {
     
 
     return (
-    <div>
+    <div >
      
 
-      <WrapperCard>
+      <WrapperCard >
       <button
-        style={{ position: "absolute", top: 0, left: 0 }}
+        style={{ position: "absolute", top: 0, left: '2%' }}
         onClick={() => {
           router.back();
         }}
@@ -153,10 +154,9 @@ const ItemCheckout = ({ user }: User) => {
           </div>
           <button onClick={(e) =>{ 
            handleShippingAddress(e);
-          }
-          } 
-           style={{  padding: '12px', borderRadius: '7px' }} className="Add-button">
-            <Image src={downarrow} width={15} height={15}  alt="greater icon"  />
+          }} 
+          className="Add-button">
+            <ArrowForwardIos style={{fontSize: '15px'}}/>
           </button>
           
         </CardStyle>
@@ -178,12 +178,12 @@ const ItemCheckout = ({ user }: User) => {
             </p>
           </div>
           {couponCode == 0 ?   
-          <button style={{ background: 'white', padding: '12px',   }} className="Add-button" onClick={(e) => { 
+          <button className="Add-button" onClick={(e) => { 
             e.preventDefault();
             showDiscount(e);
           }
           }>
-            <Image src={downarrow} unoptimized={true} width={15} height={15} alt="arrow-image" />
+            <ArrowForwardIos style={{fontSize: '15px'}}/>
           </button>   
           :  ""
            }
@@ -250,7 +250,7 @@ const ItemCheckout = ({ user }: User) => {
 
         <CardStyle>
         <button   type="button"
-        onClick={() => setShowModal(true)}
+        onClick={() => {setShowModal(true), removeAllCartItems('null')}}
         style={{ background: "green", color: "white",  margin: "20px auto", borderRadius: "6px", padding: "9px", textAlign: "center", justifyContent: "center", display: "flex", width:"80%", border: "1px solid green" }}>
           Submit Order
          </button>{showModal ? (
