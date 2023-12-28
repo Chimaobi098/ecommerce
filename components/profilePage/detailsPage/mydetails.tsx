@@ -195,13 +195,13 @@ const MyDetails = () => {
             <h3 className='text-base font-medium text-gray-600 mb-2'>FIRST NAME</h3>
             <input type="text" name='firstname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={profileDetails?.firstname ||''}  
             onChange={(e)=>{setFirstname(e.target.value)}}
-            value={firstname}
+            value={firstname} required
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>LAST NAME</h3>
             <input type="text" name='lastname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={profileDetails?.lastname ||''}
-            onChange={(e)=>{setLastname(e.target.value)}}
+            onChange={(e)=>{setLastname(e.target.value)}} required
             value={lastname}
              />
             </div>
@@ -217,14 +217,14 @@ const MyDetails = () => {
             <h3 className='text-base font-medium text-gray-600 mb-2'>DATE OF BIRTH</h3>
             <input type="date" name='dob' className='text-base h-8 outline-none'
             onChange={(e)=>{setDob(e.target.value)}}
-            value={dob}/>
+            value={dob} required/>
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mt-8 mb-2'>GENDER</h3>
             <div className='text-base mb-8 flex flex-col gap-y-2'>
                 <div className='flex gap-x-4'>
                     <input type='radio' value="Male" name="gender" id='male' 
-                              checked={gender === 'Male'}
+                              checked={gender === 'Male'} required
                               onChange={(e)=>{setGender(e.target.value)}}
                               />
                     <label htmlFor="male">Male</label>
