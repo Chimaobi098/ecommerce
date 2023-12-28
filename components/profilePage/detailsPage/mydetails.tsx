@@ -10,6 +10,13 @@ const MyDetails = () => {
   const { user, error } = useUser();
     const [profileDetails, setProfileDetails] = useState<any>("")
       const [userId, setUserId] = useState<string>("");
+
+      const [firstname, setFirstname] = useState('')
+      const [lastname, setLastname] = useState('')
+      const [email, setEmail] = useState('')
+      const [dob, setDob] = useState('')
+      const [gender, setGender] = useState('')
+      
     const [userdetails, setUserdetails] = useState({
       firstname: "",
       lastname: "",
@@ -44,14 +51,15 @@ const MyDetails = () => {
       };
       
   
-      getUID();
+      // getUID();
     }, [user]);
 
     useEffect(() => {
       async function getDetails() {
         if (!user) return;
+
         const results = await sanityClient.fetch(
-          `*[_type == "users" && email == $curr  ] {
+          `*[_type == "users" && email == "${user?.email}"] {
               _id,
               firstname,
               lastname, 
@@ -60,18 +68,61 @@ const MyDetails = () => {
               gender,
               userId
       }`,
-        { curr: user?.email }
+        {curr: user?.email}
         );
         
-        setProfileDetails(results[0]);
-    
+        setProfileDetails(results);
       }
       getDetails();
     },[user]);
 
+    useEffect(()=>{
+      if(profileDetails != ''){
+        setFirstname(profileDetails[0].firstname)
+        setLastname(profileDetails[0].lastname)
+        // setEmail(profileDetails[0].email)
+        setDob(profileDetails[0].dob)
+        setGender(profileDetails[0].gender)
+      }
+    }, [profileDetails])
+
     const handleSaveChanges = async () => {
+      
+      // This'll send user's details to Sanity if user's details weren't found there
+      if(profileDetails == ''){
+
+        const userDetails = {
+          _type: 'users', 
+          // userId: auth0ID,
+          firstname: firstname, 
+          lastname: lastname, 
+          email: user?.email,
+          dob: dob,
+          gender: gender}
   
+        sanityClient.create(userDetails)
+
+      }
+
+      if(profileDetails != ''){
+
+        var id = profileDetails[0]._id
+
+        const userDetails = {
+          firstname: firstname, 
+          lastname: lastname,
+          dob: dob,
+          gender: gender}
+  
+        sanityClient.patch(id).set(userDetails).commit()
+      }
+      
+
+
+
+
       // Prepare the data to send to the server
+
       const data = {
         _id: userId, // You should set this based on your data structure
         firstname: userdetails.firstname,
@@ -143,48 +194,46 @@ const MyDetails = () => {
               
             <h3 className='text-base font-medium text-gray-600 mb-2'>FIRST NAME</h3>
             <input type="text" name='firstname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={profileDetails?.firstname ||''}  
-            onChange={handleChange}
-            value={userdetails.firstname}
+            onChange={(e)=>{setFirstname(e.target.value)}}
+            value={firstname}
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>LAST NAME</h3>
             <input type="text" name='lastname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={profileDetails?.lastname ||''}
-            onChange={handleChange}
-            value={userdetails.lastname}
+            onChange={(e)=>{setLastname(e.target.value)}}
+            value={lastname}
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
-            <h3 className='text-base font-medium text-gray-600 mb-2'>EMAIL ADDRESS</h3>
+            <h3 className='text-base font-medium text-gray-600 mb-[10px]'>EMAIL ADDRESS</h3>
               
-                <input type="text" name='email' className='text-base h-8 outline-none w-full' disabled
-                onChange={handleChange}
-                value={profileDetails?.email}
-            
-            />
+                <div className='text-base h-8 outline-none w-full'>
+                  {user?.email}
+                </div>
 
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mb-2'>DATE OF BIRTH</h3>
             <input type="date" name='dob' className='text-base h-8 outline-none'
-            onChange={handleChange}
-            value={userdetails.dob}/>
+            onChange={(e)=>{setDob(e.target.value)}}
+            value={dob}/>
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='text-base font-medium text-gray-600 mt-8 mb-2'>GENDER</h3>
             <div className='text-base mb-8 flex flex-col gap-y-2'>
                 <div className='flex gap-x-4'>
                     <input type='radio' value="Male" name="gender" id='male' 
-                              checked={userdetails.gender === 'Male'}
-                              onChange={handleRadioChange}
+                              checked={gender === 'Male'}
+                              onChange={(e)=>{setGender(e.target.value)}}
                               />
                     <label htmlFor="male">Male</label>
                 </div>
                 <div className='border-t border-t-gray-300'></div>
                 <div className='flex gap-x-4 '>
                     <input type='radio' value="Female" name="gender" id='female'
-                    checked={userdetails.gender === 'Female'}
-                    onChange={handleRadioChange}
+                    checked={gender === 'Female'}
+                    onChange={(e)=>{setGender(e.target.value)}}
                      />
                     <label htmlFor="female">Female</label>
                 </div>
@@ -194,7 +243,9 @@ const MyDetails = () => {
             </div>
             
             <div className=" mt-8 w-12/12">
-            <button type="submit" className='h-12 bg-black text-white rounded-md w-full '>UPDATE DETAILS</button>
+            <button type="submit" className='h-12 bg-black text-white rounded-md w-full '>
+              {profileDetails==''? 'SAVE DETAILS':'UPDATE DETAILS'}
+            </button>
         </div>
         </form>
         <ToastContainer />

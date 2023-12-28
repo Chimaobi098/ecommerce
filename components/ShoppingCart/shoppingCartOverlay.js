@@ -203,17 +203,17 @@ const ShoppingCartOverlay = () => {
 
 
           {discount ? ( 
-            <div className="discount-dropdown" style={{ position: "relative", top: "10px",  width: "320px", padding: "20px" }}> 
-            <form style={{ width: "270px", border: "2px solid", borderRadius: "7px", marginBottom: "15px", padding: "10px" }}>
+            <div className="discount-dropdown py-[20px]" style={{ position: "relative", top: "10px",  width: "80%" }}> 
+            <form style={{ width: "100%", border: "2px solid", borderRadius: "7px", marginBottom: "15px", padding: "10px", overflow: "hidden" }}>
               <input type="number" 
                  onChange={(e) => setCouponCode(Number.parseInt(e.target.value))}
-                value={couponCode} 
-                placeholder="yyyyyyy" 
-                className="couponform"
+                value={couponCode == 0? '': couponCode} 
+                placeholder="Enter coupon code" 
+                className="couponform focus:outline-none"
                 style={{width: '100%'}}
               />
              </form> 
-             <button onClick={handleDiscount} style={{ border: "2px solid green", color: "white", backgroundColor: "green", borderRadius: "12px", width: "270px", padding: "10px" }} className="couponbtn">
+             <button onClick={handleDiscount} style={{ border: "2px solid green", color: "white", backgroundColor: "green", borderRadius: "12px", width: "100%", padding: "10px" }} className="couponbtn">
                Apply
              </button>
              </div>      

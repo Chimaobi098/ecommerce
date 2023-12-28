@@ -7,7 +7,7 @@ export const config = {
   dataset: "production",
   apiVersion: "2021-03-25",
   useCdn: true,
-  token: process.env.SANITY_AUTH_TOKEN,
+  token: 'sk2BmT04Uq2Hxow9cp8iDzDg76gBulpZkAq3CHqfSOgTpxFma2BN4vmnzwbCPhaVedOdUdUYJtyAjEGVbEteDPLmPZoxa2GgoapX7bBDjLHlXiPklLfT1oYPrw0lYHArhKEQVNMHS0cpJCIs7mkTAfHDkYiFMZCO4s3UbciudbSIqvKnZ1lT',
 };
 
 export const sanityClient = createClient(config);
