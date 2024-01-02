@@ -9,9 +9,20 @@ import 'react-toastify/dist/ReactToastify.css';
 const Addressbook = () => {
   const { user, error } = useUser();
     const [enabled, setEnabled] = useState(false)
-    const [addressdetails, setaddressdetails] = useState<any>()
+    const [addressdetails, setaddressdetails] = useState<any>("")
     const [userId, setUserId] = useState<string>("");
     console.log(addressdetails);
+
+    const [country, setCountry] = useState('')
+    const [firstname, setFirstname] = useState('')
+    const [lastname, setLastname] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [state, setState] = useState('')
+    const [city, setCity] = useState('')
+    const [address1, setAddress1] = useState('')
+    const [address2, setAddress2] = useState('')
+
+
     const [userdetails, setUserdetails] = useState({
       country: "",
       firstname: "",
@@ -46,10 +57,49 @@ const Addressbook = () => {
       };
       
   
-      getUID();
+      // getUID();
     }, [user]);
 
+    
+
     const handleSaveChanges = async () => {
+
+      if(addressdetails == ''){
+
+        const addressDetails = {
+          _type: 'users',
+          country: country,
+          firstname: firstname, 
+          lastname: lastname, 
+          phone: parseInt(phoneNumber),
+          state: state,
+          city: city,
+          address1: address1,
+          address2: address2,
+        }
+  
+        sanityClient.create(addressDetails)
+
+      }
+
+      if(addressdetails != ''){
+
+        var id = addressdetails[0]._id
+
+        const addressDetails = {
+          _type: 'users',
+          country: country,
+          firstname: firstname, 
+          lastname: lastname, 
+          phone: parseInt(phoneNumber),
+          state: state,
+          city: city,
+          address1: address1,
+          address2: address2,
+        }
+  
+        sanityClient.patch(id).set(addressDetails).commit()
+      }
   
       // Prepare the data to send to the server
       const data = {
@@ -118,27 +168,41 @@ const Addressbook = () => {
     useEffect(() => {
         async function getDetails() {
           if (!user) return;
+
           const results = await sanityClient.fetch(
-            `*[_type == "users" && email == $curr  ] {
+            `*[_type == "users" && email == "${user?.email}"] {
                 _id,
                 firstname,
                 lastname, 
                 country,
-                phoneNumber,
+                phone,
                 city,
-                address,
+                address1,
                 address2,
                 state,
                 userId
-        }`,
-          { curr: user?.email }
-          );
+        }`);
           
-      setaddressdetails(results[0]);
+      setaddressdetails(results);
       
         }
         getDetails();
       },[user]);
+
+      useEffect(()=>{
+        
+        if(addressdetails != '' && addressdetails != undefined){
+          setCountry(addressdetails[0].country)
+          setFirstname(addressdetails[0].firstname)
+          setLastname(addressdetails[0].lastname)
+          setPhoneNumber(addressdetails[0].phone)
+          setState(addressdetails[0].state)
+          setCity(addressdetails[0].city)
+          setAddress1(addressdetails[0].address1)
+          setAddress2(addressdetails[0].address2)
+        }
+      }, [addressdetails])
+
   return (
     <div className='mx-4 mb-12 text-base '>
       <form onSubmit={(e) => {
@@ -150,57 +214,57 @@ const Addressbook = () => {
             <div className='px-2 py-3'>
             <h3 className='font-thin text-gray-700 mb-2'>Country</h3>
             <input type="text" name='country' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.country ||''}
-            onChange={handleChange}
-            value={userdetails.country}
+            onChange={(e)=>{setCountry(e.target.value)}}
+            value={country} required
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-gray-700 mb-2 t'>First Name</h3>
             <input type="text" name='firstname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.firstname}
-            onChange={handleChange}
-            value={userdetails.firstname}
+            onChange={(e)=>{setFirstname(e.target.value)}}
+            value={firstname} required
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-gray-700 mb-2'>Last Name</h3>
             <input type="text" name='lastname' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.lastname} 
-            onChange={handleChange}
-            value={userdetails.lastname}
+            onChange={(e)=>{setLastname(e.target.value)}}
+            value={lastname} required
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-gray-700 mb-2'>Phone Number</h3>
-            <input type="text" name='phone' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.phone}
-             onChange={handleChange}
-            value={userdetails.phone}
+            <input type="number" name='phone' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.phone}
+            onChange={(e)=>{setPhoneNumber(e.target.value)}}
+            value={phoneNumber} required
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-gray-700 mb-2'>State/Province</h3>
             <input type="text" name='state' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.state}
-            onChange={handleChange}
-            value={userdetails.state}
+            onChange={(e)=>{setState(e.target.value)}}
+            value={state} required
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-gray-700 mb-2'>City</h3>
             <input type="text" name='city' className='text-base h-8 outline-none w-full placeholder-gray-700'placeholder={addressdetails?.city}
-            onChange={handleChange}
-            value={userdetails.city}
+            onChange={(e)=>{setCity(e.target.value)}}
+            value={city} required
              />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-gray-700 mb-2'>Address Line 1</h3>
             <input type="text" name='address1' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.address1}
-            onChange={handleChange}
-            value={userdetails.address1}
+            onChange={(e)=>{setAddress1(e.target.value)}}
+            value={address1} required
             />
             </div>
             <div className='border-t border-t-gray-300 px-2 py-3'>
             <h3 className='font-thin text-gray-700 mb-2'>Address Line 2</h3>
             <input type="text" name='address2' className='text-base h-8 outline-none w-full placeholder-gray-700' placeholder={addressdetails?.address2}
-            onChange={handleChange}
-            value={userdetails.address2}
+            onChange={(e)=>{setAddress2(e.target.value)}}
+            value={address2} required
             />
             </div>
             
@@ -223,7 +287,9 @@ const Addressbook = () => {
             
         </div> */}
         <div className='mt-8 w-12/12'>
-            <button type="submit" className=' h-12 bg-black text-white rounded-md w-full '>SAVE ADDRESS</button>
+            <button type="submit" className=' h-12 bg-black text-white rounded-md w-full '>
+              {addressdetails==undefined?'SAVE ADDRESS': addressdetails==''? 'SAVE ADDRESS': 'UPDATE ADDRESS'}
+            </button>
         </div>
         </form>
         <ToastContainer />

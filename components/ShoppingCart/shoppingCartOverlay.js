@@ -31,6 +31,7 @@ import { WrapperCard, CardStyle } from "../Checkout/checkoutPage.styles";
 import Image from "next/image";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import { ArrowForwardIos } from "@mui/icons-material";
+import { useUser } from '@auth0/nextjs-auth0/dist/frontend/use-user'
 
 
   
@@ -58,6 +59,10 @@ const ShoppingCartOverlay = () => {
   const [checkoutMode, setCheckoutMode] = useState(false);
   const [routeCtrl, setRouteCtrl] = useState(0)
   const [showModal, setShowModal] = useState(false)
+
+  const [addressdetails, setaddressdetails] = useState('')
+  const { user, error } = useUser();
+  
   const totalAmount =
     getTotalCartPrice() -
     (getTotalCartPrice() * (couponDiscount / 100) || 1) +
@@ -89,6 +94,35 @@ const ShoppingCartOverlay = () => {
         });
       }
     }
+
+    useEffect(() => {
+      async function getDetails() {
+        if (!user) return;
+  
+        const results = await sanityClient.fetch(
+          `*[_type == "users" && email == "${user?.email}"] {
+              _id, 
+              country,
+              city,
+              address1,
+              address2,
+              state,
+              userId
+      }`);
+        
+    setaddressdetails(results);
+    
+      }
+      getDetails();
+    },[user]);
+
+    useEffect(()=>{
+      if(addressdetails != '' && addressdetails != undefined){
+        if(addressdetails[0].address1 == null){
+          setaddressdetails('---')
+        }
+      }
+    }, [addressdetails])
 
 
   function handleCheckout(e) {
@@ -161,8 +195,12 @@ const ShoppingCartOverlay = () => {
           <div>
             <h2 style={{ fontWeight: "semi", fontSize: "1rem" }}>Shipping</h2>
             <p style={{ fontSize: "0.8rem", color: "grey", padding: "0.1rem 0" }}>
-              {shippingData?.StreetAddress}
-              {shippingData?.Postal}
+              {addressdetails==''? '---': addressdetails != '---'? 
+                <span>{addressdetails[0].address1}<br/>
+                      {addressdetails[0].city}, {addressdetails[0].state}<br/>
+                      {addressdetails[0].country}
+                </span>: addressdetails}
+            
             </p>
           </div>
 

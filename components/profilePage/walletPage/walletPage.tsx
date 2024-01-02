@@ -31,30 +31,40 @@ const WalletPage: React.FC = () => {
 
   const handleCard = () => {
     setcarddetails(!carddetails);
+    
   };
+
+  useEffect(()=>{
+    if(carddetails){
+      document.querySelector('.footer').style.opacity = 0
+    }
+    if(!carddetails){
+      document.querySelector('.footer').style.opacity = 1
+      
+    }
+    
+  },[carddetails])
 
   console.log(user)
   useEffect(() => {
     const getUID = async () => {
-      const data = await sanityClient.fetch<{ _id: string }[]>(
-        `
-        *[_type == 'users' && email == $auth0ID]{
-          _id,
-        }`, { auth0ID: user?.email }
-      );
+      // const data = await sanityClient.fetch<{ _id: string }[]>(
+      //   `
+      //   *[_type == 'users' && email == $auth0ID]{
+      //     _id,
+      //   }`, { auth0ID: user?.email }
+      // );
 
-      setUserId(data[0]?._id || "");
-      console.log(data)
+      // setUserId(data[0]?._id || "");
+      // console.log(data)
 
       const results = await sanityClient.fetch(
-        `*[_type == "users" && email == $curr  ] {
-            _id,
-            walletAmount
-            
-    }`,
-      { curr: user?.email }
-      );
-      setWalletDeposit(results[0]?.walletAmount);
+        `*[_type == "users" && email == "${user?.email}"] {
+            _id, 
+            walletAmount,
+    }`);
+      
+  setWalletDeposit(results);
       console.log(results)
     };
     
@@ -64,8 +74,8 @@ const WalletPage: React.FC = () => {
 
   const config = {
     email: user?.email!,
-    amount: Number(amount) * 100,
-    publicKey: process.env.PAYSTACK_PUBLIC_KEY!,
+    amount: parseInt(amount) * 100,
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
   };
   const initializePayment = usePaystackPayment(config);
 
@@ -123,13 +133,14 @@ const WalletPage: React.FC = () => {
     alert("Don't leave; just try again 🥺👉👈");
   };
 
-
+  
   return (
     <Wrapper className="mt-20 mx-4">
       <div className="flex flex-col items-center justify-center text-2xl py-12 gap-y-2">
-          { walletDeposit && (<div className="text-3xl md:text-4xl font-medium">
-          ₦ {walletDeposit}
-          </div>)}
+          <div className="text-3xl md:text-4xl font-medium">
+          ₦ {walletDeposit==''? console.log(walletDeposit): 
+          walletDeposit[0].walletAmount == null? '0': walletDeposit[0].walletAmount}
+          </div>
           <h4 className="text-gray-500 text-sm">Available</h4>
            </div>
 

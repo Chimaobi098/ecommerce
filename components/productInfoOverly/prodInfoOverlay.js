@@ -172,7 +172,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
 
         <ul>
           <li><button onClick={hideModal}>Continue Shopping</button></li>
-          <li><button onClick={() => setCartOpen(true)}>Go to Checkout</button></li>
+          <li><button onClick={() => {setCartOpen(true); setIsModalVisible(false)}}>Go to Checkout</button></li>
         </ul>
 
         <button onClick={hideModal}>Close</button>

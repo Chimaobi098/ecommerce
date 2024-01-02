@@ -67,9 +67,7 @@ const MyDetails = () => {
               email,
               gender,
               userId
-      }`,
-        {curr: user?.email}
-        );
+      }`);
         
         setProfileDetails(results);
       }

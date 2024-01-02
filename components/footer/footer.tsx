@@ -15,7 +15,7 @@ const Footer = () => {
   const { pathname, push, replace } = useRouter();
   console.log(pathname);
   return (
-    <Wrapper>
+    <Wrapper className="footer">
       <div className="icon-container">
         <Link passHref href={"/"}>
           {pathname == "/" ? (

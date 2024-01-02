@@ -123,7 +123,7 @@ const ProfilePage = ({ user }: User) => {
           <ArrowForwardIosRoundedIcon style={{ color: "grey", fontSize: "16px", }} />
         </ProfileItem>
 
-        <ProfileItem className="cursor-pointer">
+        {/* <ProfileItem className="cursor-pointer">
           <Image className="Image" src={Signout}  width={30} height={30} alt="signout icon" />
         <Button
           style={{  marginRight: "250px" }}
@@ -137,7 +137,7 @@ const ProfilePage = ({ user }: User) => {
           Log Out
         </Button>
         <ArrowForwardIosRoundedIcon style={{ color: "grey", fontSize: "16px", }} />
-          </ProfileItem>  
+          </ProfileItem>   */}
         
         <div
           className={` ${
@@ -145,7 +145,7 @@ const ProfilePage = ({ user }: User) => {
           } w-full flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6 transition-all duration-500 ease-in-out transform-gpu`}
         >
           <div className="text-sm text-gray-500 pt-2 ">Contact Us</div>
-          <div className="cursor-pointer">Whatsapp</div>
+          <div className="cursor-pointer"><a href="https://api.whatsapp.com/send?phone=2349094070547&text=Wake%20up%20soldier,%20we%20got%20a%20city%20to%20burn">Whatsapp</a></div>
           <div className="border-t pt-3 cursor-pointer ">Email</div>
           <div
             className="border-t text-gray-500 mb-20 md:mb-8 pt-3 cursor-pointer "

@@ -15,6 +15,7 @@ import { usePaystackPayment } from "react-paystack";
 import { sanityClient, urlFor } from "../../lib/sanity";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "../../interfaces/interface";
+import { useUser } from '@auth0/nextjs-auth0/dist/frontend/use-user'
 //import { border } from "@mui/system";
 import Arrowbutton from '../public/upArrow.svg';
 import Image from "next/image";
@@ -34,19 +35,23 @@ interface OrderInfo {
     isDelivered: boolean;
   }
 
-const ItemCheckout = ({ user }: User) => {   
+const ItemCheckout = () => {   
   const router = useRouter();
   //const { items } = useRouter();
   //const cartItems = items ? JSON.parse(items) : [];
   const [currentUID, setCurrentUID] = useState<string>("");
   const [couponCode, setCouponCode] = useState<number>(0);
   const [showModal, setShowModal] = React.useState(false);
+  const [addressdetails, setaddressdetails] = useState('')
  
   const { getTotalCartPrice, cartItems, removeAllCartItems  } = useShoppingCart();
   const [deliveryPhoneNumber, setDeliveryPhoneNumber] = useState<number>(0);
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
   const [couponDiscount, setCouponDiscount] = useState(0);
+
+  const { user, error } = useUser();
+
   const shippingFees = 0;
   const totalAmount =
     getTotalCartPrice() -
@@ -64,9 +69,33 @@ const ItemCheckout = ({ user }: User) => {
   const { shippingData } = useShippingData();
 
   useEffect(() => {
-    
+    async function getDetails() {
+      if (!user) return;
 
-  }, []);
+      const results = await sanityClient.fetch(
+        `*[_type == "users" && email == "${user?.email}"] {
+            _id, 
+            country,
+            city,
+            address1,
+            address2,
+            state,
+            userId
+    }`);
+      
+  setaddressdetails(results);
+  
+    }
+    getDetails();
+  },[user]);
+
+  useEffect(()=>{
+    if(addressdetails != '' && addressdetails != undefined){
+      if(addressdetails[0].address1 == null){
+        setaddressdetails('---')
+      }
+    }
+  }, [addressdetails])
 
   // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
   //   e.preventDefault();
@@ -147,8 +176,11 @@ const ItemCheckout = ({ user }: User) => {
           <div>
             <h2 style={{ fontWeight: "semi", fontSize: "1rem" }}>Shipping</h2>
             <p style={{ fontSize: "0.8rem", color: "grey", padding: "0.1rem 0" }}>
-              {shippingData?.StreetAddress}
-              {shippingData?.Postal}
+            {addressdetails==''? '---': addressdetails != '---'? 
+                <span>{addressdetails[0].address1}<br/>
+                      {addressdetails[0].city}, {addressdetails[0].state}<br/>
+                      {addressdetails[0].country}
+                </span>: addressdetails}
             
             </p>
           </div>

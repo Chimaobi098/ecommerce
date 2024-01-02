@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const ProfileItem = styled.div`
   display: flex;
+  flex-shrink: 0;
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid lightgray;
