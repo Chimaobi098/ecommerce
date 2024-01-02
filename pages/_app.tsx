@@ -8,8 +8,8 @@ import { AnimatePresence } from "framer-motion";
 import Script from "next/script";
 import { SanityUIDProvider } from "../context/sanityUserId";
 import { useRouter } from "next/router";
-import '../global.css'
-import { ShippingDataProvider } from '../context/shippingContext';
+import "../global.css";
+import { ShippingDataProvider } from "../context/shippingContext";
 import { Router, Routes, Route } from "react-router";
 import CheckoutPage from "../components/Checkout/checkoutPage";
 import { userInfo } from "os";
@@ -17,9 +17,8 @@ import { userInfo } from "os";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const hideFooterOnCheckout = router.pathname == '/Itemcheckout';
-  const hideOnAddressbook = router.pathname == '/Addressbook';
- 
+  const hideFooterOnCheckout = router.pathname == "/Itemcheckout";
+  const hideOnAddressbook = router.pathname == "/Addressbook";
 
   return (
     <>
@@ -35,23 +34,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <UserProvider>
         <SanityUIDProvider>
           <ShippingDataProvider>
-          <ShoppingCartProvider>
-            <main
-              style={{
-                paddingBottom: "15vmin",
-                height: "100%",
-                overflow: "hidden",
-                position: "relative",
-              }}
-            >
-              <AnimatePresence>
-                <Component {...pageProps} key={router.pathname} />
-              </AnimatePresence>
-            </main>
-            {!hideFooterOnCheckout && <Footer />}  {/* COnditionally render the footer */}
-            {/* {!hideOnAddressbook && <CheckoutPage  />} */}
-            <GlobalStyle />
-          </ShoppingCartProvider>
+            <ShoppingCartProvider>
+              <main
+                style={{
+                  paddingBottom: "15vmin",
+                  height: "100%",
+                  overflow: "hidden",
+                  position: "relative",
+                }}
+              >
+                <AnimatePresence>
+                  <Component {...pageProps} key={router.pathname} />
+                </AnimatePresence>
+              </main>
+              {!hideFooterOnCheckout && <Footer />}{" "}
+              {/* COnditionally render the footer */}
+              {/* {!hideOnAddressbook && <CheckoutPage  />} */}
+              <GlobalStyle />
+            </ShoppingCartProvider>
           </ShippingDataProvider>
         </SanityUIDProvider>
       </UserProvider>
