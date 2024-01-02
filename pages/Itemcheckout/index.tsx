@@ -42,7 +42,7 @@ const ItemCheckout = () => {
   const [currentUID, setCurrentUID] = useState<string>("");
   const [couponCode, setCouponCode] = useState<number>(0);
   const [showModal, setShowModal] = React.useState(false);
-  const [addressdetails, setaddressdetails] = useState('')
+  const [addressdetails, setaddressdetails] = useState<any>('')
  
   const { getTotalCartPrice, cartItems, removeAllCartItems  } = useShoppingCart();
   const [deliveryPhoneNumber, setDeliveryPhoneNumber] = useState<number>(0);

@@ -19,7 +19,7 @@ const WalletPage: React.FC = () => {
   const router = useRouter();
   const { user, error } = useUser();
   const [userId, setUserId] = useState<string>("");
-  const [walletDeposit, setWalletDeposit] = useState("");
+  const [walletDeposit, setWalletDeposit] = useState<any>("");
   const [amount, setAmount] = useState<string>("0.00");
   console.log(walletDeposit);
   
@@ -35,11 +35,14 @@ const WalletPage: React.FC = () => {
   };
 
   useEffect(()=>{
+    
     if(carddetails){
-      document.querySelector('.footer').style.opacity = 0
+      let footer = document.querySelector('.footer') as HTMLElement
+      footer.style.opacity = '0'
     }
     if(!carddetails){
-      document.querySelector('.footer').style.opacity = 1
+      let footer = document.querySelector('.footer') as HTMLElement
+      footer.style.opacity = '1'
       
     }
     
