@@ -186,9 +186,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
       {showVariant && currentProduct.variants.map((variant) => {
         if (variantId === variant._key) {
         return (
-          <motion.div className="translate-y-[-50%]" style={{ width: "100%", height: "70vh", position: "absolute", overflowY: 'hidden', top: '50%'}}>
+          <motion.div key={variant._key} className="translate-y-[-50%]" style={{ width: "100%", height: "70vh", position: "absolute", overflowY: 'hidden', top: '50%'}}>
             <ProductImage
-            key={variant._key}
             productInfo={variant}
             productId={currentProduct._id}
             variantButtonState={variantButtonState}
@@ -290,10 +289,10 @@ const ProductInfoOverlay = ({ currentProduct }) => {
         {currentProduct.variants.map((variant) => {
         if (variantId === variant._key) {
         return (
-          <motion.div whileTap={{scale: 0.92, borderRadius: '20px'}} style={{ width: "100%", height: "42vh", position: "absolute", overflowY: 'hidden', top: 0}}
+          <motion.div key={variant._key} whileTap={{scale: 0.92, borderRadius: '20px'}} style={{ width: "100%", height: "42vh", position: "absolute", overflowY: 'hidden', top: 0}}
           onClick={()=>{setImageViewer(true)}}>
             <ProductImage
-            key={variant._key}
+            
             productInfo={variant}
             productId={currentProduct._id}
             variantButtonState={variantButtonState}
