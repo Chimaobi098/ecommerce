@@ -15,14 +15,14 @@ import { CloseMenu } from "./prodInfoOverlay.styles";
 import { motion } from "framer-motion";
 // 🚀 Fast
 
-import  Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails"; 
-import AccordionSummary  from "@mui/material/AccordionSummary";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useShoppingCart } from "../../context/shoppingCart";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -40,9 +40,9 @@ import ReactModal from "react-modal";
 //import { useShoppingCart } from "../../context/shoppingCart";
 import { useUser } from "@auth0/nextjs-auth0";
 import { usePaystackPayment } from "react-paystack";
-import Modal from 'react-modal';
+import Modal from "react-modal";
 //import balance from "../profilePage/walletPage/withdrawPage";
-// import { useShoppingCart } from "../../context/shoppingCart";  
+// import { useShoppingCart } from "../../context/shoppingCart";
 
 const ProductInfoOverlay = ({ currentProduct }) => {
   const router = useRouter();
@@ -74,7 +74,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
   const handleInputChange = (event) => {
     const newValue = event.target.value;
     setAmountToPay(numberOfAttempts * 100);
-  }
+  };
 
   const config = {
     email: user?.email,
@@ -96,27 +96,24 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     setItemQuantity((prev) => prev - 1);
   };
 
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(amountToPay);
-   
-     window.location.href = `https://long1sland.github.io/wordsearch/?existingParams=value&numberofAttempts=${numberOfAttempts}`
+
+    window.location.href = `https://chimaobi098.github.io/wordsearch/?existingParams=value&numberofAttempts=${numberOfAttempts}`;
   };
   // initializePayment(onSuccess, onClose);
 
   const customStyles = {
     content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
     },
   };
-
 
   async function onSuccess() {
     let data = await fetch("/api/manageGameAttempts", {
@@ -129,7 +126,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     let res = await data.json();
     console.log(res);
     if (res._id) {
-      window.location.href = `https://long1sland.github.io/wordsearch?sessionId=${res._id}`;
+      window.location.href = `https://chimaobi098.github.io/wordsearch?sessionId=${res._id}`;
     } else {
       alert("there was an error contact us");
     }
@@ -139,7 +136,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     setIsModalVisible(false);
   }
 
-  function OpenModal(){
+  function OpenModal() {
     setIsModalVisible(true);
   }
 
@@ -147,18 +144,18 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     alert("just try again");
   }
 
-  function handleGamePayment(e){
-   console.log(amountToPay);
-   const balance =  getWallet() - amountToPay; 
-   setWallet(balance); 
-   console.log(balance);  
-   return balance; 
-}
+  function handleGamePayment(e) {
+    console.log(amountToPay);
+    const balance = getWallet() - amountToPay;
+    setWallet(balance);
+    console.log(balance);
+    return balance;
+  }
 
   // Inside your component
-// useEffect(() => {
-//   Modal.setAppElement('#'); // Replace '#root' with your app's root element ID
-// }, []);
+  // useEffect(() => {
+  //   Modal.setAppElement('#'); // Replace '#root' with your app's root element ID
+  // }, []);
 
   return (
     <>
@@ -222,16 +219,27 @@ const ProductInfoOverlay = ({ currentProduct }) => {
         <div>
         <h1>Your Item has been added to the cart.</h1>
 
-        <ul>
-          <li><button onClick={hideModal}>Continue Shopping</button></li>
-          <li><button onClick={() => {setCartOpen(true); setIsModalVisible(false)}}>Go to Checkout</button></li>
-        </ul>
+            <ul>
+              <li>
+                <button onClick={hideModal}>Continue Shopping</button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    setCartOpen(true);
+                    setIsModalVisible(false);
+                  }}
+                >
+                  Go to Checkout
+                </button>
+              </li>
+            </ul>
 
-        <button onClick={hideModal}>Close</button>
-        </div>
-      </ReactModal>        
-    ) : ( 
-      "" 
+            <button onClick={hideModal}>Close</button>
+          </div>
+        </ReactModal>
+      ) : (
+        ""
       )}
 
       {showVariant ?  (
@@ -245,11 +253,10 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             }
           }}
           >
-          
-          <motion.div
-            id="overlay-container"
-            initial={{ y: "70vh" }}
-            animate={{ y: "0vh" }}
+            <motion.div
+              id="overlay-container"
+              initial={{ y: "70vh" }}
+              animate={{ y: "0vh" }}
             >
             
               {/* <ReactModal 
@@ -320,80 +327,72 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             
           </div>
 
-          <h1>
-            {formatCurrency(currentProduct?.defaultProductVariant?.price)}
-          </h1>
-          </div>
+                <h1>
+                  {formatCurrency(currentProduct?.defaultProductVariant?.price)}
+                </h1>
+              </div>
 
-          <div className="flex-col w-full ">
+              <div className="flex-col w-full ">
+                <DefaultColor
+                  productInfo={currentProduct}
+                  variantButtonState={variantButtonState}
+                />
 
-        <DefaultColor
-        productInfo={currentProduct}
-        variantButtonState={variantButtonState}
-        />
+                {currentProduct.variants.map((variant) => {
+                  if (variantId === variant._key) {
+                    return (
+                      <ProductColor
+                        key={variant._key}
+                        productInfo={variant}
+                        productId={currentProduct._id}
+                        variantButtonState={variantButtonState}
+                      />
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
+              </div>
 
-        {currentProduct.variants.map((variant) => {
-        if (variantId === variant._key) {
-        return (
-        <ProductColor
-          key={variant._key}
-          productInfo={variant}
-          productId={currentProduct._id}
-          variantButtonState={variantButtonState}
-        />
-      );
-      } else {
-      return null;
-      }
-      })}
-</div>
+              <div className="w-full flex flex-row gap-x-2 items-center mt-2">
+                <DefaultProduct
+                  productInfo={currentProduct}
+                  variantButtonState={variantButtonState}
+                />
+                {currentProduct.variants.map((variant) => (
+                  <ProductVariant
+                    key={variant._key}
+                    productInfo={variant}
+                    productId={currentProduct._id}
+                    variantButtonState={variantButtonState}
+                  ></ProductVariant>
+                ))}
+              </div>
 
+              <div className="w-full mt-4 flex flex-col gap-y-4">
+                <div>Select Size</div>
+                <div className="sizes flex flex-row flex-wrap gap-x-2 text-sm items-center">
+                  <DefaultSize
+                    productInfo={currentProduct}
+                    variantButtonState={variantButtonState}
+                  />
 
-        <div className="w-full flex flex-row gap-x-2 items-center mt-2">
-            <DefaultProduct
-              productInfo={currentProduct}
-              variantButtonState={variantButtonState}
-            />
-            {currentProduct.variants.map((variant) => (
-              <ProductVariant
-                key={variant._key}
-                productInfo={variant}
-                productId={currentProduct._id}
-                variantButtonState={variantButtonState}
-              ></ProductVariant>
-            ))}
-
-        </div>
-
-        <div className="w-full mt-4 flex flex-col gap-y-4">
-
-      <div>
-        Select Size
-        
-        </div>
-      <div className="sizes flex flex-row flex-wrap gap-x-2 text-sm items-center">
-        <DefaultSize
-              productInfo={currentProduct}
-              variantButtonState={variantButtonState}
-            />
-
-        {currentProduct.variants.map((variant) => {
-        if (variantId === variant._key) {
-        return (
-        <ProductSize
-          key={variant._key}
-          productInfo={variant}
-          productId={currentProduct._id}
-          variantButtonState={variantButtonState}
-            />
-          );
-          } else {
-          return null;
-          }
-          })}
-           </div>
-
-      </div>    
+                  {currentProduct.variants.map((variant) => {
+                    if (variantId === variant._key) {
+                      return (
+                        <ProductSize
+                          key={variant._key}
+                          productInfo={variant}
+                          productId={currentProduct._id}
+                          variantButtonState={variantButtonState}
+                        />
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
+                </div>
+              </div>
 
             <div className="fixed bottom-0 px-4 pt-0 md:pt-12 bg-white h-32 w-full">
             
@@ -481,10 +480,10 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             
           </div>
 
-          <h1>
-            {formatCurrency(currentProduct?.defaultProductVariant?.price)}
-          </h1>
-            {/* <div id="quantity-control-container">
+              <h1>
+                {formatCurrency(currentProduct?.defaultProductVariant?.price)}
+              </h1>
+              {/* <div id="quantity-control-container">
               <button
                 className="quantity-change-buttons"
                 onClick={() => {
@@ -503,165 +502,179 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                 {<AddRoundedIcon />}
               </button>
             </div> */}
-            <div className="w-full h-auto flex flex-grow justify-evenly text-white my-8">
-            <button
-              style={{ color: "black", border: "2px solid black"}}
-            className="border w-5/12 rounded-md h-12"
-              onClick={() => {
-                // if (currentProduct.variants) {
-                //   console.log("add Product");
-                //   setOverlayVisibility(true);
-                // } else {
-                //   if (cartButtonState() == "In cart") return;
-                //   modifyItemQuantity(currentProduct, itemQuantity);
-                //   console.log("Product added");
-                // }
-                if(currentProduct.variants == null) {
-                modifyItemQuantity(currentProduct, itemQuantity);
-                setProductModal(true);
-                  OpenModal();
-                  console.log("No Variant");
-                }else{ 
-                  if(currentProduct.variants.length > 0){ 
-                  setShowVariant(true);
-                  console.log("Variant Product");
-                  setOpenPlay(false);
-
-                  }
-                }  
-              }}
-            >
-              Add to Bag
-            </button>
-            <button
-            className="bg-[#0aad0a] hover:bg-[green] w-5/12 h-12 rounded-md"
-              onClick={() => {
-               // router.replace("/api/auth/login");
-               setOpenPlay(true);
-               if(currentProduct.variants == null) {
-                modifyItemQuantity(currentProduct, itemQuantity)
-                setShowGameSettingsOverlay(true);
-                  console.log("No Variant");
-                }else{ 
-                  if(currentProduct.variants.length > 0){ 
-                  setShowVariant(true);
-                  console.log("Variant Product");
-                  }
-                }  
-                if (user && openPlay) {
-                 setShowGameSettingsOverlay(true);
-                  return;
-                }
-              }}
-              
-            >
-              Play
-            </button>
-            </div>
-          <Accordion>
-            <AccordionSummary style={{ padding: "15px" }} expandIcon={<ExpandMoreRoundedIcon />}>
-              <h3 style={{ fontWeight: "bold"}}>Product Description</h3>
-            </AccordionSummary>
-            <AccordionDetails>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </p>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary style={{ padding: "15px" }} expandIcon={<ExpandMoreRoundedIcon />}>
-              <h3 style={{ fontWeight: "bold" }}>Size Guide</h3>
-            </AccordionSummary>
-            <AccordionDetails>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </p>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary style={{ padding: "15px" }} expandIcon={<ExpandMoreRoundedIcon />}>
-              <h3 style={{ fontWeight: "bold"}}>Shipping Info</h3>
-            </AccordionSummary>
-            <AccordionDetails>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </p>
-            </AccordionDetails>
-          </Accordion>
-          <VendorPage>
-            <div id="vendorData">
-              <p id="vendor-title">{currentProduct.vendor.title}</p>
-              <p id="more-vendor-info">
-                {`${currentProduct.vendorProductCount} Product${
-                  currentProduct.vendorProductCount == 1 ? "" : "s"
-                } Available`}
-              </p>
-            </div>
-            <motion.div whileTap={{ scale: 0.9 }}>
-              <Link href={`/vendor/${currentProduct.vendor._id}`}>
-                <Image
-                  src={urlFor(currentProduct.vendor.logo).url()}
-                  alt="vendorLogo"
-                  height={"60rem"}
-                  width={"60rem"}
-                  unoptimized={true}
-                />
-              </Link>
-            </motion.div>
-          </VendorPage>
-          <h2 style={{ marginTop: "50px", fontSize: "20px", fontWeight: "bold" }}>More from this vendor</h2>
-          <VendorProductsWrapper>
-            {currentProduct?.moreFromVendor?.map((product, i) => (
-              <Link
-                href={`/product/${product.slug.current}`}
-                passHref
-                scroll
-                key={i}
-              >
-                <VendorProduct whileTap={{ scale: 0.9 }} key={product._id}>
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "70%",
-                      position: "relative",
-                    }}
-                  >
+              <div className="w-full h-auto flex flex-grow justify-evenly text-white my-8">
+                <button
+                  style={{ color: "black", border: "2px solid black" }}
+                  className="border w-5/12 rounded-md h-12"
+                  onClick={() => {
+                    // if (currentProduct.variants) {
+                    //   console.log("add Product");
+                    //   setOverlayVisibility(true);
+                    // } else {
+                    //   if (cartButtonState() == "In cart") return;
+                    //   modifyItemQuantity(currentProduct, itemQuantity);
+                    //   console.log("Product added");
+                    // }
+                    if (currentProduct.variants == null) {
+                      modifyItemQuantity(currentProduct, itemQuantity);
+                      setProductModal(true);
+                      OpenModal();
+                      console.log("No Variant");
+                    } else {
+                      if (currentProduct.variants.length > 0) {
+                        setShowVariant(true);
+                        console.log("Variant Product");
+                        setOpenPlay(false);
+                      }
+                    }
+                  }}
+                >
+                  Add to Bag
+                </button>
+                <button
+                  className="bg-[#0aad0a] hover:bg-[green] w-5/12 h-12 rounded-md"
+                  onClick={() => {
+                    // router.replace("/api/auth/login");
+                    setOpenPlay(true);
+                    if (currentProduct.variants == null) {
+                      modifyItemQuantity(currentProduct, itemQuantity);
+                      setShowGameSettingsOverlay(true);
+                      console.log("No Variant");
+                    } else {
+                      if (currentProduct.variants.length > 0) {
+                        setShowVariant(true);
+                        console.log("Variant Product");
+                      }
+                    }
+                    if (user && openPlay) {
+                      setShowGameSettingsOverlay(true);
+                      return;
+                    }
+                  }}
+                >
+                  Play
+                </button>
+              </div>
+              <Accordion>
+                <AccordionSummary
+                  style={{ padding: "15px" }}
+                  expandIcon={<ExpandMoreRoundedIcon />}
+                >
+                  <h3 style={{ fontWeight: "bold" }}>Product Description</h3>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Suspendisse malesuada lacus ex, sit amet blandit leo
+                    lobortis eget.
+                  </p>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion>
+                <AccordionSummary
+                  style={{ padding: "15px" }}
+                  expandIcon={<ExpandMoreRoundedIcon />}
+                >
+                  <h3 style={{ fontWeight: "bold" }}>Size Guide</h3>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Suspendisse malesuada lacus ex, sit amet blandit leo
+                    lobortis eget.
+                  </p>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion>
+                <AccordionSummary
+                  style={{ padding: "15px" }}
+                  expandIcon={<ExpandMoreRoundedIcon />}
+                >
+                  <h3 style={{ fontWeight: "bold" }}>Shipping Info</h3>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Suspendisse malesuada lacus ex, sit amet blandit leo
+                    lobortis eget.
+                  </p>
+                </AccordionDetails>
+              </Accordion>
+              <VendorPage>
+                <div id="vendorData">
+                  <p id="vendor-title">{currentProduct.vendor.title}</p>
+                  <p id="more-vendor-info">
+                    {`${currentProduct.vendorProductCount} Product${
+                      currentProduct.vendorProductCount == 1 ? "" : "s"
+                    } Available`}
+                  </p>
+                </div>
+                <motion.div whileTap={{ scale: 0.9 }}>
+                  <Link href={`/vendor/${currentProduct.vendor._id}`}>
                     <Image
-                      layout="fill"
-                      objectFit="cover"
-                      src={urlFor(
-                        product.defaultProductVariant.images[0]
-                      ).url()}
-                      alt="Product Image"
+                      src={urlFor(currentProduct.vendor.logo).url()}
+                      alt="vendorLogo"
+                      height={"60rem"}
+                      width={"60rem"}
                       unoptimized={true}
                     />
-                  </div>
-                  <div style={{ padding: "0 0.5rem" }}>
-                    <h2>
-                      {formatCurrency(product.defaultProductVariant.price)}
-                    </h2>
-                    <p>{product.title}</p>
-                  </div>
-                </VendorProduct>
-              </Link>
-            ))}
-            {currentProduct.moreFromVendor.length === 0 ? (
-              <p>No more proudcts from this vendor</p>
-            ) : null}
-          </VendorProductsWrapper>
-        </ProductInfoSection>
-      </Wrapper>
-      </>
-       ) : 
-       ( 
+                  </Link>
+                </motion.div>
+              </VendorPage>
+              <h2
+                style={{
+                  marginTop: "50px",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                }}
+              >
+                More from this vendor
+              </h2>
+              <VendorProductsWrapper>
+                {currentProduct?.moreFromVendor?.map((product, i) => (
+                  <Link
+                    href={`/product/${product.slug.current}`}
+                    passHref
+                    scroll
+                    key={i}
+                  >
+                    <VendorProduct whileTap={{ scale: 0.9 }} key={product._id}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "70%",
+                          position: "relative",
+                        }}
+                      >
+                        <Image
+                          layout="fill"
+                          objectFit="cover"
+                          src={urlFor(
+                            product.defaultProductVariant.images[0]
+                          ).url()}
+                          alt="Product Image"
+                          unoptimized={true}
+                        />
+                      </div>
+                      <div style={{ padding: "0 0.5rem" }}>
+                        <h2>
+                          {formatCurrency(product.defaultProductVariant.price)}
+                        </h2>
+                        <p>{product.title}</p>
+                      </div>
+                    </VendorProduct>
+                  </Link>
+                ))}
+                {currentProduct.moreFromVendor.length === 0 ? (
+                  <p>No more proudcts from this vendor</p>
+                ) : null}
+              </VendorProductsWrapper>
+            </ProductInfoSection>
+          </Wrapper>
+        </>
+      ) : (
         ""
-       )}
+      )}
 
       {showGameSettingsOverlay && (
         <ProudctVariantBackground
@@ -673,56 +686,70 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             }
           }}
         >
-          
           <motion.div
             id="overlay-container"
             initial={{ y: "70vh" }}
             animate={{ y: "0vh" }}
           >
-            <p className="w-full"><ArrowBackIosNewIcon onClick={(e)=>{setShowGameSettingsOverlay(false);}} /></p>
+            <p className="w-full">
+              <ArrowBackIosNewIcon
+                onClick={(e) => {
+                  setShowGameSettingsOverlay(false);
+                }}
+              />
+            </p>
             <form className="w-full h-auto" onSubmit={handleSubmit}>
               <div className="flex flex-col gap-y-16 mt-8">
-              <div className="flex flex-col w-full gap-y-2">
-                <label className="md:text-lg font-bold">Number of attempts:</label>
-              <input
-              className="w-full border-2 rounded-md h-12 p-2"
-                placeholder="how many attempts do you want?"
-                value={numberOfAttempts}
-                type="number"
-                required
-                onChange={(e) => {
-                  setNumberOfAttempts(e.target.value);
-                }}
-              />
-              </div>
-                      <div className="flex flex-col w-full gap-y-2">  
-                      <label className="md:text-lg font-bold">Amount needed to pay:</label>
-                        <input
-                            className="w-full border-2 rounded-md h-12 p-2"
-                placeholder="how much is needed to pay?"
-                value={amountToPay}
-                type="number"
-                required
-                onChange={(e) => {
-                 setAmountToPay(numberOfAttempts * 100); 
-                }}
-                // onChange={(e) => {
-                //   setNumberOfAttempts(e.target.value);
-                // }}
-              />
-              </div>
+                <div className="flex flex-col w-full gap-y-2">
+                  <label className="md:text-lg font-bold">
+                    Number of attempts:
+                  </label>
+                  <input
+                    className="w-full border-2 rounded-md h-12 p-2"
+                    placeholder="how many attempts do you want?"
+                    value={numberOfAttempts}
+                    type="number"
+                    required
+                    onChange={(e) => {
+                      setNumberOfAttempts(e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col w-full gap-y-2">
+                  <label className="md:text-lg font-bold">
+                    Amount needed to pay:
+                  </label>
+                  <input
+                    className="w-full border-2 rounded-md h-12 p-2"
+                    placeholder="how much is needed to pay?"
+                    value={amountToPay}
+                    type="number"
+                    required
+                    onChange={(e) => {
+                      setAmountToPay(numberOfAttempts * 100);
+                    }}
+                    // onChange={(e) => {
+                    //   setNumberOfAttempts(e.target.value);
+                    // }}
+                  />
+                </div>
               </div>
 
               {/* <span>Total cost: {formatCurrency(numberOfAttempts * 100)}</span> */}
-             <button  onClick={() => {console.log("Play User"); handleGamePayment()}}
-          className=" fixed bottom-0  md:right-0 bg-black text-white w-11/12 md:w-[420px] h-12 mb-12 md:mb-6 rounded-sm md:mx-4" type="submit">pay</button>
-
-      
+              <button
+                onClick={() => {
+                  console.log("Play User");
+                  handleGamePayment();
+                }}
+                className=" fixed bottom-0  md:right-0 bg-black text-white w-11/12 md:w-[420px] h-12 mb-12 md:mb-6 rounded-sm md:mx-4"
+                type="submit"
+              >
+                pay
+              </button>
             </form>
           </motion.div>
         </ProudctVariantBackground>
       )}
-      
     </>
   );
 };
