@@ -24,6 +24,10 @@ interface ShoppingCartContext {
   handleItemClick: (itemId:string) =>void;
   removeFromCart: (id: string) => void;
   removeAllCartItems: (id: string) => void;
+  returnCurrentLevel: (level: string) => void;
+  CurrentLevel: string;
+  saveCategories: (data: string) => void;
+  Categories: string;
   increaseCart: (id: string) => void;
   decreaseCart: (id: string) => void;
   getTotalCartPrice: () => number;
@@ -88,6 +92,8 @@ export const ShoppingCartProvider = ({
 }: ShoppingCartProviderProps) => {
   const [cartItems, setCartItems] = useState([] as CartItem[]);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
+  const [CurrentLevel, setCurrentLevel] = useState<any>([])
+  const [Categories, setCategories] = useState<any>([])
   const [appWallet, setAppWallet] = useState(1400.56);
   console.log(cartItems, "its all here bro");
   function getItemQuantity(id: string) {
@@ -147,6 +153,14 @@ export const ShoppingCartProvider = ({
     setCartItems((currentItems) => {
       return currentItems.filter((item) => {item._id !== id})
     })
+  }
+
+  function returnCurrentLevel(level: string){
+    return setCurrentLevel(level);
+  }
+
+  function saveCategories(data: string){
+    return setCategories(data);
   }
 
   function increaseCart(id: string) {
@@ -242,6 +256,10 @@ export const ShoppingCartProvider = ({
         handleItemClick,
         removeFromCart,
         removeAllCartItems,
+        returnCurrentLevel,
+        CurrentLevel,
+        saveCategories,
+        Categories,
         increaseCart,
         decreaseCart,
         getTotalCartPrice,

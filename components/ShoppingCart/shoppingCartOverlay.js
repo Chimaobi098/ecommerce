@@ -175,7 +175,7 @@ const ShoppingCartOverlay = () => {
         onClick={() => {
           router.push('/');
           setRouteCtrl(0);
-          setCheckoutMode(false)
+          setCheckoutMode(false);
         }}
       >
         <ArrowBackIos />

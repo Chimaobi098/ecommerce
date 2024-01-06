@@ -48,7 +48,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
   const router = useRouter();
   const { user, error } = useUser();
   const [variantButtonState, setVariantButtonState] = useState("not-selected"); // either not-selected or selected
-  const { modifyItemQuantity, getItemQuantity, variantId } = useShoppingCart();
+  const { modifyItemQuantity, getItemQuantity, variantId, deactivateDefault } = useShoppingCart();
   const [overlayVisibility, setOverlayVisibility] = useState(false);
   const [showGameSettingsOverlay, setShowGameSettingsOverlay] = useState(false);
   const [numberOfAttempts, setNumberOfAttempts] = useState(0);
@@ -57,6 +57,8 @@ const ProductInfoOverlay = ({ currentProduct }) => {
   const [showVariant, setShowVariant] = useState(false);
   const [openPlay, setOpenPlay] = useState(false);
   const [amountToPay, setAmountToPay] = useState("");
+  const [imageViewer, setImageViewer] = useState(false)
+
   console.log(currentProduct, "this is the current Product");
   const cartButtonState = () => {
     if (getItemQuantity(currentProduct._id) == null) return "Add to cart";
@@ -160,6 +162,56 @@ const ProductInfoOverlay = ({ currentProduct }) => {
 
   return (
     <>
+    {/* IMAGE VIEWER */}
+    {imageViewer && (<motion.div initial={{opacity: 0}} animate={{opacity: 1}}
+    onClick={()=>{setImageViewer(false)}}
+    className="w-[100%] h-[100vh] flex justify-center items-center" style={{zIndex: 100}}>
+            {!showVariant && (<Image
+              layout="fill"
+              objectFit="contain"
+              src={urlFor(currentProduct.defaultProductVariant?.images[0]).url()}
+              alt="Product Image"
+              unoptimized={true}
+            />)}
+
+            {showVariant && (
+              <motion.div style={{ width: "100%", height: "70vh", position: "relative", overflowY: 'hidden' }}
+              onClick={()=>{setImageViewer(true)}}>
+                <DefaultImage 
+                productInfo={currentProduct}
+                variantButtonState={variantButtonState}
+                unoptimized={true}
+                
+                />
+                </motion.div>
+            )}
+
+      {showVariant && currentProduct.variants.map((variant) => {
+        if (variantId === variant._key) {
+        return (
+          <motion.div className="translate-y-[-50%]" style={{ width: "100%", height: "70vh", position: "absolute", overflowY: 'hidden', top: '50%'}}>
+            <ProductImage
+            key={variant._key}
+            productInfo={variant}
+            productId={currentProduct._id}
+            variantButtonState={variantButtonState}
+          />
+          </motion.div>
+        
+      );
+      } else {
+      return null;
+      }
+      })}
+
+            
+            
+
+    </motion.div>)}
+
+
+
+
     {productModal  ? (
       <ReactModal 
       style={customStyles}
@@ -183,7 +235,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
       )}
 
       {showVariant ?  (
-        <>
+        <div className="h-auto w-auto" style={{display: imageViewer? 'none': 'block'}}>
             <ProudctVariantBackground
           id="variant-background"
           onClick={(e) => {
@@ -200,13 +252,13 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             animate={{ y: "0vh" }}
             >
             
-              <ReactModal 
+              {/* <ReactModal 
         isOpen={true}
         onRequestClose={hideModal}
         contentLabel="Do you want to continue shopping"
       >
       
-      </ReactModal>
+      </ReactModal> */}
    
          <div
           style={{
@@ -216,22 +268,31 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             marginBottom: "2rem",
           }}
         >
-          
-      <DefaultImage
+      
+      <motion.div whileTap={{scale: 0.92, borderRadius: '20px'}} style={{ width: "100%", height: "42vh", position: "relative", overflowY: 'hidden' }}
+      onClick={()=>{setImageViewer(true)}}>
+        <DefaultImage 
         productInfo={currentProduct}
         variantButtonState={variantButtonState}
         unoptimized={true}
+        
         />
+      </motion.div>
+      
 
         {currentProduct.variants.map((variant) => {
         if (variantId === variant._key) {
         return (
-        <ProductImage
-          key={variant._key}
-          productInfo={variant}
-          productId={currentProduct._id}
-          variantButtonState={variantButtonState}
-        />
+          <motion.div whileTap={{scale: 0.92, borderRadius: '20px'}} style={{ width: "100%", height: "42vh", position: "absolute", overflowY: 'hidden', top: 0}}
+          onClick={()=>{setImageViewer(true)}}>
+            <ProductImage
+            key={variant._key}
+            productInfo={variant}
+            productId={currentProduct._id}
+            variantButtonState={variantButtonState}
+          />
+          </motion.div>
+        
       );
       } else {
       return null;
@@ -241,6 +302,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
         <CloseMenu
         className="cursor-pointer"
             onClick={() => {
+              deactivateDefault()
               setOverlayVisibility(false);
               router.back();
             }}
@@ -339,6 +401,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           className="w-full m-auto bg-black text-white h-12 rounded-sm"
           
             onClick={() => {
+              deactivateDefault()
               setVariantButtonState("selected");
                modifyItemQuantity(currentProduct, itemQuantity);
                console.log("Variants product mode")
@@ -359,7 +422,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
           </div>
           </motion.div>
         </ProudctVariantBackground>
-        </>
+        </div>
       ) : (
         ""
       )}
@@ -388,13 +451,17 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             marginBottom: "2rem",
           }}
         >
-          <Image
-            layout="fill"
-            objectFit="cover"
-            src={urlFor(currentProduct.defaultProductVariant?.images[0]).url()}
-            alt="Product Image"
-            unoptimized={true}
-          />
+          <motion.div whileTap={{scale: 0.92, borderRadius: '20px'}} style={{ width: "100%", height: "42vh", position: "relative", overflowY: 'hidden' }}>
+            <Image
+              layout="fill"
+              objectFit="cover"
+              src={urlFor(currentProduct.defaultProductVariant?.images[0]).url()}
+              alt="Product Image"
+              unoptimized={true}
+              onClick={()=>{setImageViewer(true)}}
+            />
+          </motion.div>
+          
         </div>
         <ProductInfoSection>
           <CloseMenu

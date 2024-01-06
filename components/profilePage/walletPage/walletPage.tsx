@@ -57,14 +57,13 @@ const WalletPage: React.FC = () => {
       //     _id,
       //   }`, { auth0ID: user?.email }
       // );
-
       // setUserId(data[0]?._id || "");
       // console.log(data)
 
-      const results = await sanityClient.fetch(
-        `*[_type == "users" && email == "${user?.email}"] {
-            _id, 
-            walletAmount,
+    const results = await sanityClient.fetch(
+      `*[_type == "users" && email == "${user?.email}"] {
+          _id, 
+          walletAmount,
     }`);
       
   setWalletDeposit(results);

@@ -133,7 +133,7 @@ export const ProudctVariantBackground = styled(motion.div)`
   backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.4);
   position: absolute;
-  z-index: 100;
+  z-index: 99;
   top: 0;
   left: 0;
   right: 0;

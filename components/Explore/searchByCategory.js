@@ -16,6 +16,7 @@ import ReactModal from "react-modal";
 import { NavBar } from "./explorePage.styles";
 import {useRouter} from "next/router";
 import Image from "next/image";
+import { useShoppingCart } from "../../context/shoppingCart";
 
 
 const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIsNavVisible, searchQuery }) => {
@@ -32,6 +33,8 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
   const [feature, setFeature] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const {returnCurrentLevel, CurrentLevel, saveCategories, Categories} = useShoppingCart()
 
   const handleLikes = function(id) {
     (function(productId) {
@@ -70,7 +73,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
       transform: 'translate(-50%, -50%)',
     },
   };
-
+  console.log(CurrentLevel)
   const handlefilter = () =>{
     setIsModalVisible(true);
     setFeature(true);
@@ -84,15 +87,38 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
 
   const handleCategorySelection = (category) => {
     if (Object.values(currentData[category]).length == 0) {
-      setIsNavVisible(false);
-      console.log("Navbar is not visible");
+      // setIsNavVisible(false);
+      // console.log("Navbar is not visible");
       fetchCategoryProducts();
     }
     setSelectedCategory(category);
     setCurrentLevel((prevCurrentLevel) => [...prevCurrentLevel, category]);
+    returnCurrentLevel((prevCurrentLevel) => [...prevCurrentLevel, category])
   };
+  
+  useEffect(()=>{
+    
+    saveCategories(categoryData)
+
+
+    if(CurrentLevel.length < 1){
+      setIsNavVisible(true)
+      getCategories()
+    }
+    if(CurrentLevel.length > 1){
+      setIsNavVisible(false)
+    }
+    
+    if(CurrentLevel.length > 1 && currentLevel.length == 0){
+      setSelectedCategory(CurrentLevel[1])
+      fetchCategoryProducts()
+      setCurrentLevel(CurrentLevel)
+    }
+  }, [CurrentLevel])
+
 
   const handleBackClick = () => {
+
     setCurrentLevel((prevCurrentLevel) => {
       const updatedCurrentLevel = prevCurrentLevel.slice(
         0,
@@ -101,6 +127,19 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
       setSelectedCategory(updatedCurrentLevel[updatedCurrentLevel.length - 1]);
       return updatedCurrentLevel;
     });
+
+    
+    
+    returnCurrentLevel((prevCurrentLevel) => {
+      
+      const updatedCurrentLevel = prevCurrentLevel.slice(
+        0,
+        prevCurrentLevel.length - 1
+      );
+      setSelectedCategory(updatedCurrentLevel[updatedCurrentLevel.length - 1]);
+      return updatedCurrentLevel;
+    });
+    
   };
 
   function showModal(e) {
@@ -113,19 +152,21 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
   };
 
 
-  useEffect(() => {
-    async function getCategories() {
-      const results = await sanityClient.fetch(`*[_type == 'category' ]{
-  _id,
-  isRootCategory,
-  images,
-  description,
-  title,
+  async function getCategories() {
+    const results = await sanityClient.fetch(`*[_type == 'category' ]{
+    _id,
+    isRootCategory,
+    images,
+    description,
+    title,
 
-}`);
+    }`);
   setCategorySearchResults(results);
-  
-    }
+
+  }
+
+  useEffect(() => {
+
     getCategories();
   }, []);
 
@@ -146,12 +187,19 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
   };
 
 
-  
-
   let currentData = categoryData;
-  for (const category of currentLevel) {
-    currentData = currentData[category];
+  
+  if(categoryData == undefined){
+    categoryData == Categories
   }
+  else{
+    
+    for (const category of CurrentLevel) {
+      currentData = currentData[category];
+    }
+  }
+  
+  
   //bring in products of various categories
 
   useEffect(()=>{
@@ -232,7 +280,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
     )}
 
     <AnimatePresence>
-      {currentLevel.length > 0 && (
+      {CurrentLevel.length > 0 && (
         <div className="flex flex-row my-4 mx-4">
         <button
           onClick={handleBackClick}
@@ -245,7 +293,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
         </div>
       )}
       <CategoryWrapper >
-        {currentLevel.length < 1 ? (
+        {CurrentLevel.length < 1 ? (
       <div className="explore-card w-[100%] grid grid-cols-2 grid-rows-2 gap-4 mb-[20vh] px-4 h-[80vh]">
         {currentData
           ? Object.keys(currentData).map((category, i) => (
@@ -295,7 +343,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
             {selectedCategory == categoryItem.title && 
             
         <div className="relative">
-                      {currentLevel.length > 2 && <div className="flex flex-row border-t border-b py-4 justify-center ml-4">
+                      {CurrentLevel.length > 2 && <div className="flex flex-row border-t border-b py-4 justify-center ml-4">
               <div className="w-6/12 flex justify-center items-center cursor-pointer"
               onClick={toggleVisibility}>Sort <ExpandMoreOutlinedIcon/> </div>
               <div className="w-6/12 text-center cursor-pointer"
@@ -390,7 +438,7 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
   
         </div>
     </div>
-            <div className=" grid grid-cols-2 gap-4 my-8 ml-4">
+            <div className=" grid grid-cols-2 gap-4 w-[95%] absolute left-[50%] translate-x-[-50%] mt-[3vh] pb-[10vh]">
           {sort ==='low' && (categoryItem.Orderasc?.map((product) => (
             
 
@@ -441,15 +489,15 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
         
 
         
-          )))} 
+          )))}
           {sort ==='recommend' && (categoryItem.categoryProducts?.map((product) => (
             
 
-            <div key={product._id} className="explore-card " >
+            <div key={product._id} className="explore-card">
             
             <div className="card rounded-lg shadow-lg h-auto cursor-pointer">
               <div className="" onClick={() => {setLoading(true); router.push(`product/${product.slug.current}`)}}>
-                 <img style={{ width: "100%", height: "100%", minHeight: "1rem" }} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" src={urlFor(product.defaultProductVariant.images[0]).url()} />
+                <img style={{ width: "100%", height: "100%", minHeight: "1rem" }} className="rounded-t-lg w-full h-48 min-h-48 max-h-48" src={urlFor(product.defaultProductVariant.images[0]).url()} />
                    
               </div>
                 <div className="mx-2">

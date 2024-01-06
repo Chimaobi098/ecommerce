@@ -11,26 +11,27 @@ const ExplorePage = ({ searchResults, searchQuery, setIsNavVisible }) => {
   const [categoryData, setCategoryData] = useState();
   const tree = useRef();
   
-  useEffect(() => {
-    async function getCategories() {
-      const results = await sanityClient.fetch(`*[_type == 'category' ]{
-  title,
-  children[]->{
+  async function getAllCategories() {
+    const results = await sanityClient.fetch(`*[_type == 'category' ]{
     title,
-    children 
-  },isRootCategory
-}`);
-      setCategoryData(results);
-      tree.current = buildTree(results);
-    }
-    getCategories();
+    children[]->{
+      title,
+      children 
+    },isRootCategory
+    }`);
+        setCategoryData(results);
+        tree.current = buildTree(results);
+      }
+
+  useEffect(() => {
+    getAllCategories();
   }, []);
 
   console.log(categoryData);
   return (
     <Wrapper>
       {searchResults.length == 0 || !searchQuery ? (
-        <SearchByCategory setIsNavVisible={setIsNavVisible} categoryData={tree.current} searchQuery={searchQuery}  />
+        <SearchByCategory setIsNavVisible={setIsNavVisible} categoryData={tree.current} searchQuery={searchQuery} />
       ) : (
         searchResults?.hits?.map((searchResult) => (
           <Link
