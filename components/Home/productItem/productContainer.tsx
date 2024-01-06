@@ -212,8 +212,7 @@ const ProductContainer = ({
       <div style={{ paddingLeft: "3vw" }}>
         <div id="action-section">
           <div>
-            <motion.button
-             //onClick={setIsModalVisible(true)}
+            <motion.button onClick={()=>{setIsModalVisible(true)}}
               // whileTap={{ scale: 0.8 }}
               // onClick={() => {
               //   setIsModalVisible(true);   

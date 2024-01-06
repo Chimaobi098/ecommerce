@@ -507,13 +507,15 @@ const SearchByCategory = ({ categoryData, productProps, userLikedProducts, setIs
               <motion.button
                       whileTap={{ scale: 0.8 }}
                       onClick={() => {
-                        setLikes((prev) => {
-                          if (prev.likeState) {
-                            return { likeCount: prev.likeCount - 1, likeState: false };
-                          }
-                          return { likeCount: prev.likeCount + 1, likeState: true };
-                        });
-                        handleLikes(product._id);
+                        setFeature(true)
+                        setIsModalVisible(true)
+                        // setLikes((prev) => {
+                        //   if (prev.likeState) {
+                        //     return { likeCount: prev.likeCount - 1, likeState: false };
+                        //   }
+                        //   return { likeCount: prev.likeCount + 1, likeState: true };
+                        // });
+                        // handleLikes(product._id);
                       }}
                     >
                       {likes.likeState ? (
