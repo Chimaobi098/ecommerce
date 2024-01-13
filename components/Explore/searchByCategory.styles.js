@@ -13,14 +13,14 @@ export const CategoryWrapper = styled.div`
   background: white;
   //border: 3px solid red;
   justify-content: flex-start;
-  .card{
+  .card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
     //border: 4px solid red;
   }
-  .card img{
+  .card img {
     width: 100%;
     height: 32vh;
     // aspect-ratio: 1/1;

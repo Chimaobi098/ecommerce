@@ -129,6 +129,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     console.log(res);
     if (res._id) {
       window.location.href = `https://wordsearch-eta.vercel.app?sessionId=${res._id}`;
+      console.log("hello world");
       // window.location.href = `https://chimaobi098.github.io/wordsearch?sessionId=${res._id}`;
     } else {
       alert("there was an error contact us");
