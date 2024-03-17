@@ -13,7 +13,7 @@ import { CartButtons } from "../productInfoOverly/prodInfoOverlay.styles";
 import { useShoppingCart } from "../../context/shoppingCart";
 import { Header } from "./shoppingCartOverlay.styles";
 import { urlFor } from "../../lib/sanity";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { formatCurrency } from "../../utils/currencyFormatter";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
@@ -30,8 +30,9 @@ import downarrow from "../../public/noun-chevron-arrow-2074151.svg";
 import { WrapperCard, CardStyle } from "../Checkout/checkoutPage.styles";
 import Image from "next/image";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
-import { ArrowForwardIos } from "@mui/icons-material";
+import { ArrowForwardIos, CloseOutlined, Info, SwapHorizRounded } from "@mui/icons-material";
 import { useUser } from '@auth0/nextjs-auth0/dist/frontend/use-user'
+import useAppAuth, { FbUser } from "../../utils/firebase";
 
 
   
@@ -49,24 +50,41 @@ const ShoppingCartOverlay = () => {
     getTotalCartPrice,
   } = useShoppingCart();
 
+  const {
+    getUserFromLocalStorage,
+  } = useAppAuth();
 
-  const shippingFees = 0;
+  const user = getUserFromLocalStorage();
+
+  useEffect(() => {
+    if(user){
+      setuserDetails(JSON.parse(user));
+    }
+ 
+  }, [])
+
   // const navigate = useNavigate();
   const [couponDiscount, setCouponDiscount] = useState(0);
-  const [discount, setDiscount] = useState(false);
+  // const [discount, setDiscount] = useState(false);
+  const [walletSwitch, setWalletSwitch] = useState(true)
   const { shippingData } = useShippingData();
   const [couponCode, setCouponCode] = useState(0);
   const [checkoutMode, setCheckoutMode] = useState(false);
   const [routeCtrl, setRouteCtrl] = useState(0)
-  const [showModal, setShowModal] = useState(false)
-
-  const [addressdetails, setaddressdetails] = useState('')
-  const { user, error } = useUser();
+  const [modal, setModal] = useState({
+    show: false, orderSuccess: false
+  })
   
-  const totalAmount =
-    getTotalCartPrice() -
-    (getTotalCartPrice() * (couponDiscount / 100) || 1) +
-    shippingFees;  
+  const [userDetails, setuserDetails] = useState('')
+  // const { user, error } = useUser();
+    
+    const serviceFee = getTotalCartPrice() * 0.25;
+
+    const deliveryFee = getTotalCartPrice() * 0.25;
+
+    const totalAmount =
+    getTotalCartPrice() + serviceFee + deliveryFee -
+    (getTotalCartPrice() * (couponDiscount / 100)) ;
  
     const [dragItems, setDragItems] = useState(
       cartItems.map((item) => {
@@ -95,34 +113,6 @@ const ShoppingCartOverlay = () => {
       }
     }
 
-    useEffect(() => {
-      async function getDetails() {
-        if (!user) return;
-  
-        const results = await sanityClient.fetch(
-          `*[_type == "users" && email == "${user?.email}"] {
-              _id, 
-              country,
-              city,
-              address1,
-              address2,
-              state,
-              userId
-      }`);
-        
-    setaddressdetails(results);
-    
-      }
-      getDetails();
-    },[user]);
-
-    useEffect(()=>{
-      if(addressdetails != '' && addressdetails != undefined){
-        if(addressdetails[0].address1 == null){
-          setaddressdetails('---')
-        }
-      }
-    }, [addressdetails])
 
 
   function handleCheckout(e) {
@@ -151,6 +141,32 @@ const ShoppingCartOverlay = () => {
 
   }
 
+  function validateOrder(){
+    if(userDetails.walletBalance < serviceFee){
+      setModal({show: true, orderSuccess: false})
+    }
+    else{
+      setModal({show: true, orderSuccess: true})
+      removeAllCartItems('null')
+    }
+    
+  }
+
+  const [carddetails, setcarddetails] = useState(false);
+
+  const handleCard = () => {
+    setcarddetails(!carddetails);
+  };
+
+  const [info, setInfo] = useState({
+    title: '',
+    mssg: ''
+  })
+
+  function handleInfo(Title, Mssg){
+    setInfo({title: Title, mssg: Mssg})
+  }
+
   //  This is to catch if the user is using the browser's navigation buttons to go back in router history
    if(router.pathname == '/' && checkoutMode && routeCtrl == 0){
     // alert('router control + 1')
@@ -169,9 +185,12 @@ const ShoppingCartOverlay = () => {
   return (
     <>
     {checkoutMode ? (
+      <>
+      <h1 className="absolute top-0 z-[100] w-full text-center bg-[#f5f5f5] left-0"
+      style={{fontWeight: 500, fontSize: '1.5rem'}}>Checkout</h1>
       <WrapperCard>
-      <button
-        style={{ position: "absolute", top: 0, left: '2%' }}
+      
+      <button className="absolute top-[5px] left-[2%] z-[2]"
         onClick={() => {
           router.push('/');
           setRouteCtrl(0);
@@ -180,26 +199,26 @@ const ShoppingCartOverlay = () => {
       >
         <ArrowBackIos />
       </button>
+
       
-      <form className="">
-        <p style={{ textAlign: 'center' }} className="section-title">Checkout</p>
-        
+      <form> 
         <CardStyle
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            boxShadow: "0 5px 5px 1px rgb( 0, 0, 0, 0.2)"
+            boxShadow: "0 5px 5px 1px rgb( 0, 0, 0, 0.2)",
+            marginTop: 50
           }}
         >
           <div>
-            <h2 style={{ fontWeight: "semi", fontSize: "1rem" }}>Shipping</h2>
+            <h2 style={{ fontWeight: "semi", fontSize: "1rem" }}>Delivery</h2>
             <p style={{ fontSize: "0.8rem", color: "grey", padding: "0.1rem 0" }}>
-              {addressdetails==''? '---': addressdetails != '---'? 
-                <span>{addressdetails[0].address1}<br/>
-                      {addressdetails[0].city}, {addressdetails[0].state}<br/>
-                      {addressdetails[0].country}
-                </span>: addressdetails}
+              {userDetails==''? '------':
+                <span>{userDetails.address1}<br/>
+                      {userDetails.city}, {userDetails.state}<br/>
+                      {userDetails.country}
+                </span>}
             
             </p>
           </div>
@@ -212,7 +231,7 @@ const ShoppingCartOverlay = () => {
         </CardStyle>
 
 
-        <CardStyle
+        {/* <CardStyle
           style={{
             display: "flex",
             flexDirection: "column",
@@ -259,7 +278,26 @@ const ShoppingCartOverlay = () => {
             ""
           )
         }
+        </CardStyle> */}
+
+        <motion.div whileTap={{scale: 0.95}} onClick={()=>{setWalletSwitch(!walletSwitch)}}
+        className="p-0 mb-[13.34px]" >
+        <CardStyle
+          style={{boxShadow: "0 5px 5px 1px rgb( 0, 0, 0, 0.2)", marginBottom: 0}}>
+          <h2 style={{ fontWeight: "semi", fontSize: "1rem", textAlign: 'left', marginBottom: '1rem' }}>Wallet</h2>
+
+          <div style={{ display: "flex", justifyContent: "space-between", width: "100%", }}> 
+            
+            <div>
+            <span>{walletSwitch?'Game wallet':'Cash wallet'}</span>
+            </div>
+            <div>{walletSwitch? formatCurrency(userDetails.gameWalletBalance): formatCurrency(userDetails.walletBalance) }</div>           
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", width: "100%"}}>
+            <SwapHorizRounded className="text-[gray] scale-[1.3]"/>
+          </div>  
         </CardStyle>
+        </motion.div>
 
              
 
@@ -267,20 +305,34 @@ const ShoppingCartOverlay = () => {
           <h2 style={{ fontSize: "1.3rem", marginBottom: "1rem" }}>Summary</h2>
 
           <div className="item-details-container">
-            <div>
-              <b>Sub Total</b>
+            <div className="flex items-center gap-1">
+              <b>Sub Total</b> 
+              <Info className="text-[gray] scale-[0.7]" 
+              onClick={() => {
+                handleInfo('Sub Total','This is the initial sum of all items in the cart'),
+                handleCard()}}/>
             </div>
             <div>{formatCurrency(getTotalCartPrice())}</div>
           </div>
           <div className="item-details-container">
-            <div>
-              <b>Discount</b>
+            <div className="flex items-center gap-1">
+              <b>Service Fee</b> 
+              <Info className="text-[gray] scale-[0.7]" 
+              onClick={() => {
+                handleInfo('Service Fee','A charge of 25% of the Sub Total to use this service'),
+                handleCard()}}/>
             </div>
-            <div>{`${couponDiscount}%`}</div>
+            <div>{formatCurrency(serviceFee)}</div>
           </div>
           <div className="item-details-container">
-            <b>Shipping</b>
-            <div>{formatCurrency(shippingFees)}</div>
+            <div className="flex items-center gap-1">
+             <b>Delivery Fee</b> 
+             <Info className="text-[gray] scale-[0.7]" 
+              onClick={() => {
+                handleInfo('Delivery Fee','The cost of delivering products to your location'),
+                handleCard()}}/>
+            </div>
+            <div>{formatCurrency(deliveryFee)}</div>
           </div>
           
           <div className="item-details-container" id="total-container">
@@ -301,10 +353,10 @@ const ShoppingCartOverlay = () => {
 
         <CardStyle>
         <button type="button"
-        onClick={() => {setShowModal(true), removeAllCartItems('null')}}
+        onClick={() => {validateOrder()}}
         style={{ background: "green", color: "white",  margin: "20px auto", borderRadius: "6px", padding: "9px", textAlign: "center", justifyContent: "center", display: "flex", width:"80%", border: "1px solid green" }}>
           Submit Order
-         </button>{showModal ? (
+         </button>{modal.show ? (
         <>
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
@@ -317,15 +369,23 @@ const ShoppingCartOverlay = () => {
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
-                     your order has been sent successfully
+                     {modal.orderSuccess? 
+                      'Your order has been placed successfully':'Insufficient cash balance for service fee'}
                   </p>
                 </div>
                 {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b" >
+                <div className={`flex items-center ${modal.orderSuccess?'justify-end':'justify-between'}  px-4 py-6 border-t border-solid border-blueGray-200 rounded-b`} >
+                  {!modal.orderSuccess && (<button 
+                    className="text-green-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={()=>{ setModal({show: false, orderSuccess: true}), setCartOpen(false), router.push('/profile/wallet')}}>
+                        Fund Cash Wallet
+                  </button>)}
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => (setShowModal(false), setCartOpen(false), router.push('/'))}
+                    onClick={() => (modal.orderSuccess?
+                      (setModal({show: false, orderSuccess: true}), setCartOpen(false), router.push('/')): setModal({show: false, orderSuccess: false}))}
                   >
                     Close
                   </button>
@@ -341,8 +401,8 @@ const ShoppingCartOverlay = () => {
       </form>
       
     </WrapperCard>
-    ) : ""}
-    <Wrapper initial={{ y: "100vh" }} animate={{ y: 0 }} exit={{ y: "100vh" , transition: {duration: 0.1} }}>
+    </>) : ""}
+    <Wrapper initial={{ y: "100vh" }} animate={{ y: 0 }} exit={{ y: "100vh" , transition: {duration: 0.1} }} style={{position: 'relative', zIndex: 99}}>
       <Header>
         <button
           onClick={() => {
@@ -495,6 +555,35 @@ const ShoppingCartOverlay = () => {
         </CheckoutDetails>
       </AnimatePresence>
     </Wrapper>
+
+    <div
+        className={`${
+          carddetails
+            ? "h-screen top-0 left-0 absolute w-full z-10 bg-black opacity-60"
+            : ""
+        }`}
+        onClick={handleCard}
+      ></div>
+
+    <div
+        className={` ${
+          carddetails ? "translate-y-0" : "translate-y-full"
+        } w-full left-0 flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6 px-4 pb-12 transition-all duration-500 ease-in-out transform-gpu`}
+      >
+        <div className="flex flex-row justify-between items-end ">
+          <div className="mt-8 text-2xl font-medium">{info.title}</div>
+          <div>
+            
+            <CloseOutlined
+              onClick={handleCard}
+              className="text-2xl mb-2 cursor-pointer"
+            />
+          </div>
+        </div>
+        <div className="flex flex-col text-left w-full">
+          {info.mssg}
+        </div>
+      </div>
     </>
     )
   

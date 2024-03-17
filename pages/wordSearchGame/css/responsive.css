@@ -1,0 +1,33 @@
+/* Styles for laptops (viewport width >= 768px) */
+@media (min-width: 768px) {
+
+    .cell {
+        margin: 3px 5px;
+        height: 30px;
+        width: 30px;
+        padding: 2px;
+      }
+
+    /* Laptop styles here */
+    .cell {
+        font-size: 1em;
+    }
+
+    .boardRow {
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 auto;
+    }
+}
+
+/* Styles for tablets (768px > viewport width >= 576px) */
+@media (max-width: 767px) {
+    /* Tablet styles here */
+}
+
+/* Styles for phones (viewport width < 576px) */
+@media (max-width: 575px) {
+    /* Phone styles here */
+}

@@ -42,23 +42,34 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { usePaystackPayment } from "react-paystack";
 import Modal from "react-modal";
 //import balance from "../profilePage/walletPage/withdrawPage";
-// import { useShoppingCart } from "../../context/shoppingCart";
+import { sanityClient } from "../../lib/sanity";
+import useAppAuth, { FbUser } from "../../utils/firebase";
 
 const ProductInfoOverlay = ({ currentProduct }) => {
   const router = useRouter();
-  const { user, error } = useUser();
+  const {
+    getUserFromLocalStorage,
+    updateFieldsInFirebase,
+  } = useAppAuth();
+  
+  const user = getUserFromLocalStorage();
+ 
+  // const { user, error } = useUser();
+  const {wsgDetails, updateWSGDetails, getWallet, setWallet} =
+    useShoppingCart();
   const [variantButtonState, setVariantButtonState] = useState("not-selected"); // either not-selected or selected
-  const { modifyItemQuantity, getItemQuantity, variantId, deactivateDefault } =
+  const { modifyItemQuantity, getItemQuantity, variantId, deactivateDefault, updateWSGUserDetails } =
     useShoppingCart();
   const [overlayVisibility, setOverlayVisibility] = useState(false);
   const [showGameSettingsOverlay, setShowGameSettingsOverlay] = useState(false);
-  const [numberOfAttempts, setNumberOfAttempts] = useState(0);
+  const [numberOfAttempts, setNumberOfAttempts] = useState();
   const [productModal, setProductModal] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showVariant, setShowVariant] = useState(false);
   const [openPlay, setOpenPlay] = useState(false);
-  const [amountToPay, setAmountToPay] = useState("");
   const [imageViewer, setImageViewer] = useState(false);
+  const [userDetails, setUserDetails] = useState(null);
+  const [reward, setReward] = useState(0)
 
   console.log(currentProduct, "this is the current Product");
   const cartButtonState = () => {
@@ -70,15 +81,14 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     }
   };
 
-  const { getWallet, setWallet } = useShoppingCart();
+  // const { getWallet, setWallet } = useShoppingCart();
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
-    setAmountToPay(numberOfAttempts * 100);
   };
 
   const config = {
-    email: user?.email,
+    email: userDetails?.email,
     amount: numberOfAttempts * 100 * 100, // converting to kobo for paystack and multiplying by 100 (1attempt = 100naira)
     publicKey: process.env.PAYSTACK_PUBLIC_KEY,
   };
@@ -97,14 +107,48 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     setItemQuantity((prev) => prev - 1);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(amountToPay);
 
-    window.location.href = `https://wordsearch-eta.vercel.app/?existingParams=value&numberofAttempts=${numberOfAttempts}`;
-    // window.location.href = `https://chimaobi098.github.io/wordsearch/?existingParams=value&numberofAttempts=${numberOfAttempts}`;
+    updateWSGDetails({reward: reward})
+    await updateFieldsInFirebase(userDetails.email, {
+      // walletBalance: userDetails.walletBalance - amountToPay,
+      attemptsBalance: userDetails.attemptsBalance + parseInt(numberOfAttempts)
+    });
+    
+    router.push('/wordSearchGame/')
   };
-  // initializePayment(onSuccess, onClose);
+
+  useEffect(() => {
+    const getUID = async () => {
+      // const data = await sanityClient.fetch<{ _id: string }[]>(
+      //   `
+      //   *[_type == 'users' && email == $auth0ID]{
+      //     _id,
+      //   }`, { auth0ID: user?.email }
+      // );
+      // setUserId(data[0]?._id || "");
+      // console.log(data)
+
+  //   const results = await sanityClient.fetch(
+  //     `*[_type == "users" && email == "${user?.email}"] {
+  //         walletAmount,
+  //   }`);
+      
+  // setWalletAmount(results);
+  
+      // console.log(results)
+    };
+    
+
+    // getUID();
+  }, [user]);
+
+  useEffect(() => {
+    if(user){
+      setUserDetails(JSON.parse(user));
+    }
+  }, [])
 
   const customStyles = {
     content: {
@@ -148,13 +192,6 @@ const ProductInfoOverlay = ({ currentProduct }) => {
     alert("just try again");
   }
 
-  function handleGamePayment(e) {
-    console.log(amountToPay);
-    const balance = getWallet() - amountToPay;
-    setWallet(balance);
-    console.log(balance);
-    return balance;
-  }
 
   // Inside your component
   // useEffect(() => {
@@ -247,17 +284,18 @@ const ProductInfoOverlay = ({ currentProduct }) => {
 
             <ul>
               <li>
-                <button onClick={hideModal}>Continue Shopping</button>
+                <button onClick={()=>{hideModal(), router.push('/')}}>Continue Shopping</button>
               </li>
               <li>
-                <button
+                {currentProduct.variants != null &&(<button
                   onClick={() => {
                     setCartOpen(true);
+                    
                     setIsModalVisible(false);
                   }}
                 >
                   Go to Checkout
-                </button>
+                </button>)}
               </li>
             </ul>
 
@@ -376,7 +414,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                 </h1>
               </div>
 
-              <div className="flex-col w-full ">
+              <div className="flex-col w-full">
                 <DefaultColor
                   productInfo={currentProduct}
                   variantButtonState={variantButtonState}
@@ -568,6 +606,7 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                     if (currentProduct.variants == null) {
                       modifyItemQuantity(currentProduct, itemQuantity);
                       setProductModal(true);
+                
                       OpenModal();
                       console.log("No Variant");
                     } else {
@@ -741,22 +780,32 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             initial={{ y: "70vh" }}
             animate={{ y: "0vh" }}
           >
-            <p className="w-full">
+            <span className="w-full absolute left-[1rem]">
               <ArrowBackIosNewIcon
                 onClick={(e) => {
                   setShowGameSettingsOverlay(false);
                 }}
               />
-            </p>
+            </span>
+            <div className="w-full mb-[5px]">
+                  <h2 className="md:text-lg font-bold text-center mb-[5px]">
+                    Wallet
+                  </h2>
+                  <h2 className="text-center text-[30px] font-bold">
+                    ₦{userDetails?.walletBalance}
+                  </h2>
+            </div>
+
             <form className="w-full h-auto" onSubmit={handleSubmit}>
-              <div className="flex flex-col gap-y-16 mt-8">
+            <div className="flex flex-col gap-y-5 mt-5">
                 <div className="flex flex-col w-full gap-y-2">
+                
                   <label className="md:text-lg font-bold">
                     Number of attempts:
                   </label>
                   <input
                     className="w-full border-2 rounded-md h-12 p-2"
-                    placeholder="how many attempts do you want?"
+                    placeholder="How many attempts?"
                     value={numberOfAttempts}
                     type="number"
                     required
@@ -767,34 +816,39 @@ const ProductInfoOverlay = ({ currentProduct }) => {
                 </div>
                 <div className="flex flex-col w-full gap-y-2">
                   <label className="md:text-lg font-bold">
-                    Amount needed to pay:
+                    Reward:
                   </label>
-                  <input
+                  <select
                     className="w-full border-2 rounded-md h-12 p-2"
-                    placeholder="how much is needed to pay?"
-                    value={amountToPay}
-                    type="number"
+                    placeholder="Price for every attempt?"
                     required
                     onChange={(e) => {
-                      setAmountToPay(numberOfAttempts * 100);
+                      setReward(parseInt(e.target.value));
                     }}
-                    // onChange={(e) => {
-                    //   setNumberOfAttempts(e.target.value);
-                    // }}
-                  />
+                  >
+                  <option value={null}>-</option>
+                  <option value={1000}>1000</option>
+                  <option value={2000}>2000</option>
+                  <option value={3000}>3000</option>
+                  <option value={4000}>4000</option>
+                  <option value={5000}>5000</option>
+                  <option value={6000}>6000</option>
+                  <option value={7000}>7000</option>
+                  <option value={8000}>8000</option>
+                  <option value={9000}>9000</option>
+                  <option value={10000}>10000</option>
+                  </select>
                 </div>
+                
+                
               </div>
 
               {/* <span>Total cost: {formatCurrency(numberOfAttempts * 100)}</span> */}
               <button
-                onClick={() => {
-                  console.log("Play User");
-                  handleGamePayment();
-                }}
                 className=" fixed bottom-0  md:right-0 bg-black text-white w-11/12 md:w-[420px] h-12 mb-12 md:mb-6 rounded-sm md:mx-4"
                 type="submit"
               >
-                pay
+                play
               </button>
             </form>
           </motion.div>
