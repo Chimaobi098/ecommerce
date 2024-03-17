@@ -31,6 +31,8 @@ interface ShoppingCartContext {
   increaseCart: (id: string) => void;
   decreaseCart: (id: string) => void;
   getTotalCartPrice: () => number;
+  updateWSGDetails: (data: object) => void
+  wsgDetails: object;
   variantfunc: (id:string)=> void;
   variantId: string;
   activateDefault:()=>void;
@@ -93,6 +95,7 @@ export const ShoppingCartProvider = ({
   const [cartItems, setCartItems] = useState([] as CartItem[]);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [CurrentLevel, setCurrentLevel] = useState<any>([])
+  const [wsgDetails, setWSGDetails] = useState<any>({reward: 0})
   const [Categories, setCategories] = useState<any>([])
   const [appWallet, setAppWallet] = useState(1400.56);
   console.log(cartItems, "its all here bro");
@@ -157,6 +160,10 @@ export const ShoppingCartProvider = ({
 
   function returnCurrentLevel(level: string){
     return setCurrentLevel(level);
+  }
+
+  function updateWSGDetails(data: object){
+    return setWSGDetails(data)
   }
 
   function saveCategories(data: string){
@@ -258,6 +265,8 @@ export const ShoppingCartProvider = ({
         removeAllCartItems,
         returnCurrentLevel,
         CurrentLevel,
+        updateWSGDetails,
+        wsgDetails,
         saveCategories,
         Categories,
         increaseCart,

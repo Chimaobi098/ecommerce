@@ -4,20 +4,12 @@ import { useRouter } from "next/router";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { ProfileItem, Wrapper } from "./profilePage.styles";
-import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
-import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
-import HouseOutlinedIcon from '@mui/icons-material/HouseOutlined';
-import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
-import Button from "@mui/material/Button";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import walleticon from "../../public/et_wallet.svg";
 import homeUser from "../../public/uit_house-user.svg"
 import Image from "next/image";
-import Question from "../../public/question-mark_3524335.png";
-import Signout from "../../public/Signoutbtn.png";
+import {AccountBalanceWalletOutlined } from "@mui/icons-material";
 
 const ProfilePage = ({ user }: User) => {
   const [loading, setLoading] = useState(false);
@@ -53,7 +45,12 @@ const ProfilePage = ({ user }: User) => {
       profileUrl: "/profile/address",
     },
     {
-      profileItemName: "Wallet",
+      profileItemName: "Game Wallet",
+      profileItemIcon: <AccountBalanceWalletOutlined />,
+      profileUrl: "/profile/game_wallet",
+    },
+    {
+      profileItemName: "Cash Wallet",
       profileItemIcon: <Image src={walleticon} width={0} height={0} />,
       profileUrl: "/profile/wallet",
     },

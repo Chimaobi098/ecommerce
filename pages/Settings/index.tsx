@@ -57,13 +57,9 @@ const profileList = [
   {
     profileItemName: "Sign Out",
     profileItemIcon: <Image className="Image" style={{ marginTop: "6px", }} src={Signout}  width={30} height={30} alt="signout icon" />,
-    // profileUrl: "/profile/saved-posts",
+    
   },
-  // {
-  //   profileItemName: "Membership plans",
-  //   profileItemIcon: <DateRangeOutlinedIcon />,
-  //   profileUrl: "/profile/membership",
-  // },
+  
 ];
 
 return ( 
@@ -97,6 +93,7 @@ return (
                     // handleNavigation(item.profileUrl);
                     if(item.profileItemName == 'Sign Out'){
                       setLoading(true); // Show loading while logging out
+                      localStorage.removeItem('user')
                       router.replace("/api/auth/logout");
                     }
                   }}
