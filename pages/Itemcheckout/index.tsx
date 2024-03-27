@@ -14,8 +14,6 @@ import { formatCurrency } from "../../utils/currencyFormatter";
 import { useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useRouter } from "next/router";
-import { usePaystackPayment } from "react-paystack";
-import { sanityClient, urlFor } from "../../lib/sanity";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "../../interfaces/interface";
 import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
@@ -57,39 +55,65 @@ const ItemCheckout = () => {
     show: false,
     orderSuccess: false,
   });
+  const [serviceFee, setServiceFee] = useState(0)
+  const [totalAmount, setTotalAmount] = useState(0)
 
-  const { getUserFromLocalStorage } = useAppAuth();
+  const {
+    getUserFromLocalStorage,
+    updateFieldsInFirebase,
+  } = useAppAuth();
 
-  const user = getUserFromLocalStorage();
+  function getUserDetails(){
+    let user = getUserFromLocalStorage();
 
-  useEffect(() => {
-    if (user) {
-      
+    if(user){
       setuserDetails(JSON.parse(user));
     }
-  }, []);
+  }
+  
+  
 
   // const { user, error } = useUser();
 
-  const serviceFee = getTotalCartPrice() * 0.25;
+  // const serviceFee = getTotalCartPrice() * 0.25;
 
-  const deliveryFee = getTotalCartPrice() * 0.25;
+  // const deliveryFee = getTotalCartPrice() * 0.25;
 
-  const totalAmount =
-    getTotalCartPrice() +
-    serviceFee +
-    deliveryFee -
-    getTotalCartPrice() * (couponDiscount / 100);
+ 
+  
+
+  useEffect(() => {
+    getUserDetails()
+
+    
+  }, [])
+
+  useEffect(()=>{
+    if(userDetails){
+      let cartTotal = getTotalCartPrice()
+    if(userDetails.gameWalletBalance >= cartTotal){
+      setServiceFee(cartTotal * 0.25)
+    }
+    else{
+      setServiceFee(0)
+    }
+    }
+    
+  }, [userDetails])
+
+    useEffect(()=>{
+      let value =
+      getTotalCartPrice() +
+      serviceFee -
+      getTotalCartPrice() * (couponDiscount / 100);
+
+      setTotalAmount(value)
+    }, [serviceFee])
 
   // const [discount, setDiscount] = useState(false);
   const [walletSwitch, setWalletSwitch] = useState(true);
 
-  const config = {
-    amount: totalAmount * 100, // converting to kobo for paystack
-    publicKey: process.env.PAYSTACK_PUBLIC_KEY!,
-    email: "",
-  };
-  const initializePayment = usePaystackPayment(config);
+ 
   const { shippingData } = useShippingData();
 
   // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -137,13 +161,34 @@ const ItemCheckout = () => {
   };
 
   function validateOrder() {
-    if (userDetails.walletBalance < serviceFee) {
+    if (userDetails.gameWalletBalance >= totalAmount){
+      onSuccess('game')
+    }else if(userDetails.walletBalance >= totalAmount){ 
+      onSuccess('cash')
+    }
+    else{
       setModal({ show: true, orderSuccess: false });
-    } else {
-      setModal({ show: true, orderSuccess: true });
-      removeAllCartItems("null");
     }
   }
+
+  const onSuccess = async (walletType: string) => {
+
+    if(walletType == 'game'){
+      await updateFieldsInFirebase(userDetails.email, {
+        gameWalletBalance: userDetails.gameWalletBalance - totalAmount,
+        walletBalance: userDetails.walletBalance - serviceFee,
+      });
+    }
+    
+    if(walletType == 'cash'){
+      await updateFieldsInFirebase(userDetails.email, {
+        walletBalance: userDetails.walletBalance - totalAmount,
+      });
+    }
+
+    setModal({ show: true, orderSuccess: true });
+    removeAllCartItems("null");
+  };
 
   const [carddetails, setcarddetails] = useState(false);
 
@@ -386,7 +431,7 @@ const ItemCheckout = () => {
             </div>
             <div>{formatCurrency(serviceFee)}</div>
           </div>
-          <div className="item-details-container">
+          {/* <div className="item-details-container">
             <div className="flex items-center gap-1">
              <b>Delivery Fee</b> 
              <Info className="text-[gray] scale-[0.7]" 
@@ -395,7 +440,7 @@ const ItemCheckout = () => {
                 handleCard()}}/>
             </div>
             <div>{formatCurrency(deliveryFee)}</div>
-          </div>
+          </div> */}
 
             <div className="item-details-container" id="total-container">
               <div>
@@ -446,7 +491,7 @@ const ItemCheckout = () => {
                         <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
                           {modal.orderSuccess
                             ? "Your order has been placed successfully"
-                            : "Insufficient cash balance for service fee"}
+                            : "Insufficient balance"}
                         </p>
                       </div>
                       {/*footer*/}
@@ -472,7 +517,7 @@ const ItemCheckout = () => {
                           type="button"
                           onClick={() =>
                             modal.orderSuccess
-                              ? (setModal({ show: false, orderSuccess: true }),
+                              ? (setModal({ show: false, orderSuccess: true }), getUserDetails(),
                                 router.push("/"))
                               : setModal({ show: false, orderSuccess: false })
                           }

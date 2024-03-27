@@ -13,7 +13,7 @@ const Address = () => {
     <>
     <div>
               <ProfileNav>
-         <div className='' onClick={()=>router.back()}><ArrowBackRoundedIcon /></div>
+         <div  onClick={()=>router.back()}><ArrowBackRoundedIcon /></div>
         <header>Shipping</header>
       </ProfileNav>
       </div>

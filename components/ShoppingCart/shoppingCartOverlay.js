@@ -15,7 +15,6 @@ import { Header } from "./shoppingCartOverlay.styles";
 import { urlFor } from "../../lib/sanity";
 import { AnimatePresence, motion } from "framer-motion";
 import { formatCurrency } from "../../utils/currencyFormatter";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { sanityClient } from "../../lib/sanity";
@@ -38,6 +37,8 @@ import useAppAuth, { FbUser } from "../../utils/firebase";
   
 const ShoppingCartOverlay = () => {
   const router = useRouter();
+  const [serviceFee, setServiceFee] = useState(0)
+  const [totalAmount, setTotalAmount] = useState(0)
   const {
     setCartOpen,
     cartItems,
@@ -52,16 +53,16 @@ const ShoppingCartOverlay = () => {
 
   const {
     getUserFromLocalStorage,
+    updateFieldsInFirebase,
   } = useAppAuth();
 
-  const user = getUserFromLocalStorage();
+  function getUserDetails(){
+    let user = getUserFromLocalStorage();
 
-  useEffect(() => {
-    if(user){
-      setuserDetails(JSON.parse(user));
-    }
- 
-  }, [])
+    setuserDetails(JSON.parse(user));
+  }
+  
+  
 
   // const navigate = useNavigate();
   const [couponDiscount, setCouponDiscount] = useState(0);
@@ -78,13 +79,10 @@ const ShoppingCartOverlay = () => {
   const [userDetails, setuserDetails] = useState('')
   // const { user, error } = useUser();
     
-    const serviceFee = getTotalCartPrice() * 0.25;
+    // const serviceFee = getTotalCartPrice() * 0.25;
 
-    const deliveryFee = getTotalCartPrice() * 0.25;
+    // const deliveryFee = getTotalCartPrice() * 0.25;
 
-    const totalAmount =
-    getTotalCartPrice() + serviceFee + deliveryFee -
-    (getTotalCartPrice() * (couponDiscount / 100)) ;
  
     const [dragItems, setDragItems] = useState(
       cartItems.map((item) => {
@@ -92,6 +90,34 @@ const ShoppingCartOverlay = () => {
       })
     );
   
+    useEffect(() => {
+      getUserDetails()
+
+      
+    }, [])
+
+    useEffect(()=>{
+      if(userDetails){
+        let cartTotal = getTotalCartPrice()
+      if(userDetails.gameWalletBalance >= cartTotal){
+        setServiceFee(cartTotal * 0.25)
+      }
+      else{
+        setServiceFee(0)
+      }
+      }
+      
+    }, [userDetails])
+
+    useEffect(()=>{
+      let value =
+      getTotalCartPrice() +
+      serviceFee -
+      getTotalCartPrice() * (couponDiscount / 100);
+
+      setTotalAmount(value)
+    }, [serviceFee])
+
     function handleDragEnd(event, id) {
       const isTouch = event.pointerType == "touch" ? true : false;
   
@@ -142,15 +168,34 @@ const ShoppingCartOverlay = () => {
   }
 
   function validateOrder(){
-    if(userDetails.walletBalance < serviceFee){
-      setModal({show: true, orderSuccess: false})
+    if (userDetails.gameWalletBalance >= totalAmount){
+      onSuccess('game')
+    }else if(userDetails.walletBalance >= totalAmount){ 
+      onSuccess('cash')
     }
     else{
-      setModal({show: true, orderSuccess: true})
-      removeAllCartItems('null')
+      setModal({ show: true, orderSuccess: false });
+    }
+  }
+
+  const onSuccess = async (walletType) => {
+
+    if(walletType == 'game'){
+      await updateFieldsInFirebase(userDetails.email, {
+        gameWalletBalance: userDetails.gameWalletBalance - totalAmount,
+        walletBalance: userDetails.walletBalance - serviceFee,
+      });
     }
     
-  }
+    if(walletType == 'cash'){
+      await updateFieldsInFirebase(userDetails.email, {
+        walletBalance: userDetails.walletBalance - totalAmount,
+      });
+    }
+
+    setModal({ show: true, orderSuccess: true });
+    removeAllCartItems("null");
+  };
 
   const [carddetails, setcarddetails] = useState(false);
 
@@ -186,7 +231,7 @@ const ShoppingCartOverlay = () => {
     <>
     {checkoutMode ? (
       <>
-      <h1 className="absolute top-0 z-[100] w-full text-center bg-[#f5f5f5] left-0"
+      <h1 className="absolute top-0 z-[1] w-full text-center bg-[#f5f5f5] left-0"
       style={{fontWeight: 500, fontSize: '1.5rem'}}>Checkout</h1>
       <WrapperCard>
       
@@ -324,7 +369,7 @@ const ShoppingCartOverlay = () => {
             </div>
             <div>{formatCurrency(serviceFee)}</div>
           </div>
-          <div className="item-details-container">
+          {/* <div className="item-details-container">
             <div className="flex items-center gap-1">
              <b>Delivery Fee</b> 
              <Info className="text-[gray] scale-[0.7]" 
@@ -333,7 +378,7 @@ const ShoppingCartOverlay = () => {
                 handleCard()}}/>
             </div>
             <div>{formatCurrency(deliveryFee)}</div>
-          </div>
+          </div> */}
           
           <div className="item-details-container" id="total-container">
             <div>{cartItems.length > 1? `${cartItems.length} items`: `${cartItems.length} item`}</div>
@@ -370,7 +415,7 @@ const ShoppingCartOverlay = () => {
                 <div className="relative p-6 flex-auto">
                   <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
                      {modal.orderSuccess? 
-                      'Your order has been placed successfully':'Insufficient cash balance for service fee'}
+                      'Your order has been placed successfully':'Insufficient balance'}
                   </p>
                 </div>
                 {/*footer*/}
@@ -385,7 +430,7 @@ const ShoppingCartOverlay = () => {
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => (modal.orderSuccess?
-                      (setModal({show: false, orderSuccess: true}), setCartOpen(false), router.push('/')): setModal({show: false, orderSuccess: false}))}
+                      (setModal({show: false, orderSuccess: true}), getUserDetails(),setCartOpen(false), router.push('/')): setModal({show: false, orderSuccess: false}))}
                   >
                     Close
                   </button>

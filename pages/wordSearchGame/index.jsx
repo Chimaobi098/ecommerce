@@ -20,13 +20,15 @@ const WordSearchGame = () => {
       updateFieldsInFirebase,
     } = useAppAuth();
 
-    const user = getUserFromLocalStorage();
+    function getUserDetails(){
+      let user = getUserFromLocalStorage();
+
+      setUserDetails(JSON.parse(user));
+    }
+
 
     useEffect(() => {
-      if(user){
-        setUserDetails(JSON.parse(user));     
-      }
-   
+     getUserDetails()
     }, [])
 
     async function gameStart(){
@@ -59,7 +61,7 @@ const WordSearchGame = () => {
         },
         board: {
           boardSize: 9,
-          rows: 8,
+          rows: 7,
           columns: 10, //this value has to be greater than or equal to the number of rows
           initGridStyling: function (gridContainerId) {
             const gridContainer = document.querySelector(gridContainerId);
@@ -85,7 +87,7 @@ const WordSearchGame = () => {
         instructionsId: "instructions",
         themeId: "#wordTheme",
         timer: {
-          duration: 15,
+          duration: 20,
           containerId: "#timer",
           timerCallback: function () {
             setTimeUp(true)
@@ -1816,7 +1818,7 @@ const WordSearchGame = () => {
                     {/* <button className="wsg-button btn-lg" id="buyMore">Buy More Attempts</button> */}
                     {attemptsLeft!=0 && (
                       <button className="wsg-button btn-lg" id="newGame" onClick={()=>{setTimeUp(false), setResetTrigger(!resetTrigger),
-                      setWin(false)
+                      setWin(false), getUserDetails(),
                       $("#grid-container").empty();
                       $("#found-words").empty();
                       $("#wordTheme").empty();}}>
@@ -1843,7 +1845,7 @@ const WordSearchGame = () => {
                     </div>
                     <div className="wsg-flexCol game-control text-center">
                       <div className='h-[45px] flex items-center'>Game Wallet</div>
-                      <div id="wallet-balance" className="play-info">₦{userDetails.gameWalletBalance}</div>
+                      <div id="wallet-balance" className="play-info">₦ {userDetails.gameWalletBalance}</div>
                     </div>
                       <div className="wsg-flexCol game-control text-center">
                       <div className='h-[45px] flex items-center'>Timer</div>
