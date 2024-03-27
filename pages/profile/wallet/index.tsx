@@ -4,13 +4,14 @@ import Link from "next/link";
 import WalletPage from "../../../components/profilePage/walletPage/walletPage";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
-
+import { useRouter } from 'next/router';
 
 const Wallet = () => {
+  const router = useRouter()
   return (
     <>
             <ProfileNav>
-            <Link href='/profile'><div className=''><ArrowBackRoundedIcon /></div></Link>
+            <div onClick={()=>router.back()}><ArrowBackRoundedIcon /></div>
         <header>Cash Wallet</header>
       </ProfileNav>
   <WalletPage></WalletPage>

@@ -789,10 +789,10 @@ const ProductInfoOverlay = ({ currentProduct }) => {
             </span>
             <div className="w-full mb-[5px]">
                   <h2 className="md:text-lg font-bold text-center mb-[5px]">
-                    Wallet
+                    Game Wallet
                   </h2>
                   <h2 className="text-center text-[30px] font-bold">
-                    ₦{userDetails?.walletBalance}
+                    ₦{userDetails?.gameWalletBalance}
                   </h2>
             </div>
 
