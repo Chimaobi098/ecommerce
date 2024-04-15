@@ -61,7 +61,7 @@ const WordSearchGame = () => {
         },
         board: {
           boardSize: 9,
-          rows: 7,
+          rows: 8,
           columns: 10, //this value has to be greater than or equal to the number of rows
           initGridStyling: function (gridContainerId) {
             const gridContainer = document.querySelector(gridContainerId);
@@ -87,7 +87,7 @@ const WordSearchGame = () => {
         instructionsId: "instructions",
         themeId: "#wordTheme",
         timer: {
-          duration: 20,
+          duration: 15,
           containerId: "#timer",
           timerCallback: function () {
             setTimeUp(true)
@@ -100,7 +100,7 @@ const WordSearchGame = () => {
 
         },
       };
-
+      let solutionsPositions = [[],[],[]]
 
       //   TIMER
       let countdownInterval = null;
@@ -247,7 +247,7 @@ const WordSearchGame = () => {
       /** This object sets up the word search game, as well as button functions (for solving
       * and for refreshing/setting up a new game).
       *
-      * @author Ugege Daniel
+      * @author Nikechukwum Ene, Ugege Daniel
       *
       * @param {String} config.gameContainerId ID of the word search game div (where the actual grid of letters goes)
       * @param {String} config.listOfWords.containerId ID of the div where the list of words to find goes
@@ -288,6 +288,7 @@ const WordSearchGame = () => {
         }
 
         resultArray.push(array1, array2);
+        console.log(resultArray)
         countdownTimer(config.timer.duration, config.timer.timerCallback);
         convertToUpperCase(resultArray);
 
@@ -390,13 +391,15 @@ const WordSearchGame = () => {
       }
 
       function fitWordsIntoMatrix(wordList, matrix) {
+        let key = 0;
         for (var i = 0; i < wordList.length; i++) {
           for (var j = 0; j < wordList[i].length; j++) {
+            
             //removes spaces/apostrophes/the like from the word
             var trimmedWord = trimWord(wordList[i][j]);
             //tries 50 times to fit the word into the matrix
             for (var k = 0; currentWord.wordFitted == false && k < 100; k++) {
-              insertWordIntoMatrix(trimmedWord, matrix);
+              insertWordIntoMatrix(trimmedWord, matrix, key);
             }
             //if the word could not be fitted
             if (currentWord.wordFitted == false) {
@@ -409,11 +412,12 @@ const WordSearchGame = () => {
             else {
               currentWord.wordFitted = false;
             }
+            key += 1
           }
         }
       }
 
-      function insertWordIntoMatrix(word, matrix) {
+      function insertWordIntoMatrix(word, matrix, key) {
         //random row and column value
         var randX = getRandomNum(matrix.length);
         var randY = getRandomNum(matrix.length);
@@ -422,11 +426,11 @@ const WordSearchGame = () => {
           $.isEmptyObject(matrix[randX][randY]) ||
           matrix[randX][randY] == word.charAt(0)
         ) {
-          checkPossibleOrientations(word, matrix, randX, randY);
+          checkPossibleOrientations(word, matrix, randX, randY, key);
         }
       }
 
-      function checkPossibleOrientations(w, m, x, y) {
+      function checkPossibleOrientations(w, m, x, y, key) {
         Object.keys(paths).forEach(function (i) {
           doesOrientationFit(w, m, x, y, paths[i]);
         });
@@ -447,11 +451,11 @@ const WordSearchGame = () => {
           wordLocations[w] = { x: x, y: y, p: finalOrientation };
 
           //finally sets the word inside the matrix!
-          setWordIntoMatrix(w, m, x, y, finalOrientation);
+          setWordIntoMatrix(w, m, x, y, finalOrientation, key);
         }
       }
 
-      function setWordIntoMatrix(w, m, x, y, p) {
+      function setWordIntoMatrix(w, m, x, y, p, key) {
         /** initialized variables: k - for word length
          *						   x - for matrix row
         *						   y - for matrix column
@@ -469,6 +473,7 @@ const WordSearchGame = () => {
           k++, x = incr[p](x, y).x, y = incr[p](x, y).y
         ) {
           m[x][y] = w.charAt(k); //sets the index as the respective character
+          solutionsPositions[key].push({x: x, y: y})
         }
 
         //sets whether word is fitted or not to true
@@ -569,7 +574,7 @@ const WordSearchGame = () => {
       /** This object contains the necessary functions to create the 'view' of the word search,
       * which essentially refers to displaying the puzzle and handling mouse events!
       *
-      * @author Ugege Daniel
+      * @author Nikechukwum Ene, Ugege Daniel
       *
       * @param {Array[]} matrix - 2D array containing the filled word search grid
       * @param {Array[]} list - 2D array containing the list of words in the grid
@@ -646,6 +651,8 @@ const WordSearchGame = () => {
             //each letter in the row is a button element
             var letter = $("<button/>"); //i hearbuttons are preferred for clickable actions
 
+            letter.data('text',matrix[i][j])
+
             //the letter is given a cell class, and given row and column attributes!
             letter
               .attr({
@@ -653,8 +660,13 @@ const WordSearchGame = () => {
                 [rowAttr]: i,
                 [colAttr]: j,
               })
-              .text(matrix[i][j]); //sets text of button to the respective matrix index
 
+              let hideLetterChance = Math.round(Math.random()*9)
+              
+              if(hideLetterChance >= 7){
+                letter.text('?')
+              }else{letter.text(matrix[i][j])}
+              
             //adds letter to the larger row element
             letter.appendTo(row);
           }
@@ -662,6 +674,17 @@ const WordSearchGame = () => {
           //adds the row of letters to the larger game board element
           row.appendTo($(boardId));
         }
+
+        solutionsPositions.forEach((word, wordKey)=>{
+          word.forEach((letter, letterIndex, arr)=>{
+            if(wordKey == 2 && (letterIndex == 0 || letterIndex == 2)){
+              $(`button[row=${letter.x}][column=${letter.y}]`).text('?')
+            }else{
+              $(`button[row=${letter.x}][column=${letter.y}]`).text(matrix[letter.x][letter.y])
+            }
+          })
+        })
+
       }
 
       /** This function creates a table-type object to insert all the words
@@ -1007,9 +1030,9 @@ const WordSearchGame = () => {
                 hoverIndex,
                 pivotIndex
               );
-
+              // legitto
               //adds pivot text to the end
-              wordConstructed += $(select.pivot).text();
+              wordConstructed += $(select.pivot).data('text');
 
               break;
           }
@@ -1045,7 +1068,7 @@ const WordSearchGame = () => {
               selectedCells.push($(this));
 
               //updates the word being made to include the newest cell's letter
-              wordConstructed += $(this).text();
+              wordConstructed += $(this).data('text');
             });
 
           return wordConstructed;
@@ -1140,7 +1163,7 @@ const WordSearchGame = () => {
       /** This object contains the necessary functions to create the 'view' of the word search,
       * which essentially refers to displaying the puzzle and handling mouse events!
       *
-      * @author Ugege Daniel
+      * @author Nikechukwum Ene, Ugege Daniel
       *
       * @param {Array[]} matrix - 2D array containing the filled word search grid
       * @param {Array[]} list - 2D array containing the list of words in the grid

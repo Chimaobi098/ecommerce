@@ -304,6 +304,14 @@
   .cell.foundCell{
     background-color: rgb(109, 124, 255);
   }
+
+  #grid-container {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
   
   /* Media queries */
   /* @media screen and (max-width: 1400px) {
@@ -325,13 +333,6 @@
       font-size: 0.9em;
     }
   
-    /* #attempts-balance,
-    #wallet-balance,
-    #timer {
-      max-width: 80px;
-      padding: 5px;
-    } */
-  
     #attempts-balance.balance,
     #wallet-balance.balance,
     #timer.balance {
@@ -347,13 +348,6 @@
       width: 80px;
       font-size: 0.9em;
     }
-  
-    /* #attempts-balance,
-    #wallet-balance,
-    #timer {
-      max-width: 80px;
-      padding: 5px;
-    } */
   
     #attempts-balance.balance,
     #wallet-balance.balance,
