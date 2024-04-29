@@ -246,24 +246,17 @@
     z-index: 10;
   }
   
-  #game-wrapper {
+  #grid-wrapper {
     display: flex;
-  }
-  
-  #game-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-    height: 100vh;
+    justify-content: center;
+    width: 100%;
   }
   
   .boardRow {
-    flex: 1;
-    width: 95%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(10, 10%);
+    /* margin: auto; */
   }
   
   .cell {
@@ -271,12 +264,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1;
-    margin: 3px 7px;
     border: none;
-    height: 1em;
-    width: 1em;
-    padding: 0;
+    width: 100%;
+    aspect-ratio: 1/1;
     outline: 0;
     font-weight: 600;
     background-color: transparent;
@@ -306,11 +296,11 @@
   }
 
   #grid-container {
-    min-height: 100%;
+    height: auto;
     width: 100%;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
   }
   
   /* Media queries */
