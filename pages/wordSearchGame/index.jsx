@@ -61,7 +61,7 @@ const WordSearchGame = () => {
         },
         board: {
           boardSize: 9,
-          rows: 8,
+          rows: 10,
           columns: 10, //this value has to be greater than or equal to the number of rows
           initGridStyling: function (gridContainerId) {
             const gridContainer = document.querySelector(gridContainerId);
@@ -661,9 +661,9 @@ const WordSearchGame = () => {
                 [colAttr]: j,
               })
 
-              let hideLetterChance = Math.round(Math.random()*9)
+              let hideLetterChance = Math.round(Math.random()*99)
               
-              if(hideLetterChance >= 7){
+              if(hideLetterChance < 29){
                 letter.text('?')
               }else{letter.text(matrix[i][j])}
               
