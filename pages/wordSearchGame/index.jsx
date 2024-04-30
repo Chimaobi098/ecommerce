@@ -55,7 +55,7 @@ const WordSearchGame = () => {
         },
         board: {
           boardSize: 9,
-          rows: 10,
+          rows: 7,
           columns: 10, //this value has to be greater than or equal to the number of rows
           initGridStyling: function (gridContainerId) {
             const gridContainer = document.querySelector(gridContainerId);
@@ -84,7 +84,7 @@ const WordSearchGame = () => {
         instructionsId: "instructions",
         themeId: "#wordTheme",
         timer: {
-          duration: 15,
+          duration: 59,
           containerId: "#timer",
           timerCallback: function () {
             setTimeUp(true);
