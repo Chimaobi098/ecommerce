@@ -265,8 +265,8 @@
     align-items: center;
     justify-content: center;
     border: none;
-    width: 100%;
-    aspect-ratio: 1/1;
+    width: 35px;
+    height: 35px;
     outline: 0;
     font-weight: 600;
     background-color: transparent;
@@ -295,13 +295,70 @@
     background-color: rgb(109, 124, 255);
   }
 
+  .foundCell-yellow{
+    background-color: rgb(255, 238, 85);
+    animation: revealFlashes-y 4s linear 0s 1  ;
+  }
+
+  .foundCell-red{
+    background-color: rgb(255, 109, 116);
+    animation: revealFlashes-r 4s linear 0s 1  ;
+  }
+
+  .foundCell-green{
+    background-color: rgb(109, 255, 150);
+    animation: revealFlashes-g 4s linear 0s 1  ;
+  }
+
+  @keyframes revealFlashes-g {
+    0%{background-color: transparent;}
+    10%{background-color: transparent;}
+    20%{background-color: rgb(109, 255, 150);}
+    30%{ background-color: rgb(109, 255, 150);}
+    40%{background-color: transparent;}
+    50%{background-color: transparent;}
+    60%{background-color: rgb(109, 255, 150);}
+    70%{background-color: rgb(109, 255, 150);}
+    80%{background-color: transparent;}
+    90%{background-color: transparent;}
+    100%{background-color: rgb(109, 255, 150);};
+  }
+
+  @keyframes revealFlashes-r {
+    0%{background-color: transparent;}
+    10%{background-color: transparent;}
+    20%{background-color: rgb(255, 109, 116)}
+    30%{ background-color: rgb(255, 109, 116)}
+    40%{background-color: transparent;}
+    50%{background-color: transparent;}
+    60%{background-color: rgb(255, 109, 116);}
+    70%{background-color: rgb(255, 109, 116);}
+    80%{background-color: transparent;}
+    90%{background-color: transparent;}
+    100%{background-color: rgb(255, 109, 116);};
+  }
+
+  @keyframes revealFlashes-y {
+    0%{background-color: transparent;}
+    10%{background-color: transparent;}
+    20%{background-color: rgb(255, 238, 85)}
+    30%{ background-color: rgb(255, 238, 85)}
+    40%{background-color: transparent;}
+    50%{background-color: transparent;}
+    60%{background-color: rgb(255, 238, 85)}
+    70%{background-color: rgb(255, 238, 85)}
+    80%{background-color: transparent}
+    90%{background-color: transparent}
+    100%{background-color: rgb(255, 238, 85)};
+  }
+
   #grid-container {
     height: auto;
     width: 95%;
     max-width: 400px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
   }
   
   /* Media queries */

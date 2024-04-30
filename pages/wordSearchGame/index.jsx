@@ -84,10 +84,11 @@ const WordSearchGame = () => {
         instructionsId: "instructions",
         themeId: "#wordTheme",
         timer: {
-          duration: 59,
+          duration: 15,
           containerId: "#timer",
           timerCallback: function () {
-            setTimeUp(true);
+            revealAnswers(solutionsPositions)
+            // setTimeUp(true);
           },
         },
         onSuccess: function () {
@@ -97,6 +98,28 @@ const WordSearchGame = () => {
         },
       };
       let solutionsPositions = [[], [], []];
+
+      function revealAnswers(answers){
+        answers.forEach((word, wordKey) => {
+          word.forEach((letter, letterIndex, arr) => {
+            if(!($(`button[row=${letter.x}][column=${letter.y}]`).hasClass('foundCell'))){
+              if(wordKey == 0){
+                $(`button[row=${letter.x}][column=${letter.y}]`).addClass('foundCell-green')
+              }
+              if(wordKey == 1){
+                $(`button[row=${letter.x}][column=${letter.y}]`).addClass('foundCell-yellow')
+              }
+              if(wordKey == 2){
+                $(`button[row=${letter.x}][column=${letter.y}]`).addClass('foundCell-red')
+              }
+            }
+            
+          });
+        });
+        setTimeout(() => {
+          setTimeUp(true)
+        }, 7000);
+      }
 
       //   TIMER
       let countdownInterval = null;
@@ -945,9 +968,9 @@ const WordSearchGame = () => {
             if (validWordMade(list, wordMade, config.instructionsId)) {
               // alert('endTouch')
               $(select.selected).addClass("foundCell");
-              document.querySelectorAll(".foundCell").forEach((foundCell) => {
-                foundCell.style.backgroundColor = "#6D7CFF";
-              });
+              // document.querySelectorAll(".foundCell").forEach((foundCell) => {
+              //   foundCell.style.backgroundColor = "#6D7CFF";
+              // });
             }
 
             setTimeout(() => {
