@@ -297,10 +297,11 @@
 
   #grid-container {
     height: auto;
-    width: 100%;
+    width: 95%;
     max-width: 400px;
     display: flex;
     flex-direction: column;
+    gap: 5px;
   }
   
   /* Media queries */
