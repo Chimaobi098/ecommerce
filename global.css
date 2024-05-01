@@ -324,6 +324,20 @@
     100%{background-color: rgb(109, 255, 150);};
   }
 
+  @keyframes revealFlashes-y {
+    0%{background-color: transparent;}
+    10%{background-color: transparent;}
+    20%{background-color: rgb(255, 238, 85)}
+    30%{ background-color: rgb(255, 238, 85)}
+    40%{background-color: transparent;}
+    50%{background-color: transparent;}
+    60%{background-color: rgb(255, 238, 85)}
+    70%{background-color: rgb(255, 238, 85)}
+    80%{background-color: transparent}
+    90%{background-color: transparent}
+    100%{background-color: rgb(255, 238, 85)};
+  }
+
   @keyframes revealFlashes-r {
     0%{background-color: transparent;}
     10%{background-color: transparent;}
@@ -338,19 +352,6 @@
     100%{background-color: rgb(255, 109, 116);};
   }
 
-  @keyframes revealFlashes-y {
-    0%{background-color: transparent;}
-    10%{background-color: transparent;}
-    20%{background-color: rgb(255, 238, 85)}
-    30%{ background-color: rgb(255, 238, 85)}
-    40%{background-color: transparent;}
-    50%{background-color: transparent;}
-    60%{background-color: rgb(255, 238, 85)}
-    70%{background-color: rgb(255, 238, 85)}
-    80%{background-color: transparent}
-    90%{background-color: transparent}
-    100%{background-color: rgb(255, 238, 85)};
-  }
 
   #grid-container {
     height: auto;

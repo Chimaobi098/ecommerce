@@ -84,7 +84,7 @@ const WordSearchGame = () => {
         instructionsId: "instructions",
         themeId: "#wordTheme",
         timer: {
-          duration: 15,
+          duration: 20,
           containerId: "#timer",
           timerCallback: function () {
             revealAnswers(solutionsPositions)
@@ -100,23 +100,31 @@ const WordSearchGame = () => {
       let solutionsPositions = [[], [], []];
 
       function revealAnswers(answers){
+        $('#grid-container').css('pointer-events', 'none')
+        $('.cell').css('color', 'gray').css('transition', 'color 1s')
         answers.forEach((word, wordKey) => {
-          word.forEach((letter, letterIndex, arr) => {
-            if(!($(`button[row=${letter.x}][column=${letter.y}]`).hasClass('foundCell'))){
+          word.forEach((letter) => {
+            let target = $(`button[row=${letter.x}][column=${letter.y}]`)
+            if(target.hasClass('foundCell')){
+              target.css('color', 'black')
+            }
+            if(!(target.hasClass('foundCell'))){
               if(wordKey == 0){
-                $(`button[row=${letter.x}][column=${letter.y}]`).addClass('foundCell-green')
+                target.addClass('foundCell-green').css('color', 'black')
               }
               if(wordKey == 1){
-                $(`button[row=${letter.x}][column=${letter.y}]`).addClass('foundCell-yellow')
+                target.addClass('foundCell-yellow').css('color', 'black')
               }
               if(wordKey == 2){
-                $(`button[row=${letter.x}][column=${letter.y}]`).addClass('foundCell-red')
+                target.addClass('foundCell-red').css('color', 'black')
               }
             }
             
           });
         });
         setTimeout(() => {
+          $('#grid-container').css('pointer-events', 'all')
+          $('.cell').css('color', 'black').css('transition', 'color 0s')
           setTimeUp(true)
         }, 7000);
       }
@@ -681,10 +689,12 @@ const WordSearchGame = () => {
             //adds the row of letters to the larger game board element
             row.appendTo($(boardId));
           }
+          
+          let challengeWord = Math.floor(Math.random()*3)
 
           solutionsPositions.forEach((word, wordKey) => {
             word.forEach((letter, letterIndex, arr) => {
-              if (wordKey == 2 && (letterIndex == 0 || letterIndex == 2)) {
+              if (wordKey == (challengeWord) && (letterIndex == 0 || letterIndex == 2)) {
                 $(`button[row=${letter.x}][column=${letter.y}]`).text("?");
               } else {
                 $(`button[row=${letter.x}][column=${letter.y}]`).text(
@@ -1018,7 +1028,7 @@ const WordSearchGame = () => {
                 pivotIndex = 0;
 
                 //sets up wordConstructed with the pivot's letter (to start it off)
-                wordConstructed = $(select.pivot).text();
+                wordConstructed = $(select.pivot).data("text");
 
                 //using the pivot text, selects cells and adds their text to wordConstructed
                 wordConstructed = selectLetters(
