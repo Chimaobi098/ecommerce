@@ -55,7 +55,7 @@ const WordSearchGame = () => {
         },
         board: {
           boardSize: 9,
-          rows: 7,
+          rows: 6,
           columns: 10, //this value has to be greater than or equal to the number of rows
           initGridStyling: function (gridContainerId) {
             const gridContainer = document.querySelector(gridContainerId);
@@ -690,13 +690,17 @@ const WordSearchGame = () => {
             row.appendTo($(boardId));
           }
           
-          let challengeWord = Math.floor(Math.random()*3)
+          // let challengeWord = Math.floor(Math.random()*3)
 
           solutionsPositions.forEach((word, wordKey) => {
             word.forEach((letter, letterIndex, arr) => {
-              if (wordKey == (challengeWord) && (letterIndex == 0 || letterIndex == 2)) {
+              // if (wordKey == (challengeWord) && (letterIndex == 0 || letterIndex == 2)) {
+              //   $(`button[row=${letter.x}][column=${letter.y}]`).text("?");
+              // } 
+              if (letterIndex == 0 || letterIndex == 2) {
                 $(`button[row=${letter.x}][column=${letter.y}]`).text("?");
-              } else {
+              } 
+              else {
                 $(`button[row=${letter.x}][column=${letter.y}]`).text(
                   matrix[letter.x][letter.y]
                 );
