@@ -55,7 +55,7 @@ const WordSearchGame = () => {
         },
         board: {
           boardSize: 9,
-          rows: 7,
+          rows: 6,
           columns: 10, //this value has to be greater than or equal to the number of rows
           initGridStyling: function (gridContainerId) {
             const gridContainer = document.querySelector(gridContainerId);
@@ -691,16 +691,16 @@ const WordSearchGame = () => {
           }
           
           let challengeWord = Math.floor(Math.random()*2.9) // Used to randomly pick one of the 3 words to find and make the challenge word
-          let secondHiddenLetter = Math.floor(Math.random()*2.9) // Used to randomly pick which the second letter to hide in the challenge word
+          let secondHiddenLetter = Math.floor(Math.random()*2.9)+1 // Used to randomly pick which the second letter to hide in the challenge word
 
           // For each word
           solutionsPositions.forEach((word, wordKey) => {
             // For each letter in the words
             word.forEach((letter, letterIndex, arr) => {
-              if(secondHiddenLetter == 1){
+              if(secondHiddenLetter == 3){
                 secondHiddenLetter = word.length-1 // anytime secondHiddenLetter value is 3, that will represent the last letter of the word
               }
-              if (wordKey == (challengeWord) && (letterIndex == 1 || letterIndex == secondHiddenLetter)) {
+              if (wordKey == (challengeWord) && (letterIndex == 0 || letterIndex == secondHiddenLetter)) {
                 $(`button[row=${letter.x}][column=${letter.y}]`).text("?");
               } 
               else {
