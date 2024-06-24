@@ -55,7 +55,7 @@ const WordSearchGame = () => {
         },
         board: {
           boardSize: 9,
-          rows: 6,
+          rows: 8,
           columns: 10, //this value has to be greater than or equal to the number of rows
           initGridStyling: function (gridContainerId) {
             const gridContainer = document.querySelector(gridContainerId);
