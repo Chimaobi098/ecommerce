@@ -217,14 +217,8 @@
   #found-words .listRow {
     display: flex;
     justify-content: space-between;
-    /* margin-bottom: 3vh; */
-    flex-wrap: no-wrap;
-    max-width: 100%;
-  }
-  
-  .listWord {
-    flex: 1;
-    margin: 0 40px;
+    column-gap: 2rem;
+    width: 100%;
   }
   
   span.foundWord {
@@ -310,6 +304,11 @@
     animation: revealFlashes-g 4s linear 0s 1  ;
   }
 
+  .foundCell-purple{
+    background-color: rgb(255, 88, 255);
+    animation: revealFlashes-p 4s linear 0s 1  ;
+  }
+
   @keyframes revealFlashes-g {
     0%{background-color: transparent;}
     10%{background-color: transparent;}
@@ -352,6 +351,19 @@
     100%{background-color: rgb(255, 109, 116);};
   }
 
+  @keyframes revealFlashes-p {
+    0%{background-color: transparent;}
+    10%{background-color: transparent;}
+    20%{background-color: rgb(255, 88, 255);}
+    30%{ background-color: rgb(255, 88, 255);}
+    40%{background-color: transparent;}
+    50%{background-color: transparent;}
+    60%{background-color: rgb(255, 88, 255);}
+    70%{background-color: rgb(255, 88, 255);}
+    80%{background-color: transparent;}
+    90%{background-color: transparent;}
+    100%{background-color: rgb(255, 88, 255);};
+  }
 
   #grid-container {
     height: auto;

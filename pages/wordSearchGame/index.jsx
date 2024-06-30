@@ -72,7 +72,7 @@ const WordSearchGame = () => {
           wordLength: 4,
           rowOfWords: 1,
         },
-        numberOfWordsToFind: 3,
+        numberOfWordsToFind: 4,
         showSolution: {
           show: false,
           solveButtonId: "#solveButton",
@@ -97,7 +97,7 @@ const WordSearchGame = () => {
           stopCountdownTimer();
         },
       };
-      let solutionsPositions = [[], [], []];
+      let solutionsPositions = [[], [], [], []];
 
       function revealAnswers(answers){
         $('#grid-container').css('pointer-events', 'none')
@@ -117,6 +117,9 @@ const WordSearchGame = () => {
               }
               if(wordKey == 2){
                 target.addClass('foundCell-red').css('color', 'black')
+              }
+              if(wordKey == 3){
+                target.addClass('foundCell-purple').css('color', 'black')
               }
             }
             
@@ -691,7 +694,7 @@ const WordSearchGame = () => {
           }
           
           let challengeWord = Math.floor(Math.random()*2.9) // Used to randomly pick one of the 3 words to find and make the challenge word
-          let secondHiddenLetter = Math.floor(Math.random()*2.9)+1 // Used to randomly pick which the second letter to hide in the challenge word
+          let secondHiddenLetter = 2 // Used to randomly pick which the second letter to hide in the challenge word
 
           // For each word
           solutionsPositions.forEach((word, wordKey) => {
