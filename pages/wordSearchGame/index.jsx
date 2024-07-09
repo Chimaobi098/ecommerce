@@ -97,7 +97,7 @@ const WordSearchGame = () => {
           stopCountdownTimer();
         },
       };
-      let solutionsPositions = [[], [], [], []];
+      let solutionsPositions = [[], [], [], [], [], [], [], []];
 
       function revealAnswers(answers){
         $('#grid-container').css('pointer-events', 'none')
@@ -295,31 +295,54 @@ const WordSearchGame = () => {
           var randIndex = Math.floor(Math.random() * themesOfWords.length);
           var listOfWords = wordsToSearch[themesOfWords[randIndex]];
           const flattenedArray = listOfWords.flat();
-          const resultArray = [];
+          const wordsToAddToMatrixArray = [];
+          const wordsToFindArray = [];
+          const decoyArray = [];
+          const alphabets = ['a','b','c','d','e','f','g','q','x','z']
           const array1 = [];
           const array2 = [];
           while (array1.length + array2.length < config.numberOfWordsToFind) {
             const randomIndex = Math.floor(
               Math.random() * flattenedArray.length
             );
-            const randomElement = flattenedArray.splice(randomIndex, 1)[0];
-            if (array1.length <= array2.length) {
-              array1.push(randomElement);
-            } else {
-              array2.push(randomElement);
-            }
-          }
 
-          resultArray.push(array1, array2);
-          console.log(resultArray);
+            const randomWord = flattenedArray.splice(randomIndex, 1)[0];
+            
+            if (array1.length <= array2.length) {
+              array1.push(randomWord);
+            } else {
+              array2.push(randomWord);
+            }
+            // Pushing to decoy Array
+              let validDecoyLetter = false
+              let decoy = [...randomWord]
+
+              while(!validDecoyLetter){
+                const randomIndexForDecoys = Math.floor(Math.random() * alphabets.length)
+                const randomLetterForDecoys = alphabets.splice(randomIndexForDecoys, 1)[0]
+                if(decoy[(randomWord.length-1)] == randomLetterForDecoys){
+                  // Don't include the letter
+                  }else{
+                    // Include the fake last letter
+                    decoy[(randomWord.length-1)] = randomLetterForDecoys
+                    validDecoyLetter = true
+                  }
+              }
+              decoyArray.push(decoy.join(''))
+            }
+          
+
+          wordsToAddToMatrixArray.push(array1, array2, decoyArray);
+          wordsToFindArray.push(array1,array2)
           countdownTimer(config.timer.duration, config.timer.timerCallback);
-          convertToUpperCase(resultArray);
+          convertToUpperCase(wordsToAddToMatrixArray);
+          convertToUpperCase(wordsToFindArray);
 
           //sets the headings to reflect the instructions and themes
           updateHeadings(mainInstructions, themesOfWords[randIndex]);
 
           //generates the view of the game and sets up mouse events for clicking and dragging
-          game = new WordSearchLogic(resultArray.slice());
+          game = new WordSearchLogic(wordsToAddToMatrixArray.slice(), wordsToFindArray.slice());
           game.setUpGame();
           view =
             getDeviceType() === "Phone" || getDeviceType() === "Tablet"
@@ -360,7 +383,6 @@ const WordSearchGame = () => {
          */
         $(config.newGameButtonId).click(function () {
           //empties the game and list elements, as well as the h3 theme span element
-          // alert('hey')
 
           $(config.gameContainerId).empty();
           $(config.listOfWords.containerId).empty();
@@ -389,7 +411,7 @@ const WordSearchGame = () => {
         wordFitted: false, //whether the word has been set into grid
       };
 
-      function WordSearchLogic(list) {
+      function WordSearchLogic(list, findList) {
         //empty object to hold the locations of each fitted word
         var wordLocations = {};
 
@@ -583,7 +605,7 @@ const WordSearchGame = () => {
           return wordLocations;
         };
         this.getListOfWords = function () {
-          return list;
+          return findList;
         };
       }
 
@@ -693,7 +715,7 @@ const WordSearchGame = () => {
             row.appendTo($(boardId));
           }
           
-          let challengeWord = Math.floor(Math.random()*2.9) // Used to randomly pick one of the 3 words to find and make the challenge word
+          let challengeWord = Math.floor(Math.random()*3.9) // Used to randomly pick one of the 4 words to find and make the challenge word
           let secondHiddenLetter = 2 // Used to randomly pick which the second letter to hide in the challenge word
 
           // For each word
