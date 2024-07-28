@@ -87,8 +87,9 @@ const WordSearchGame = () => {
           duration: 20,
           containerId: "#timer",
           timerCallback: function () {
+            $('.hint').removeClass('hint')
             revealAnswers(solutionsPositions)
-            // setTimeUp(true);
+            
           },
         },
         onSuccess: function () {
@@ -98,27 +99,29 @@ const WordSearchGame = () => {
         },
       };
       let solutionsPositions = [[], [], [], [], [], [], [], []];
+      let hintCountdown;
 
       function revealAnswers(answers){
+        clearTimeout(hintCountdown)
         $('#grid-container').css('pointer-events', 'none')
         $('.cell').css('color', 'gray').css('transition', 'color 1s')
-        answers.forEach((word, wordKey) => {
+        answers.forEach((word, wordIndex) => {
           word.forEach((letter) => {
             let target = $(`button[row=${letter.x}][column=${letter.y}]`)
             if(target.hasClass('foundCell')){
               target.css('color', 'black')
             }
             if(!(target.hasClass('foundCell'))){
-              if(wordKey == 0){
+              if(wordIndex == 0){
                 target.addClass('foundCell-green').css('color', 'black')
               }
-              if(wordKey == 1){
+              if(wordIndex == 1){
                 target.addClass('foundCell-yellow').css('color', 'black')
               }
-              if(wordKey == 2){
+              if(wordIndex == 2){
                 target.addClass('foundCell-red').css('color', 'black')
               }
-              if(wordKey == 3){
+              if(wordIndex == 3){
                 target.addClass('foundCell-purple').css('color', 'black')
               }
             }
@@ -313,7 +316,8 @@ const WordSearchGame = () => {
             } else {
               array2.push(randomWord);
             }
-            // Pushing to decoy Array
+            if(array1.length + array2.length <= 2){
+              // Pushing to decoy Array
               let validDecoyLetter = false
               let decoy = [...randomWord]
 
@@ -329,6 +333,8 @@ const WordSearchGame = () => {
                   }
               }
               decoyArray.push(decoy.join(''))
+            }
+            
             }
           
 
@@ -737,6 +743,54 @@ const WordSearchGame = () => {
           });
         }
 
+        hintsManagement()
+
+        function hintsManagement(){
+          clearTimeout(hintCountdown)
+          let foundWords = document.querySelectorAll(".listWord.foundWord")
+          if(foundWords.length > 0 && foundWords.length < 3){
+            
+              $('.hint').removeClass('hint')
+              let controller = true
+              hintCountdown = setTimeout(() => {
+                solutionsPositions.forEach((word, wordIndex) => {
+                  if(controller){
+                    word.forEach((letter) => {
+                      let target = $(`button[row=${letter.x}][column=${letter.y}]`)              
+                      if(!(target.hasClass('foundCell')) && wordIndex < 4){
+                        target.addClass('hint')
+                          setTimeout(() => {
+                            target.removeClass('hint')
+                          }, 2500);
+                          controller = false
+                      }
+                    });
+                  }
+                });
+              }, 5*1000)
+          }
+          else{
+            let first = Math.floor(Math.random()*4)
+              let second = Math.floor(Math.random()*4)
+              hintCountdown = setTimeout(() => {
+                solutionsPositions.forEach((word, wordIndex) => {
+                  word.forEach((letter) => {
+                    let target = $(`button[row=${letter.x}][column=${letter.y}]`)              
+                      if(wordIndex == first){
+                        target.addClass('hint')
+                      }
+                      if(wordIndex == second){
+                        target.addClass('hint')
+                      }
+                      setTimeout(() => {
+                        target.removeClass('hint')
+                      }, 2500);
+                  });
+                });
+              }, 10*1000);
+          }
+        }
+        
         /** This function creates a table-type object to insert all the words
          * contained in the word search puzzle! players refer to this table
          * when looking for words to find
@@ -1162,7 +1216,8 @@ const WordSearchGame = () => {
 
                   //checks if the last word to find was found
                   checkPuzzleSolved(".listWord", ".listWord.foundWord");
-
+                  //hint system
+                  hintsManagement(".listWord.foundWord")
                   return true;
                 }
               }
