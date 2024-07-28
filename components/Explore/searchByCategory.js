@@ -90,8 +90,6 @@ const SearchByCategory = ({
 
   const handleCategorySelection = (category) => {
     if (Object.values(currentData[category]).length == 0) {
-      // setIsNavVisible(false);
-      // console.log("Navbar is not visible");
       fetchCategoryProducts();
     }
     setSelectedCategory(category);
@@ -296,9 +294,7 @@ const SearchByCategory = ({
                     <div
                       className="card rounded-lg shadow-lg  cursor-pointer"
                       onClick={(e) => {
-                        i < 2
-                          ? showModal(e)
-                          : handleCategorySelection(category);
+                        handleCategorySelection(category);
                         setIsNavVisible(false);
                       }}
                       key={i}
