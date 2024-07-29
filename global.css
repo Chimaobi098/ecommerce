@@ -366,7 +366,7 @@
   }
 
   .hint{
-    animation: hint 2s ease 0s;
+    animation: hint 2.5s ease 2 0s;
   }
 
   @keyframes hint {
