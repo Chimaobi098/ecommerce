@@ -761,7 +761,7 @@ const WordSearchGame = () => {
                         target.addClass('hint')
                           setTimeout(() => {
                             target.removeClass('hint')
-                          }, 2500);
+                          }, 5000);
                           controller = false
                       }
                     });
@@ -784,7 +784,7 @@ const WordSearchGame = () => {
                       }
                       setTimeout(() => {
                         target.removeClass('hint')
-                      }, 2500);
+                      }, 5000);
                   });
                 });
               }, 10*1000);
