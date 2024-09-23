@@ -14,7 +14,7 @@ export const SanityUIDProvider = ({ children }) => {
   const { storeUserToFirebase } = useAppAuth();
 
   useEffect(() => {
-    async function getSanityUID() {
+    async function getSanityUID(){
       if (user) {
         let userId = await sanityClient.fetch(
           `
