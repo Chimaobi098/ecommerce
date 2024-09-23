@@ -5,18 +5,23 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  onSnapshot,
+  orderBy,
   query,
+  Timestamp,
   updateDoc,
   where,
 } from "firebase/firestore";
 import { firebaseConfig } from "./config";
 import { initializeApp } from "firebase/app";
+import { UserProfile } from "@auth0/nextjs-auth0";
 
 // Initialize Firebase app
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const fbUsersRef = collection(db, "users");
 const fbPaymentRef = collection(db, "payments");
+const fbAuctionBidsRef = collection(db, "auctionBids");
 
 // Types
 export type FbUser = {
@@ -49,6 +54,13 @@ type Auth0User = {
 type Transaction = {
   reference: string;
 };
+
+export interface BidData {
+  userName: string;
+  userEmail: string; // Added username field
+  bidAmount: number;
+  createdAt: Timestamp; // Firestore's Timestamp type
+}
 
 const useAppAuth = () => {
   // Function for finding a user by email
@@ -108,6 +120,82 @@ const useAppAuth = () => {
       amount,
     });
   };
+
+  // Helper function for placing or changing bids
+  const handleBidPlacements = async (user: UserProfile, bidAmount: number) => {
+
+  if (!user) {
+    return { error: "Unauthenticated!" };
+  }
+
+  const userName = user.name
+  const userEmail = user.email
+
+  try {
+    // Query Firestore to check if the user has already placed a bid
+    const existingBidQuery = query(fbAuctionBidsRef, where("userEmail", "==", userEmail));
+    const existingBidSnapshot = await getDocs(existingBidQuery);
+
+    if (!existingBidSnapshot.empty) {
+      const existingBidDoc = existingBidSnapshot.docs[0];
+      const existingBidId = existingBidDoc.id;
+
+      // Update the existing bid with the new bid amount
+      const bidDocRef = doc(db, "auctionBids", existingBidId);
+      await updateDoc(bidDocRef, {
+        bidAmount: bidAmount, // Overwrite the existing bid amount
+        updatedAt: Timestamp.now(),
+      });
+
+      return { success: "Bid updated" };
+    } else {
+      // If no bid exists, create a new one
+      await addDoc(fbAuctionBidsRef, {
+        userEmail,
+        userName,
+        bidAmount,
+        createdAt: Timestamp.now(),
+      });
+
+      return { success: "Bid placed" };
+    }
+  } catch (error) {
+    return { error: "Failed to process bid" };
+  }
+  }
+
+  // Helper function to get all bids for the auction bids list
+  function getAllBids(setBids: (bids: BidData[]) => void) {
+    try {
+      const bidRef = collection(db, "auctionBids");
+  
+      const bidsQuery = query(
+        bidRef,
+        orderBy("bidAmount", "desc"),
+        orderBy("createdAt", "asc")
+      );
+  
+      // Real-time snapshot listener
+      const unsubscribe = onSnapshot(bidsQuery, (snapshot) => {
+        const bids = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            userName: data.userName,
+            userEmail: data.userEmail,
+            bidAmount: data.bidAmount,
+            createdAt: data.createdAt.toDate(), // Convert Firestore timestamp to JS Date
+          };
+        });
+  
+        setBids(bids);
+      });
+  
+      return unsubscribe; // Immediately return the unsubscribe function
+    } catch (error) {
+      console.error("Error fetching real-time bids: ", error);
+      throw new Error("Failed to fetch bids");
+    }
+  }
 
   // Helper function to create a new user in Firebase
   const createNewUserInFirebase = async (user: Auth0User) => {
@@ -176,7 +264,9 @@ const useAppAuth = () => {
     storeUserToFirebase,
     getUserFromLocalStorage,
     updateFieldsInFirebase,
-    saveNewPaymentRefInFirebase
+    saveNewPaymentRefInFirebase,
+    handleBidPlacements,
+    getAllBids,
   };
 };
 

@@ -6,18 +6,19 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { CircularProgress } from "@mui/material";
 import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
 import { useEffect } from "react";
-import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
 import { useShoppingCart } from "../../context/shoppingCart";
 //import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { HomeProduct } from "../../pages";
 import ProductContainer from "./productItem/productContainer";
-import Shop from '../../public/noun-shopping-bag-858425.svg';
-import Image from "next/image";
+import { ShoppingBagIcon } from "../../public/ShoppingBag";
+import AuctionIcon from "../../public/Auction";
+import { useRouter } from "next/router";
 
 const Home = ({ results }: HomeProduct) => {
   const { getCartQuantity, cartOpen, setCartOpen } = useShoppingCart();
   const { user, error } = useUser();
+  const router = useRouter()
   const [productData, setProductData] = useState(results);
   const [hasMore, setHasMore] = useState(true);
   const [userLikedProducts, setUserLikedProducts] = useState();
@@ -84,7 +85,7 @@ _id
     }
   }
 
-  console.log(productData, "this is all product data");
+  // console.log(productData, "this is all product data");
 
 
   return (
@@ -99,27 +100,25 @@ _id
 
       <NavBar>
         <header>Home</header>
-        <Button
-          onClick={() => {
-            setCartOpen(true);
-            console.log("Shop cart opened");
-          }}
-          style={{
-            width: "60px",
-            height: "60px",
-            paddingTop: "13px",
-            borderRadius: "50%",
-            color: "black",
-          }}
-        >
-          <Badge
-            badgeContent={getCartQuantity()}
-            color="error"
-            overlap="rectangular"
-          >
-            <Image src={Shop} className="shopImg" style={{ width: "40px", height: "40px", border: "1px solid red" }} unoptimized={true} width={40} height={40} alt="shop icon" />
-          </Badge>
-        </Button>
+        <div className="flex gap-x-5 absolute right-5">
+          <button
+            onClick={() => { router.push('/auction') }}
+            className="h-[60px] text-black">
+            <AuctionIcon />
+          </button>
+
+          <button
+            onClick={() => { setCartOpen(true) }}
+            className="h-[60px] text-black">
+            <Badge
+              badgeContent={getCartQuantity()}
+              color="error"
+              overlap="rectangular"
+            >
+              <ShoppingBagIcon />
+            </Badge>
+          </button>
+        </div>
       </NavBar>
       <Wrapper id="parent">
         <InfiniteScroll
