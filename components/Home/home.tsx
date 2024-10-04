@@ -99,8 +99,8 @@ _id
         )}
 
       <NavBar>
-        <header>Home</header>
-        <div className="flex gap-x-5 absolute right-5">
+        <h1>Seidou</h1>
+        <div className="flex gap-x-5 items-center">
           <button
             onClick={() => { router.push('/auction') }}
             className="h-[60px] text-black">
