@@ -21,15 +21,14 @@ export const NavBar = styled.nav`
   height: 9vh;
   width: 100%;
   max-width: 450px;
+  padding: 0px 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid hsl(0, 0%, 90%);
-  header {
+  h1 {
     font-weight: 600;
     font-size: 1.6rem;
-    width: 70%;
-    text-align: center;
   }
 `;
 
