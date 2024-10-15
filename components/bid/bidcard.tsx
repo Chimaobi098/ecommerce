@@ -90,7 +90,7 @@ export const BidCard = ({ userEmail }: Props) => {
 
   return (
     <>
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {isOpen && (
           <BidForm
             onSubmit={handleFormSubmit}
@@ -98,7 +98,7 @@ export const BidCard = ({ userEmail }: Props) => {
             setIsOpen={setIsOpen}
           />
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       <ToastContainer />
 
