@@ -136,21 +136,7 @@ const AuctionPage = () => {
           {bidQueue.isOpen && 
             <BidsQueue setBidQueue={setBidQueue} setBidForm={setBidForm} slot={bidQueue.slot} bids={bids}/>
           }
-
-      {/* <div className="w-full h-full max-w-md flex flex-col items-center px-4">
-        <div className="w-full flex items-center flex-col mt-24">
-          {user?.email ? (
-            <BidCard userEmail={user.email} />
-          ) : (
-            <div className="mt-4 text-gray-500">
-              Please <button className="px-2 py-[2px] rounded-md border text-gray-400" onClick={()=>{router.push('/api/auth/login')}}>sign in</button> to place a bid.
-            </div>
-          )}
-          <div className="mt-7 w-full h-auto max-h-[calc(100dvh-350px)]">
-            <BidList />
-          </div>
-        </div>
-      </div> */}
+          
     </div>
     </>
   );
