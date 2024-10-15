@@ -67,36 +67,6 @@ export const BidCard = ({ userEmail }: Props) => {
     return () => unsubscribe();
   }, [userEmail]);
 
-  const handleFormSubmit = (bid_amount: number) => {
-    handleBidPlacements(user!, bid_amount).then((res: any) => {
-      if (res.success) {
-        toast.success(res.success, {
-          position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-      }
-      if (res.error) {
-        toast.error(res.error, {
-          position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-      }
-    });
-    setIsOpen(false);
-  };
-
   const handleCancelBid = async () => {
     if (bidDetails?.id) {
       try {
