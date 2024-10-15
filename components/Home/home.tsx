@@ -85,9 +85,6 @@ _id
     }
   }
 
-  // console.log(productData, "this is all product data");
-
-
   return (
     <>
         {loading && (

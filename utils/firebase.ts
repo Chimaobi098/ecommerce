@@ -58,6 +58,7 @@ type Transaction = {
 export interface BidData {
   userName: string;
   userEmail: string; // Added username field
+  slot: number;
   bidAmount: number;
   createdAt: Timestamp; // Firestore's Timestamp type
 }
@@ -122,7 +123,7 @@ const useAppAuth = () => {
   };
 
   // Helper function for placing or changing bids
-  const handleBidPlacements = async (user: UserProfile, bidAmount: number) => {
+  const handleBidPlacements = async (user: UserProfile, slot:number, bidAmount: number) => {
 
   if (!user) {
     return { error: "Unauthenticated!" };
@@ -133,7 +134,7 @@ const useAppAuth = () => {
 
   try {
     // Query Firestore to check if the user has already placed a bid
-    const existingBidQuery = query(fbAuctionBidsRef, where("userEmail", "==", userEmail));
+    const existingBidQuery = query(fbAuctionBidsRef, where("userEmail", "==", userEmail), where("slot", "==", slot));
     const existingBidSnapshot = await getDocs(existingBidQuery);
 
     if (!existingBidSnapshot.empty) {
@@ -153,6 +154,7 @@ const useAppAuth = () => {
       await addDoc(fbAuctionBidsRef, {
         userEmail,
         userName,
+        slot,
         bidAmount,
         createdAt: Timestamp.now(),
       });
@@ -182,6 +184,7 @@ const useAppAuth = () => {
           return {
             userName: data.userName,
             userEmail: data.userEmail,
+            slot: data.slot,
             bidAmount: data.bidAmount,
             createdAt: data.createdAt.toDate(), // Convert Firestore timestamp to JS Date
           };

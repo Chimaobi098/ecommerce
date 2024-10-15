@@ -24,6 +24,7 @@ const formatDate = (createdAt: Date | Timestamp) => {
 export interface BidData {
   userName: string;
   userEmail: string; // Added username field
+  slot: number;
   bidAmount: number;
   createdAt: Timestamp; // Firestore's Timestamp type
 }
