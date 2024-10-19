@@ -97,8 +97,8 @@ const AuctionPage = () => {
 
       <ToastContainer />
 
-    <div className="w-full h-[100dvh] flex items-center justify-center bg-gray-100 overflow-scroll">
-      <div className="fixed top-0 text-2xl w-full flex justify-center items-center font-bold h-[60px] border-b-[1px] border-[#00000023] bg-white">
+    <div className="w-full h-[100dvh] flex items-center justify-center bg-gray-100 text-sm lg:text-base">
+      <div className="fixed top-0 z-20 text-2xl w-full flex justify-center items-center font-bold h-[60px] border-b-[1px] border-[#00000023] bg-white">
         <button className="absolute left-2 top-1/2 -translate-y-1/2" onClick={()=>{router.back()}}>
           <ArrowBackRounded />
         </button>
@@ -106,12 +106,12 @@ const AuctionPage = () => {
       </div>
 
       {user? (
-            <section className="flex flex-col w-full h-[calc(100dvh-120px)] text-sm md:text-base items-center py-5 gap-y-7">
+            <section className="flex flex-col h-[calc(100dvh-120px)] w-full text-sm md:text-base items-center gap-y-7 snap-mandatory snap-y pt-7 overflow-scroll">
             {slots.map((slot, index)=>{
               return(
-                <div key={index} className="w-[95%] rounded-l-[48px] rounded-r-[5px] flex h-20 shadow-sm bg-white">
+                <div key={index} className="w-[95%] flex-shrink-0 last:mb-7 snap-bottom rounded-l-[48px] rounded-r-[0px] flex h-20 bg-white">
                   <div className="flex justify-center items-center h-full aspect-square rounded-full
-                  outline outline-[7px] outline-gray-100 outline-offset-[-1px] border-[5px] border-gray-100 text-lg">
+                   text-lg shadow-[inset_-2px_2px_2px_2px_#f3f4f6]">
                     {slot.slotNumber}
                   </div>
                   <div className="flex-grow h-full relative">
@@ -129,7 +129,7 @@ const AuctionPage = () => {
           </section>
           ) : (
             <div className=" text-gray-500">
-              <span>Please <button className="px-2 py-[2px] rounded-md border border-[#d5d5d5] text-blue-400" onClick={()=>{router.push('/api/auth/login')}}>sign in</button> to place a bid.</span>
+              <span>Please <button className="px-2 py-[2px] rounded-md border border-[#d5d5d5] text-[#d5d5d5]" onClick={()=>{router.push('/api/auth/login')}}>sign in</button> to place a bid.</span>
             </div>
           )}
       

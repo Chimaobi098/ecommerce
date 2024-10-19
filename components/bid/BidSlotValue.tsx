@@ -10,13 +10,15 @@ export const BidSlotValue = ({slot, bids}: Props) => {
     const [totalValue, setTotalValue] = useState<number>(0)
 
     useEffect(()=>{
-        let tempValue = 0
-        bids.forEach((item)=>{
-            if(item.slot === slot){
-                tempValue = tempValue + item.bidAmount
-            }
-        })
-        setTotalValue(tempValue)
+        // let tempValue = 0
+        // bids.forEach((item)=>{
+        //     if(item.slot === slot){
+        //         tempValue = tempValue + item.bidAmount
+        //     }
+        // })
+        // setTotalValue(tempValue)
+
+        setTotalValue(30000)
     }, [bids])
 
     return ( 
