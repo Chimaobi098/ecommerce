@@ -2,414 +2,497 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@media(min-width: 1000px){
-    ::-webkit-scrollbar{
-        width: 1px;
-    }
+@media (min-width: 1000px) {
+  ::-webkit-scrollbar {
+    width: 1px;
+  }
 }
 
-
 #game {
-    display: flex;
-    align-items: center;
-    position: relative;
-    height: 100vh;
-  }
-  
-  #wsg-overlay {
-    background-color: rgba(0, 0, 0, 0.4);
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 99;
-    position: fixed;
-    opacity: 1;
-    animation: fade-in 1s forwards;
-    /* display: none; */
-    margin-bottom: 20px;
-  }
-  
-  #wsg-card {
-    height: 80%;
-    background: white;
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    border-radius: 15px;
-    text-align: center;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
-    padding: 0 20px;
-  }
-  
-  /* Flexbox */
-  .wsg-flex {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-  }
-  
-  .wsg-flexCol {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-  }
-  
-  
-  /* Form Styles */
-  .wsg-flexCol select,
-  .wsg-flexCol input {
-    font-size: 0.75em;
-    font-weight: 600;
-    min-width: 100% !important;
-    border: 2px solid black;
-    padding: 10px;
-    border-radius: 5px;
-    display: inline-block;
-  }
-  
-  .input-field {
-    margin: 8px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    width: 60%;
-  }
-  
-  /* Style the default dropdown arrow */
-  select {
-    /* Add padding to create space for the arrow */
-    padding-right: 20px;
-    /* Adjust as needed */
-  }
-  
-  /* Create the dropdown arrow using ::after pseudo-element */
-  select::after {
-    position: absolute;
-    content: "";
-    top: 14px;
-    right: 10px;
-    width: 0;
-    height: 0;
-    border: 6px solid transparent;
-    border-color: #fff transparent transparent transparent;
-  }
-  
-  /* Button Styles */
-  .wsg-button {
-    font-size: 16px;
-    font-weight: 600;
-    background-color: orange;
-    color: white;
-    outline: none;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    /* min-width: 200px; */
-  }
-  
-  /* .wsg-button:hover {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 100vh;
+}
+
+#wsg-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  position: fixed;
+  opacity: 1;
+  animation: fade-in 1s forwards;
+  /* display: none; */
+  margin-bottom: 20px;
+}
+
+#wsg-card {
+  height: 80%;
+  background: white;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  text-align: center;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0 20px;
+}
+
+/* Flexbox */
+.wsg-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.wsg-flexCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* Form Styles */
+.wsg-flexCol select,
+.wsg-flexCol input {
+  font-size: 0.75em;
+  font-weight: 600;
+  min-width: 100% !important;
+  border: 2px solid black;
+  padding: 10px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.input-field {
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 60%;
+}
+
+/* Style the default dropdown arrow */
+select {
+  /* Add padding to create space for the arrow */
+  padding-right: 20px;
+  /* Adjust as needed */
+}
+
+/* Create the dropdown arrow using ::after pseudo-element */
+select::after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* Button Styles */
+.wsg-button {
+  font-size: 16px;
+  font-weight: 600;
+  background-color: orange;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /* min-width: 200px; */
+}
+
+/* .wsg-button:hover {
     background-color: var(--light-orange);
   } */
-  
-  .sec-button {
-    color: orange;
-    background-color: white;
-    border: 2px solid black;
-  }
-  
-  /* .sec-button:hover {
+
+.sec-button {
+  color: orange;
+  background-color: white;
+  border: 2px solid black;
+}
+
+/* .sec-button:hover {
    
     color: black;
     border-color: orange;
   } */
-  
-  .btn-lg {
-    width: 200px;
-    margin-top: 20px;
-  }
-  
-  
-  /* Frequently used classes */
-  .payment-details {
-    padding-top: 1rem;
-    height: 70vh;
-    overflow: scroll;
-  }
-  
-  .payment-footer {
-    width: 50vw;
-    margin: 0 auto;
-  }
-  
-  .wsg-vertical-centre {
-    margin: auto 0;
-  }
-  
-  .how-to-play-container {
-    text-align: center;
-    padding: 10px;
-    max-width: 500px;
-    margin: 0 auto;
-  }
-  
-  .grid-items {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-    transition: all 0.1s ease-in-out;
-    border-radius: 50%;
-  }
-  
-  .balance {
-    padding: 15px 10px;
-    width: inherit;
-    border-radius: 1vmin;
-    color: white;
-    margin-bottom: 10px;
-    min-width: 200px;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #152938;
-  }
-  .play-info{
-    height: auto;
-    padding: 2px;
-    background-color: #152938;
-    text-align: center;
-    color: white;
-    width: inherit;
-    border-radius: 10px;
-  }
-  
-  .win-lose {
-    font-size: 1.6em;
-  }
-  
-  
-  /* Game Styles  */
-  
-  #game {
-    display: flex;
-    align-items: center;
-    height: 100vh;
-    position: relative;
-  }
-  
-  #found-words .listRow {
-    display: flex;
-    justify-content: space-between;
-    column-gap: 2rem;
-    width: 100%;
-  }
-  
-  span.foundWord {
-    position: relative;
-    color: #6D7CFF;
-  }
-  
-  span.foundWord::before {
-    content: "";
-    position: absolute;
-    top: 40%;
-    right: -10%;
-    width: 120%;
-    background-color: #6D7CFF;
-    color: #6D7CFF;
-    padding: 1px;
-    border-radius: 10px;
-    transition: all 0.5s ease-in-out;
-    z-index: 10;
-  }
-  
-  #grid-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-  
-  .boardRow {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(10, 10%);
-    /* margin: auto; */
-  }
-  
-  .cell {
-    font-size: 1.5em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    width: 35px;
-    height: 35px;
-    outline: 0;
-    font-weight: 600;
+
+.btn-lg {
+  width: 200px;
+  margin-top: 20px;
+}
+
+/* Frequently used classes */
+.payment-details {
+  padding-top: 1rem;
+  height: 70vh;
+  overflow: scroll;
+}
+
+.payment-footer {
+  width: 50vw;
+  margin: 0 auto;
+}
+
+.wsg-vertical-centre {
+  margin: auto 0;
+}
+
+.how-to-play-container {
+  text-align: center;
+  padding: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.grid-items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transition: all 0.1s ease-in-out;
+  border-radius: 50%;
+}
+
+.balance {
+  padding: 15px 10px;
+  width: inherit;
+  border-radius: 1vmin;
+  color: white;
+  margin-bottom: 10px;
+  min-width: 200px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #152938;
+}
+.play-info {
+  height: auto;
+  padding: 2px;
+  background-color: #152938;
+  text-align: center;
+  color: white;
+  width: inherit;
+  border-radius: 10px;
+}
+
+.win-lose {
+  font-size: 1.6em;
+}
+
+/* Game Styles  */
+
+#game {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+
+#found-words .listRow {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 2rem;
+  width: 100%;
+}
+
+span.foundWord {
+  position: relative;
+  color: #6d7cff;
+}
+
+span.foundWord::before {
+  content: "";
+  position: absolute;
+  top: 40%;
+  right: -10%;
+  width: 120%;
+  background-color: #6d7cff;
+  color: #6d7cff;
+  padding: 1px;
+  border-radius: 10px;
+  transition: all 0.5s ease-in-out;
+  z-index: 10;
+}
+
+#grid-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.boardRow {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(10, 10%);
+  /* margin: auto; */
+}
+
+.cell {
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  width: 35px;
+  height: 35px;
+  outline: 0;
+  font-weight: 600;
+  background-color: transparent;
+  border-radius: 50%;
+  cursor: default;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.cell:hover {
+  background-color: rgb(242, 229, 141);
+}
+
+.cell.selectable {
+  background-color: rgb(234, 228, 206);
+}
+
+.cell.selected {
+  background-color: rgb(205, 188, 90);
+}
+
+.cell.foundCell {
+  background-color: rgb(109, 124, 255);
+}
+
+.foundCell-yellow {
+  background-color: rgb(255, 238, 85);
+  animation: revealFlashes-y 4s linear 0s 1;
+}
+
+.foundCell-red {
+  background-color: rgb(255, 109, 116);
+  animation: revealFlashes-r 4s linear 0s 1;
+}
+
+.foundCell-green {
+  background-color: rgb(109, 255, 150);
+  animation: revealFlashes-g 4s linear 0s 1;
+}
+
+.foundCell-purple {
+  background-color: rgb(255, 88, 255);
+  animation: revealFlashes-p 4s linear 0s 1;
+}
+
+@keyframes revealFlashes-g {
+  0% {
     background-color: transparent;
-    border-radius: 50%;
-    cursor: default;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
   }
-  
-  .cell:hover {
-    background-color: rgb(242, 229, 141);
+  10% {
+    background-color: transparent;
   }
-  
-  .cell.selectable {
-    background-color: rgb(234, 228, 206);
-  }
-  
-  .cell.selected {
-    background-color: rgb(205, 188, 90);
-  }
-  
-  .cell.foundCell{
-    background-color: rgb(109, 124, 255);
-  }
-
-  .foundCell-yellow{
-    background-color: rgb(255, 238, 85);
-    animation: revealFlashes-y 4s linear 0s 1  ;
-  }
-
-  .foundCell-red{
-    background-color: rgb(255, 109, 116);
-    animation: revealFlashes-r 4s linear 0s 1  ;
-  }
-
-  .foundCell-green{
+  20% {
     background-color: rgb(109, 255, 150);
-    animation: revealFlashes-g 4s linear 0s 1  ;
   }
+  30% {
+    background-color: rgb(109, 255, 150);
+  }
+  40% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: transparent;
+  }
+  60% {
+    background-color: rgb(109, 255, 150);
+  }
+  70% {
+    background-color: rgb(109, 255, 150);
+  }
+  80% {
+    background-color: transparent;
+  }
+  90% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: rgb(109, 255, 150);
+  }
+}
 
-  .foundCell-purple{
+@keyframes revealFlashes-y {
+  0% {
+    background-color: transparent;
+  }
+  10% {
+    background-color: transparent;
+  }
+  20% {
+    background-color: rgb(255, 238, 85);
+  }
+  30% {
+    background-color: rgb(255, 238, 85);
+  }
+  40% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: transparent;
+  }
+  60% {
+    background-color: rgb(255, 238, 85);
+  }
+  70% {
+    background-color: rgb(255, 238, 85);
+  }
+  80% {
+    background-color: transparent;
+  }
+  90% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: rgb(255, 238, 85);
+  }
+}
+
+@keyframes revealFlashes-r {
+  0% {
+    background-color: transparent;
+  }
+  10% {
+    background-color: transparent;
+  }
+  20% {
+    background-color: rgb(255, 109, 116);
+  }
+  30% {
+    background-color: rgb(255, 109, 116);
+  }
+  40% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: transparent;
+  }
+  60% {
+    background-color: rgb(255, 109, 116);
+  }
+  70% {
+    background-color: rgb(255, 109, 116);
+  }
+  80% {
+    background-color: transparent;
+  }
+  90% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: rgb(255, 109, 116);
+  }
+}
+
+@keyframes revealFlashes-p {
+  0% {
+    background-color: transparent;
+  }
+  10% {
+    background-color: transparent;
+  }
+  20% {
     background-color: rgb(255, 88, 255);
-    animation: revealFlashes-p 4s linear 0s 1  ;
+  }
+  30% {
+    background-color: rgb(255, 88, 255);
+  }
+  40% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: transparent;
+  }
+  60% {
+    background-color: rgb(255, 88, 255);
+  }
+  70% {
+    background-color: rgb(255, 88, 255);
+  }
+  80% {
+    background-color: transparent;
+  }
+  90% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: rgb(255, 88, 255);
+  }
+}
+
+.hint {
+  animation: hint 2.5s ease 2 0s;
+}
+
+@keyframes hint {
+  0% {
+    transform: scale3d(1, 1, 1);
   }
 
-  @keyframes revealFlashes-g {
-    0%{background-color: transparent;}
-    10%{background-color: transparent;}
-    20%{background-color: rgb(109, 255, 150);}
-    30%{ background-color: rgb(109, 255, 150);}
-    40%{background-color: transparent;}
-    50%{background-color: transparent;}
-    60%{background-color: rgb(109, 255, 150);}
-    70%{background-color: rgb(109, 255, 150);}
-    80%{background-color: transparent;}
-    90%{background-color: transparent;}
-    100%{background-color: rgb(109, 255, 150);};
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
   }
 
-  @keyframes revealFlashes-y {
-    0%{background-color: transparent;}
-    10%{background-color: transparent;}
-    20%{background-color: rgb(255, 238, 85)}
-    30%{ background-color: rgb(255, 238, 85)}
-    40%{background-color: transparent;}
-    50%{background-color: transparent;}
-    60%{background-color: rgb(255, 238, 85)}
-    70%{background-color: rgb(255, 238, 85)}
-    80%{background-color: transparent}
-    90%{background-color: transparent}
-    100%{background-color: rgb(255, 238, 85)};
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
   }
 
-  @keyframes revealFlashes-r {
-    0%{background-color: transparent;}
-    10%{background-color: transparent;}
-    20%{background-color: rgb(255, 109, 116)}
-    30%{ background-color: rgb(255, 109, 116)}
-    40%{background-color: transparent;}
-    50%{background-color: transparent;}
-    60%{background-color: rgb(255, 109, 116);}
-    70%{background-color: rgb(255, 109, 116);}
-    80%{background-color: transparent;}
-    90%{background-color: transparent;}
-    100%{background-color: rgb(255, 109, 116);};
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
   }
 
-  @keyframes revealFlashes-p {
-    0%{background-color: transparent;}
-    10%{background-color: transparent;}
-    20%{background-color: rgb(255, 88, 255);}
-    30%{ background-color: rgb(255, 88, 255);}
-    40%{background-color: transparent;}
-    50%{background-color: transparent;}
-    60%{background-color: rgb(255, 88, 255);}
-    70%{background-color: rgb(255, 88, 255);}
-    80%{background-color: transparent;}
-    90%{background-color: transparent;}
-    100%{background-color: rgb(255, 88, 255);};
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
   }
 
-  .hint{
-    animation: hint 2.5s ease 2 0s;
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
   }
 
-  @keyframes hint {
-    0% {
-      transform: scale3d(1, 1, 1);
-    }
-  
-    30% {
-      transform: scale3d(1.25, 0.75, 1);
-    }
-  
-    40% {
-      transform: scale3d(0.75, 1.25, 1);
-    }
-  
-    50% {
-      transform: scale3d(1.15, 0.85, 1);
-    }
-  
-    65% {
-      transform: scale3d(0.95, 1.05, 1);
-    }
-  
-    75% {
-      transform: scale3d(1.05, 0.95, 1);
-    }
-  
-    100% {
-      transform: scale3d(1, 1, 1);
-    }
+  100% {
+    transform: scale3d(1, 1, 1);
   }
+}
 
-  #grid-container {
-    height: auto;
-    width: 95%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  /* Media queries */
-  /* @media screen and (max-width: 1400px) {
+#grid-container {
+  height: auto;
+  width: 95%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Media queries */
+/* @media screen and (max-width: 1400px) {
     #game {
       flex-direction: column;
     }
@@ -419,35 +502,33 @@
     }
   
   } */
-  
-  /* Styles for tablets (768px > viewport width >= 576px) */
-  /* Tablet styles here */
-  @media only screen and (max-width: 767px) {
-    .game-control {
-      width: 100px;
-      font-size: 0.9em;
-    }
-  
-    #attempts-balance.balance,
-    #wallet-balance.balance,
-    #timer.balance {
-      min-width: 80px;
-      ;
-    }
+
+/* Styles for tablets (768px > viewport width >= 576px) */
+/* Tablet styles here */
+@media only screen and (max-width: 767px) {
+  .game-control {
+    width: 100px;
+    font-size: 0.9em;
   }
-  
-  /* Styles for phones (viewport width < 576px) */
-  /* Phone styles here*/
-  @media only screen and (max-width: 576px) {
-    .game-control {
-      width: 80px;
-      font-size: 0.9em;
-    }
-  
-    #attempts-balance.balance,
-    #wallet-balance.balance,
-    #timer.balance {
-      min-width: 80px;
-      ;
-    }
+
+  #attempts-balance.balance,
+  #wallet-balance.balance,
+  #timer.balance {
+    min-width: 80px;
   }
+}
+
+/* Styles for phones (viewport width < 576px) */
+/* Phone styles here*/
+@media only screen and (max-width: 576px) {
+  .game-control {
+    width: 80px;
+    font-size: 0.9em;
+  }
+
+  #attempts-balance.balance,
+  #wallet-balance.balance,
+  #timer.balance {
+    min-width: 80px;
+  }
+}

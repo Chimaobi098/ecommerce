@@ -14,17 +14,31 @@ import ProductContainer from "./productItem/productContainer";
 import { ShoppingBagIcon } from "../../public/ShoppingBag";
 import AuctionIcon from "../../public/Auction";
 import { useRouter } from "next/router";
+import CategoryDropdown from "./category-dropdown";
 
 const Home = ({ results }: HomeProduct) => {
   const { getCartQuantity, cartOpen, setCartOpen } = useShoppingCart();
   const { user, error } = useUser();
-  const router = useRouter()
+  const router = useRouter();
   const [productData, setProductData] = useState(results);
   const [hasMore, setHasMore] = useState(true);
   const [userLikedProducts, setUserLikedProducts] = useState();
   const [userSavedProducts, setUserSavedProducts] = useState();
   const lastId = useRef<string | null>(results[results.length - 1]._id);
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState<string>("All");
+  const categories = [
+    "All",
+    ...Array.from(
+      new Set(
+        results
+          .map((item) => item.category?.title)
+          .filter((name): name is string => !!name) // removes null/undefined
+      )
+    ),
+  ];
+
+  console.log("Product Data:", productData);
 
   useEffect(() => {
     async function likedProducts() {
@@ -67,7 +81,11 @@ const Home = ({ results }: HomeProduct) => {
   
   title,
   slug,
-  category,
+ category->{
+  title,
+  slug,
+  description
+},
   vendor->{
   title,
   logo,_id
@@ -87,26 +105,41 @@ _id
 
   return (
     <>
-        {loading && (
-          <div className="loading-page h-[100%] top-0 w-[100%] absolute z-[100] bg-white flex justify-center items-center">
-            <svg className="animate-spin h-16 w-16 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-          </div>
-        )}
+      {loading && (
+        <div className="loading-page h-[100%] top-0 w-[100%] absolute z-[100] bg-white flex justify-center items-center">
+          <svg
+            className="animate-spin h-16 w-16 text-gray-700"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+        </div>
+      )}
 
       <NavBar>
         <h1>Seidou</h1>
         <div className="flex gap-x-5 items-center">
           <button
-            onClick={() => { router.push('/auction') }}
-            className="h-[60px] text-black">
+            onClick={() => {
+              router.push("/auction");
+            }}
+            className="h-[60px] text-black"
+          >
             <AuctionIcon />
           </button>
 
           <button
-            onClick={() => { setCartOpen(true) }}
-            className="h-[60px] text-black">
+            onClick={() => {
+              setCartOpen(true);
+            }}
+            className="h-[60px] text-black"
+          >
             <Badge
               badgeContent={getCartQuantity()}
               color="error"
@@ -117,6 +150,14 @@ _id
           </button>
         </div>
       </NavBar>
+      <div className="pt-5 pb-5">
+        <CategoryDropdown
+          categories={categories}
+          currentFilter={filter}
+          setFilter={setFilter}
+        />
+      </div>
+
       <Wrapper id="parent">
         <InfiniteScroll
           dataLength={productData.length}
@@ -135,18 +176,23 @@ _id
             alignItems: "center",
           }}
         >
-          {productData.map((product) => {
-if(product.vendor&& product.vendor.logo)return (<ProductContainer
-              productProps={product}
-              setLoading={setLoading}
-              userLikedProducts={userLikedProducts}
-              userSavedProducts={userSavedProducts}
-              key={product._id}
-
-            />)
-          }
-            
-          )}
+          {productData
+            .filter(
+              (product) =>
+                filter === "All" || product.category?.title === filter
+            )
+            .map((product) => {
+              if (product.vendor && product.vendor.logo)
+                return (
+                  <ProductContainer
+                    productProps={product}
+                    setLoading={setLoading}
+                    userLikedProducts={userLikedProducts}
+                    userSavedProducts={userSavedProducts}
+                    key={product._id}
+                  />
+                );
+            })}
         </InfiniteScroll>
       </Wrapper>
     </>

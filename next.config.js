@@ -5,10 +5,9 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'assets.example.com',
-        port: '',
-        pathname: '/account123/**',
+        protocol: "https",
+        hostname: "assets.example.com",
+        pathname: "/account123/**",
       },
     ],
   },
@@ -21,25 +20,22 @@ const nextConfig = {
 
 module.exports = nextConfig;
 
-
-
 // next.config.js
 module.exports = {
   pageDataCollectionTimeout: 1000000,
   // Other configurations...
 };
 
-
 // next.config.js
 module.exports = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'assets.example.com',
-        port: '',
-        pathname: '/account123/**',
+        protocol: "https",
+        hostname: "assets.example.com",
+        port: "",
+        pathname: "/account123/**",
       },
     ],
   },
-}
+};
