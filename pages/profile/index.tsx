@@ -7,8 +7,12 @@ import settingIcon from "../../public/iwwa_settings.svg";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Settings from "../Settings";
+//supabase stuff
+import useAuth from "../../utils/supabaseClient";
 
 const Profile = ({ user }: User) => {
+  const { referralCode } = useAuth();
+
   const router = useRouter();
 
   // console.log(router.basePath);

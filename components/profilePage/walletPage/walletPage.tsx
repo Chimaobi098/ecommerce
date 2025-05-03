@@ -52,8 +52,6 @@ const WalletPage: React.FC = () => {
 
   const [carddetails, setcarddetails] = useState<boolean>(false);
 
-
-
   // const [copied, setCopied] = useState<boolean>(false);
 
   const handleCard = () => {
@@ -61,17 +59,17 @@ const WalletPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if(user){
+    if (user) {
       setUserDetails(JSON.parse(user));
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (carddetails) {
       let footer = document.querySelector(".footer") as HTMLElement;
       footer.style.opacity = "0";
     }
-    if (!carddetails){
+    if (!carddetails) {
       let footer = document.querySelector(".footer") as HTMLElement;
       footer.style.opacity = "1";
     }
@@ -131,7 +129,6 @@ const WalletPage: React.FC = () => {
     alert("Don't leave; just try again 🥺👉👈");
   };
 
- 
   return (
     <Wrapper className="mt-20 mx-4">
       <div className="flex flex-col items-center justify-center text-2xl py-12 gap-y-2">
@@ -190,12 +187,11 @@ const WalletPage: React.FC = () => {
             className=""
             onSubmit={(e) => {
               e.preventDefault();
-              initiateNewPayment(
-                JSON.parse(user!),
-                Number(amount),
-                onSuccess,
-                onClose
-              );
+              if (!amount) return;
+              router.push({
+                pathname: "wallet/topup",
+                query: { amount },
+              });
             }}
           >
             <input
@@ -205,6 +201,7 @@ const WalletPage: React.FC = () => {
               onChange={(e) => {
                 setAmount(e.target.value);
               }}
+              min={100}
             />
 
             <button

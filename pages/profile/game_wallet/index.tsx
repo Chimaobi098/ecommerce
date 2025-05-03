@@ -5,18 +5,20 @@ import GameWalletPage from "../../../components/profilePage/gameWalletPage/gameW
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
-
 const Wallet = () => {
   return (
     <>
-            <ProfileNav>
-            <Link href='/profile'><div className=''><ArrowBackRoundedIcon /></div></Link>
-        <header>Game Wallet</header>
+      <ProfileNav>
+        <Link href="/profile">
+          <div className="">
+            <ArrowBackRoundedIcon />
+          </div>
+        </Link>
+        <header>Auction Wallet</header>
       </ProfileNav>
-  <GameWalletPage></GameWalletPage>
-
-  </>
-  )
+      <GameWalletPage></GameWalletPage>
+    </>
+  );
 };
 
 export default Wallet;

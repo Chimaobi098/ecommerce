@@ -5,11 +5,11 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { ProfileItem, Wrapper } from "./profilePage.styles";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
-import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
+import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 import walleticon from "../../public/et_wallet.svg";
-import homeUser from "../../public/uit_house-user.svg"
+import homeUser from "../../public/uit_house-user.svg";
 import Image from "next/image";
-import {AccountBalanceWalletOutlined } from "@mui/icons-material";
+import { AccountBalanceWalletOutlined } from "@mui/icons-material";
 
 const ProfilePage = ({ user }: User) => {
   const [loading, setLoading] = useState(false);
@@ -35,6 +35,11 @@ const ProfilePage = ({ user }: User) => {
 
   const profileList = [
     {
+      profileItemName: "Refer a friend",
+      profileItemIcon: <ShoppingBagOutlinedIcon />,
+      profileUrl: "/profile/referral",
+    },
+    {
       profileItemName: "My Details",
       profileItemIcon: <FolderSharedOutlinedIcon />,
       profileUrl: "/profile/my-details",
@@ -45,7 +50,7 @@ const ProfilePage = ({ user }: User) => {
       profileUrl: "/profile/address",
     },
     {
-      profileItemName: "Game Wallet",
+      profileItemName: "Auction Wallet",
       profileItemIcon: <AccountBalanceWalletOutlined />,
       profileUrl: "/profile/game_wallet",
     },
@@ -59,6 +64,7 @@ const ProfilePage = ({ user }: User) => {
       profileItemIcon: <ShoppingBagOutlinedIcon />,
       profileUrl: "/profile/saved-posts",
     },
+
     // {
     //   profileItemName: "Membership plans",
     //   profileItemIcon: <DateRangeOutlinedIcon />,
@@ -76,9 +82,18 @@ const ProfilePage = ({ user }: User) => {
         {/* Render the loading page if loading is true */}
         {loading && (
           <div className="loading-page h-screen top-0 w-screen absolute z-10 bg-white flex justify-center items-center">
-            <svg className="animate-spin -ml-1 mr-3 h-16 w-16 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-    </svg>
+            <svg
+              className="animate-spin -ml-1 mr-3 h-16 w-16 text-gray-700"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
           </div>
         )}
 
@@ -108,7 +123,9 @@ const ProfilePage = ({ user }: User) => {
               {item.profileItemIcon}
               <div>{item.profileItemName}</div>
             </div>
-            <ArrowForwardIosRoundedIcon style={{ color: "grey", fontSize: "16px", }} />
+            <ArrowForwardIosRoundedIcon
+              style={{ color: "grey", fontSize: "16px" }}
+            />
           </ProfileItem>
         ))}
 
@@ -117,7 +134,9 @@ const ProfilePage = ({ user }: User) => {
             <SupportAgentOutlinedIcon />
             <div>Customer support</div>
           </div>
-          <ArrowForwardIosRoundedIcon style={{ color: "grey", fontSize: "16px", }} />
+          <ArrowForwardIosRoundedIcon
+            style={{ color: "grey", fontSize: "16px" }}
+          />
         </ProfileItem>
 
         {/* <ProfileItem className="cursor-pointer">
@@ -135,14 +154,16 @@ const ProfilePage = ({ user }: User) => {
         </Button>
         <ArrowForwardIosRoundedIcon style={{ color: "grey", fontSize: "16px", }} />
           </ProfileItem>   */}
-        
+
         <div
           className={` ${
             support ? "translate-y-0" : "translate-y-full"
           } w-full flex flex-col text-center absolute bottom-0 z-20 bg-white rounded-t-lg gap-y-6 transition-all duration-500 ease-in-out transform-gpu`}
         >
           <div className="text-sm text-gray-500 pt-2 ">Contact Us</div>
-          <div className="cursor-pointer"><a href="https://wa.link/j8qu3c">Whatsapp</a></div>
+          <div className="cursor-pointer">
+            <a href="https://wa.link/j8qu3c">Whatsapp</a>
+          </div>
           <div className="border-t pt-3 cursor-pointer ">Email</div>
           <div
             className="border-t text-gray-500 mb-20 md:mb-8 pt-3 cursor-pointer "
@@ -151,10 +172,9 @@ const ProfilePage = ({ user }: User) => {
             Cancel
           </div>
         </div>
-    </Wrapper>
-        </>
+      </Wrapper>
+    </>
   );
-
 };
 
 export default ProfilePage;

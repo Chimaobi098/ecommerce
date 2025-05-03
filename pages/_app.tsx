@@ -14,8 +14,24 @@ import { Router, Routes, Route } from "react-router";
 import CheckoutPage from "../components/Checkout/checkoutPage";
 import { userInfo } from "os";
 //import Productcheckout from "./productcheckout";
+import { useEffect } from "react";
+// import { useUser } from "@auth0/nextjs-auth0";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  //referral stuff
+
+  // const { user, error, isLoading } = useUser();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const referredBy = urlParams.get("ref");
+    if (referredBy) {
+      localStorage.setItem("referredBy", referredBy);
+    }
+    console.log("ref code is, ", referredBy);
+  }, []);
+  //end
+
   const router = useRouter();
   const hideFooterOnCheckout = router.pathname == "/Itemcheckout";
   const hideOnAddressbook = router.pathname == "/Addressbook";
