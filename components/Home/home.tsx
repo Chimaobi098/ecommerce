@@ -14,6 +14,7 @@ import ProductContainer from "./productItem/productContainer";
 import { ShoppingBagIcon } from "../../public/ShoppingBag";
 import AuctionIcon from "../../public/Auction";
 import { useRouter } from "next/router";
+import { ChevronRight } from "@mui/icons-material";
 
 const Home = ({ results }: HomeProduct) => {
   const { getCartQuantity, cartOpen, setCartOpen } = useShoppingCart();
@@ -24,7 +25,22 @@ const Home = ({ results }: HomeProduct) => {
   const [userLikedProducts, setUserLikedProducts] = useState();
   const [userSavedProducts, setUserSavedProducts] = useState();
   const lastId = useRef<string | null>(results[results.length - 1]._id);
+  const initialLoad = useRef(true)
+  const lastScrollValue = useRef<number>(0)
   const [loading, setLoading] = useState(false);
+  const searchFilters = {
+    All: [],
+    Tops: ['blouse','tee','shirt'],
+    Bags: ['bag'],
+    Skirts: ['skirt'],
+    Shoes: ['shoes'],
+    Jeans: ['jeans'],
+    Shades: ['sunglasses'],
+    Headwear: ['hat','cap'],
+    Foods: ['burger','meal','rice','chicken','ice cream'],
+  }
+  const [activeFilter, setActiveFilter] = useState<keyof typeof searchFilters>('All')
+  const [fullHeader, setFullHeader] = useState(true)
 
   useEffect(() => {
     async function likedProducts() {
@@ -60,21 +76,30 @@ const Home = ({ results }: HomeProduct) => {
     if (current === null) {
       setHasMore(false);
     }
+    const tagFilter = searchFilters[activeFilter].length
+      ? `count(tags[@ in $selectedTags]) > 0 &&`
+      : '';
     const data = await sanityClient.fetch(
-      `*[_type == "product" && _id > $current] | order(_id) [0...3] {
+      `*[_type == "product" && _id > $current && 
+      ${tagFilter}
+      true
+      ] | order(_id) [0...3] {
      defaultProductVariant,
   _id,
-  
   title,
   slug,
   category,
   vendor->{
-  title,
-  logo,_id
+    title,
+    logo,
+    _id
 },
-_id
     }`,
-      { current }
+      { 
+        current: current,
+        selectedTags: searchFilters[activeFilter],
+        tagFilter: tagFilter
+      }
     );
     if (data.length > 0) {
       lastId.current = data[data.length - 1]._id;
@@ -83,6 +108,74 @@ _id
       lastId.current = null; // Reached the end
       setHasMore(false);
     }
+  }
+
+    useEffect(()=>{
+      async function filteredNewFetch() {
+        const tagFilter = searchFilters[activeFilter].length
+        ? `count(tags[@ in $selectedTags]) > 0 &&`
+        : '';
+        setHasMore(true)
+        const data = await sanityClient.fetch(
+            `*[_type == "product" &&
+            ${tagFilter}
+            true
+            ] | order(_id) [0...3] {
+          defaultProductVariant,
+          _id,
+          title,
+          slug,
+          category,
+          vendor->{
+            title,
+            logo,
+            _id
+          },
+          }`,
+          { 
+            selectedTags: searchFilters[activeFilter],
+            tagFilter: tagFilter
+          }
+        );
+        if (data.length > 0) {
+          lastId.current = data[data.length - 1]._id;
+          setProductData(data);
+        }else{
+          setProductData([])
+          setHasMore(false)
+        }
+      }
+
+      if(!initialLoad.current){
+        filteredNewFetch()
+      } else {
+        initialLoad.current = false
+      }
+      
+      
+    }, [activeFilter])
+
+  function handleTagSelection(filter: keyof typeof searchFilters){
+    const feed: HTMLElement|null = document.getElementById('parent')
+    feed?.scrollTo({top:0})
+
+    const filterButton: HTMLElement|null = document.querySelector(`.${filter}-tag`)
+    filterButton?.scrollIntoView({inline: 'start', block: 'nearest', behavior: 'smooth'})
+    setActiveFilter(filter)
+  }
+
+  function checkScrollDirection(){
+    const feed: HTMLElement|null = document.getElementById('parent')
+    const newScrollValue = feed?.scrollTop || 0
+    if(Math.abs(newScrollValue - lastScrollValue.current) < 20){
+      return // Don't even bother if scrolling displacement is less than 20 to minimize unnecessary triggers
+    }
+    if((newScrollValue >= lastScrollValue.current) && (newScrollValue >= 100)){
+      setFullHeader(false)
+    } else {
+      setFullHeader(true)
+    }
+    lastScrollValue.current = newScrollValue
   }
 
   return (
@@ -95,48 +188,65 @@ _id
           </div>
         )}
 
-      <NavBar>
-        <h1>Seidou</h1>
-        <div className="flex gap-x-5 items-center">
-          <button
-            onClick={() => { router.push('/auction') }}
-            className="h-[60px] text-black">
-            <AuctionIcon />
-          </button>
+      <NavBar className={`duration-[0.35s] ${!fullHeader? '-translate-y-[60px]':''}`}>
+        <div className="h-[60px] flex items-center justify-between px-5 pt-[20px]">
+          <h1>Seidou</h1>
+          <div className="flex gap-x-5 items-center">
+            <button
+              onClick={() => { router.push('/auction') }}
+              className="w-[30px] text-black">
+              <AuctionIcon />
+            </button>
 
-          <button
-            onClick={() => { setCartOpen(true) }}
-            className="h-[60px] text-black">
-            <Badge
-              badgeContent={getCartQuantity()}
-              color="error"
-              overlap="rectangular"
-            >
-              <ShoppingBagIcon />
-            </Badge>
-          </button>
+            <button
+              onClick={() => { setCartOpen(true) }}
+              className="w-[30px] text-black">
+              <Badge
+                badgeContent={getCartQuantity()}
+                color="error"
+                overlap="rectangular"
+              >
+                <ShoppingBagIcon />
+              </Badge>
+            </button>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className={`w-full flex items-center bg-white px-2`}>
+          <div className="no-scrollbar fade-right py-2.5 w-full h-full flex grow gap-x-3 overflow-x-scroll snap-x snap-mandatory">
+            {(Object.keys(searchFilters) as Array<keyof typeof searchFilters>).map((filter, index)=>{
+              return(
+                <button key={index} className={`flex-shrink-0 rounded-md px-3.5 py-1.5 text-sm first:ml-10 last:mr-28 
+                snap-start scroll-ml-3 active:scale-[1.07] transition-transform ${filter}-tag ${filter===activeFilter? 'bg-[#202020] text-white':'bg-[#f5f5f5]'}`}
+                onClick={()=>{handleTagSelection(filter)}}>
+                  {filter}
+                </button>
+              )
+            })}
+          </div>
+          <div className="h-full flex items-center justify-center px-2 bg-white">
+            <ChevronRight className="w-7"/>
+          </div>
         </div>
       </NavBar>
-      <Wrapper id="parent">
+
+      <Wrapper id="parent" onScroll={()=>{checkScrollDirection()}}>
         <InfiniteScroll
           dataLength={productData.length}
           next={fetchNextPage}
           hasMore={hasMore}
           loader={<CircularProgress style={{ marginBottom: "50px" }} />}
           endMessage={
-            <p style={{ textAlign: "center" }}>
+            <p className="text-center">
               <b>Yay! You have seen it all</b>
             </p>
           }
           scrollableTarget="parent"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+          className="flex flex-col items-center pt-2"
         >
           {productData.map((product) => {
-if(product.vendor&& product.vendor.logo)return (<ProductContainer
+            if(product.vendor&& product.vendor.logo)return (<ProductContainer
               productProps={product}
               setLoading={setLoading}
               userLikedProducts={userLikedProducts}

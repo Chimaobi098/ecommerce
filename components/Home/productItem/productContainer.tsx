@@ -165,7 +165,7 @@ const ProductContainer = ({
         </div>
       </ReactModal>
     )}
-    <ProductInfo key={productProps._id}>
+    <ProductInfo key={productProps._id} className="first:mt-[116px]">
       <div id="vendor-info-container">
         <div id="vendor-info">
           <Image
