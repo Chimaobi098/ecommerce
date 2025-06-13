@@ -26,7 +26,7 @@ const Footer = () => {
         </Link>
         <p style={{ fontWeight: pathname == "/" ? 600 : 500 }}>Home</p>
       </div>
-      {/* <div className="icon-container">
+      <div className="icon-container">
         <Link passHref href={"/arcade"}>
           {pathname == "/arcade" ? (
             <VideogameAssetIcon fontSize="large" style={{ color: "black" }} />
@@ -38,7 +38,7 @@ const Footer = () => {
           )}
         </Link>
         <p style={{ fontWeight: pathname == "/arcade" ? 600 : 500 }}>Games</p>
-      </div> */}
+      </div>
       <div className="icon-container">
         <Link passHref href={"/explore"}>
           {pathname == "/explore" ? (
