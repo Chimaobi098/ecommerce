@@ -81,7 +81,7 @@ const GameGallery: React.FC = () => {
             style={{
               display: "inline-block",
               marginTop: "0.5rem",
-              backgroundColor: "#0070f3",
+              backgroundColor: "black",
               color: "#fff",
               padding: "0.5rem 1rem",
               borderRadius: 4,
@@ -121,7 +121,8 @@ const GameGallery: React.FC = () => {
               style={{
                 display: "inline-block",
                 marginTop: "0.5rem",
-                backgroundColor: "#0070f3",
+                // backgroundColor: "#0070f3",
+                backgroundColor: "black",
                 color: "#fff",
                 padding: "0.5rem 1rem",
                 borderRadius: 4,

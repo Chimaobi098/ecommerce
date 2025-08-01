@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { User } from "../../interfaces/interface";
 import { useRouter } from "next/router";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import ReferAFriendIcon from "../../public/quality-service.png";
+import WishlistIcon from "../../public/wishlist-2.png";
+import CustomerSupportIcon from "../../public/ooooooooooooooooooooooooooooooooooo.png";
+import MyDetailsIcon from "../../public/person.png";
+import AuctionWalletIcon from "../../public/wallet.png";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import { ProfileItem, Wrapper } from "./profilePage.styles";
-import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
-import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 import walleticon from "../../public/et_wallet.svg";
 import homeUser from "../../public/uit_house-user.svg";
 import Image from "next/image";
-import { AccountBalanceWalletOutlined } from "@mui/icons-material";
+
 
 const ProfilePage = ({ user }: User) => {
   const [loading, setLoading] = useState(false);
@@ -36,12 +38,14 @@ const ProfilePage = ({ user }: User) => {
   const profileList = [
     {
       profileItemName: "Refer a friend",
-      profileItemIcon: <ShoppingBagOutlinedIcon />,
+      profileItemIcon: (
+        <Image src={ReferAFriendIcon} alt="Refer a friend icon" />
+      ),
       profileUrl: "/profile/referral",
     },
     {
       profileItemName: "My Details",
-      profileItemIcon: <FolderSharedOutlinedIcon />,
+      profileItemIcon: <Image src={MyDetailsIcon} />,
       profileUrl: "/profile/my-details",
     },
     {
@@ -51,7 +55,7 @@ const ProfilePage = ({ user }: User) => {
     },
     {
       profileItemName: "Auction Wallet",
-      profileItemIcon: <AccountBalanceWalletOutlined />,
+      profileItemIcon: <Image src={AuctionWalletIcon} />,
       profileUrl: "/profile/game_wallet",
     },
     {
@@ -61,15 +65,9 @@ const ProfilePage = ({ user }: User) => {
     },
     {
       profileItemName: "Wishlist",
-      profileItemIcon: <ShoppingBagOutlinedIcon />,
+      profileItemIcon: <Image src={WishlistIcon} />,
       profileUrl: "/profile/saved-posts",
     },
-
-    // {
-    //   profileItemName: "Membership plans",
-    //   profileItemIcon: <DateRangeOutlinedIcon />,
-    //   profileUrl: "/profile/membership",
-    // },
   ];
 
   const handleClick = () => {
@@ -97,7 +95,13 @@ const ProfilePage = ({ user }: User) => {
           </div>
         )}
 
-        <header style={{ top: "0px", marginBottom: "0px" }}>
+        <header
+          style={{
+            top: "0px",
+            marginBottom: "0px",
+            marginTop: "80px",
+          }}
+        >
           <div id="hi">Hi,</div>
           <div id="user-name">{user.nickname}</div>
         </header>
@@ -120,7 +124,10 @@ const ProfilePage = ({ user }: User) => {
             }}
           >
             <div className="profile-name-container cursor-pointer">
-              {item.profileItemIcon}
+              {/* mew item */}
+              <div className="icon-wrapper">{item.profileItemIcon}</div>
+
+              {/* {item.profileItemIcon} */}
               <div>{item.profileItemName}</div>
             </div>
             <ArrowForwardIosRoundedIcon
@@ -131,7 +138,10 @@ const ProfilePage = ({ user }: User) => {
 
         <ProfileItem className="cursor-pointer" onClick={handleClick}>
           <div className="profile-name-container cursor-pointer">
-            <SupportAgentOutlinedIcon />
+            <div className="icon-wrapper">
+              <Image src={CustomerSupportIcon} />
+            </div>
+
             <div>Customer support</div>
           </div>
           <ArrowForwardIosRoundedIcon

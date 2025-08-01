@@ -5,24 +5,20 @@ import { ProductVariant, Slug, Vendor } from "../../../pages/index";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { urlFor, sanityClient } from "../../../lib/sanity";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
 import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@auth0/nextjs-auth0/dist/frontend/use-user";
 import debounce from "../../../utils/debounce";
-//import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-// 🚀 Fast
-import Button from '@mui/material/Button';
-//import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
-//import BookmarkIcon from "@mui/icons-material/Bookmark";
-//import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import Button from "@mui/material/Button";
 import { useSanityUIDContext } from "../../../context/sanityUserId";
-import More from '../../../public/More.svg';
-import Like from '../../../public/Like.svg';
-import Share from '../../../public/Share.svg';
-import comment from '../../../public/Comment.svg';
-import Bookmark from '../../../public/Bookmark.svg';
+import More from "../../../public/More.svg";
+import Like from "../../../public/Like.svg";
+import Share from "../../../public/Share.svg";
+import comment from "../../../public/Comment.svg";
+import Bookmark from "../../../public/Bookmark.svg";
+import ChatImage from "../../../public/chat.png";
+import LikeImage from "../../../public/wishlist.png";
+import BookmarkImage from "../../../public/bookmark-2.png";
+import ShareImage from "../../../public/direct.png";
 import ReactModal from "react-modal";
 
 interface ProductProps {
@@ -45,7 +41,7 @@ const ProductContainer = ({
   userSavedProducts,
 }: ProductProps) => {
   const sanityUID = useSanityUIDContext();
-  // const [loading, setLoading] = useState(false);
+
   const [feature, setFeature] = useState(true);
   const router = useRouter();
   const [likes, setLikes] = useState({ likeCount: 5, likeState: false });
@@ -104,15 +100,14 @@ const ProductContainer = ({
 
   const customStyles = {
     content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
     },
   };
-
 
   function showModal(e: any) {
     e.preventDefault();
@@ -151,147 +146,191 @@ const ProductContainer = ({
   }, [user, userLikedProducts]);
 
   return (
-    <> 
-    {isModalVisible && (
-      <ReactModal
-        style={customStyles}
-        isOpen={isModalVisible}
-        onRequestClose={hideModal}
-        contentLabel="This category is comming soon"
-      >
-        <div>
-          <p>{feature ? "Feature still in development" : "Category coming soon"} </p>
-          <button onClick={hideModal}>Close</button>
+    <>
+      {isModalVisible && (
+        <ReactModal
+          style={customStyles}
+          isOpen={isModalVisible}
+          onRequestClose={hideModal}
+          contentLabel="This category is comming soon"
+        >
+          <div>
+            <p>
+              {feature
+                ? "Feature still in development"
+                : "Category coming soon"}{" "}
+            </p>
+            <button onClick={hideModal}>Close</button>
+          </div>
+        </ReactModal>
+      )}
+      <ProductInfo key={productProps._id} className="first:mt-[100px]">
+        <div id="vendor-info-container">
+          <div id="vendor-info">
+            <Image
+              placeholder="blur"
+              blurDataURL="/placeholder.png"
+              className="vendorImage"
+              width={50}
+              height={50}
+              unoptimized={true}
+              src={urlFor(productProps.vendor.logo).url()}
+              alt={productProps.title}
+              onClick={() => {
+                router.push(`/vendor/${productProps.vendor._id}`);
+              }}
+            />
+            <span style={{ marginLeft: "30px" }}>
+              {productProps.vendor.title}
+            </span>
+          </div>
+          <Button style={{ color: "black", paddingLeft: "50px" }}>
+            <Image
+              src={More}
+              alt="more icon"
+              width={0}
+              height={0}
+              unoptimized={true}
+            />
+            {/* <Image src={ChatImage} alt="chat icon" /> */}
+          </Button>
         </div>
-      </ReactModal>
-    )}
-    <ProductInfo key={productProps._id} className="first:mt-[116px]">
-      <div id="vendor-info-container">
-        <div id="vendor-info">
+        <motion.div className="post-image-wrapper">
+          <Image
+            className="post-image"
+            placeholder="blur"
+            blurDataURL="/placeholder.png"
+            objectFit="cover"
+            unoptimized={true}
+            width={430}
+            height={370}
+            src={urlFor(productProps.defaultProductVariant.images[0]).url()}
+            alt="Product Image"
+            onClick={() => {
+              setLoading(true);
+              router.push(`/product/${productProps.slug.current}`);
+            }}
+          />
+        </motion.div>
+
+        {/* <motion.div
+          whileTap={{ scale: 0.9 }}
+          style={{
+            width: "100%",
+            height: "20rem",
+            position: "relative",
+            overflowY: "hidden",
+          }}
+        >
           <Image
             placeholder="blur"
             blurDataURL="/placeholder.png"
-            className="vendorImage"
-            width={50}
-            height={50}
+            objectFit="cover"
             unoptimized={true}
-            src={urlFor(productProps.vendor.logo).url()}
-            alt={productProps.title}
+            width={430}
+            height={370}
+            src={urlFor(productProps.defaultProductVariant.images[0]).url()}
+            alt="Product Image"
             onClick={() => {
-              router.push(`/vendor/${productProps.vendor._id}`);
+              setLoading(true);
+              router.push(`/product/${productProps.slug.current}`);
             }}
           />
-          <span style={{ marginLeft: "30px" }}>
-            {productProps.vendor.title}
-          </span>
-        </div>
-        <Button style={{ color: "black", paddingLeft: "50px" }}>
-          <Image src={More} alt="more icon" width={0} height={0} unoptimized={true} />
-        </Button>
-      </div>
-      <motion.div
-        whileTap={{ scale: 0.9 }}
-        style={{ width: "100%", height: "20rem", position: "relative", overflowY: 'hidden' }}
-      >
-        <Image
-          placeholder="blur"
-          blurDataURL="/placeholder.png"
-          objectFit="cover"
-          unoptimized={true}
-          width={430}
-          height={370}
-          src={urlFor(productProps.defaultProductVariant.images[0]).url()}
-          alt="Product Image"
-          onClick={() => {
-            setLoading(true);
-            router.push(`/product/${productProps.slug.current}`);
-          }}
-        />
-      </motion.div>
-
-      <div style={{ paddingLeft: "3vw" }}>
-        <div id="action-section">
-          <div>
-            <motion.button onClick={()=>{setIsModalVisible(true)}}
-              // whileTap={{ scale: 0.8 }}
-              // onClick={() => {
-              //   setIsModalVisible(true);   
-              //   setLikes((prev) => {
-              //     if (prev.likeState) {
-              //       return {
-              //         likeCount: prev.likeCount - 1,
-              //         likeState: false,
-              //       };
-              //     }
-              //     return { likeCount: prev.likeCount + 1, likeState: true };
-              //   });
-              //   handleLikes(productProps._id);
-              // }}
+        </motion.div> */}
+        <div>
+          {/* <div style={{ paddingLeft: "3vw" }}> */}
+          <div id="action-section">
+            <div>
+              <motion.button
+                onClick={() => {
+                  setIsModalVisible(true);
+                }}
               >
-              {likes.likeState ? (
-                <Image src={Like}
-               //   onClick={setIsModalVisible(true)}
-                  alt="like icon"  
+                {likes.likeState ? (
+                  <Image
+                    src={LikeImage}
+                    alt="like icon"
+                    unoptimized={true}
+                    width={0}
+                    height={0}
+                  />
+                ) : (
+                  <Image
+                    src={LikeImage}
+                    alt="like icon"
+                    width={35}
+                    height={35}
+                  />
+                )}
+              </motion.button>
+              <button>
+                <Image
+                  src={ChatImage}
+                  width={35}
+                  height={35}
+                  alt="comment icon"
+                />
+              </button>
+              <motion.button
+                whileTap={{ scale: 0.8 }}
+                onClick={async () => {
+                  try {
+                    await navigator.share({
+                      title: "Ecommerce",
+                      text: "BUY THIS NOW!!!",
+                      url: `/product/${productProps.slug.current}`,
+                    });
+                  } catch (err) {
+                    alert(err);
+                  }
+                }}
+              >
+                <Image
+                  src={ShareImage}
+                  width={30}
+                  height={30}
+                  style={{ border: "3px solid red" }}
+                  alt="share icon"
+                />
+              </motion.button>
+            </div>
+            <motion.button
+              id="save-button"
+              whileTap={{ scale: 0.8 }}
+              onClick={() => {
+                setIsModalVisible(true);
+                setPostSaveState((prev) => {
+                  handlePostSave(productProps._id);
+                  return !prev;
+                });
+              }}
+            >
+              {postSaveState ? (
+                <Image
+                  src={BookmarkImage}
                   unoptimized={true}
                   width={0}
-                  height={0}            
+                  height={0}
+                  alt="bookmark icon"
                 />
               ) : (
                 <Image
-                 src={Like}
-                 alt="like icon"
-             //    onClick={setIsModalVisible(true)}
-                 width={35}
-                 height={35}
-                    />
+                  src={BookmarkImage}
+                  width={30}
+                  height={30}
+                  alt="bookmark icon"
+                />
               )}
             </motion.button>
-            <button>
-              <Image src={comment}  width={35} height={35} alt="comment icon" 
-              />
-            </button>
-            <motion.button
-              whileTap={{ scale: 0.8 }}
-              onClick={  async () => {
-                try {
-                  await navigator.share({
-                    title: "Ecommerce",
-                    text: "BUY THIS NOW!!!",
-                    url: `/product/${productProps.slug.current}`,
-                  });
-                } catch (err) {
-                  alert(err);
-                }
-              }}
-
-            >
-              <Image src={Share} width={35} height={35}  style={{ border: "3px solid red" }} alt="share icon" />
-            </motion.button>
           </div>
-          <motion.button
-            id="save-button"
-            whileTap={{ scale: 0.8 }}
-            onClick={() => {
-              setIsModalVisible(true);
-              setPostSaveState((prev) => {
-                handlePostSave(productProps._id);
-                return !prev;
-              });
-            }}
-          >
-            {postSaveState ? (
-              <Image src={Bookmark} unoptimized={true} width={0} height={0} alt="bookmark icon" />
-            ) : (
-              <Image  src={Bookmark}  width={35} height={35} alt="bookmark icon"  
-              />
-            )}
-          </motion.button>
+          <h4 className="like-count">{`${likes.likeCount} like${
+            likes.likeCount > 1 || likes.likeCount == 0 ? "s" : ""
+          }`}</h4>
+          {/* <h4 style={{ marginTop: "10px", marginLeft: "10px" }}>{`${
+            likes.likeCount
+          } like${likes.likeCount > 1 || likes.likeCount == 0 ? "s" : ""}`}</h4> */}
         </div>
-        <h4 style={{ marginTop: "10px", marginLeft: "10px" }}>{`${likes.likeCount} like${
-          likes.likeCount > 1 || likes.likeCount == 0 ? "s" : ""
-        }`}</h4>
-      </div>
-    </ProductInfo>
+      </ProductInfo>
     </>
   );
 };

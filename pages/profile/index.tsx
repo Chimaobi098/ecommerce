@@ -3,6 +3,7 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { User } from "../../interfaces/interface";
 import ProfilePage from "../../components/profilePage/profilePage";
 import { NavBar, Wrapper } from "../../components/Home/home.styles";
+// import { NavBar } from "../../components/profilePage/profilePage.styles";
 import settingIcon from "../../public/iwwa_settings.svg";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -28,6 +29,9 @@ const Profile = ({ user }: User) => {
           textAlign: "center",
           display: "flex",
           justifyContent: "center",
+          fontSize: "1.6rem",
+          padding: "1rem",
+          fontWeight: 600,
         }}
       >
         <header style={{ width: "100%" }}>My Account</header>

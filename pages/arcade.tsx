@@ -230,36 +230,112 @@
 // export default ArcadePage;
 
 // pages/arcade.tsx
-import React, { useEffect } from "react";
-import { useState } from "react";
+// import React, { useEffect ,useState} from "react";
+// import GameGallery from "../components/GameGallery";
+// import useAppAuth, { FbUser } from "../utils/firebase";
+// import { NavBar } from "../components/Home/home.styles";
+
+// const ArcadePage: React.FC = () => {
+//   const { getUserFromLocalStorage, updateFieldsInFirebase } = useAppAuth();
+//   const user = getUserFromLocalStorage();
+//   const [userDetails, setUserDetails] = useState<FbUser | null>(null);
+//   useEffect(() => {
+//     if (user) {
+//       setUserDetails(JSON.parse(user));
+//     }
+//   }, [user]);
+//   return (
+//     <>
+//       <NavBar style={{ justifyContent: "center", padding: "1rem" }}>
+//         <h1> Games</h1>
+//       </NavBar>
+//       <main
+//         style={{
+//           marginTop: "4rem",
+//         }}
+//       >
+//         <div
+//           style={{
+//             overflowY: "auto",
+//             maxHeight: "100vh",
+//             paddingBottom: "9rem",
+//           }}
+//         >
+//           <GameGallery />
+//         </div>
+//       </main>
+//     </>
+//   );
+// };
+
+// export default ArcadePage;
+
+import React, { useEffect, useState } from "react";
 import GameGallery from "../components/GameGallery";
-import GameEmbed from "../components/GameEmbed";
-
+import AppsGallery from "../components/AppsGallery";
 import useAppAuth, { FbUser } from "../utils/firebase";
-
-import CrashGame from "../components/CrashGame/App";
 import { NavBar } from "../components/Home/home.styles";
 
 const ArcadePage: React.FC = () => {
-  const { getUserFromLocalStorage, updateFieldsInFirebase } = useAppAuth();
-
+  const { getUserFromLocalStorage } = useAppAuth();
   const user = getUserFromLocalStorage();
-
   const [userDetails, setUserDetails] = useState<FbUser | null>(null);
-  //this shows the user details and wallet balance
-  console.log("user details: ", userDetails);
-  console.log("wallet balance is ", userDetails?.walletBalance);
+  const [activeTab, setActiveTab] = useState<"apps" | "games">("apps");
 
   useEffect(() => {
     if (user) {
       setUserDetails(JSON.parse(user));
     }
   }, [user]);
+
   return (
     <>
-      <NavBar style={{ justifyContent: "center", padding: "1rem" }}>
-        <h1> Games</h1>
-      </NavBar>
+      {/* <NavBar style={{ justifyContent: "center", padding: "0.5rem" }}>
+        <h1 style={{ textAlign: "center", marginBottom: "1rem" }}>
+          {" "}
+          App gallery
+        </h1>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "0rem 5rem",
+          }}
+        >
+          <button
+            onClick={() => setActiveTab("apps")}
+            style={{
+              border: "none",
+              background: "none",
+              fontWeight: "bold",
+              fontSize: "1.2rem",
+              color: activeTab === "apps" ? "black" : "gray",
+              borderBottom: activeTab === "apps" ? "2px solid black" : "none",
+              paddingBottom: "0.3rem",
+              cursor: "pointer",
+            }}
+          >
+            Apps
+          </button>
+          <button
+            onClick={() => setActiveTab("games")}
+            style={{
+              border: "none",
+              background: "none",
+              fontWeight: "bold",
+              fontSize: "1.2rem",
+              color: activeTab === "games" ? "black" : "gray",
+              borderBottom: activeTab === "games" ? "2px solid black" : "none",
+              paddingBottom: "0.3rem",
+              cursor: "pointer",
+            }}
+          >
+            Games
+          </button>
+        </div>
+      </NavBar> */}
+
       <main
         style={{
           marginTop: "4rem",
@@ -269,12 +345,13 @@ const ArcadePage: React.FC = () => {
           style={{
             overflowY: "auto",
             maxHeight: "100vh",
-            paddingBottom: "9rem",
+            padding: "1rem",
+            paddingTop: "4rem", // adjusts for top nav
+            paddingBottom: "10rem", // adjusts for bottom nav
           }}
         >
-          {/* <CrashGame /> */}
-          {/* <GameEmbed /> */}
-          <GameGallery />
+          {<GameGallery />}
+          {/* {activeTab === "apps" ? <AppsGallery /> : <GameGallery />} */}
         </div>
       </main>
     </>

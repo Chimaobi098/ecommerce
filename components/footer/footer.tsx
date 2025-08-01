@@ -56,7 +56,7 @@ const Footer = () => {
             <AccountCircleIcon fontSize="large" style={{ color: "black" }} />
           ) : (
             <AccountCircleOutlinedIcon
-              fontSize="large"
+              fontSize="large" dev
               style={{ color: "black" }}
             />
           )}
