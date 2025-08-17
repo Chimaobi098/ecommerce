@@ -1,78 +1,47 @@
 'use client'
 
 import { useState } from 'react'
-import { Heart, MessageCircle, Send, Bookmark } from 'lucide-react'
+import { Search, Camera } from 'lucide-react'
+import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { CategoryGrid } from '@/components/search/categoryGrid'
 
-interface ProductActionsProps {
-  likes: number
-  isLiked: boolean
-  isSaved: boolean
-}
-
-export function ProductActions({ likes: initialLikes, isLiked: initialIsLiked, isSaved: initialIsSaved }: ProductActionsProps) {
-  const [likes, setLikes] = useState(initialLikes)
-  const [isLiked, setIsLiked] = useState(initialIsLiked)
-  const [isSaved, setIsSaved] = useState(initialIsSaved)
-
-  const handleLike = () => {
-    setIsLiked(!isLiked)
-    setLikes(isLiked ? likes - 1 : likes + 1)
-  }
-
-  const handleSave = () => {
-    setIsSaved(!isSaved)
-  }
+export default function SearchPage() {
+  const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <div className="p-3">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleLike}
-            className="text-gray-700 hover:text-red-500 p-0 h-auto"
-          >
-            <Heart 
-              className={`h-6 w-6 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} 
-            />
-          </Button>
-          
+    <div className="min-h-screen bg-gray-50">
+      {/* Search Header */}
+      <div className="bg-white px-4 py-4 border-b">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Input
+            placeholder="Search for products"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 pr-12 py-3 text-base border-gray-200 rounded-full"
+          />
           <Button 
             variant="ghost" 
             size="icon"
-            className="text-gray-700 hover:text-gray-900 p-0 h-auto"
+            className="absolute right-1 top-1/2 transform -translate-y-1/2"
           >
-            <MessageCircle className="h-6 w-6" />
-          </Button>
-          
-          <Button 
-            variant="ghost" 
-            size="icon"
-            className="text-gray-700 hover:text-gray-900 p-0 h-auto"
-          >
-            <Send className="h-6 w-6" />
+            <Camera className="h-4 w-4 text-gray-400" />
           </Button>
         </div>
-        
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleSave}
-          className="text-gray-700 hover:text-gray-900 p-0 h-auto"
-        >
-          <Bookmark 
-            className={`h-6 w-6 ${isSaved ? 'fill-current' : ''}`} 
-          />
-        </Button>
       </div>
       
-      {likes > 0 && (
-        <p className="text-sm font-medium text-gray-900 mt-2">
-          {likes} like{likes !== 1 ? 's' : ''}
-        </p>
-      )}
+      {/* Category Grid */}
+      <div className="p-4">
+        {searchQuery ? (
+          <div className="text-center text-gray-500 py-12">
+            <Search className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+            <p>Searching for "{searchQuery}"...</p>
+          </div>
+        ) : (
+          <CategoryGrid />
+        )}
+      </div>
     </div>
   )
 }
