@@ -10,12 +10,27 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AuctionIcon from "../../public/Auction";
+import { Apps, AppsOutlined, Gamepad, GamepadOutlined } from "@mui/icons-material";
+import { useEffect, useState } from "react";
 
 const Footer = () => {
   const { pathname, push, replace } = useRouter();
-  console.log(pathname);
+  const [isVisible, setIsVisible] = useState(true)
+  const specialRoutes = [
+    '/app-center',
+  ]
+  useEffect(()=>{
+    specialRoutes.forEach((route)=>{
+     if(pathname.includes(route)){
+      setIsVisible(false)
+     } else {
+      setIsVisible(true)
+     }
+    })
+  }, [pathname])
   return (
-    <Wrapper className="footer">
+    <Wrapper className={`footer ${isVisible? '': '!hidden'}`}>
       <div className="icon-container">
         <Link passHref href={"/"}>
           {pathname == "/" ? (
@@ -27,27 +42,25 @@ const Footer = () => {
         <p style={{ fontWeight: pathname == "/" ? 600 : 500 }}>Home</p>
       </div>
       <div className="icon-container">
-        <Link passHref href={"/arcade"}>
-          {pathname == "/arcade" ? (
-            <VideogameAssetIcon fontSize="large" style={{ color: "black" }} />
+        <Link passHref href={"/auction"}>
+          {pathname == "/auction" ? (
+            <AuctionIcon size={35}/>
           ) : (
-            <VideogameAssetOutlinedIcon
-              fontSize="large"
-              style={{ color: "black" }}
-            />
+            <AuctionIcon size={35}/>
           )}
         </Link>
-        <p style={{ fontWeight: pathname == "/arcade" ? 600 : 500 }}>Games</p>
+        <p style={{ fontWeight: pathname == "/auction" ? 600 : 500 }}>Auction</p>
       </div>
+      
       <div className="icon-container">
-        <Link passHref href={"/explore"}>
-          {pathname == "/explore" ? (
-            <SearchIcon fontSize="large" style={{ color: "black" }} />
+        <Link passHref href={"/app-center"}>
+          {pathname == "/app-center" ? (
+            <Apps fontSize="large" style={{ color: "black" }} />
           ) : (
-            <SearchOutlinedIcon fontSize="large" style={{ color: "black" }} />
+            <AppsOutlined fontSize="large" style={{ color: "black" }} />
           )}
         </Link>
-        <p style={{ fontWeight: pathname == "/explore" ? 600 : 500 }}>Search</p>
+        <p style={{ fontWeight: pathname == "/app-center" ? 600 : 500 }}>App Center</p>
       </div>
 
       <div className="icon-container">

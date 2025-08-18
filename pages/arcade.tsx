@@ -350,8 +350,8 @@ const ArcadePage: React.FC = () => {
             paddingBottom: "10rem", // adjusts for bottom nav
           }}
         >
-          {<GameGallery />}
-          {/* {activeTab === "apps" ? <AppsGallery /> : <GameGallery />} */}
+          {/* {<GameGallery />} */}
+          {activeTab === "apps" ? <AppsGallery /> : <GameGallery />}
         </div>
       </main>
     </>

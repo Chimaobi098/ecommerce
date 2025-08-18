@@ -54,7 +54,7 @@ const WalletPage: React.FC = () => {
     <Wrapper className="mt-20 mx-4">
       <div className="flex flex-col items-center justify-center text-2xl py-12 gap-y-2">
         <div className="text-3xl md:text-4xl font-medium">
-          ₦{userDetails?.walletBalance}
+          ₦{userDetails?.gameWalletBalance}
         </div>
         <h4 className="text-gray-500 text-sm">Available</h4>
       </div>

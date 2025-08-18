@@ -98,7 +98,7 @@ export const ShoppingCartProvider = ({
   const [wsgDetails, setWSGDetails] = useState<any>({reward: 0})
   const [Categories, setCategories] = useState<any>([])
   const [appWallet, setAppWallet] = useState(1400.56);
-  console.log(cartItems, "its all here bro");
+  // console.log(cartItems, "its all here bro");
   function getItemQuantity(id: string) {
     const data = cartItems.find((item) => {
       return item._id == id;

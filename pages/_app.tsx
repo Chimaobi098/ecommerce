@@ -191,7 +191,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <AuthTrackingWrapper>
                 <main
                   style={{
-                    paddingBottom: "15vmin",
+                    // paddingBottom: "15vmin",
                     height: "100%",
                     overflow: "hidden",
                     position: "relative",

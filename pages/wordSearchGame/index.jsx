@@ -1926,7 +1926,7 @@ const WordSearchGame = () => {
 
   useEffect(() => {
     if (win || timeUp) {
-      gameOver();
+      // gameOver();
     }
   }, [win, timeUp]);
 

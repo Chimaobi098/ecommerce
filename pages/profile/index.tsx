@@ -12,7 +12,7 @@ import Settings from "../Settings";
 import useAuth from "../../utils/supabaseClient";
 
 const Profile = ({ user }: User) => {
-  const { referralCode } = useAuth();
+  // const { referralCode } = useAuth();
 
   const router = useRouter();
 

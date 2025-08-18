@@ -15,6 +15,8 @@ import { ShoppingBagIcon } from "../../public/ShoppingBag";
 import AuctionIcon from "../../public/Auction";
 import { useRouter } from "next/router";
 import { ChevronRight } from "@mui/icons-material";
+import SearchIcon from "@mui/icons-material/Search";
+
 
 const Home = ({ results }: HomeProduct) => {
   const { getCartQuantity, cartOpen, setCartOpen } = useShoppingCart();
@@ -204,19 +206,16 @@ const Home = ({ results }: HomeProduct) => {
 
       <NavBar
         className={`duration-[0.35s] ${
-          !fullHeader ? "-translate-y-[60px]" : ""
+          !fullHeader ? "-translate-y-[50px]" : ""
         }`}
       >
         <div className="h-[50px] flex items-center justify-between px-5 pt-[20px]">
           <h1>Seidou</h1>
           <div className="flex gap-x-5 items-center">
             <button
-              onClick={() => {
-                router.push("/auction");
-              }}
-              className="w-[30px] text-black"
-            >
-              <AuctionIcon />
+              onClick={() => { router.push('/explore') }}
+              className="w-[30px] text-black">
+              <SearchIcon fontSize="large" style={{ color: "black" }} />
             </button>
 
             <button
@@ -260,9 +259,7 @@ const Home = ({ results }: HomeProduct) => {
               );
             })}
           </div>
-          <div className="h-full flex items-center justify-center px-2 bg-white">
-            <ChevronRight className="w-7" />
-          </div>
+         
         </div>
       </NavBar>
 

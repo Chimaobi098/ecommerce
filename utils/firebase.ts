@@ -13,11 +13,14 @@ import {
   where,
 } from "firebase/firestore";
 import { firebaseConfig } from "./config";
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { UserProfile } from "@auth0/nextjs-auth0";
 
 // Initialize Firebase app
-const app = initializeApp(firebaseConfig);
+if(getApps().length === 0){
+  initializeApp(firebaseConfig)
+}
+
 const db = getFirestore();
 const fbUsersRef = collection(db, "users");
 const fbPaymentRef = collection(db, "payments");
@@ -242,9 +245,11 @@ const useAppAuth = () => {
   }
 
   async function updateFieldsInFirebase(
-    userEmail: string,
+    userEmail: string|null|undefined,
     fieldsToUpdate: Partial<FbUser>
   ) {
+    if(!userEmail) return
+
     const documentId = (await getDocumentIdByEmail(userEmail)) as string;
     const filteredProfile: Partial<FbUser> = Object.fromEntries(
       Object.entries(fieldsToUpdate).filter(([_, value]) => value !== undefined)
