@@ -33,6 +33,13 @@ const GameGrid: React.FC<GameGridProps> = ({ games, loading, error }) => {
         specialTitle="Crash Game" 
         specialUrl="/crash" 
       />
+
+      {/* Special Crash Game Card */}
+      <GameCard 
+        isSpecial={true} 
+        specialTitle="Word Search Game" 
+        specialUrl="/word"
+      />
       
       {/* Regular Game Cards */}
       {games.map((game) => (
