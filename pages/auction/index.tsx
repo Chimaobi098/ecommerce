@@ -197,7 +197,7 @@ const AuctionPage = () => {
             <span>
               Please{" "}
               <button
-                className="px-2 py-[2px] rounded-md border border-[#d5d5d5] text-[#d5d5d5]"
+                className="px-2 py-[2px] rounded-md border border-[#d5d5d5] active:scale-150"
                 onClick={() => {
                   router.push("/api/auth/login");
                 }}

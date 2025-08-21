@@ -1,16 +1,17 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { categories } from "../Utils/Utils";
 import { Search, YouTube } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import useCategories from "../../../../utils/seidouVideoUtils/UseCategories";
 
 type Props = {
  selectedCategory?: string;
  setSelectedCategory?: Dispatch<SetStateAction<string>>;
  fullHeader?: boolean;
 }
-export const Header = ({selectedCategory, setSelectedCategory, fullHeader=true}: Props) => {
+const Header = ({selectedCategory, setSelectedCategory, fullHeader=true}: Props) => {
   const [searchTerm, setSearchTerm] = useState('')
   const router = useRouter()
+  const categories = useCategories()
    
   function handleSearch(){
     if(searchTerm){
@@ -25,6 +26,7 @@ export const Header = ({selectedCategory, setSelectedCategory, fullHeader=true}:
                 <div className="rounded-xl grow max-w-[200px] border border-[#404040] h-9 bg-transparent overflow-hidden flex items-center">
                   <input type="text" 
                   value={searchTerm}
+                  placeholder="Search"
                   onChange={(e)=>{setSearchTerm(e.target.value)}} 
                   className="w-full h-full px-3 text-white grow bg-transparent focus:outline-none"/>
                   <button onClick={()=>{handleSearch()}} className="h-full w-12 grid place-content-center bg-[#ffffff10] rounded-l-xl">
@@ -49,3 +51,5 @@ export const Header = ({selectedCategory, setSelectedCategory, fullHeader=true}:
             </div>
     );
 }
+
+export default Header

@@ -5,7 +5,7 @@ import { ShoppingBagIcon } from "../../public/ShoppingBag";
 interface props {
     theme: 'light'|'dark'
 }
-const Footer = ({theme}: props) => {
+const AC_Footer = ({theme}: props) => {
     const baseURL = '/app-center'
     const apps = [
         {name: 'Seidou', route: '/', icon: <ShoppingBagIcon fill={`${theme==='light'? 'black':'white'}`}/>},
@@ -27,4 +27,4 @@ const Footer = ({theme}: props) => {
      );
 }
  
-export default Footer;
+export default AC_Footer;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Footer from "../Footer";
+import Footer from "../AC_Footer";
 import { KeyboardArrowLeft } from "@mui/icons-material";
 import { useRouter } from "next/router";
 

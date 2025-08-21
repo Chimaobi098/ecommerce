@@ -1,6 +1,6 @@
 import { Checkroom, Code, DeveloperMode, FaceRetouchingNatural, FitnessCenter, GraphicEq, Home, LiveTv, MusicNote, OndemandVideo, School, SportsEsports, TheaterComedy } from "@mui/icons-material";
 
-export const categories = [
+const categories = [
   { name: 'New', icon: <Home />, },
   { name: 'JS Mastery', icon: <Code />, },
   { name: 'Coding', icon: <Code />, },
@@ -19,3 +19,7 @@ export const categories = [
   { name: 'Gym', icon: <FitnessCenter />, },
   { name: 'Crypto', icon: <DeveloperMode />, },
 ];
+
+export default function useCategories() {
+  return categories
+}

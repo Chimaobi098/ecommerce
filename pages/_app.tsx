@@ -154,7 +154,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const hideOnAddressbook = router.pathname === "/Addressbook";
 
   useEffect(() => {
-    initMixpanel();
+    // initMixpanel();
 
     const urlParams = new URLSearchParams(window.location.search);
     const referredBy = urlParams.get("ref");
@@ -163,7 +163,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
 
     const handleRouteChange = (url: string) => {
-      trackPageView(url);
+      // trackPageView(url);
     };
 
     router.events.on("routeChangeComplete", handleRouteChange);

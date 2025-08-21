@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Footer from "./Footer";
+import Footer from "./AC_Footer";
 import { KeyboardArrowLeft, PlayArrow, PlayArrowRounded, YouTube } from "@mui/icons-material";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";

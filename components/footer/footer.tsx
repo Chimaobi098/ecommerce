@@ -41,6 +41,7 @@ const Footer = () => {
         </Link>
         <p style={{ fontWeight: pathname == "/" ? 600 : 500 }}>Home</p>
       </div>
+
       <div className="icon-container">
         <Link passHref href={"/auction"}>
           {pathname == "/auction" ? (

@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player'
 import CheckIcon from '../../../../public/CheckIcon';
 import CancelIcon from '../../../../public/CancelIcon';
-import { fetchFromAPI } from '../Utils/FetchData';
+import { fetchFromAPI } from '../../../../utils/seidouVideoUtils/FetchData';
 import { CheckCircle, KeyboardArrowLeft } from '@mui/icons-material';
 import Link from 'next/link';
 import PayoutPopup from '../components/PayoutPopup';
@@ -151,7 +151,7 @@ const WatchVideo = () => {
                             <img src={item.snippet?.thumbnails?.high?.url} className="w-full h-[180px] object-cover rounded-t-2xl"/>
                             <div className="pt-3 pb-5 px-3 rounded-b-2xl text-white bg-[#1a1a1a] flex flex-col gap-y-1">
                                 <span className="overflow-hidden">{item.snippet?.title.length >= 70? `${decode(item.snippet?.title).slice(0,70)}...` : decode(item.snippet?.title)}</span>
-                                <Link href={`/app-center/seidou-video/channel?${item.snippet?.channelId}`}>
+                                <Link href={`/app-center/seidou-video/channel?id=${item.snippet?.channelId}`}>
                                     <div className="flex flex-gap-x-1.5 items-center text-sm">
                                     <span>{item.snippet?.channelTitle.slice(0,60)}</span>
                                     <CheckCircle sx={{fontSize:14, color:'gray', ml:'5px'}}/>
