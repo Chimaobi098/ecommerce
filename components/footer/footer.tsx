@@ -31,54 +31,54 @@ const Footer = () => {
   }, [pathname])
   return (
     <Wrapper className={`footer ${isVisible? '': '!hidden'}`}>
-      <div className="icon-container">
         <Link passHref href={"/"}>
-          {pathname == "/" ? (
-            <HomeIcon fontSize="large" style={{ color: "black" }} />
-          ) : (
-            <HomeOutlinedIcon fontSize="large" style={{ color: "black" }} />
-          )}
+          <div className="icon-container">
+              {pathname == "/" ? (
+                <HomeIcon fontSize="large" style={{ color: "black" }} />
+              ) : (
+                <HomeOutlinedIcon fontSize="large" style={{ color: "black" }} />
+              )}
+            <p style={{ fontWeight: pathname == "/" ? 600 : 500 }}>Home</p>
+          </div>
         </Link>
-        <p style={{ fontWeight: pathname == "/" ? 600 : 500 }}>Home</p>
-      </div>
 
-      <div className="icon-container">
         <Link passHref href={"/auction"}>
-          {pathname == "/auction" ? (
-            <AuctionIcon size={35}/>
-          ) : (
-            <AuctionIcon size={35}/>
-          )}
+          <div className="icon-container">
+              {pathname == "/auction" ? (
+                <AuctionIcon size={35}/>
+              ) : (
+                <AuctionIcon size={35}/>
+              )}
+            <p style={{ fontWeight: pathname == "/auction" ? 600 : 500 }}>Auction</p>
+          </div>
         </Link>
-        <p style={{ fontWeight: pathname == "/auction" ? 600 : 500 }}>Auction</p>
-      </div>
       
-      <div className="icon-container">
         <Link passHref href={"/app-center"}>
-          {pathname == "/app-center" ? (
-            <Apps fontSize="large" style={{ color: "black" }} />
-          ) : (
-            <AppsOutlined fontSize="large" style={{ color: "black" }} />
-          )}
+          <div className="icon-container">
+              {pathname == "/app-center" ? (
+                <Apps fontSize="large" style={{ color: "black" }} />
+              ) : (
+                <AppsOutlined fontSize="large" style={{ color: "black" }} />
+              )}
+            <p style={{ fontWeight: pathname == "/app-center" ? 600 : 500 }}>App Center</p>
+          </div>
         </Link>
-        <p style={{ fontWeight: pathname == "/app-center" ? 600 : 500 }}>App Center</p>
-      </div>
 
-      <div className="icon-container">
         <Link passHref href={"/profile"}>
-          {pathname == "/profile" ? (
-            <AccountCircleIcon fontSize="large" style={{ color: "black" }} />
-          ) : (
-            <AccountCircleOutlinedIcon
-              fontSize="large"
-              style={{ color: "black" }}
-            />
-          )}
+          <div className="icon-container">
+              {pathname == "/profile" ? (
+                <AccountCircleIcon fontSize="large" style={{ color: "black" }} />
+              ) : (
+                <AccountCircleOutlinedIcon
+                  fontSize="large"
+                  style={{ color: "black" }}
+                />
+              )}
+            <p style={{ fontWeight: pathname == "/profile" ? 600 : 500 }}>
+              Profile
+            </p>
+          </div>
         </Link>
-        <p style={{ fontWeight: pathname == "/profile" ? 600 : 500 }}>
-          Profile
-        </p>
-      </div>
     </Wrapper>
   );
 };

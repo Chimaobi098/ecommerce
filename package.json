@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "cross-env NODE_ENV=production node server.js",
-    "lint": "next lint"
+    "lint": "next lint --max-warnings=0"
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",

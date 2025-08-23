@@ -7,7 +7,7 @@ type Props = {
     setPopup: Dispatch<SetStateAction<{isExpanded: boolean, template: ReactNode | null}>>;
 };
 
-const PayoutPopup = ({setPopup, popup}: Props) => {
+const PayoutPopup = ({setPopup, popup = { isExpanded: false, template: null, singleViewTemplate: true}}: Props) => {
     const {isExpanded, template, singleViewTemplate} = popup
     const [allowInHouseToggle, setAllowInHouseToggle] = useState(true)
     const [notify, setNotify] = useState(false)
@@ -18,6 +18,12 @@ const PayoutPopup = ({setPopup, popup}: Props) => {
             setNotify(false)
         }
     }
+
+    const [screenWidth, setScreenWidth] = useState<number>(0);
+
+    useEffect(() => {
+        setScreenWidth(window.innerWidth);
+    }, []);
 
     useEffect(()=>{
         if(template && !isExpanded){
@@ -35,7 +41,7 @@ const PayoutPopup = ({setPopup, popup}: Props) => {
     }, [isExpanded])
 
     return ( 
-        <motion.div drag='y' dragMomentum={false} dragConstraints={{top: 0, bottom: window.innerHeight-280}} onDragStart={()=> setAllowInHouseToggle(false)} onDragEnd={()=> setAllowInHouseToggle(true)}
+        <motion.div drag='y' dragMomentum={false} dragConstraints={{top: 0, bottom: screenWidth-280}} onDragStart={()=> setAllowInHouseToggle(false)} onDragEnd={()=> setAllowInHouseToggle(true)}
         className={`w-fit h-[80px] fixed left-0 top-[90px] flex drop-shadow-[0px_0px_3px_#ffffff30] text-sm font-bold z-[99] rounded-r-xl ${isExpanded? ' backdrop-blur-sm popup-transition':''}`}>
             <div className="h-full w-[45px] bg-white rounded-r-xl relative z-[2] flex justify-center items-center"
             onClick={()=> handleInHouseToggle()}>
