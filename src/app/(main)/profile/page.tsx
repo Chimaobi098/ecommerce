@@ -1,70 +1,98 @@
 import { Header } from '@/components/layout/header'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Heart, Bookmark, Settings } from 'lucide-react'
+import { createClient } from '@/lib/supabase/server'
+import { 
+  Users, 
+  User, 
+  MapPin, 
+  Wallet, 
+  CreditCard, 
+  Heart, 
+  HeadphonesIcon,
+  ChevronRight,
+  Settings
+} from 'lucide-react'
+import { redirect } from 'next/navigation';
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const supabase = await createClient();
+  const menuItems = [
+    {
+      icon: Users,
+      label: "Refer a friend",
+      href: "/profile/refer"
+    },
+    {
+      icon: User,
+      label: "My Details",
+      href: "/profile/details"
+    },
+    {
+      icon: MapPin,
+      label: "Address book",
+      href: "/profile/address"
+    },
+    {
+      icon: Wallet,
+      label: "Auction Wallet",
+      href: "/profile/auction-wallet"
+    },
+    {
+      icon: CreditCard,
+      label: "Cash Wallet",
+      href: "/profile/cash-wallet"
+    },
+    {
+      icon: Heart,
+      label: "Wishlist",
+      href: "/profile/wishlist"
+    },
+    {
+      icon: HeadphonesIcon,
+      label: "Customer support",
+      href: "/profile/support"
+    }
+  ]
+
+  const { data, error } = await supabase.auth.getClaims();
+  if (error || !data?.claims) {
+    // console.error("Error fetching user:", error?.message);
+    redirect("/auth/login");
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      
-      <div className="p-4">
-        {/* Profile Header */}
-        <div className="text-center mb-6">
-          <Avatar className="h-24 w-24 mx-auto mb-4">
-            <AvatarImage src="/api/placeholder/96/96" />
-            <AvatarFallback className="text-xl bg-black text-white">JD</AvatarFallback>
-          </Avatar>
-          <h1 className="text-xl font-semibold text-gray-900 mb-1">Jane Doe</h1>
-          <p className="text-gray-600 mb-4">Fashion enthusiast</p>
-          <Button variant="outline" size="sm">
-            <Settings className="h-4 w-4 mr-2" />
-            Edit Profile
-          </Button>
+      <div className="bg-white border-b">
+        <div className="flex items-center justify-between p-4">
+          <h1 className="text-xl font-semibold text-gray-900">My Account</h1>
+          <Settings className="h-6 w-6 text-gray-600" />
         </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <Card>
-            <CardContent className="p-4 text-center">
-              <div className="text-2xl font-bold text-gray-900">127</div>
-              <div className="text-sm text-gray-600">Following</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4 text-center">
-              <div className="text-2xl font-bold text-gray-900">1.2k</div>
-              <div className="text-sm text-gray-600">Followers</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4 text-center">
-              <div className="text-2xl font-bold text-gray-900">89</div>
-              <div className="text-sm text-gray-600">Likes</div>
-            </CardContent>
-          </Card>
+      </div>
+     
+      <div className="p-4">
+        {/* Greeting */}
+        <div className="mb-8 grid justify-center">
+          <h2 className="text-2xl font-medium text-gray-900 mb-2">Hi,</h2>
+          <p className="text-gray-500">User</p>
         </div>
 
         {/* Menu Items */}
-        <div className="space-y-2">
-          <Card className="hover:shadow-md transition-shadow cursor-pointer">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <Heart className="h-5 w-5 text-gray-600" />
-                <span className="font-medium">Liked Items</span>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card className="hover:shadow-md transition-shadow cursor-pointer">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <Bookmark className="h-5 w-5 text-gray-600" />
-                <span className="font-medium">Saved Items</span>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="space-y-1">
+          {menuItems.map((item, index) => (
+            <Card key={index} className="transition-shadow cursor-pointer border-0 shadow-none">
+              <CardContent className="">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-gray-100 rounded-lg">
+                      <item.icon className="h-5 w-5 text-gray-600" />
+                    </div>
+                    <span className="font-medium text-gray-900">{item.label}</span>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-gray-400" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </div>

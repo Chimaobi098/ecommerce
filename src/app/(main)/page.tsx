@@ -5,7 +5,7 @@ import { BrandCard } from '@/components/brand/brandCard'
 const mockProducts = [
   {
     id: 1,
-    image: '/api/placeholder/300/400',
+    image: '/images/Dress.webp',
     brand: 'Shein',
     likes: 0,
     isLiked: false,
@@ -13,7 +13,7 @@ const mockProducts = [
   },
   {
     id: 2,
-    image: '/api/placeholder/300/500',
+    image: '/images/skirt.jpg',
     brand: 'Shein',
     likes: 12,
     isLiked: true,
