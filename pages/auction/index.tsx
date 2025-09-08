@@ -48,6 +48,7 @@ const AuctionPage = () => {
   //end
   const { user } = useUser();
   console.log("user info is: ", user);
+  const { getUserFromLocalStorage} = useAppAuth();
   const router = useRouter();
   const { handleBidPlacements, getAllBids } = useAppAuth();
   const [isPending, startTransition] = useTransition();
@@ -62,8 +63,14 @@ const AuctionPage = () => {
     { slotNumber: 5 },
   ];
 
-  const handleFormSubmit = (bid_amount: number) => {
-    handleBidPlacements(user!, bidForm.slot, bid_amount).then((res: any) => {
+  const handleFormSubmit = async (bid_amount: number) => {
+    const userDetails = JSON.parse(getUserFromLocalStorage() || '')
+    const auctionBalance = userDetails.gameWalletBalance || 0
+
+    const previousBid = bids.filter((bid)=> bid.userEmail === user?.email && bid.slot === bidForm.slot).map((bid)=> bid.bidAmount)[0]
+    console.log(`previous bid: ${previousBid}`)
+    await  handleBidPlacements(user!, bidForm.slot, bid_amount, auctionBalance, previousBid).then((res: any) => {
+      console.log(res)
       if (res.success) {
         toast.success(res.success, {
           position: "top-right",
@@ -89,6 +96,7 @@ const AuctionPage = () => {
         });
       }
     });
+    
     setBidForm({ isOpen: false, slot: 1 });
   };
 
@@ -127,6 +135,7 @@ const AuctionPage = () => {
             onSubmit={handleFormSubmit}
             isPending={isPending}
             setBidForm={setBidForm}
+            previousBid={bids.filter((bid)=> bid.userEmail === user?.email && bid.slot === bidForm.slot).map((bid)=> bid.bidAmount)[0]}
           />
         )}
       </AnimatePresence>

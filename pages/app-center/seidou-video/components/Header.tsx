@@ -22,7 +22,7 @@ const Header = ({selectedCategory, setSelectedCategory, fullHeader=true}: Props)
     return ( 
             <div className={`fixed text-white top-0 left-0 z-10 bg-[#000000c5] backdrop-blur-md w-full max-w-[450px] duration-[0.35s] ${!fullHeader? '-translate-y-[60px]':''}`}>
               <div className="h-[60px] flex gap-x-4 items-center justify-between px-5 pt-[15px] pb-[5px]">
-                <h1 onClick={()=>{router.push('/app-center/seidou-video')}}>Seidou Video</h1>
+                <h1 className="shrink-0" onClick={()=>{router.push('/app-center/seidou-video')}}>Seidou Video</h1>
                 <div className="rounded-xl grow max-w-[200px] border border-[#404040] h-9 bg-transparent overflow-hidden flex items-center">
                   <input type="text" 
                   value={searchTerm}

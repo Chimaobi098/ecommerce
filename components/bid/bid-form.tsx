@@ -2,19 +2,25 @@ import { Balance } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import useAppAuth from "../../utils/firebase";
+
 
 type Props = {
   onSubmit: (bidAmount: number) => void;
   isPending: boolean;
+  previousBid?: number
   setBidForm: React.Dispatch<
     React.SetStateAction<{ isOpen: boolean; slot: number }>
   >;
 };
 
-export function BidForm({ onSubmit, isPending, setBidForm }: Props) {
+export function BidForm({ onSubmit, isPending, setBidForm, previousBid }: Props) {
+  const { getUserFromLocalStorage} = useAppAuth();
   const [bidAmount, setBidAmount] = useState<string>("");
   const [showPopup, setShowPopup] = useState(false);
   const router = useRouter();
+  const userDetails = JSON.parse(getUserFromLocalStorage() || '')
+  const auctionBalance = userDetails.gameWalletBalance || 0
 
   return (
     <motion.div
@@ -53,10 +59,13 @@ export function BidForm({ onSubmit, isPending, setBidForm }: Props) {
         <button
           disabled={isPending}
           onClick={() => {
-            if (parseInt(bidAmount) < 100000) {
-              onSubmit(parseInt(bidAmount || "0"));
+            const actualAuctionBalance = auctionBalance + (previousBid ?? 0)
+            if (parseInt(bidAmount) > actualAuctionBalance) {
+              // If bid is greater than the balance (+ bids) the user has in this slot
+              setShowPopup(true)
             } else {
-              setShowPopup(true);
+              // Allow if user has sufficient funds
+              onSubmit(parseInt(bidAmount || "0"));
             }
           }}
           className="px-3 py-2 rounded-md bg-black mt-3 text-white"

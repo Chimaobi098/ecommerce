@@ -76,7 +76,7 @@ const ProfilePage = ({ user }: User) => {
 
   return (
     <>
-      <Wrapper className="mb-16   md:mb-2">
+      <Wrapper className="mb-16 md:mb-2">
         {/* Render the loading page if loading is true */}
         {loading && (
           <div className="loading-page h-screen top-0 w-screen absolute z-10 bg-white flex justify-center items-center">

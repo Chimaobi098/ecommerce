@@ -126,10 +126,10 @@ const useAppAuth = () => {
   };
 
   // Helper function for placing or changing bids
-  const handleBidPlacements = async (user: UserProfile, slot:number, bidAmount: number) => {
+  const handleBidPlacements = async (user: UserProfile, slot:number, bidAmount: number, currentAuctionBalance: number, previousBid: number|null) => {
 
   if (!user) {
-    return { error: "Unauthenticated!" };
+    return "Unauthenticated!";
   }
 
   const userName = user.name
@@ -151,7 +151,16 @@ const useAppAuth = () => {
         updatedAt: Timestamp.now(),
       });
 
-      return { success: "Bid updated" };
+      // Undo previous bid
+      const correctedBalance = currentAuctionBalance + (previousBid ?? 0)
+
+      // Deduct new bid amount
+      const newBalance = correctedBalance - bidAmount
+      
+      // Debit auction wallet
+      updateFieldsInFirebase(user.email, {'gameWalletBalance': newBalance})
+
+      return "Bid updated";
     } else {
       // If no bid exists, create a new one
       await addDoc(fbAuctionBidsRef, {
@@ -162,10 +171,10 @@ const useAppAuth = () => {
         createdAt: Timestamp.now(),
       });
 
-      return { success: "Bid placed" };
+      return "Bid placed";
     }
   } catch (error) {
-    return { error: "Failed to process bid" };
+    return "Failed to process bid";
   }
   }
 
@@ -192,7 +201,7 @@ const useAppAuth = () => {
             createdAt: data.createdAt.toDate(), // Convert Firestore timestamp to JS Date
           };
         });
-  
+        console.log(bids)
         setBids(bids);
       });
   
