@@ -13,50 +13,70 @@ const WatchVideo = () => {
     const { user } = useUser();
     const [activeVideoDetails, setActiveVideoDetails] = useState<{snippet: any, statistics: any}|null>(null);
     const [videos, setVideos] = useState<{id: any, snippet: any}[]|null>(null)
-    const [popup, setPopup] = useState<{isExpanded: boolean, template: ReactNode | null, singleViewTemplate?: boolean}>({isExpanded: false, template: null})
+    const [popup, setPopup] = useState<{isExpanded: boolean, template: ReactNode | null}>({isExpanded: false, template: null})
     const router = useRouter();
     const { id } = router.query
     const initialPopup = useRef(true)
     const { getUserFromLocalStorage, updateFieldsInFirebase } = useAppAuth();
     const watchTimeInterval = useRef<any>()
     const watchTimeCounter = useRef(0)
-    const watchTimeReward = useRef(0)
+    const watchTimeReward = useRef(1000)
+    const [isPlaying, setIsPlaying] = useState(false)
 
+    useEffect(()=>{
+      // Clean up the interval when unmounting component
+      return (()=> clearInterval(watchTimeInterval.current))
+    }, [])
+
+    useEffect(()=>{
+      if(popup.isExpanded){
+        // If the popup is visible, stop the watch time tracking.
+        clearInterval(watchTimeInterval.current)
+      } else if(isPlaying){
+        // If the popup is closed and video is playing then continue the tracking
+        trackWatchTime(true)
+      }
+    }, [popup])
+    
     function trackWatchTime(videoIsPlaying: boolean){
       const timeToReward = 0.1 // In minutes
       
       if(videoIsPlaying){
+        setIsPlaying(true)
         watchTimeInterval.current = setInterval(() => { // Interval increments watchTimeCounter every second
         watchTimeCounter.current += 1
-        if(watchTimeCounter.current === timeToReward*60){
-          rewardCheckpoint()
-          watchTimeCounter.current = 1 // Reset the counter
-        }
+          if(watchTimeCounter.current === timeToReward*60){
+            rewardCheckpoint()
+            watchTimeCounter.current = 1 // Reset the counter
+            console.log('it ran')
+          }
         }, 1000); // Run every 1 second
 
       } else {
+        setIsPlaying(false)
         clearInterval(watchTimeInterval.current)
       }
   }
 
   function rewardCheckpoint(){
-    watchTimeReward.current += 1000
+    // watchTimeReward.current += 1000
     setPopup({
-        isExpanded: initialPopup.current? true:false, 
+        isExpanded: true, 
         template: (
-        <div style={{display: 'flex', flexDirection: 'column', rowGap: '8px'}}>
-          Claim your bidding currency? 
-          <div style={{display: 'flex', columnGap: '10px', fontSize: '14px'}}>
-            <button style={{borderRadius: '6px', width: 70, height: 30, border: 'none', backgroundColor: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center'}}
-            onClick={()=>{addRewardToGameWallet()}}>
-              <CheckIcon />
-            </button> 
-            <button style={{borderRadius: '6px', width: 70, height: 30, border: 'none', backgroundColor: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center'}} 
-            onClick={()=>{setPopup((prev)=> ({...prev, isExpanded: false}))}}>
-              <CancelIcon />
-            </button>
+          <div className="flex flex-col gap-y-2">
+              <span className="text-base font-bold text-center leading-snug">You have been awarded some <br /> bidding currency.</span>
+              <span className="text-center text-sm">Claim it now?</span>
+              <div className="flex gap-x-3 text-sm w-full justify-center">
+              <button className="rounded-md w-16 h-8 border-none bg-white flex justify-center items-center"
+              onClick={()=>{addRewardToGameWallet()}}>
+                  <CheckIcon />
+              </button> 
+              <button className="rounded-md w-16 h-8 border-none bg-white flex justify-center items-center"
+              onClick={()=>{setPopup((prev)=> ({...prev, isExpanded: false}))}}>
+                  <CancelIcon />
+              </button>
+              </div>
           </div>
-        </div>
         )
       })
 
@@ -76,7 +96,7 @@ const WatchVideo = () => {
         });
 
         if(!res){
-          setPopup((prev)=> ({...prev, template: 'Something went wrong. Try again later', singleViewTemplate: true}))
+          setPopup((prev)=> ({...prev, template: 'Something went wrong'}))
           return
         }
 
@@ -85,7 +105,11 @@ const WatchVideo = () => {
           <span>Success!</span>
           <span className='font-bold text-base'>Auction wallet: ₦{currentGameBalance} + {tempRewardValue}</span>
         </div>, 
-        singleViewTemplate: true}))
+        }))
+
+        setTimeout(() => {
+          setPopup((prev)=> ({...prev, isExpanded: false}))
+        }, 1500);
 
         watchTimeReward.current = 0 // Reset reward back to 0
     } 

@@ -21,7 +21,7 @@ export const SlotBidsCount = ({slot, bids, setBidQueue}: Props) => {
     }, [bids])
 
     return (
-        <span className="absolute left-5 bottom-2 bg-black text-white rounded-lg px-3 py-1"
+        <span className="bg-black text-white rounded-lg px-3 py-1 w-fit h-fit self-center"
         onClick={()=>{setBidQueue({isOpen: true, slot: slot})}}>
             Bids {totalNumber}
         </span>

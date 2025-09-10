@@ -29,12 +29,12 @@ const AppCenter = () => {
             </div>
             <div className="flex flex-col items-center justify-center h-[100dvh] pt-[60px]">
                 <div onClick={()=>{handleRouting('/app-center/seidou-video')}} style={{clipPath: 'polygon(100% 0%, 100% calc(100% - 20px), 0% 100%, 0% 0%)'}}
-                className="w-[90%] aspect-[1/0.7] rounded-t-lg max-w-[400px] bg-gray-900 flex flex-col justify-center items-center gap-y-5 active:scale-110 duration-150 text-[52px]">
+                className="w-[90%] aspect-[1/0.7] rounded-t-lg max-w-[400px] bg-gray-900 flex flex-col justify-center items-center gap-y-5 active:scale-105 duration-150 text-[52px]">
                     <PlayArrowRounded fontSize="inherit" className="text-white"/>
                     <span className="text-white font-medium text-lg">Seidou Video</span> 
                 </div>
                 <div onClick={()=>{handleRouting('/app-center/arcade')}} style={{clipPath: 'polygon(100% 0%, 100% 100%, 0% 100%, 0% 20px)'}}
-                className="w-[90%] aspect-[1/0.7] rounded-b-lg max-w-[400px] bg-gray-900 flex flex-col justify-center items-center gap-y-5 active:scale-110 duration-150">
+                className="w-[90%] aspect-[1/0.7] rounded-b-lg max-w-[400px] bg-gray-900 flex flex-col justify-center items-center gap-y-5 active:scale-105 duration-150">
                     <LucideGamepad2 size={52} stroke="white"/>
                     <span className="text-white font-medium text-lg">Arcade</span> 
                 </div>

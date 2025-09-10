@@ -22,6 +22,6 @@ export const BidSlotValue = ({slot, bids}: Props) => {
     }, [bids])
 
     return ( 
-        <span className="absolute left-5 top-2">₦ {totalValue.toLocaleString()}</span>
+        <span className="w-fit">₦ {totalValue.toLocaleString()}</span>
     );
 }

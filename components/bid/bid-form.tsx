@@ -59,9 +59,8 @@ export function BidForm({ onSubmit, isPending, setBidForm, previousBid }: Props)
         <button
           disabled={isPending}
           onClick={() => {
-            const actualAuctionBalance = auctionBalance + (previousBid ?? 0)
-            if (parseInt(bidAmount) > actualAuctionBalance) {
-              // If bid is greater than the balance (+ bids) the user has in this slot
+            if (parseInt(bidAmount) > auctionBalance) {
+              // If bid is greater than the balance the user has in this slot,
               setShowPopup(true)
             } else {
               // Allow if user has sufficient funds

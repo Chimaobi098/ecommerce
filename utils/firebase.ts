@@ -151,11 +151,12 @@ const useAppAuth = () => {
         updatedAt: Timestamp.now(),
       });
 
-      // Undo previous bid
-      const correctedBalance = currentAuctionBalance + (previousBid ?? 0)
+      // Since bids can only increase and not reduce,
+      // Find the difference between new bid and previous bid
+      const difference = bidAmount - (previousBid ?? 0)
 
-      // Deduct new bid amount
-      const newBalance = correctedBalance - bidAmount
+      // Deduct difference from Auction balance
+      const newBalance = currentAuctionBalance - difference
       
       // Debit auction wallet
       updateFieldsInFirebase(user.email, {'gameWalletBalance': newBalance})

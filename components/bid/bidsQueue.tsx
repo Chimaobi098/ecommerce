@@ -36,21 +36,21 @@ const BidsQueue = ({setBidQueue, setBidForm, slot, bids}:Props) => {
       </div>
 
           {targetBids.length > 0? (
-            <motion.section initial={{opacity:0}} animate={{opacity: 1, transition: {delay: 0.2, duration: 0.2}}} className="flex flex-col w-full flex-grow text-sm md:text-base items-center overflow-scroll pt-7 gap-y-7">
+            <motion.section initial={{opacity:0}} animate={{opacity: 1, transition: {delay: 0.2, duration: 0.2}}} className="flex flex-col w-full flex-grow text-sm md:text-base items-center pt-7 snap-mandatory snap-y overflow-scroll gap-y-7">
             {targetBids.map((bid, index)=>{
               return(
-                <div key={index} className={`w-[95%] flex-shrink-0 last:mb-7 rounded-l-[48px] rounded-r-[5px] flex h-20 shadow-sm bg-white ${bid.userEmail===user?.email? 'outline outline-[2px] outline-[#e8e8e8]':''}`}>
-                  <div className={`flex justify-center items-center h-full aspect-square rounded-full
-                   text-lg ${bid.userEmail===user?.email? 'shadow-[inset_-2px_2px_2px_2px_#e8e8e8]':'shadow-[inset_-2px_2px_2px_2px_#f3f4f6]'}`}>
+                <div key={index} className={`w-[95%] flex-shrink-0 rounded-l-[48px] rounded-r-2xl flex h-20 bg-white first:mt-52 snap-start last:mb-[100vh] scroll-mt-3 scroll-mb-3 ${bid.userEmail===user?.email? 'outline outline-[4px] outline-[#e3e3e6]':''}`}>
+                  <div className={`flex justify-center items-center h-full aspect-square rounded-full text-lg
+                   bg-white ${bid.userEmail===user?.email? 'shadow-[3px_2px_0px_3px_#e3e3e6]':'shadow-[3px_2px_0px_3px_#f3f4f6]'}`}>
                     {index+1}
                   </div>
-                  <div className="flex-grow flex justify-between flex-col h-full relative py-3 px-5">
-                    <div className="w-full flex justify-between">
-                      <span className="flex-grow truncate">{bid.userName}</span>
-                      <span className="flex-shrink-0">₦ {bid.bidAmount.toLocaleString()}</span>
-                    </div>
+                  <div className="flex-grow h-full grid grid-cols-[1fr_0.8fr] px-4 py-2">
+
+                    <span className="flex-grow truncate capitalize">{bid.userName}</span>
+                    <span className="flex-shrink-0 justify-self-end">₦ {bid.bidAmount.toLocaleString()}</span>
+
                     {bid.userEmail===user?.email && 
-                    (<button className="ml-auto bg-blue-400 text-white rounded-lg px-3 py-1"
+                    (<button className="bg-blue-400 text-white rounded-lg px-3 py-1 w-fit h-fit"
                     onClick={()=>{setBidForm({isOpen: true, slot: slot})}}>
                       Increase bid
                     </button>)}

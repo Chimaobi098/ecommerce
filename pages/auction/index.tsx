@@ -120,15 +120,20 @@ const AuctionPage = () => {
     };
   }, []);
 
-  // function checkIfUserHasBidInSlot(slot: number){
-  //   let check: boolean
-  //   check = bids.some((bid) => (bid.userEmail === user?.email && bid.slot === slot))
+  // useEffect(()=>{
 
-  //   if(check){return 'Increase bid'}
-  // }
+  // }, [bids])
+  
+  function checkIfUserHasBidInSlot(slot: number){
+    let check: boolean
+    check = bids.some((bid) => (bid.userEmail === user?.email && bid.slot === slot))
+
+    return check
+  }
 
   return (
     <>
+      {/* MODAL */}
       <AnimatePresence>
         {bidForm.isOpen && (
           <BidForm
@@ -140,9 +145,11 @@ const AuctionPage = () => {
         )}
       </AnimatePresence>
 
+      {/* TOAST */}
       <ToastContainer />
 
       <div className="w-full h-[100dvh] flex items-center justify-center bg-gray-100 text-sm lg:text-base">
+        {/* HEADER */}
         <div className="fixed top-0 z-20 text-2xl w-full flex justify-center items-center font-bold h-[60px] border-b-[1px] border-[#00000023] bg-white">
           <button
             className="absolute left-2 top-1/2 -translate-y-1/2"
@@ -154,24 +161,42 @@ const AuctionPage = () => {
           </button>
           Auction
         </div>
-
-        {user ? (
-          <section className="flex flex-col h-[calc(100dvh-120px)] w-full text-sm md:text-base items-center gap-y-7 snap-mandatory snap-y pt-7 overflow-scroll">
+          
+        {!user ? (
+          // IF USER IS NOT SIGNED IN
+          <div className=" text-gray-500">
+            <span>
+              Please{" "}
+              <button
+                className="px-2 py-[2px] rounded-md border border-[#d5d5d5] active:scale-110"
+                onClick={() => {
+                  router.push("/api/auth/login");
+                }}
+              >
+                sign in
+              </button>{" "}
+              to place a bid.
+            </span>
+          </div>
+          
+        ) : (
+          // SHOW THE BID SLOTS FOR AUTHENTICATED USERS
+          <section className="flex flex-col h-[calc(100dvh-120px)] w-full text-sm md:text-base items-center gap-y-7 snap-mandatory snap-y overflow-scroll">
             {slots.map((slot, index) => {
               return (
                 <div
                   key={index}
-                  className="w-[95%] flex-shrink-0 last:mb-7 snap-bottom rounded-l-[48px] rounded-r-[0px] flex h-20 bg-white"
+                  className="w-[95%] flex-shrink-0 first:mt-52 snap-start last:mb-[70vh] scroll-mt-3 scroll-mb-3 rounded-l-[48px] rounded-r-2xl flex h-20 bg-white"
                 >
                   <div
                     className="flex justify-center items-center h-full aspect-square rounded-full
-                   text-lg shadow-[inset_-2px_2px_2px_2px_#f3f4f6]"
+                   text-lg shadow-[3px_2px_0px_3px_#f3f4f6] bg-white"
                   >
                     {slot.slotNumber}
                   </div>
-                  <div className="flex-grow h-full relative">
+                  <div className="flex-grow h-full grid grid-cols-[0.85fr_1fr] px-4 py-2">
                     <BidSlotValue slot={slot.slotNumber} bids={bids} />
-                    <span className="absolute right-5 top-2">
+                    <span className="">
                       <Countdown
                         endTime={auctions?.end_time}
                         serverTime={serverTime}
@@ -183,12 +208,12 @@ const AuctionPage = () => {
                       setBidQueue={setBidQueue}
                     />
                     <span
-                      className="absolute right-5 bottom-2 bg-blue-400 text-white rounded-lg px-3 py-1"
+                      className=" bg-blue-400 text-white rounded-lg px-3 py-1 w-fit h-fit self-center"
                       onClick={() => {
                         setBidForm({ isOpen: true, slot: slot.slotNumber });
                       }}
                     >
-                      Place a bid
+                      {checkIfUserHasBidInSlot(slot.slotNumber)? 'Increase bid':'Place a bid'}
                     </span>
                   </div>
                 </div>
@@ -201,21 +226,6 @@ const AuctionPage = () => {
               </p>
             )} */}
           </section>
-        ) : (
-          <div className=" text-gray-500">
-            <span>
-              Please{" "}
-              <button
-                className="px-2 py-[2px] rounded-md border border-[#d5d5d5] active:scale-150"
-                onClick={() => {
-                  router.push("/api/auth/login");
-                }}
-              >
-                sign in
-              </button>{" "}
-              to place a bid.
-            </span>
-          </div>
         )}
 
         {bidQueue.isOpen && (
