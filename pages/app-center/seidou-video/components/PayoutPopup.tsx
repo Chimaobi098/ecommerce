@@ -17,7 +17,7 @@ const PayoutPopup = ({setPopup, popup = {isExpanded: false, template: null}}: Pr
         <AnimatePresence>
             {isExpanded &&
                 <motion.div initial={{y: '-100%'}} animate={{y: 0, transition:{duration: 0.4}}} exit={{y: '-100%', transition:{ duration: 0.4 }}}
-                className="fixed z-50 top-0 left-0 w-full bg-[#000000c5] h-fit py-4 px-3 text-white">
+                className="fixed z-50 top-0 left-0 w-full bg-[#000000c5] h-fit shadow-lg py-4 px-3 text-white">
                     {template}
                 </motion.div>
             }

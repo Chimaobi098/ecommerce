@@ -50,5 +50,5 @@ export default function Countdown({ endTime, serverTime }) {
     `${minutes.toString().padStart(2, "0")}:` +
     `${seconds.toString().padStart(2, "0")}`;
 
-  return <p>Time left: {formattedTime}</p>;
+  return <span>Time left: {formattedTime}</span>;
 }

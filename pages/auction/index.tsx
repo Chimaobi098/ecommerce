@@ -121,8 +121,10 @@ const AuctionPage = () => {
   }, []);
 
   // useEffect(()=>{
+  //   alert(user ?? 'undefined')
 
-  // }, [bids])
+  // }, [user])
+
   
   function checkIfUserHasBidInSlot(slot: number){
     let check: boolean
@@ -186,15 +188,15 @@ const AuctionPage = () => {
               return (
                 <div
                   key={index}
-                  className="w-[95%] flex-shrink-0 first:mt-52 snap-start last:mb-[70vh] scroll-mt-3 scroll-mb-3 rounded-l-[48px] rounded-r-2xl flex h-20 bg-white"
+                  className="w-[95%] flex-shrink-0 first:mt-52 snap-start last:mb-28 scroll-mt-3 scroll-mb-3 rounded-l-[48px] rounded-r-2xl flex h-20 bg-white"
                 >
                   <div
                     className="flex justify-center items-center h-full aspect-square rounded-full
-                   text-lg shadow-[3px_2px_0px_3px_#f3f4f6] bg-white"
+                   text-lg shadow-[2px_0px_0px_2px_#f3f4f6] bg-white"
                   >
                     {slot.slotNumber}
                   </div>
-                  <div className="flex-grow h-full grid grid-cols-[0.85fr_1fr] px-4 py-2">
+                  <div className="flex-grow h-full grid grid-cols-[0.8fr_1fr] px-3.5 py-2">
                     <BidSlotValue slot={slot.slotNumber} bids={bids} />
                     <span className="">
                       <Countdown
