@@ -79,6 +79,7 @@ export default async function ProfilePage() {
         {/* Menu Items */}
         <div className="space-y-1">
           {menuItems.map((item, index) => (
+            
             <Card key={index} className="transition-shadow cursor-pointer border-0 shadow-none">
               <CardContent className="">
                 <div className="flex items-center justify-between">

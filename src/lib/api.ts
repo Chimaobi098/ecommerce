@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Game } from '@/types/game';
+import { Game } from '@/types/game.types';
 
 export class GameAPI {
   private static readonly BASE_URL = 'https://feeds.gamepix.com/v2/json';

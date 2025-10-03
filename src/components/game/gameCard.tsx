@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameCardProps } from '@/types/game';
+import { GameCardProps } from '@/types/game.types';
 
 const GameCard: React.FC<GameCardProps> = ({ 
   game, 

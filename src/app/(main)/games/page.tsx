@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Game } from '@/types/game';
+import { Game } from '@/types/game.types';
 import { GameAPI } from '@/lib/api';
 import GameGrid from '@/components/game/gameGrid';
 

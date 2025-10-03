@@ -1,5 +1,5 @@
 import React from 'react';
-import { Game } from '@/types/game';
+import { Game } from '@/types/game.types';
 import GameCard from './gameCard';
 
 interface GameGridProps {
