@@ -4,10 +4,12 @@ import { fetchFromAPI } from "../../../../utils/seidouVideoUtils/FetchData";
 import Link from "next/link";
 import { CheckCircle } from "@mui/icons-material";
 import Footer from "../../AC_Footer";
+import { useRouter } from "next/router";
 
 const SearchFeed = () => {
-    const [videos, setVideos] = useState<{id: any, snippet: any}[]|null>(null)
-    const [searchTerm, setSearchTerm] = useState('')
+    const [videos, setVideos] = useState<{id: any, snippet: any}[]|null>(null);
+    const [searchTerm, setSearchTerm] = useState('');
+    const router = useRouter();
 
      function decode(data: string) {
         const txt = document.createElement('textarea');
@@ -24,11 +26,11 @@ const SearchFeed = () => {
      .then((data)=>{setVideos(data.items)})
 
  
-   }, [])
+   }, [router.query.query])
 
     return ( 
         <div className="bg-black h-[100dvh] overflow-scroll w-full px-3 pb-[15vmin]">
-            <Header />
+            <Header backButton={true} />
             <h2 className="font-medium text-lg mt-[60px] h-fit text-white">Search results for: <span className="text-xl text-red-500"> {searchTerm}</span></h2>
             <div className="flex flex-col items-center gap-y-7 mt-2">
                 {videos?.map((item, idx)=>{

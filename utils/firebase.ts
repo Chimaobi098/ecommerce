@@ -147,16 +147,16 @@ const useAppAuth = () => {
       // Update the existing bid with the new bid amount
       const bidDocRef = doc(db, "auctionBids", existingBidId);
       await updateDoc(bidDocRef, {
-        bidAmount: bidAmount, // Overwrite the existing bid amount
+        bidAmount: bidAmount + ( previousBid || 0), // Overwrite the existing bid amount
         updatedAt: Timestamp.now(),
       });
 
       // Since bids can only increase and not reduce,
       // Find the difference between new bid and previous bid
-      const difference = bidAmount - (previousBid ?? 0)
+      // const difference = bidAmount - (previousBid ?? 0)
 
       // Deduct difference from Auction balance
-      const newBalance = currentAuctionBalance - difference
+      const newBalance = currentAuctionBalance - bidAmount
       
       // Debit auction wallet
       updateFieldsInFirebase(user.email, {'gameWalletBalance': newBalance})

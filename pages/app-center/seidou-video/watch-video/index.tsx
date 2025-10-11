@@ -39,7 +39,7 @@ const WatchVideo = () => {
     }, [popup])
     
     function trackWatchTime(videoIsPlaying: boolean){
-      const timeToReward = 5 // In minutes
+      const timeToReward = 2 // In minutes
       
       if(videoIsPlaying){
         setIsPlaying(true)
