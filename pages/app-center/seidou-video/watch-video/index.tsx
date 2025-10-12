@@ -39,7 +39,7 @@ const WatchVideo = () => {
     }, [popup])
     
     function trackWatchTime(videoIsPlaying: boolean){
-      const timeToReward = 2 // In minutes
+      const timeToReward = 1 // In minutes
       
       if(videoIsPlaying){
         setIsPlaying(true)
@@ -96,7 +96,11 @@ const WatchVideo = () => {
         });
 
         if(!res){
-          setPopup((prev)=> ({...prev, template: 'Something went wrong'}))
+          setPopup((prev)=> ({...prev, template: 'Something went wrong'}));
+          // Auto-dismiss after 2 seconds
+          setTimeout(() => {
+            setPopup((prev)=> ({...prev, isExpanded: false}))
+          }, 2000);
           return
         }
 
@@ -111,11 +115,15 @@ const WatchVideo = () => {
           setPopup((prev)=> ({...prev, isExpanded: false}))
         }, 1500);
 
-        watchTimeReward.current = 0 // Reset reward back to 0
+        // watchTimeReward.current = 0 // Reset reward back to 0
     } 
     
     else {
       setPopup((prev)=> ({...prev, template: 'Failed: User not signed in'}))
+      // Auto-dismiss after 2 seconds
+      setTimeout(() => {
+        setPopup((prev)=> ({...prev, isExpanded: false}))
+      }, 2000);
     }
 
 

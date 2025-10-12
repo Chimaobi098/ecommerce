@@ -1,6 +1,8 @@
-import { Apps, YouTube } from "@mui/icons-material";
+import { Apps, Home, YouTube } from "@mui/icons-material";
+import { LayoutGrid } from "lucide-react";
 import Link from "next/link";
-import { ShoppingBagIcon } from "../../public/ShoppingBag";
+
+
 
 interface props {
     theme: 'light'|'dark'
@@ -8,8 +10,8 @@ interface props {
 const AC_Footer = ({theme}: props) => {
     const baseURL = '/app-center'
     const apps = [
-        {name: 'Seidou', route: '/', icon: <ShoppingBagIcon fill={`${theme==='light'? 'black':'white'}`}/>},
-        {name: 'App center', route: `${baseURL}`, icon: <Apps className={`text-[30px] ${theme==='light'? 'black':'text-white'}`}/>}
+        {name: 'Home', route: '/', icon: <Home/>},
+        {name: 'App center', route: `${baseURL}`, icon: <LayoutGrid fill="#FFF" strokeWidth={0}/>}
     ]
     return ( 
         <div className={`fixed bottom-0 left-0 ${theme==='light'? 'bg-white':'bg-black'} border-t border-[#cccccc] h-[60px] z-[90] w-full max-w-[450px] flex justify-around items-center px-8`}>

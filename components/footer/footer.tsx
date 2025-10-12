@@ -13,6 +13,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AuctionIcon from "../../public/Auction";
 import { Apps, AppsOutlined, Gamepad, GamepadOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
+import { LayoutGrid } from "lucide-react";
 
 const Footer = () => {
   const { pathname, push, replace } = useRouter();
@@ -56,9 +57,9 @@ const Footer = () => {
         <Link passHref href={"/app-center"}>
           <div className="icon-container">
               {pathname == "/app-center" ? (
-                <Apps fontSize="large" style={{ color: "black" }} />
+                <LayoutGrid fill="#FFF" strokeWidth={0}/>
               ) : (
-                <AppsOutlined fontSize="large" style={{ color: "black" }} />
+                <LayoutGrid/>
               )}
             <p style={{ fontWeight: pathname == "/app-center" ? 600 : 500 }}>App Center</p>
           </div>
