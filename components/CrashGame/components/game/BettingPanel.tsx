@@ -2,16 +2,12 @@ import { useState, useMemo, useEffect } from "react";
 import { useCrashGame } from "../../lib/stores/useCrashGame";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Slider } from "../ui/slider";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { motion } from "framer-motion";
-
 import { toast } from "sonner";
-
-// import { ToastContainer, toast } from "react-toastify";
 
 export function BettingPanel() {
   const {
@@ -28,11 +24,11 @@ export function BettingPanel() {
 
   const [useAutoCashout, setUseAutoCashout] = useState(false);
   const [autoValue, setAutoValue] = useState<string>("2");
-  const [returnAmount, setReturnAmount] = useState(0);
   const [inputValue, setInputValue] = useState(betAmount.toString());
+  const [isPlacingBet, setIsPlacingBet] = useState(false);
 
   // Can place bet during betting phase and when not already bet
-  const canPlaceBet = gameState === "betting" && !currentBet.active;
+  const canPlaceBet = gameState === "betting" && !currentBet.active && !isPlacingBet;
 
   // Reset input value when bet amount changes externally
   useEffect(() => {
@@ -97,22 +93,25 @@ export function BettingPanel() {
     }
   };
 
-  // Place bet - implementation for demo
-  const handlePlaceBet = () => {
+  // Place bet - ASYNC implementation with Firestore
+  const handlePlaceBet = async () => {
     if (!canPlaceBet) return;
+
+    setIsPlacingBet(true);
 
     try {
       const autoCashoutValue = useAutoCashout ? parseFloat(autoValue) : null;
 
-      // Update local state via the store actions
-      // Reduce balance immediately
-      placeBet(betAmount, autoCashoutValue);
+      // Place bet (updates Firestore and local state)
+      await placeBet(betAmount, autoCashoutValue);
 
       // Extra UI feedback
       toast.success(`Bet of ${betAmount.toFixed(2)} placed!`);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error placing bet:", error);
-      toast.error("Failed to place bet");
+      toast.error(error.message || "Failed to place bet");
+    } finally {
+      setIsPlacingBet(false);
     }
   };
 
@@ -216,15 +215,16 @@ export function BettingPanel() {
           </div>
 
           {/* Bet amount slider */}
-          <Slider
-            defaultValue={[10]}
-            min={1}
-            max={balance}
-            step={1}
-            value={[betAmount]}
-            onValueChange={handleBetSliderChange}
-            disabled={!canPlaceBet}
-          />
+          {balance > 0 && (
+            <Slider
+              min={1}
+              max={Math.max(balance, 1)}
+              step={1}
+              value={[Math.min(betAmount, balance)]}
+              onValueChange={handleBetSliderChange}
+              disabled={!canPlaceBet}
+            />
+          )}
         </div>
 
         {/* Auto cashout */}
@@ -264,7 +264,7 @@ export function BettingPanel() {
           onClick={handlePlaceBet}
           disabled={!canPlaceBet || betAmount <= 0 || betAmount > balance}
         >
-          Place Bet
+          {isPlacingBet ? "Placing Bet..." : "Place Bet"}
         </Button>
 
         {/* Current bet info */}
